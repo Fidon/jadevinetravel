@@ -1,0 +1,118 @@
+{% extends "accounts/dashboard_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "My Dashboard" %} — Jadevine{% endblock %}
+{% block meta_description %}{% trans "Manage your bookings and account." %}{% endblock %}
+{% block topbar_title %}{% trans "Dashboard" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts/dashboard.css' %}">
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dash-page-header jd-load-reveal" data-delay="1">
+  <div>
+    <p class="eyebrow">{% trans "Welcome back" %}</p>
+    <h1 class="dash-page-title">{{ user.get_full_name|title|default:user.email }}</h1>
+  </div>
+  <a href="{% url 'hotels:list' %}" class="btn-accent-jd">
+    <i class="bi bi-plus-lg me-1"></i>{% trans "New Booking" %}
+  </a>
+</div>
+
+<!-- Stats row -->
+<div class="dash-stats-row jd-load-reveal" data-delay="2">
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon dash-stat-icon-primary">
+      <i class="bi bi-calendar2-check"></i>
+    </div>
+    <div class="dash-stat-info">
+      <span class="dash-stat-value">{{ upcoming_bookings|length }}</span>
+      <span class="dash-stat-label">{% trans "Upcoming" %}</span>
+    </div>
+  </div>
+  <div class="dash-stat-card">
+    <div class="dash-stat-icon dash-stat-icon-accent">
+      <i class="bi bi-heart"></i>
+    </div>
+    <div class="dash-stat-info">
+      <span class="dash-stat-value" id="favCount">—</span>
+      <span class="dash-stat-label">{% trans "Saved" %}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Upcoming Bookings -->
+<section class="dash-section jd-load-reveal" data-delay="3">
+  <div class="dash-section-header">
+    <h2 class="dash-section-title">{% trans "Upcoming Bookings" %}</h2>
+    <a href="{% url 'accounts:booking_history' %}" class="btn-ghost-jd">
+      {% trans "View all" %} <i class="bi bi-arrow-right ms-1"></i>
+    </a>
+  </div>
+
+  {% if upcoming_bookings %}
+    <div class="dash-bookings-list">
+      {% for booking in upcoming_bookings %}
+      <div class="dash-booking-card jd-reveal">
+        <div class="dash-booking-icon dash-booking-icon-{{ booking.service_type }}">
+          {% if booking.service_type == 'hotel' %}
+            <i class="bi bi-building"></i>
+          {% elif booking.service_type == 'tour' %}
+            <i class="bi bi-binoculars"></i>
+          {% else %}
+            <i class="bi bi-car-front"></i>
+          {% endif %}
+        </div>
+        <div class="dash-booking-info">
+          <span class="dash-booking-name">
+            {% if booking.service_type == 'hotel' and booking.hotel %}
+              {{ booking.hotel.name }}
+            {% elif booking.service_type == 'tour' and booking.tour_package %}
+              {{ booking.tour_package.name_en }}
+            {% elif booking.service_type == 'car' and booking.car %}
+              {{ booking.car.name }}
+            {% endif %}
+          </span>
+          <span class="dash-booking-date">
+            {% if booking.service_type == 'hotel' %}
+              <i class="bi bi-calendar3 me-1"></i>{{ booking.check_in_date|date:"d M Y" }} — {{ booking.check_out_date|date:"d M Y" }}
+            {% elif booking.service_type == 'tour' %}
+              <i class="bi bi-calendar3 me-1"></i>{{ booking.preferred_date|date:"d M Y" }}
+            {% else %}
+              <i class="bi bi-calendar3 me-1"></i>{{ booking.pickup_date|date:"d M Y" }}
+            {% endif %}
+          </span>
+          <span class="dash-booking-ref">{{ booking.reference }}</span>
+        </div>
+        <div class="dash-booking-meta">
+          <span class="jd-badge jd-badge-{{ booking.status|lower|cut:'_' }}">
+            {{ booking.get_status_display }}
+          </span>
+          <span class="dash-booking-total">{{ booking.currency }} {{ booking.total_price }}</span>
+        </div>
+        <a href="{% url 'accounts:booking_detail' booking.reference %}"
+           class="dash-booking-arrow" aria-label="{% trans 'View booking' %}">
+          <i class="bi bi-chevron-right"></i>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="dash-empty-state">
+      <div class="dash-empty-icon">
+        <i class="bi bi-calendar2-x"></i>
+      </div>
+      <p class="dash-empty-title">{% trans "No upcoming bookings" %}</p>
+      <p class="dash-empty-sub">{% trans "When you make a booking, it will appear here." %}</p>
+      <a href="{% url 'hotels:list' %}" class="btn-primary-jd mt-2">
+        {% trans "Explore Hotels" %}
+      </a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block dashboard_js %}
+<script src="{% static 'js/accounts/dashboard.js' %}"></script>
+{% endblock %}

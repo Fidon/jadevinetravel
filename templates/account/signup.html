@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Create Account" %} — Jadevine Travel & Tours{% endblock %}
+{% block meta_description %}{% trans "Create a Jadevine account to book hotels, safaris, and car rentals in Tanzania." %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section section-py">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+
+        <div class="auth-card jd-card">
+          <div class="auth-card-header">
+            <a href="{% url 'core:home' %}" class="auth-logo-link">
+              <img src="{% static 'images/logo.png' %}" alt="Jadevine" class="auth-logo">
+            </a>
+            <h1 class="auth-title">{% trans "Create your account" %}</h1>
+            <p class="auth-subtitle">{% trans "Start planning your Tanzania adventure" %}</p>
+          </div>
+
+          {% if form.non_field_errors %}
+          <div class="auth-alert auth-alert-error">
+            <i class="bi bi-exclamation-circle"></i>
+            {% for error in form.non_field_errors %}<span>{{ error }}</span>{% endfor %}
+          </div>
+          {% endif %}
+
+          <form method="post" action="{% url 'account_signup' %}" class="auth-form" autocomplete="off" novalidate>
+            {% csrf_token %}
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+            {% endif %}
+
+            <!-- Name row -->
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="jd-form-group">
+                  <label class="jd-label" for="id_first_name">{% trans "First Name" %} <span class="text-danger">*</span></label>
+                  <input type="text" name="first_name" id="id_first_name"
+                         class="jd-input {% if form.first_name.errors %}jd-input-error{% endif %}"
+                         placeholder="{% trans 'First name' %}" value="{{ form.first_name.value|default:'' }}">
+                  {% if form.first_name.errors %}
+                  <span class="jd-field-error">{{ form.first_name.errors|join:", " }}</span>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="jd-form-group">
+                  <label class="jd-label" for="id_last_name">{% trans "Last Name" %} <span class="text-danger">*</span></label>
+                  <input type="text" name="last_name" id="id_last_name"
+                         class="jd-input {% if form.last_name.errors %}jd-input-error{% endif %}"
+                         placeholder="{% trans 'Last name' %}" value="{{ form.last_name.value|default:'' }}">
+                  {% if form.last_name.errors %}
+                  <span class="jd-field-error">{{ form.last_name.errors|join:", " }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            <div class="jd-form-group">
+              <label class="jd-label" for="id_email">{% trans "Email Address" %} <span class="text-danger">*</span></label>
+              <div class="jd-input-icon-wrap">
+                <i class="bi bi-envelope jd-input-icon"></i>
+                <input type="email" name="email" id="id_email"
+                       class="jd-input {% if form.email.errors %}jd-input-error{% endif %}"
+                       placeholder="{% trans 'your@email.com' %}" value="{{ form.email.value|default:'' }}">
+              </div>
+              {% if form.email.errors %}
+              <span class="jd-field-error">{{ form.email.errors|join:", " }}</span>
+              {% endif %}
+            </div>
+
+            <div class="jd-form-group">
+              <label class="jd-label" for="id_password1">{% trans "Password" %} <span class="text-danger">*</span></label>
+              <div class="jd-input-icon-wrap">
+                <i class="bi bi-lock jd-input-icon"></i>
+                <input type="password" name="password1" id="id_password1"
+                       class="jd-input {% if form.password1.errors %}jd-input-error{% endif %}"
+                       placeholder="{% trans 'Create a password' %}">
+                <button type="button" class="jd-input-toggle-password" tabindex="-1">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              {% if form.password1.errors %}
+              <span class="jd-field-error">{{ form.password1.errors|join:", " }}</span>
+              {% endif %}
+            </div>
+
+            <div class="jd-form-group">
+              <label class="jd-label" for="id_password2">{% trans "Confirm Password" %} <span class="text-danger">*</span></label>
+              <div class="jd-input-icon-wrap">
+                <i class="bi bi-lock-fill jd-input-icon"></i>
+                <input type="password" name="password2" id="id_password2"
+                       class="jd-input {% if form.password2.errors %}jd-input-error{% endif %}"
+                       placeholder="{% trans 'Repeat your password' %}">
+              </div>
+              {% if form.password2.errors %}
+              <span class="jd-field-error">{{ form.password2.errors|join:", " }}</span>
+              {% endif %}
+            </div>
+
+            <div class="jd-form-group">
+              <label class="jd-label" for="id_preferred_language">{% trans "Preferred Language" %}</label>
+              {{ form.preferred_language }}
+              {% if form.preferred_language.errors %}
+              <span class="jd-field-error">{{ form.preferred_language.errors|join:", " }}</span>
+              {% endif %}
+            </div>
+
+            <button type="submit" class="btn-primary-jd w-100 auth-submit-btn">
+              {% trans "Create Account" %}
+            </button>
+
+            <p class="auth-terms">
+              {% blocktrans %}By creating an account, you agree to our
+              <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.{% endblocktrans %}
+            </p>
+          </form>
+
+          <div class="auth-divider"><span>{% trans "Already have an account?" %}</span></div>
+          <a href="{% url 'account_login' %}" class="btn-outline-jd w-100 text-center d-block auth-alt-btn">
+            {% trans "Sign In" %}
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/accounts/auth.js' %}"></script>
+{% endblock %}

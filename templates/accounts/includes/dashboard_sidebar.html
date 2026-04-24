@@ -1,0 +1,59 @@
+{% load i18n static %}
+<aside class="dashboard-sidebar" id="dashboardSidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-user-avatar">
+      {% if user.profile_photo %}
+        <img src="{{ user.profile_photo.url }}" alt="{{ user.full_name }}" class="sidebar-avatar-img">
+      {% else %}
+        <div class="sidebar-avatar-placeholder">
+          <i class="bi bi-person-fill"></i>
+        </div>
+      {% endif %}
+    </div>
+    <div class="sidebar-user-info">
+      <span class="sidebar-user-name">{{ user.full_name|truncatechars:20 }}</span>
+      <span class="sidebar-user-email">{{ user.email|truncatechars:24 }}</span>
+    </div>
+    <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="{% trans 'Close menu' %}">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="{% url 'accounts:dashboard' %}"
+       class="sidebar-nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+      <i class="bi bi-grid-1x2"></i>
+      <span>{% trans "Dashboard" %}</span>
+    </a>
+    <a href="{% url 'accounts:booking_history' %}"
+       class="sidebar-nav-item {% if 'booking' in request.resolver_match.url_name %}active{% endif %}">
+      <i class="bi bi-calendar2-check"></i>
+      <span>{% trans "My Bookings" %}</span>
+    </a>
+    <a href="{% url 'accounts:favourites' %}"
+       class="sidebar-nav-item {% if request.resolver_match.url_name == 'favourites' %}active{% endif %}">
+      <i class="bi bi-heart"></i>
+      <span>{% trans "Saved" %}</span>
+    </a>
+    <a href="{% url 'accounts:profile' %}"
+       class="sidebar-nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+      <i class="bi bi-person-circle"></i>
+      <span>{% trans "Profile" %}</span>
+    </a>
+    <a href="{% url 'account_change_password' %}"
+       class="sidebar-nav-item">
+      <i class="bi bi-shield-lock"></i>
+      <span>{% trans "Change Password" %}</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="{% url 'account_logout' %}" class="sidebar-logout-btn">
+      <i class="bi bi-box-arrow-right"></i>
+      <span>{% trans "Sign Out" %}</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Overlay for mobile -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>

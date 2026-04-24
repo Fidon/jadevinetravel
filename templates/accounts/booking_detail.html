@@ -1,0 +1,279 @@
+{% extends "accounts/dashboard_base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ booking.reference }} — {% trans "Booking Detail" %} — Jadevine{% endblock %}
+{% block topbar_title %}{% trans "Booking Detail" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts/dashboard.css' %}">
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dash-page-header jd-load-reveal" data-delay="1">
+  <div>
+    <a href="{% url 'accounts:booking_history' %}" class="dash-back-link">
+      <i class="bi bi-arrow-left me-1"></i>{% trans "My Bookings" %}
+    </a>
+    <h1 class="dash-page-title mt-1">{{ booking.reference }}</h1>
+  </div>
+  <div class="dash-booking-detail-actions">
+    <a href="{% url 'accounts:booking_pdf' booking.reference %}"
+       class="btn-outline-jd" target="_blank">
+      <i class="bi bi-download me-1"></i>{% trans "Download PDF" %}
+    </a>
+    {% if cancellable %}
+    <button type="button" class="btn-danger-jd" id="cancelBookingBtn">
+      <i class="bi bi-x-circle me-1"></i>{% trans "Cancel Booking" %}
+    </button>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Status banner -->
+<div class="dash-status-banner dash-status-{{ booking.status }} jd-load-reveal" data-delay="2">
+  <div class="dash-status-icon">
+    {% if booking.status == 'confirmed' %}
+      <i class="bi bi-check-circle-fill"></i>
+    {% elif booking.status == 'pending_confirmation' %}
+      <i class="bi bi-hourglass-split"></i>
+    {% elif booking.status == 'cancellation_requested' %}
+      <i class="bi bi-clock-history"></i>
+    {% elif booking.status == 'cancelled' %}
+      <i class="bi bi-x-circle-fill"></i>
+    {% elif booking.status == 'completed' %}
+      <i class="bi bi-trophy-fill"></i>
+    {% else %}
+      <i class="bi bi-info-circle-fill"></i>
+    {% endif %}
+  </div>
+  <div class="dash-status-text">
+    <strong>{{ booking.get_status_display }}</strong>
+    {% if booking.status == 'confirmed' %}
+      <span>{% trans "Your booking is confirmed and ready. We look forward to seeing you." %}</span>
+    {% elif booking.status == 'pending_confirmation' and booking.service_type == 'tour' %}
+      <span>{% trans "We will confirm your preferred date within 24–48 hours and send you an email." %}</span>
+    {% elif booking.status == 'pending_confirmation' %}
+      <span>{% trans "Your booking is being reviewed. We will confirm it shortly." %}</span>
+    {% elif booking.status == 'cancellation_requested' %}
+      <span>{% trans "Your cancellation request is being processed. We will contact you within 2–3 business days." %}</span>
+    {% elif booking.status == 'cancelled' %}
+      <span>{% trans "This booking has been cancelled. Contact us if you have any questions." %}</span>
+    {% elif booking.status == 'completed' %}
+      <span>{% trans "We hope you had a wonderful experience. Thank you for travelling with Jadevine." %}</span>
+    {% elif booking.status == 'no_show' %}
+      <span>{% trans "This booking was marked as a no-show. Please contact us if you believe this is an error." %}</span>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row g-4 mt-0">
+
+  <!-- Left column: booking info -->
+  <div class="col-lg-8 jd-load-reveal" data-delay="3">
+
+    <!-- Service details card -->
+    <div class="dash-detail-card jd-card">
+      <div class="dash-detail-card-header">
+        <div class="dash-detail-card-icon dash-booking-icon-{{ booking.service_type }}">
+          {% if booking.service_type == 'hotel' %}<i class="bi bi-building"></i>
+          {% elif booking.service_type == 'tour' %}<i class="bi bi-binoculars"></i>
+          {% else %}<i class="bi bi-car-front"></i>{% endif %}
+        </div>
+        <div>
+          <span class="dash-detail-card-type">{{ booking.get_service_type_display }}</span>
+          <h3 class="dash-detail-card-name">
+            {% if booking.service_type == 'hotel' and booking.hotel %}{{ booking.hotel.name }}
+            {% elif booking.service_type == 'tour' and booking.tour_package %}{{ booking.tour_package.name_en }}
+            {% elif booking.service_type == 'car' and booking.car %}{{ booking.car.name }}
+            {% endif %}
+          </h3>
+        </div>
+      </div>
+
+      <div class="dash-detail-grid">
+        {% if booking.service_type == 'hotel' %}
+          {% if booking.room_type %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Room Type" %}</span>
+            <span class="dash-detail-value">{{ booking.room_type.name }}</span>
+          </div>
+          {% endif %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Check-in" %}</span>
+            <span class="dash-detail-value">{{ booking.check_in_date|date:"D, d M Y" }}</span>
+          </div>
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Check-out" %}</span>
+            <span class="dash-detail-value">{{ booking.check_out_date|date:"D, d M Y" }}</span>
+          </div>
+          {% if booking.nights %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Duration" %}</span>
+            <span class="dash-detail-value">{{ booking.nights }} {% trans "night(s)" %}</span>
+          </div>
+          {% endif %}
+          {% if booking.num_guests %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Guests" %}</span>
+            <span class="dash-detail-value">{{ booking.num_guests }}</span>
+          </div>
+          {% endif %}
+
+        {% elif booking.service_type == 'tour' %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Preferred Date" %}</span>
+            <span class="dash-detail-value">{{ booking.preferred_date|date:"D, d M Y" }}</span>
+          </div>
+          {% if booking.num_participants %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Participants" %}</span>
+            <span class="dash-detail-value">{{ booking.num_participants }}</span>
+          </div>
+          {% endif %}
+
+        {% elif booking.service_type == 'car' %}
+          {% if booking.rental_mode %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Rental Mode" %}</span>
+            <span class="dash-detail-value">{{ booking.get_rental_mode_display }}</span>
+          </div>
+          {% endif %}
+          {% if booking.pickup_location %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Pickup Location" %}</span>
+            <span class="dash-detail-value">{{ booking.pickup_location }}</span>
+          </div>
+          {% endif %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Pickup Date" %}</span>
+            <span class="dash-detail-value">{{ booking.pickup_date|date:"D, d M Y" }}</span>
+          </div>
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Return Date" %}</span>
+            <span class="dash-detail-value">{{ booking.return_date|date:"D, d M Y" }}</span>
+          </div>
+          {% if booking.num_days %}
+          <div class="dash-detail-item">
+            <span class="dash-detail-label">{% trans "Days" %}</span>
+            <span class="dash-detail-value">{{ booking.num_days }}</span>
+          </div>
+          {% endif %}
+        {% endif %}
+
+        {% if booking.special_requests %}
+        <div class="dash-detail-item dash-detail-item-full">
+          <span class="dash-detail-label">{% trans "Special Requests" %}</span>
+          <span class="dash-detail-value">{{ booking.special_requests }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Right column: payment + refund info -->
+  <div class="col-lg-4 jd-load-reveal" data-delay="4">
+
+    <!-- Payment card -->
+    <div class="dash-detail-card jd-card mb-4">
+      <h4 class="dash-detail-card-section-title">{% trans "Payment" %}</h4>
+      <div class="dash-payment-row">
+        <span>{% trans "Base Price" %}</span>
+        <span>{{ booking.currency }} {{ booking.base_price }}</span>
+      </div>
+      <div class="dash-payment-row dash-payment-row-total">
+        <span>{% trans "Total" %}</span>
+        <span>{{ booking.currency }} {{ booking.total_price }}</span>
+      </div>
+      <div class="dash-payment-row">
+        <span>{% trans "Payment Mode" %}</span>
+        <span>{{ booking.get_payment_mode_display }}</span>
+      </div>
+      <div class="dash-payment-row">
+        <span>{% trans "Payment Status" %}</span>
+        <span class="jd-badge jd-badge-{{ booking.payment_status }}">
+          {{ booking.get_payment_status_display }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Refund info (only if cancellable or already cancellation_requested) -->
+    {% if cancellable and refund_info and booking.payment_status == 'paid' %}
+    <div class="dash-detail-card jd-card dash-refund-card">
+      <h4 class="dash-detail-card-section-title">{% trans "Cancellation Policy" %}</h4>
+      <p class="dash-refund-label">{{ refund_info.label }}</p>
+      <div class="dash-refund-amount">
+        <span class="dash-refund-pct">{{ refund_info.refund_percentage }}%</span>
+        <span class="dash-refund-value">
+          {% trans "refund" %}: {{ booking.currency }} {{ refund_info.refund_amount|floatformat:2 }}
+        </span>
+      </div>
+      <p class="dash-refund-days">
+        {% blocktrans with days=refund_info.days_remaining %}
+          {{ days }} day(s) until service date
+        {% endblocktrans %}
+      </p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<!-- Cancellation Modal -->
+{% if cancellable %}
+<div class="jd-modal-backdrop" id="cancelModal" role="dialog" aria-modal="true" aria-labelledby="cancelModalTitle">
+  <div class="jd-modal">
+    <div class="jd-modal-header">
+      <h3 class="jd-modal-title" id="cancelModalTitle">{% trans "Cancel Booking" %}</h3>
+      <button type="button" class="jd-modal-close" id="cancelModalClose">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="jd-modal-body">
+      {% if refund_info and booking.payment_status == 'paid' %}
+      <div class="cancel-refund-summary">
+        <p>{% trans "Based on our cancellation policy:" %}</p>
+        <div class="cancel-refund-box">
+          <span class="cancel-refund-pct">{{ refund_info.refund_percentage }}%</span>
+          <span>{% trans "refund" %}: <strong>{{ booking.currency }} {{ refund_info.refund_amount|floatformat:2 }}</strong></span>
+        </div>
+        {% if booking.payment_mode == 'pay_now' and refund_info.refund_percentage > 0 %}
+        <p class="cancel-note">{% trans "Your cancellation request will be reviewed. The refund will be processed within 2–3 business days." %}</p>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'accounts:cancel_booking' booking.reference %}" id="cancelForm">
+        {% csrf_token %}
+        <div class="jd-form-group mt-3">
+          <label class="jd-label" for="id_cancellation_reason">
+            {% trans "Reason (optional)" %}
+          </label>
+          <textarea name="cancellation_reason" id="id_cancellation_reason"
+                    class="jd-input" rows="3"
+                    placeholder="{% trans 'Let us know why you are cancelling...' %}"></textarea>
+        </div>
+        <div class="jd-form-group">
+          <label class="auth-remember-label">
+            <input type="checkbox" name="confirm" id="id_confirm" required>
+            <span>{% trans "I understand and confirm this cancellation" %}</span>
+          </label>
+        </div>
+        <div class="jd-modal-footer">
+          <button type="button" class="btn-outline-jd" id="cancelModalClose2">
+            {% trans "Keep Booking" %}
+          </button>
+          <button type="submit" class="btn-danger-jd">
+            {% trans "Confirm Cancellation" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block dashboard_js %}
+<script src="{% static 'js/accounts/booking_detail.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,15 @@
+Hello {{ user.first_name|default:user.email }},
+
+Thank you for registering with Jadevine Travel & Tours.
+
+Please confirm your email address by visiting the link below:
+
+{{ activate_url }}
+
+This link expires in 3 days.
+
+If you did not create this account, please ignore this email.
+
+— Jadevine Travel & Tours
+Zanzibar, Tanzania
+info@jadevinetours.com

@@ -1,0 +1,652 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Jadevine Travel & Tours — Zanzibar & Tanzania" %}{% endblock %}
+{% block meta_description %}{% trans "Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Book hotels, safari packages, car rentals and more." %}{% endblock %}
+{% block navbar_class %}navbar-transparent{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/core/home.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<!-- ============================================================
+     1. HERO
+     ============================================================ -->
+<section class="jd-hero">
+  <div class="jd-hero-bg"></div>
+  <div class="jd-hero-overlay"></div>
+
+  <div class="container jd-hero-content w-100">
+    <div class="row">
+      <div class="col-lg-7 col-xl-6">
+
+        <div class="jd-hero-eyebrow">
+          {% trans "Zanzibar & Tanzania" %}
+        </div>
+
+        <h1 class="jd-hero-title">
+          {% trans "Discover the" %} <em>{% trans "Heart" %}</em><br>
+          {% trans "of East Africa" %}
+        </h1>
+
+        <p class="jd-hero-subtitle">
+          {% trans "Luxury safaris, pristine beaches, and unforgettable cultural experiences — crafted exclusively for discerning travellers." %}
+        </p>
+
+        <div class="jd-hero-actions">
+          <a href="{% url 'tours:list' %}" class="btn-accent-jd">
+            <i class="bi bi-compass"></i>
+            {% trans "Explore Tours" %}
+          </a>
+          <a href="{% url 'contact:contact' %}" class="btn-outline-white-jd">
+            {% trans "Plan My Trip" %}
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Booking Widget -->
+    <div class="row mt-5">
+      <div class="col-xl-10">
+        <div class="jd-booking-widget">
+
+          <!-- Tabs -->
+          <div class="jd-booking-tabs">
+            <button class="jd-booking-tab active" data-target="booking-panel-hotels">
+              <i class="bi bi-building"></i>
+              {% trans "Hotels" %}
+            </button>
+            <button class="jd-booking-tab" data-target="booking-panel-tours">
+              <i class="bi bi-binoculars"></i>
+              {% trans "Safaris & Tours" %}
+            </button>
+            <button class="jd-booking-tab" data-target="booking-panel-cars">
+              <i class="bi bi-car-front"></i>
+              {% trans "Car Rentals" %}
+            </button>
+            <button class="jd-booking-tab disabled-tab" data-target="">
+              <i class="bi bi-airplane"></i>
+              {% trans "Flights" %}
+              <span class="jd-coming-soon-pill">{% trans "Soon" %}</span>
+            </button>
+          </div>
+
+          <!-- Hotels Panel -->
+          <div class="jd-booking-panel active" id="booking-panel-hotels">
+            <form id="booking-form-hotels">
+              <div class="jd-booking-row cols-4">
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Destination" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-geo-alt jd-input-icon"></i>
+                    <select class="jd-input" name="hotel_location">
+                      <option value="">{% trans "All Destinations" %}</option>
+                      <option value="zanzibar">{% trans "Zanzibar" %}</option>
+                      <option value="dar_es_salaam">{% trans "Dar es Salaam" %}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Check In" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-calendar3 jd-input-icon"></i>
+                    <input type="date" class="jd-input" name="check_in" />
+                  </div>
+                </div>
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Check Out" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-calendar3 jd-input-icon"></i>
+                    <input type="date" class="jd-input" name="check_out" />
+                  </div>
+                </div>
+                <button type="submit" class="btn-primary-jd w-100" style="height:48px;">
+                  <i class="bi bi-search"></i> {% trans "Search" %}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Tours Panel -->
+          <div class="jd-booking-panel" id="booking-panel-tours">
+            <form id="booking-form-tours">
+              <div class="jd-booking-row cols-4">
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Tour Type" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-binoculars jd-input-icon"></i>
+                    <select class="jd-input" name="tour_type">
+                      <option value="">{% trans "All Tours" %}</option>
+                      <option value="safari">{% trans "Safari" %}</option>
+                      <option value="beach">{% trans "Beach" %}</option>
+                      <option value="cultural">{% trans "Cultural" %}</option>
+                      <option value="climbing">{% trans "Climbing" %}</option>
+                      <option value="combined">{% trans "Safari & Beach" %}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Preferred Date" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-calendar3 jd-input-icon"></i>
+                    <input type="date" class="jd-input" name="preferred_date" />
+                  </div>
+                </div>
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Participants" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-people jd-input-icon"></i>
+                    <select class="jd-input" name="participants">
+                      {% for i in "12345678" %}
+                        <option value="{{ forloop.counter }}">{{ forloop.counter }} {% trans "Person(s)" %}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="btn-primary-jd w-100" style="height:48px;">
+                  <i class="bi bi-search"></i> {% trans "Search" %}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Cars Panel -->
+          <div class="jd-booking-panel" id="booking-panel-cars">
+            <form id="booking-form-cars">
+              <div class="jd-booking-row cols-4">
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Pickup Location" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-geo-alt jd-input-icon"></i>
+                    <select class="jd-input" name="pickup_location">
+                      <option value="">{% trans "Any Location" %}</option>
+                      <option value="zanzibar_airport">{% trans "Zanzibar Airport" %}</option>
+                      <option value="stone_town">{% trans "Stone Town" %}</option>
+                      <option value="dar_airport">{% trans "Dar es Salaam Airport" %}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Pickup Date" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-calendar3 jd-input-icon"></i>
+                    <input type="date" class="jd-input" name="pickup_date" />
+                  </div>
+                </div>
+                <div class="jd-form-group mb-0">
+                  <label class="jd-label">{% trans "Return Date" %}</label>
+                  <div class="jd-input-icon-wrap">
+                    <i class="bi bi-calendar3 jd-input-icon"></i>
+                    <input type="date" class="jd-input" name="return_date" />
+                  </div>
+                </div>
+                <button type="submit" class="btn-primary-jd w-100" style="height:48px;">
+                  <i class="bi bi-search"></i> {% trans "Search" %}
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div><!-- /.jd-booking-widget -->
+      </div>
+    </div>
+
+  </div><!-- /.container -->
+
+  <!-- Hero stats strip (bottom right) -->
+  <div class="jd-hero-stats d-none d-xl-flex">
+    <div class="jd-hero-stat">
+      <div class="jd-hero-stat-number">500<span style="color:var(--color-accent-light);font-size:1.2rem;">+</span></div>
+      <div class="jd-hero-stat-label">{% trans "Happy Clients" %}</div>
+    </div>
+    <div class="jd-hero-stat">
+      <div class="jd-hero-stat-number">40<span style="color:var(--color-accent-light);font-size:1.2rem;">+</span></div>
+      <div class="jd-hero-stat-label">{% trans "Tour Packages" %}</div>
+    </div>
+    <div class="jd-hero-stat">
+      <div class="jd-hero-stat-number">8<span style="color:var(--color-accent-light);font-size:1.2rem;">+</span></div>
+      <div class="jd-hero-stat-label">{% trans "Years Experience" %}</div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="jd-hero-scroll">
+    <span>{% trans "Scroll" %}</span>
+    <div class="jd-hero-scroll-line"></div>
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     2. OUR SERVICES
+     ============================================================ -->
+<section class="jd-services-section section-py">
+  <div class="container">
+
+    <div class="text-center mb-5 jd-reveal">
+      <span class="eyebrow">{% trans "What We Offer" %}</span>
+      <h2 class="section-heading">{% trans "Our Premium" %} <em>{% trans "Services" %}</em></h2>
+      <p class="section-subheading mx-auto">
+        {% trans "From Zanzibar's spice-scented shores to the Serengeti's golden plains — we handle every detail." %}
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Hotels -->
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-1">
+        <a href="{% url 'hotels:list' %}" class="jd-service-card">
+          <div class="jd-service-card-bg" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80');"></div>
+          <div class="jd-service-card-overlay"></div>
+          <div class="jd-service-card-content">
+            <i class="bi bi-building jd-service-card-icon"></i>
+            <div class="jd-service-card-title">{% trans "Hotels" %}</div>
+            <p class="jd-service-card-desc">{% trans "Curated stays in Zanzibar and Dar es Salaam — from boutique beach resorts to city hotels." %}</p>
+            <div class="jd-service-card-arrow">
+              {% trans "Browse Hotels" %} <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Safaris & Tours -->
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-2">
+        <a href="{% url 'tours:list' %}" class="jd-service-card">
+          <div class="jd-service-card-bg" style="background-image:url('https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80');"></div>
+          <div class="jd-service-card-overlay"></div>
+          <div class="jd-service-card-content">
+            <i class="bi bi-binoculars jd-service-card-icon"></i>
+            <div class="jd-service-card-title">{% trans "Safaris & Tours" %}</div>
+            <p class="jd-service-card-desc">{% trans "Serengeti, Ngorongoro, Zanzibar beach — expertly guided experiences for every traveller." %}</p>
+            <div class="jd-service-card-arrow">
+              {% trans "View Packages" %} <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Car Rentals -->
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-3">
+        <a href="{% url 'cars:list' %}" class="jd-service-card">
+          <div class="jd-service-card-bg" style="background-image:url('https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80');"></div>
+          <div class="jd-service-card-overlay"></div>
+          <div class="jd-service-card-content">
+            <i class="bi bi-car-front jd-service-card-icon"></i>
+            <div class="jd-service-card-title">{% trans "Car Rentals" %}</div>
+            <p class="jd-service-card-desc">{% trans "Sedans, 4x4 safari vehicles and minibuses with optional bilingual drivers." %}</p>
+            <div class="jd-service-card-arrow">
+              {% trans "Browse Vehicles" %} <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Flights (coming soon) -->
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-4">
+        <div class="jd-service-card" style="cursor:default;">
+          <div class="jd-service-card-bg" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80');"></div>
+          <div class="jd-service-card-overlay"></div>
+          <span class="jd-service-card-coming">{% trans "Coming Soon" %}</span>
+          <div class="jd-service-card-content">
+            <i class="bi bi-airplane jd-service-card-icon"></i>
+            <div class="jd-service-card-title">{% trans "Domestic Flights" %}</div>
+            <p class="jd-service-card-desc">{% trans "Tanzania domestic routes: Zanzibar, Dar es Salaam, Kilimanjaro, Arusha and more." %}</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.row -->
+  </div>
+</section>
+
+
+<!-- ============================================================
+     3. FEATURED PACKAGES
+     ============================================================ -->
+<section class="jd-packages-section section-py">
+  <div class="container">
+
+    <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-5 jd-reveal">
+      <div>
+        <span class="eyebrow">{% trans "Top Experiences" %}</span>
+        <h2 class="section-heading mb-0">{% trans "Featured" %} <em>{% trans "Packages" %}</em></h2>
+      </div>
+      <a href="{% url 'tours:list' %}" class="btn-ghost-jd">
+        {% trans "View All Packages" %} <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    {% if featured_packages %}
+      <div class="row g-4">
+        {% for package in featured_packages %}
+          <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-{{ forloop.counter }}">
+            <a href="{% url 'tours:list' %}" class="text-decoration-none">
+              <div class="jd-package-card">
+
+                <div class="jd-package-card-img-wrap">
+                  {% if package.cover_image %}
+                    <img src="{{ package.cover_image.url }}"
+                         alt="{{ package.get_name }}"
+                         class="jd-package-card-img"
+                         loading="lazy" />
+                  {% else %}
+                    <div class="jd-gallery-placeholder">
+                      <i class="bi bi-image"></i>
+                      <span style="font-size:0.75rem;">{% trans "Photo coming soon" %}</span>
+                    </div>
+                  {% endif %}
+
+                  <div class="jd-package-card-type">
+                    <span class="jd-badge jd-badge-accent">
+                      {{ package.get_tour_type_display }}
+                    </span>
+                  </div>
+
+                  <div class="jd-package-card-price-tag">
+                    {% trans "From" %} <span>${{ package.price_per_person|floatformat:0 }}</span>
+                  </div>
+                </div>
+
+                <div class="jd-package-card-body">
+                  <div class="jd-package-card-title">{{ package.display_name }}</div>
+
+                  <div class="jd-package-card-meta">
+                    <span class="jd-package-card-meta-item">
+                      <i class="bi bi-clock"></i>
+                      {{ package.duration_days }} {% trans "days" %}
+                    </span>
+                    <span class="jd-package-card-meta-item">
+                      <i class="bi bi-people"></i>
+                      {% trans "Max" %} {{ package.group_size_max }}
+                    </span>
+                  </div>
+
+                  {% if package.highlights_en %}
+                    <div class="jd-package-card-highlights">
+                      {% for highlight in package.display_highlights %}
+                        <div class="jd-package-card-highlight">
+                          <i class="bi bi-check-circle-fill"></i>
+                          <span>{{ highlight }}</span>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  <span class="btn-ghost-jd mt-auto">
+                    {% trans "View Details" %} <i class="bi bi-arrow-right"></i>
+                  </span>
+                </div>
+
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <!-- Empty state: shown until admin adds featured packages -->
+      <div class="jd-packages-empty jd-reveal">
+        <i class="bi bi-compass"></i>
+        <h4 style="font-family:var(--font-heading);color:var(--color-text);">{% trans "Packages Coming Soon" %}</h4>
+        <p>{% trans "Our team is curating the finest Zanzibar and Tanzania experiences. Check back shortly." %}</p>
+        <a href="{% url 'contact:contact' %}" class="btn-outline-jd mt-3">{% trans "Enquire Now" %}</a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     4. WHY CHOOSE US
+     ============================================================ -->
+<section class="jd-why-section section-py">
+  <div class="container position-relative" style="z-index:1;">
+
+    <!-- Stats row -->
+    <div class="row g-0 mb-5 jd-reveal">
+      <div class="col-12">
+        <div class="d-flex justify-content-center flex-wrap gap-0" style="border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-lg);overflow:hidden;">
+          <div class="jd-why-stat" style="border-right:1px solid rgba(255,255,255,0.08);">
+            <div class="jd-why-stat-number">
+              <span class="jd-counter" data-target="500">0</span><sup>+</sup>
+            </div>
+            <div class="jd-why-stat-label">{% trans "Happy Clients" %}</div>
+          </div>
+          <div class="jd-why-stat" style="border-right:1px solid rgba(255,255,255,0.08);">
+            <div class="jd-why-stat-number">
+              <span class="jd-counter" data-target="40">0</span><sup>+</sup>
+            </div>
+            <div class="jd-why-stat-label">{% trans "Tour Packages" %}</div>
+          </div>
+          <div class="jd-why-stat" style="border-right:1px solid rgba(255,255,255,0.08);">
+            <div class="jd-why-stat-number">
+              <span class="jd-counter" data-target="8">0</span><sup>+</sup>
+            </div>
+            <div class="jd-why-stat-label">{% trans "Years Experience" %}</div>
+          </div>
+          <div class="jd-why-stat">
+            <div class="jd-why-stat-number">
+              <span class="jd-counter" data-target="15">0</span><sup>+</sup>
+            </div>
+            <div class="jd-why-stat-label">{% trans "Hotel Partners" %}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features grid -->
+    <div class="row g-4 align-items-start">
+
+      <div class="col-lg-4 jd-reveal">
+        <span class="eyebrow eyebrow-white">{% trans "Why Jadevine" %}</span>
+        <h2 class="section-heading" style="color:var(--color-white);">
+          {% trans "Travel With" %} <em style="color:var(--color-accent-light);">{% trans "Confidence" %}</em>
+        </h2>
+        <p class="section-subheading" style="color:rgba(255,255,255,0.55);">
+          {% trans "We've been crafting exceptional Tanzania travel experiences since 2016. Every booking is backed by local expertise and personal care." %}
+        </p>
+        <a href="{% url 'core:about' %}" class="btn-outline-white-jd mt-3">
+          {% trans "Our Story" %} <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="row g-3">
+
+          <div class="col-md-6 jd-reveal jd-reveal-delay-1">
+            <div class="jd-why-feature">
+              <div class="jd-why-feature-icon"><i class="bi bi-shield-check"></i></div>
+              <div>
+                <div class="jd-why-feature-title">{% trans "Licensed & Certified" %}</div>
+                <p class="jd-why-feature-desc">{% trans "Fully registered with the Tanzania Tourism Board and all required authorities." %}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 jd-reveal jd-reveal-delay-2">
+            <div class="jd-why-feature">
+              <div class="jd-why-feature-icon"><i class="bi bi-person-hearts"></i></div>
+              <div>
+                <div class="jd-why-feature-title">{% trans "Personal Service" %}</div>
+                <p class="jd-why-feature-desc">{% trans "A dedicated team that responds within 24 hours and knows Zanzibar intimately." %}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 jd-reveal jd-reveal-delay-3">
+            <div class="jd-why-feature">
+              <div class="jd-why-feature-icon"><i class="bi bi-credit-card"></i></div>
+              <div>
+                <div class="jd-why-feature-title">{% trans "Secure Payments" %}</div>
+                <p class="jd-why-feature-desc">{% trans "Pay online via Visa, Mastercard, M-Pesa — or pay on arrival. Your choice." %}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 jd-reveal jd-reveal-delay-4">
+            <div class="jd-why-feature">
+              <div class="jd-why-feature-icon"><i class="bi bi-translate"></i></div>
+              <div>
+                <div class="jd-why-feature-title">{% trans "Multilingual Support" %}</div>
+                <p class="jd-why-feature-desc">{% trans "We serve clients in English, French, and Russian — with more languages coming." %}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 jd-reveal jd-reveal-delay-1">
+            <div class="jd-why-feature">
+              <div class="jd-why-feature-icon"><i class="bi bi-arrow-repeat"></i></div>
+              <div>
+                <div class="jd-why-feature-title">{% trans "Flexible Cancellation" %}</div>
+                <p class="jd-why-feature-desc">{% trans "Up to 100% refund when you cancel 14+ days before your service date." %}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 jd-reveal jd-reveal-delay-2">
+            <div class="jd-why-feature">
+              <div class="jd-why-feature-icon"><i class="bi bi-clock-history"></i></div>
+              <div>
+                <div class="jd-why-feature-title">{% trans "24/7 Availability" %}</div>
+                <p class="jd-why-feature-desc">{% trans "Book online anytime. Our team is available via WhatsApp around the clock." %}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     5. TRIPADVISOR
+     ============================================================ -->
+<section class="jd-ta-section section-py-sm">
+  <div class="container">
+    <div class="text-center mb-4 jd-reveal">
+      <span class="eyebrow">{% trans "Verified Reviews" %}</span>
+      <h3 class="section-heading">{% trans "What Our Guests" %} <em>{% trans "Say" %}</em></h3>
+    </div>
+    <div class="jd-ta-widget-wrap jd-reveal">
+      <!-- TripAdvisor embeddable widget — replace with your actual widget code after registering -->
+      <div class="text-center text-muted py-3">
+        <i class="bi bi-star-fill text-warning me-2" style="font-size:1.5rem;"></i>
+        <span style="font-family:var(--font-heading);font-size:1.3rem;color:var(--color-text);">
+          {% trans "TripAdvisor reviews will appear here once your business listing is verified." %}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6. GALLERY HIGHLIGHTS
+     ============================================================ -->
+<section class="jd-gallery-section section-py">
+  <div class="container">
+
+    <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-5 jd-reveal">
+      <div>
+        <span class="eyebrow eyebrow-white">{% trans "Visual Journey" %}</span>
+        <h2 class="section-heading" style="color:var(--color-white);">
+          {% trans "Moments of" %} <em style="color:var(--color-accent-light);">{% trans "Wonder" %}</em>
+        </h2>
+      </div>
+      <a href="{% url 'gallery:gallery' %}" class="btn-outline-white-jd">
+        {% trans "Full Gallery" %} <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    {% if gallery_highlights %}
+      <div class="jd-gallery-grid">
+        {% for item in gallery_highlights %}
+          <div class="jd-gallery-item {% if forloop.first %}featured{% endif %}"
+               {% if item.image %}
+               data-img="{{ item.image.url }}"
+               data-caption="{{ item.get_caption }}"
+               {% endif %}>
+            {% if item.image %}
+              <img src="{{ item.image.url }}"
+                   alt="{{ item.get_caption }}"
+                   class="jd-gallery-item-img"
+                   loading="lazy" />
+            {% else %}
+              <div class="jd-gallery-placeholder {% if forloop.first %}featured{% endif %}">
+                <i class="bi bi-image"></i>
+              </div>
+            {% endif %}
+            <div class="jd-gallery-item-overlay">
+              <i class="bi bi-zoom-in"></i>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <!-- Placeholder grid shown before photos are uploaded -->
+      <div class="jd-gallery-grid">
+        {% for i in "123456789" %}
+          <div class="jd-gallery-item {% if forloop.first %}featured{% endif %}">
+            <div class="jd-gallery-placeholder" style="height:{% if forloop.first %}380px{% else %}280px{% endif %};">
+              <i class="bi bi-image" style="font-size:2.5rem;"></i>
+              <span style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;">
+                {% trans "Photo" %} {{ forloop.counter }}
+              </span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     7. NEWSLETTER
+     ============================================================ -->
+<section class="jd-newsletter-section section-py-sm">
+  <div class="container">
+    <div class="text-center jd-reveal">
+      <span class="eyebrow">{% trans "Stay Connected" %}</span>
+      <h3 class="section-heading">{% trans "Get Exclusive" %} <em>{% trans "Travel Offers" %}</em></h3>
+      <p class="section-subheading mx-auto mb-4">
+        {% trans "Subscribe for curated Zanzibar travel tips, early access to deals, and seasonal promotions." %}
+      </p>
+
+      <form class="jd-newsletter-form jd-reveal" style="max-width:520px;margin:0 auto;">
+        {% csrf_token %}
+        <div class="jd-newsletter-input-wrap">
+          <input type="email"
+                 class="jd-input"
+                 name="email"
+                 placeholder="{% trans 'Enter your email address' %}"
+                 required />
+          <button type="submit" class="jd-newsletter-submit">
+            {% trans "Subscribe" %}
+          </button>
+        </div>
+      </form>
+
+      <p class="mt-3" style="font-size:var(--text-xs);color:var(--color-muted);">
+        {% trans "No spam, ever. Unsubscribe anytime." %}
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/core/home.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Confirm Email" %} — Jadevine{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section section-py">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-7 col-lg-5">
+        <div class="auth-card jd-card text-center">
+
+          {% if confirmation %}
+
+            <!-- Confirming state — shown briefly before auto-submit -->
+            <div id="confirmingState">
+              <div style="width:72px;height:72px;background:#e8f0eb;border-radius:50%;margin:0 auto 20px;text-align:center;padding-top:18px;">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="4" width="20" height="16" rx="2" stroke="#1a4d2e" stroke-width="2" fill="none"/>
+                  <path d="M2 7l10 7 10-7" stroke="#1a4d2e" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h1 class="auth-title">{% trans "Verifying your email" %}</h1>
+              <p class="auth-subtitle mt-2">
+                {% blocktrans with email=confirmation.email_address.email %}
+                  Confirming <strong>{{ email }}</strong>…
+                {% endblocktrans %}
+              </p>
+              <div class="mt-4 d-flex justify-content-center">
+                <div class="jd-spinner"></div>
+              </div>
+
+              <!-- Hidden auto-submit form -->
+              <form method="post"
+                    action="{% url 'account_confirm_email' confirmation.key %}"
+                    id="autoConfirmForm" style="display:none;">
+                {% csrf_token %}
+              </form>
+            </div>
+
+            <!-- Success state — shown after JS confirms -->
+            <div id="successState" style="display:none;">
+              <div style="width:72px;height:72px;background:#edf7f1;border-radius:50%;margin:0 auto 20px;text-align:center;padding-top:18px;">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="#2d7a4f" stroke-width="2" fill="none"/>
+                  <path d="M7 12l3.5 3.5L17 9" stroke="#2d7a4f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h1 class="auth-title" style="color: var(--color-success);">
+                {% trans "Email confirmed!" %}
+              </h1>
+              <p class="auth-subtitle mt-2">
+                {% trans "Your account is now active. You can sign in." %}
+              </p>
+              <a href="{% url 'account_login' %}"
+                 class="btn-primary-jd d-block w-100 mt-4 justify-content-center">
+                <i class="bi bi-box-arrow-in-right me-1"></i>{% trans "Sign In" %}
+              </a>
+            </div>
+
+          {% else %}
+            <!-- Invalid or expired link -->
+            <div style="width:72px;height:72px;background:#fdf0ee;border-radius:50%;margin:0 auto 20px;text-align:center;padding-top:16px;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="#b03a2e" stroke-width="2" fill="none"/>
+                <path d="M12 8v4m0 4h.01" stroke="#b03a2e" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h1 class="auth-title" style="color: var(--color-danger);">
+              {% trans "Link expired or invalid" %}
+            </h1>
+            <p class="auth-subtitle mt-2">
+              {% trans "This verification link is no longer valid. Request a new one below." %}
+            </p>
+            <a href="{% url 'accounts:resend_verification' %}"
+               class="btn-primary-jd d-block w-100 mt-4 justify-content-center">
+              <i class="bi bi-arrow-clockwise me-1"></i>{% trans "Resend Verification Email" %}
+            </a>
+            <a href="{% url 'account_login' %}"
+               class="btn-outline-jd d-block w-100 mt-3 justify-content-center">
+              {% trans "Back to Sign In" %}
+            </a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{% if confirmation %}
+<script>
+(function ($) {
+  'use strict';
+
+  // Auto-submit the hidden form on page load
+  // Brief delay so user sees the "Verifying..." state with spinner
+  setTimeout(function () {
+    var $form = $('#autoConfirmForm');
+
+    $.ajax({
+      url: $form.attr('action'),
+      method: 'POST',
+      data: $form.serialize(),
+      success: function () {
+        // Show success state
+        $('#confirmingState').fadeOut(200, function () {
+          $('#successState').fadeIn(300);
+        });
+        // Redirect to login after 2.5 seconds
+        setTimeout(function () {
+          window.location.href = "{% url 'account_login' %}";
+        }, 4000);
+      },
+      error: function () {
+        // On error fall back to showing the manual button
+        // Replace spinner with a manual confirm button
+        $('#confirmingState').html(
+          '<p style="color:var(--color-danger);margin-bottom:16px;">' +
+          "{% trans 'Auto-confirm failed. Please click below.' %}" +
+          '</p>' +
+          '<button type="submit" form="autoConfirmForm" class="btn-primary-jd w-100 justify-content-center">' +
+          "{% trans 'Confirm Email Address' %}" +
+          '</button>'
+        );
+        $('#autoConfirmForm').show();
+      }
+    });
+  }, 2000);
+
+})(jQuery);
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cancellation Alert — Jadevine Admin</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f0f0;color:#1e1e1e}
+  .wrap{max-width:600px;margin:40px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+  .hdr{background:#122f1c;padding:0}
+  .hdr-table{width:100%;border-collapse:collapse}
+  .hdr-table td{padding:22px 28px;vertical-align:middle}
+  .hdr-table td:last-child{text-align:right;white-space:nowrap}
+  .hdr-brand{font-size:18px;font-weight:700;color:#fff;letter-spacing:.02em}
+  .hdr-sub{font-size:11px;color:#a8c8b4;margin-top:3px;letter-spacing:.05em}
+  .body{padding:36px}
+  .alert-bar{padding:14px 18px;border-radius:8px;margin-bottom:24px;font-size:14px;font-weight:600}
+  .alert-action{background:#fdf0ee;color:#b03a2e;border-left:4px solid #b03a2e}
+  .alert-info{background:#e8f0eb;color:#1a4d2e;border-left:4px solid #1a4d2e}
+  .section-title{font-size:11px;font-weight:700;color:#9e8e7e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;margin-top:24px}
+  .info-table{width:100%;border-collapse:collapse}
+  .info-table td{padding:10px 14px;font-size:14px;border-bottom:1px solid #f0ebe3}
+  .info-table td:first-child{color:#9e8e7e;font-weight:600;width:40%;background:#f8f5f0}
+  .info-table td:last-child{color:#1e1e1e;text-align:right}
+  .info-table tr:last-child td{border-bottom:none}
+  .refund-table{width:100%;border-collapse:collapse;background:#1a4d2e;border-radius:8px;margin:20px 0}
+  .refund-table td{padding:16px 20px;vertical-align:middle}
+  .refund-table td:last-child{text-align:right}
+  .refund-label{color:rgba(255,255,255,0.7);font-size:13px}
+  .refund-sub{color:rgba(255,255,255,0.5);font-size:12px;margin-top:3px}
+  .refund-value{color:#fff;font-size:22px;font-weight:700}
+  .portal-btn{display:block;background:#c89666;color:#fff;text-decoration:none;text-align:center;padding:14px 24px;border-radius:8px;font-size:14px;font-weight:700;margin-top:24px;letter-spacing:.04em}
+  .ftr{background:#f0ebe3;padding:20px 36px;text-align:center;border-top:1px solid #e0d5c8}
+  .ftr p{font-size:12px;color:#9e8e7e;line-height:1.8}
+  @media(max-width:620px){.wrap{margin:0;border-radius:0}.body{padding:24px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header: table-based so Gmail renders it correctly -->
+  <div class="hdr">
+    <table class="hdr-table">
+      <tr>
+        <td>
+          <div class="hdr-brand">Jadevine Travel &amp; Tours</div>
+          <div class="hdr-sub">Admin Notification System</div>
+        </td>
+        <td>
+          {% if is_pay_now %}
+          <span style="background:#b03a2e;color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.08em;">
+            Action Required
+          </span>
+          {% else %}
+          <span style="background:#c89666;color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.08em;">
+            FYI
+          </span>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="body">
+    {% if is_pay_now %}
+    <div class="alert-bar alert-action">
+      ⚠ Refund required — please process via PesaPal and mark as refunded in the portal.
+    </div>
+    {% else %}
+    <div class="alert-bar alert-info">
+      ✓ Booking cancelled by customer. No refund action required.
+    </div>
+    {% endif %}
+
+    <div class="section-title">Booking Information</div>
+    <table class="info-table">
+      <tr><td>Reference</td><td><strong>{{ reference }}</strong></td></tr>
+      <tr><td>Customer</td><td>{{ customer_name }}</td></tr>
+      <tr><td>Email</td><td>{{ customer_email }}</td></tr>
+      <tr><td>Service</td><td>{{ service_name }}</td></tr>
+      <tr><td>Payment Mode</td><td>{{ payment_mode }}</td></tr>
+      <tr><td>Reason</td><td>{{ reason }}</td></tr>
+    </table>
+
+    {% if is_pay_now %}
+    <!-- Refund amount: table-based for Gmail compatibility -->
+    <table class="refund-table">
+      <tr>
+        <td>
+          <div class="refund-label">Refund Amount Due</div>
+          <div class="refund-sub">{{ refund_pct }}% of {{ currency }} {{ total }}</div>
+        </td>
+        <td>
+          <div class="refund-value">{{ currency }} {{ refund_amount }}</div>
+        </td>
+      </tr>
+    </table>
+
+    <a href="http://127.0.0.1:8000{{ portal_url }}" class="portal-btn">
+      View in Admin Portal →
+    </a>
+    {% endif %}
+
+  </div>
+
+  <div class="ftr">
+    <p>Jadevine Travel &amp; Tours — Internal Admin Notification<br>
+    Do not reply to this email.</p>
+  </div>
+
+</div>
+</body>
+</html>

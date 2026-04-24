@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Resend Verification Email" %} — Jadevine{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section section-py">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-5">
+        <div class="auth-card jd-card">
+
+          {% if sent %}
+            <!-- Success state -->
+            <div class="text-center">
+              <div class="auth-icon-circle auth-icon-success mx-auto">
+                <i class="bi bi-envelope-check"></i>
+              </div>
+              <h1 class="auth-title mt-3">{% trans "Verification link sent" %}</h1>
+              <p class="auth-subtitle mt-2">
+                {% trans "If an account with that email exists and is unverified, we've sent a fresh verification link. Check your inbox and spam folder." %}
+              </p>
+              <a href="{% url 'account_login' %}" class="btn-outline-jd d-block w-100 mt-4">
+                <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Sign In" %}
+              </a>
+            </div>
+
+          {% else %}
+            <!-- Form state -->
+            <div class="auth-card-header">
+              <div class="auth-icon-circle auth-icon-primary mx-auto">
+                <i class="bi bi-envelope-arrow-up"></i>
+              </div>
+              <h1 class="auth-title mt-3">{% trans "Resend verification email" %}</h1>
+              <p class="auth-subtitle">
+                {% trans "Enter your email address and we'll send you a new verification link." %}
+              </p>
+            </div>
+
+            {% if error %}
+            <div class="auth-alert auth-alert-error">
+              <i class="bi bi-exclamation-circle"></i>
+              <span>{{ error }}</span>
+            </div>
+            {% endif %}
+
+            <form method="post" class="auth-form">
+              {% csrf_token %}
+              <div class="jd-form-group">
+                <label class="jd-label" for="id_email">{% trans "Email Address" %}</label>
+                <div class="jd-input-icon-wrap">
+                  <i class="bi bi-envelope jd-input-icon"></i>
+                  <input type="email" name="email" id="id_email"
+                         class="jd-input"
+                         placeholder="{% trans 'your@email.com' %}"
+                         autocomplete="email" required>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary-jd w-100 auth-submit-btn">
+                {% trans "Send Verification Link" %}
+              </button>
+            </form>
+
+            <div class="auth-divider"><span>{% trans "Remembered it?" %}</span></div>
+            <a href="{% url 'account_login' %}" class="btn-outline-jd w-100 text-center d-block auth-alt-btn">
+              {% trans "Back to Sign In" %}
+            </a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Hotels in Zanzibar & Dar es Salaam" %} — Jadevine Travel & Tours{% endblock %}
+{% block meta_description %}{% trans "Book hotels in Zanzibar and Dar es Salaam with Jadevine Travel & Tours. Handpicked accommodation for every budget." %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hotels/hotel_list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="hotel-list-header jd-load-reveal" data-delay="1">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-lg-7">
+        <span class="eyebrow">{% trans "Accommodation" %}</span>
+        <h1 class="section-heading mb-0">{% trans "Hotels in <em>Zanzibar</em> & Dar es Salaam" %}</h1>
+      </div>
+      <div class="col-lg-5 mt-3 mt-lg-0">
+        <p class="section-subheading mb-0">
+          {% trans "Handpicked hotels and guesthouses — from beachfront luxury to Stone Town boutique stays." %}
+        </p>
+      </div>
+    </div>
+    <div class="jd-divider mt-4"></div>
+  </div>
+</section>
+
+<!-- Filters -->
+<section class="hotel-filters-bar jd-load-reveal" data-delay="2">
+  <div class="container">
+    <div class="hotel-filters-inner">
+
+      <div class="filter-group">
+        <label class="jd-label">{% trans "Destination" %}</label>
+        <select class="jd-input" id="filter-location">
+          <option value="">{% trans "All Destinations" %}</option>
+          <option value="zanzibar">{% trans "Zanzibar" %}</option>
+          <option value="dar_es_salaam">{% trans "Dar es Salaam" %}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="jd-label">{% trans "Star Rating" %}</label>
+        <select class="jd-input" id="filter-stars">
+          <option value="">{% trans "Any Rating" %}</option>
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★</option>
+          <option value="3">★★★</option>
+          <option value="2">★★</option>
+          <option value="1">★</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="jd-label">{% trans "Max Price / Night" %}</label>
+        <select class="jd-input" id="filter-max-price">
+          <option value="">{% trans "Any Price" %}</option>
+          <option value="50">{% trans "Up to $50" %}</option>
+          <option value="100">{% trans "Up to $100" %}</option>
+          <option value="200">{% trans "Up to $200" %}</option>
+          <option value="350">{% trans "Up to $350" %}</option>
+          <option value="500">{% trans "Up to $500" %}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="jd-label">{% trans "Guests" %}</label>
+        <select class="jd-input" id="filter-guests">
+          <option value="">{% trans "Any" %}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5+</option>
+        </select>
+      </div>
+
+      <button class="btn-outline-jd" id="btn-clear-filters">
+        <i class="bi bi-x-lg"></i> {% trans "Clear" %}
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+<section class="section-py-sm">
+  <div class="container">
+
+    <!-- Results count -->
+    <div class="d-flex align-items-center justify-content-between mb-4 jd-load-reveal" data-delay="3">
+      <p class="hotel-results-count mb-0">
+        <span id="results-count">—</span> {% trans "hotels found" %}
+      </p>
+    </div>
+
+    <!-- Loading spinner -->
+    <div id="hotels-loading" class="text-center py-5" style="display:none !important;">
+      <div class="jd-spinner mx-auto"></div>
+      <p class="text-muted mt-3 small">{% trans "Finding hotels..." %}</p>
+    </div>
+
+    <!-- Empty state -->
+    <div id="hotels-empty" class="hotel-empty-state" style="display:none;">
+      <i class="bi bi-building-x"></i>
+      <h4>{% trans "No hotels found" %}</h4>
+      <p>{% trans "Try adjusting your filters to see more results." %}</p>
+      <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
+    </div>
+
+    <!-- Hotel grid -->
+    <div class="row g-4" id="hotels-grid">
+      <!-- Populated by hotel_list.js via AJAX -->
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.viewHotel = "{% trans 'View Hotel' %}";
+  window.JD_STRINGS.hotelsNotFound = "{% trans 'Failed to load hotels. Please try again.' %}";
+  window.JD_STRINGS.off         = "{% trans 'off' %}";
+  window.JD_STRINGS.reviews     = "{% trans 'reviews' %}";
+  window.JD_STRINGS.perNight    = "{% trans 'per night' %}";
+</script>
+<script src="{% static 'js/hotels/hotel_list.js' %}"></script>
+{% endblock %}

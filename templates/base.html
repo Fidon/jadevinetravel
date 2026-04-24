@@ -1,0 +1,242 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_CODE == 'ar' %}dir="rtl"{% endif %}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1a4d2e" />
+
+  <title>{% block title %}{% trans "Jadevine Travel & Tours — Zanzibar, Tanzania" %}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% trans "Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Hotels, safaris, car rentals and more." %}{% endblock %}" />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Global Design System -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+  <!-- Page-specific CSS -->
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav class="jd-navbar {% block navbar_class %}navbar-transparent{% endblock %}">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between">
+
+        <!-- Brand -->
+        <a href="{% url 'core:home' %}" class="text-decoration-none">
+          <span class="navbar-brand-text">Jadevine</span>
+          <span class="navbar-brand-sub">{% trans "Travel & Tours" %}</span>
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="d-none d-lg-flex align-items-center gap-4">
+          <a href="{% url 'hotels:list' %}" class="jd-nav-link">{% trans "Hotels" %}</a>
+          <a href="{% url 'tours:list' %}" class="jd-nav-link">{% trans "Safaris & Tours" %}</a>
+          <a href="{% url 'cars:list' %}" class="jd-nav-link">{% trans "Car Rentals" %}</a>
+          <a href="{% url 'gallery:gallery' %}" class="jd-nav-link">{% trans "Gallery" %}</a>
+          <a href="{% url 'core:about' %}" class="jd-nav-link">{% trans "About" %}</a>
+          <a href="{% url 'contact:contact' %}" class="jd-nav-link">{% trans "Contact" %}</a>
+        </div>
+
+        <!-- Desktop right: language + account -->
+        <div class="d-none d-lg-flex align-items-center gap-3">
+
+          <!-- Language switcher -->
+          <div class="jd-lang-switcher">
+            <button class="jd-lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}" data-lang="en">EN</button>
+            <span class="jd-lang-separator">|</span>
+            <button class="jd-lang-btn {% if LANGUAGE_CODE == 'fr' %}active{% endif %}" data-lang="fr">FR</button>
+            <span class="jd-lang-separator">|</span>
+            <button class="jd-lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}" data-lang="ru">RU</button>
+          </div>
+
+          <!-- Account -->
+          {% if user.is_authenticated %}
+            <div class="dropdown">
+              <button class="btn-ghost-jd dropdown-toggle border-0 pb-0" type="button" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle me-1"></i>
+                {{ user.first_name|default:user.email }}
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="min-width:200px;">
+                <li><a class="dropdown-item" href="{% url 'accounts:dashboard' %}"><i class="bi bi-grid me-2 text-muted"></i>{% trans "My Dashboard" %}</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="{% url 'account_logout' %}"><i class="bi bi-box-arrow-right me-2"></i>{% trans "Sign Out" %}</a></li>
+              </ul>
+            </div>
+          {% else %}
+            <a href="{% url 'account_login' %}" class="jd-nav-link">{% trans "Sign In" %}</a>
+            <a href="{% url 'account_signup' %}" class="btn-accent-jd" style="padding: 10px 22px; font-size: 0.7rem;">{% trans "Register" %}</a>
+          {% endif %}
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button class="jd-hamburger d-lg-none" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile full-screen menu -->
+  <div class="jd-mobile-menu">
+    <a href="{% url 'hotels:list' %}" class="jd-mobile-nav-link">{% trans "Hotels" %}</a>
+    <a href="{% url 'tours:list' %}" class="jd-mobile-nav-link">{% trans "Safaris & Tours" %}</a>
+    <a href="{% url 'cars:list' %}" class="jd-mobile-nav-link">{% trans "Car Rentals" %}</a>
+    <a href="{% url 'gallery:gallery' %}" class="jd-mobile-nav-link">{% trans "Gallery" %}</a>
+    <a href="{% url 'core:about' %}" class="jd-mobile-nav-link">{% trans "About" %}</a>
+    <a href="{% url 'contact:contact' %}" class="jd-mobile-nav-link">{% trans "Contact" %}</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'accounts:dashboard' %}" class="jd-mobile-nav-link">{% trans "Dashboard" %}</a>
+    {% else %}
+      <a href="{% url 'account_login' %}" class="jd-mobile-nav-link">{% trans "Sign In" %}</a>
+    {% endif %}
+    <!-- Mobile language switcher -->
+    <div class="jd-lang-switcher mt-3">
+      <button class="jd-lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}" data-lang="en" style="color:rgba(255,255,255,0.7);font-size:1rem;">EN</button>
+      <span class="jd-lang-separator" style="color:rgba(255,255,255,0.3);">|</span>
+      <button class="jd-lang-btn {% if LANGUAGE_CODE == 'fr' %}active{% endif %}" data-lang="fr" style="color:rgba(255,255,255,0.7);font-size:1rem;">FR</button>
+      <span class="jd-lang-separator" style="color:rgba(255,255,255,0.3);">|</span>
+      <button class="jd-lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}" data-lang="ru" style="color:rgba(255,255,255,0.7);font-size:1rem;">RU</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE CONTENT
+       ============================================================ -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="jd-footer">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- Brand column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="jd-footer-brand">Jadevine</div>
+          <div class="jd-footer-brand-sub">{% trans "Travel & Tours" %}</div>
+          <p class="jd-footer-desc">
+            {% trans "Your trusted partner for unforgettable travel experiences across Zanzibar and Tanzania." %}
+          </p>
+          <div class="jd-footer-social">
+            <a href="#" class="jd-footer-social-link" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="jd-footer-social-link" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="jd-footer-social-link" aria-label="TripAdvisor"><i class="bi bi-star-fill"></i></a>
+            <a href="#" class="jd-footer-social-link" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <div class="jd-footer-heading">{% trans "Services" %}</div>
+          <nav class="jd-footer-links">
+            <a href="{% url 'hotels:list' %}" class="jd-footer-link">{% trans "Hotels" %}</a>
+            <a href="{% url 'tours:list' %}" class="jd-footer-link">{% trans "Safaris & Tours" %}</a>
+            <a href="{% url 'cars:list' %}" class="jd-footer-link">{% trans "Car Rentals" %}</a>
+            <a href="#" class="jd-footer-link">{% trans "Flights" %} <span style="font-size:0.65rem;opacity:0.5;">({% trans "coming soon" %})</span></a>
+          </nav>
+        </div>
+
+        <!-- Company -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <div class="jd-footer-heading">{% trans "Company" %}</div>
+          <nav class="jd-footer-links">
+            <a href="{% url 'core:about' %}" class="jd-footer-link">{% trans "About Us" %}</a>
+            <a href="{% url 'gallery:gallery' %}" class="jd-footer-link">{% trans "Gallery" %}</a>
+            <a href="{% url 'contact:contact' %}" class="jd-footer-link">{% trans "Contact" %}</a>
+            <a href="{% url 'account_signup' %}" class="jd-footer-link">{% trans "Create Account" %}</a>
+          </nav>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-lg-4 col-md-6">
+          <div class="jd-footer-heading">{% trans "Contact Us" %}</div>
+          <div class="jd-footer-contact-item">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>{% trans "Stone Town, Zanzibar, Tanzania" %}</span>
+          </div>
+          <div class="jd-footer-contact-item">
+            <i class="bi bi-whatsapp"></i>
+            <a href="https://wa.me/255000000000" class="jd-footer-link">+255 000 000 000</a>
+          </div>
+          <div class="jd-footer-contact-item">
+            <i class="bi bi-envelope-fill"></i>
+            <a href="mailto:info@jadevinetours.com" class="jd-footer-link">info@jadevinetours.com</a>
+          </div>
+
+          <!-- Mini newsletter -->
+          <div class="mt-4">
+            <div class="jd-footer-heading">{% trans "Newsletter" %}</div>
+            <form class="jd-newsletter-form d-flex gap-2">
+              {% csrf_token %}
+              <input type="email" class="jd-input" placeholder="{% trans 'Your email' %}" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12);color:var(--color-white);" required />
+              <button type="submit" class="btn-accent-jd flex-shrink-0" style="padding:12px 18px;">
+                <i class="bi bi-send"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="jd-footer-bottom">
+        <span class="jd-footer-copy">
+          &copy; {% now "Y" %} Jadevine Travel &amp; Tours. {% trans "All rights reserved." %}
+        </span>
+        <span class="jd-footer-copy">
+          {% trans "Zanzibar, Tanzania" %} &mdash; {% trans "Licensed by Tanzania Tourism Board" %}
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/255713529019?text=Hello%2C%20I%27d%20like%20to%20book%20a%20tour"
+     class="jd-whatsapp-btn"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Chat on WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+    <span class="whatsapp-tooltip">{% trans "Chat with us" %}</span>
+  </a>
+
+  <!-- Toast container (injected by JS if needed) -->
+  <div id="jd-toast-container"></div>
+
+  <!-- Bootstrap 5 JS bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- jQuery (must be before main.js) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Global JS -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+  <!-- Page-specific JS -->
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

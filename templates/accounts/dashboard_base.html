@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block content %}
+<div class="dashboard-root">
+
+  <!-- Mobile topbar -->
+  <div class="dashboard-topbar d-lg-none">
+    <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="{% trans 'Open menu' %}">
+      <i class="bi bi-list"></i>
+    </button>
+    <span class="dashboard-topbar-title">{% block topbar_title %}{% trans "My Account" %}{% endblock %}</span>
+    <a href="{% url 'core:home' %}" class="dashboard-topbar-logo">
+      <img src="{% static 'images/logo.png' %}" alt="Jadevine" height="28">
+    </a>
+  </div>
+
+  <div class="dashboard-layout container-fluid px-0">
+    {% include "accounts/includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-main">
+      <div class="dashboard-main-inner">
+        {% block dashboard_content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.JD_URLS = window.JD_URLS || {};
+  window.JD_URLS.toggleFavourite = "{% url 'accounts:toggle_favourite' %}";
+  window.JD_URLS.favourites = "{% url 'accounts:favourites' %}";
+  window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.processing = "{% trans 'Processing...' %}";
+  window.JD_STRINGS.removeError = "{% trans 'Could not remove. Please try again.' %}";
+  window.JD_STRINGS.photoTooLarge = "{% trans 'Photo must be under 5MB.' %}";
+</script>
+<script src="{% static 'js/accounts/dashboard_base.js' %}"></script>
+{% block dashboard_js %}{% endblock %}
+{% endblock %}

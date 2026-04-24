@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Review Your Booking" %} — Jadevine Travel & Tours{% endblock %}
+{% block meta_description %}{% trans "Review and confirm your booking with Jadevine Travel & Tours." %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/bookings/booking_summary.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="booking-breadcrumb">
+  <div class="container">
+    <div class="booking-steps">
+      <div class="booking-step completed">
+        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+        <span class="step-label">{% trans "Select" %}</span>
+      </div>
+      <div class="booking-step-line completed"></div>
+      <div class="booking-step active">
+        <span class="step-num">2</span>
+        <span class="step-label">{% trans "Review" %}</span>
+      </div>
+      <div class="booking-step-line"></div>
+      <div class="booking-step">
+        <span class="step-num">3</span>
+        <span class="step-label">{% trans "Payment" %}</span>
+      </div>
+      <div class="booking-step-line"></div>
+      <div class="booking-step">
+        <span class="step-num">4</span>
+        <span class="step-label">{% trans "Confirmed" %}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-py-sm">
+  <div class="container">
+    <div class="row g-5 justify-content-center">
+
+      <div class="col-lg-7">
+
+        <span class="eyebrow">{% trans "Step 2 of 4" %}</span>
+        <h1 class="section-heading mb-4">{% trans "Review Your <em>Booking</em>" %}</h1>
+
+        {% if is_session_booking %}
+        {% with data=booking_data %}
+
+        <!-- Service summary card -->
+        <div class="summary-card jd-reveal">
+          <div class="summary-card-header">
+            {% if data.service_type == 'hotel' %}
+            <i class="bi bi-building summary-card-icon"></i>
+            <div>
+              <div class="summary-card-type">{% trans "Hotel Booking" %}</div>
+              <div class="summary-card-name">{{ data.hotel_name }}</div>
+            </div>
+            {% elif data.service_type == 'car' %}
+            <i class="bi bi-car-front summary-card-icon"></i>
+            <div>
+              <div class="summary-card-type">{% trans "Car Rental" %}</div>
+              <div class="summary-card-name">{{ data.car_name }}</div>
+            </div>
+            {% elif data.service_type == 'tour' %}
+            <i class="bi bi-map summary-card-icon"></i>
+            <div>
+              <div class="summary-card-type">{% trans "Safari & Tour Booking" %}</div>
+              <div class="summary-card-name">{{ data.tour_name }}</div>
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="summary-details">
+            {% if data.service_type == 'hotel' %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Room Type" %}</span>
+              <span class="summary-value">{{ data.room_type_name }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Check-in" %}</span>
+              <span class="summary-value">{{ data.check_in_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Check-out" %}</span>
+              <span class="summary-value">{{ data.check_out_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Duration" %}</span>
+              <span class="summary-value">{{ data.nights }} {% trans "night(s)" %}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Guests" %}</span>
+              <span class="summary-value">{{ data.num_guests }}</span>
+            </div>
+
+            {% elif data.service_type == 'car' %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Vehicle Type" %}</span>
+              <span class="summary-value">{{ data.vehicle_type }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Rental Mode" %}</span>
+              <span class="summary-value">
+                {% if data.rental_mode == 'self_drive' %}{% trans "Self Drive" %}
+                {% else %}{% trans "With Driver" %}{% endif %}
+              </span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Pickup Location" %}</span>
+              <span class="summary-value">{{ data.pickup_location }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Pickup Date" %}</span>
+              <span class="summary-value">{{ data.pickup_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Return Date" %}</span>
+              <span class="summary-value">{{ data.return_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Duration" %}</span>
+              <span class="summary-value">{{ data.num_days }} {% trans "day(s)" %}</span>
+            </div>
+
+            {% elif data.service_type == 'tour' %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Tour Type" %}</span>
+              <span class="summary-value">{{ data.tour_type_display }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Duration" %}</span>
+              <span class="summary-value">{{ data.duration_days }} {% trans "day(s)" %}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Preferred Start Date" %}</span>
+              <span class="summary-value">{{ data.preferred_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Participants" %}</span>
+              <span class="summary-value">{{ data.num_participants }}</span>
+            </div>
+            <div class="summary-row summary-row--notice">
+              <i class="bi bi-info-circle-fill me-2"></i>
+              {% trans "Jadevine will confirm your preferred date within 24–48 hours of booking." %}
+            </div>
+            {% endif %}
+
+            {% if data.special_requests %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Special Requests" %}</span>
+              <span class="summary-value">{{ data.special_requests }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Price breakdown -->
+        <div class="price-breakdown-card jd-reveal">
+          <div class="price-breakdown-title">{% trans "Price Breakdown" %}</div>
+
+          {% if data.service_type == 'hotel' %}
+          <div class="price-row">
+            <span>${{ data.price_per_night }} × {{ data.nights }} {% trans "night(s)" %}</span>
+            <span>${{ data.total_price }}</span>
+          </div>
+          {% elif data.service_type == 'car' %}
+          <div class="price-row">
+            <span>${{ data.price_per_day }} × {{ data.num_days }} {% trans "day(s)" %}</span>
+            <span>${{ data.total_price }}</span>
+          </div>
+          {% elif data.service_type == 'tour' %}
+          <div class="price-row">
+            <span>${{ data.price_per_person }} × {{ data.num_participants }} {% trans "participant(s)" %}</span>
+            <span>${{ data.total_price }}</span>
+          </div>
+          {% endif %}
+
+          <div class="price-row price-row-total">
+            <span>{% trans "Total" %}</span>
+            <span>${{ data.total_price }} <span class="price-currency">USD</span></span>
+          </div>
+          <p class="price-note">
+            <i class="bi bi-info-circle me-1"></i>
+            {% trans "Price locked at time of search. No additional fees." %}
+          </p>
+        </div>
+
+        <!-- Non-refundable notice -->
+        {% if not data.is_refundable %}
+        <div class="jd-nonrefundable-notice jd-reveal">
+          <i class="bi bi-x-circle-fill"></i>
+          <div>
+            <strong>{% trans "Non-refundable Booking" %}</strong>
+            <p class="mb-0 mt-1" style="font-size:var(--text-xs);">
+              {% trans "This booking is non-refundable. Once confirmed, no refund will be issued regardless of cancellation date." %}
+            </p>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Payment method -->
+        <div class="payment-method-card jd-reveal">
+          <div class="payment-method-title">{% trans "Choose Payment Method" %}</div>
+
+          <form method="post" action="{% url 'bookings:summary' reference='pending' %}" id="payment-mode-form">
+            {% csrf_token %}
+
+            <label class="payment-option" id="opt-pay-now">
+              <input type="radio" name="payment_mode" value="pay_now" checked>
+              <div class="payment-option-content">
+                <div class="payment-option-header">
+                  <div class="payment-option-title">
+                    <i class="bi bi-credit-card-2-front me-2"></i>
+                    {% trans "Pay Now" %}
+                  </div>
+                  <span class="jd-badge jd-badge-success">{% trans "Recommended" %}</span>
+                </div>
+                <p class="payment-option-desc">
+                  {% trans "Pay securely online via Visa, Mastercard, or M-Pesa. Booking confirmed instantly." %}
+                </p>
+                <div class="payment-icons">
+                  <span class="payment-icon-badge">VISA</span>
+                  <span class="payment-icon-badge">Mastercard</span>
+                  <span class="payment-icon-badge">M-Pesa</span>
+                  <span class="payment-icon-badge">AirtelMoney</span>
+                  <span class="payment-icon-badge">MixxYas</span>
+                </div>
+              </div>
+            </label>
+
+            {% if data.allows_pay_on_arrival %}
+            <label class="payment-option" id="opt-pay-arrival">
+              <input type="radio" name="payment_mode" value="pay_on_arrival">
+              <div class="payment-option-content">
+                <div class="payment-option-header">
+                  <div class="payment-option-title">
+                    <i class="bi bi-cash-coin me-2"></i>
+                    {% trans "Pay on Arrival" %}
+                  </div>
+                </div>
+                <p class="payment-option-desc">
+                  {% trans "Reserve now, pay when you arrive in Tanzania. Your slot is held for you." %}
+                </p>
+              </div>
+            </label>
+            {% else %}
+            <div class="jd-pay-now-only-notice mb-3">
+              <i class="bi bi-credit-card-fill me-2"></i>
+              {% trans "Pay on Arrival is not available for this booking. Online payment is required." %}
+            </div>
+            {% endif %}
+
+            <button type="submit"
+                    class="btn-accent-jd w-100 justify-content-center summary-confirm-btn"
+                    id="confirm-btn">
+              <i class="bi bi-lock-fill me-2"></i>
+              {% trans "Confirm Booking" %}
+            </button>
+
+          </form>
+
+          <p class="summary-no-charge-note">
+            <i class="bi bi-shield-check me-1"></i>
+            {% trans "By confirming, you agree to our cancellation policy. Your card will not be charged until you complete payment on the next screen." %}
+          </p>
+        </div>
+
+        {% endwith %}
+
+        {% else %}
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <i class="bi bi-calendar-check summary-card-icon"></i>
+            <div>
+              <div class="summary-card-type">{% trans "Booking Reference" %}</div>
+              <div class="summary-card-name">{{ booking.reference }}</div>
+            </div>
+          </div>
+          <div class="summary-details">
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Status" %}</span>
+              <span class="summary-value">
+                <span class="jd-badge jd-badge-warning">{{ booking.get_status_display }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="mt-4">
+          <a href="javascript:history.back()" class="btn-ghost-jd">
+            <i class="bi bi-arrow-left me-2"></i> {% trans "Go Back & Edit" %}
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Trust sidebar -->
+      <div class="col-lg-4 d-none d-lg-block">
+        <div class="summary-trust-sidebar">
+
+          <div class="trust-item">
+            <i class="bi bi-shield-check trust-icon"></i>
+            <div>
+              <div class="trust-title">{% trans "Secure Booking" %}</div>
+              <p class="trust-desc">{% trans "Your data is encrypted and protected. We never store card details." %}</p>
+            </div>
+          </div>
+
+          {% if is_session_booking and not booking_data.is_refundable %}
+          <div class="trust-item">
+            <i class="bi bi-x-circle trust-icon" style="color:var(--color-danger);"></i>
+            <div>
+              <div class="trust-title" style="color:var(--color-danger);">{% trans "Non-refundable" %}</div>
+              <p class="trust-desc">{% trans "This booking cannot be refunded once confirmed." %}</p>
+            </div>
+          </div>
+          {% else %}
+          <div class="trust-item">
+            <i class="bi bi-arrow-repeat trust-icon"></i>
+            <div>
+              <div class="trust-title">{% trans "Free Cancellation" %}</div>
+              <p class="trust-desc">{% trans "Cancel 14+ days before your service for a full refund." %}</p>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="trust-item">
+            <i class="bi bi-headset trust-icon"></i>
+            <div>
+              <div class="trust-title">{% trans "24/7 Support" %}</div>
+              <p class="trust-desc">{% trans "Questions? WhatsApp us anytime — we respond within minutes." %}</p>
+            </div>
+          </div>
+
+          {% if is_session_booking and booking_data.allows_pay_on_arrival %}
+          <div class="trust-item">
+            <i class="bi bi-cash-coin trust-icon"></i>
+            <div>
+              <div class="trust-title">{% trans "Pay on Arrival" %}</div>
+              <p class="trust-desc">{% trans "Prefer to pay in person? Select Pay on Arrival — your slot is held." %}</p>
+            </div>
+          </div>
+          {% endif %}
+
+          <a href="https://wa.me/255713529019" target="_blank" rel="noopener" class="trust-whatsapp-btn">
+            <i class="bi bi-whatsapp me-2"></i>
+            {% trans "Ask Us Anything" %}
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/bookings/booking_summary.js' %}"></script>
+{% endblock %}

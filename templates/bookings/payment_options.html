@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Complete Payment" %} — Jadevine Travel & Tours{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/bookings/payment_options.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Steps -->
+<div class="booking-breadcrumb">
+  <div class="container">
+    <div class="booking-steps">
+      <div class="booking-step completed">
+        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+        <span class="step-label">{% trans "Select" %}</span>
+      </div>
+      <div class="booking-step-line completed"></div>
+      <div class="booking-step completed">
+        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+        <span class="step-label">{% trans "Review" %}</span>
+      </div>
+      <div class="booking-step-line completed"></div>
+      <div class="booking-step active">
+        <span class="step-num">3</span>
+        <span class="step-label">{% trans "Payment" %}</span>
+      </div>
+      <div class="booking-step-line"></div>
+      <div class="booking-step">
+        <span class="step-num">4</span>
+        <span class="step-label">{% trans "Confirmed" %}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-py-sm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+
+        <div class="payment-stub-card">
+          <div class="payment-stub-icon">
+            <i class="bi bi-credit-card-2-front"></i>
+          </div>
+
+          <span class="eyebrow">{% trans "Step 3 of 4" %}</span>
+          <h1 class="section-heading my-3">{% trans "Complete <em>Payment</em>" %}</h1>
+
+          <!-- Booking reference -->
+          <div class="payment-ref-badge">
+            <span class="payment-ref-label">{% trans "Booking Reference" %}</span>
+            <span class="payment-ref-value">{{ booking.reference }}</span>
+          </div>
+
+          <!-- Amount due -->
+          <div class="payment-amount-display">
+            <span class="payment-amount-label">{% trans "Amount Due" %}</span>
+            <span class="payment-amount-value">${{ booking.total_price }}</span>
+            <span class="payment-amount-currency">USD</span>
+          </div>
+
+          {% if pesapal_stub %}
+          <!-- Phase 6 stub message -->
+          <div class="payment-stub-notice">
+            <i class="bi bi-tools me-2"></i>
+            <div>
+              <strong>{% trans "Payment gateway coming in Phase 6" %}</strong>
+              <p class="mb-0 mt-1">
+                {% trans "PesaPal integration is not yet live. To test the full flow, use the button below to simulate a successful payment." %}
+              </p>
+            </div>
+          </div>
+
+          <!-- Simulate payment button (dev only) -->
+          <a href="{% url 'bookings:confirmation' booking.reference %}"
+             class="btn-accent-jd w-100 justify-content-center mt-4"
+             style="padding:16px;">
+            <i class="bi bi-check-circle me-2"></i>
+            {% trans "Simulate Payment Success (Dev Only)" %}
+          </a>
+
+          {% endif %}
+
+          <p class="payment-stub-note mt-3">
+            {% trans "In production, you will be redirected to PesaPal's secure payment page to complete payment via Visa, Mastercard, or M-Pesa." %}
+          </p>
+
+          <a href="{% url 'bookings:summary' booking.reference %}" class="btn-ghost-jd mt-3">
+            <i class="bi bi-arrow-left me-2"></i> {% trans "Back to Summary" %}
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/bookings/payment_options.js' %}"></script>
+{% endblock %}

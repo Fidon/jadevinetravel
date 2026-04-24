@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cancellation Request — Jadevine Travel & Tours</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f8f5f0;color:#1e1e1e}
+  .wrap{max-width:600px;margin:40px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+  .hdr{background:#1a4d2e;padding:32px 40px}
+  .hdr-brand{font-size:24px;font-weight:700;color:#fff}
+  .hdr-tag{font-size:11px;color:#c89666;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+  .body{padding:40px}
+  .icon-wrap{width:68px;height:68px;background:#fdf6ee;border-radius:50%;margin:0 auto 20px;text-align:center;padding-top:16px}
+  .title{font-size:22px;font-weight:700;color:#1a4d2e;text-align:center;margin-bottom:10px}
+  .intro{font-size:15px;color:#5a5550;text-align:center;line-height:1.7;margin-bottom:28px}
+  .info-table{width:100%;border-collapse:collapse;margin-bottom:24px}
+  .info-table td{padding:10px 14px;font-size:14px;border-bottom:1px solid #e0d5c8}
+  .info-table td:first-child{color:#9e8e7e;font-weight:600;width:45%;background:#f8f5f0}
+  .info-table td:last-child{color:#1e1e1e;text-align:right}
+  .info-table tr:last-child td{border-bottom:none}
+  .refund-table{width:100%;border-collapse:collapse;background:#e8f0eb;border-radius:6px;margin-bottom:24px;border-left:4px solid #1a4d2e}
+  .refund-table td{padding:14px 18px;vertical-align:middle}
+  .refund-table td:last-child{text-align:right}
+  .refund-title{font-size:11px;color:#1a4d2e;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:6px}
+  .refund-amount{font-size:22px;font-weight:700;color:#1a4d2e}
+  .refund-pct{font-size:13px;color:#2a6b40;margin-top:2px}
+  .note{font-size:13px;color:#9e8e7e;text-align:center;line-height:1.6;margin-top:20px}
+  .ftr{background:#f0ebe3;padding:24px 40px;text-align:center;border-top:1px solid #e0d5c8}
+  .ftr p{font-size:12px;color:#9e8e7e;line-height:1.8}
+  .ftr a{color:#c89666;text-decoration:none}
+  @media(max-width:620px){.wrap{margin:0;border-radius:0}.body{padding:28px 20px}.hdr{padding:24px 20px}.ftr{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <div class="hdr-brand">Jadevine Travel &amp; Tours</div>
+    <div class="hdr-tag">Zanzibar, Tanzania</div>
+  </div>
+  <div class="body">
+    <div class="icon-wrap">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="#c89666" stroke-width="2" fill="none"/>
+        <path d="M12 8v4m0 4h.01" stroke="#c89666" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1 class="title">Cancellation Request Received</h1>
+    <p class="intro">
+      Hello <strong>{{ first_name }}</strong>,<br><br>
+      We have received your cancellation request for booking
+      <strong>{{ reference }}</strong>. Our team will process your
+      refund and confirm within <strong>2–3 business days</strong>.
+    </p>
+
+    <!-- Booking info table -->
+    <table class="info-table">
+      <tr><td>Booking Reference</td><td>{{ reference }}</td></tr>
+      <tr><td>Service</td><td>{{ service_name }}</td></tr>
+      <tr><td>Payment Mode</td><td>{{ payment_mode }}</td></tr>
+    </table>
+
+    <!-- Refund highlight — table-based so Gmail renders it correctly -->
+    <table class="refund-table">
+      <tr>
+        <td>
+          <div class="refund-title">Refund Entitlement</div>
+          <div class="refund-pct">{{ refund_pct }}% of total paid</div>
+        </td>
+        <td>
+          <div class="refund-amount">{{ currency }} {{ refund_amount }}</div>
+        </td>
+      </tr>
+    </table>
+
+    <p class="note">
+      You will receive a confirmation email once your refund has been processed.<br>
+      Questions? Contact us at <a href="mailto:info@jadevinetours.com" style="color:#c89666;">info@jadevinetours.com</a>
+    </p>
+  </div>
+  <div class="ftr">
+    <p><strong>Jadevine Travel &amp; Tours</strong><br>Zanzibar, Tanzania<br>
+    <a href="mailto:info@jadevinetours.com">info@jadevinetours.com</a> &nbsp;·&nbsp; +255 713 529 019</p>
+  </div>
+</div>
+</body>
+</html>

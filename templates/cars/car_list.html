@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Car Rentals in Zanzibar & Tanzania" %} — Jadevine Travel & Tours{% endblock %}
+{% block meta_description %}{% trans "Rent a car in Zanzibar or Dar es Salaam with Jadevine Travel & Tours. Sedans, SUVs, 4x4 safari vehicles and minibuses with optional drivers." %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cars/car_list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="car-list-header jd-load-reveal" data-delay="1">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-lg-7">
+        <span class="eyebrow">{% trans "Ground Transport" %}</span>
+        <h1 class="section-heading mb-0">{% trans "Car Rentals in <em>Zanzibar</em> & Tanzania" %}</h1>
+      </div>
+      <div class="col-lg-5 mt-3 mt-lg-0">
+        <p class="section-subheading mb-0">
+          {% trans "Sedans, 4x4 safari vehicles, minibuses and vans — with or without a bilingual driver." %}
+        </p>
+      </div>
+    </div>
+    <div class="jd-divider mt-4"></div>
+  </div>
+</section>
+
+<!-- Filters -->
+<section class="car-filters-bar jd-load-reveal" data-delay="2">
+  <div class="container">
+    <div class="car-filters-inner">
+
+      <div class="filter-group">
+        <label class="jd-label">{% trans "Vehicle Type" %}</label>
+        <select class="jd-input" id="filter-vehicle-type">
+          <option value="">{% trans "All Types" %}</option>
+          <option value="sedan">{% trans "Sedan" %}</option>
+          <option value="suv">{% trans "SUV" %}</option>
+          <option value="4x4">{% trans "4x4 Safari" %}</option>
+          <option value="minibus">{% trans "Minibus" %}</option>
+          <option value="van">{% trans "Van" %}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="jd-label">{% trans "Rental Mode" %}</label>
+        <select class="jd-input" id="filter-rental-mode">
+          <option value="">{% trans "Any Mode" %}</option>
+          <option value="with_driver">{% trans "With Driver" %}</option>
+          <option value="self_drive">{% trans "Self Drive" %}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="jd-label">{% trans "Max Price / Day" %}</label>
+        <select class="jd-input" id="filter-max-price">
+          <option value="">{% trans "Any Price" %}</option>
+          <option value="50">{% trans "Up to $50" %}</option>
+          <option value="100">{% trans "Up to $100" %}</option>
+          <option value="150">{% trans "Up to $150" %}</option>
+          <option value="200">{% trans "Up to $200" %}</option>
+        </select>
+      </div>
+
+      <button class="btn-outline-jd" id="btn-clear-filters">
+        <i class="bi bi-x-lg"></i> {% trans "Clear" %}
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+<section class="section-py-sm">
+  <div class="container">
+
+    <div class="d-flex align-items-center justify-content-between mb-4 jd-load-reveal" data-delay="3">
+      <p class="car-results-count mb-0">
+        <span id="results-count">—</span> {% trans "vehicles found" %}
+      </p>
+    </div>
+
+    <!-- Empty state -->
+    <div id="cars-empty" class="car-empty-state" style="display:none;">
+      <i class="bi bi-car-front-fill"></i>
+      <h4>{% trans "No vehicles found" %}</h4>
+      <p>{% trans "Try adjusting your filters to see more results." %}</p>
+      <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
+    </div>
+
+    <!-- Car grid -->
+    <div class="row g-4" id="cars-grid"></div>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.viewCar      = "{% trans 'View & Book' %}";
+  window.JD_STRINGS.carsNotFound = "{% trans 'Failed to load vehicles. Please try again.' %}";
+  window.JD_STRINGS.withDriver   = "{% trans 'With Driver' %}";
+  window.JD_STRINGS.selfDrive    = "{% trans 'Self Drive' %}";
+  window.JD_STRINGS.perDay       = "{% trans '/ day' %}";
+  window.JD_STRINGS.capacity     = "{% trans 'passengers' %}";
+  window.JD_STRINGS.off          = "{% trans 'off' %}";
+</script>
+<script src="{% static 'js/cars/car_list.js' %}"></script>
+{% endblock %}

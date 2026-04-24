@@ -1,0 +1,401 @@
+/* Steps breadcrumb */
+.booking-breadcrumb {
+  background: var(--color-off-white);
+  border-bottom: 1px solid var(--color-border);
+  padding: 100px 0 0;
+}
+
+.booking-steps {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  gap: 0;
+}
+
+.booking-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-muted);
+  background: var(--color-white);
+  transition: all var(--transition-base);
+}
+
+.booking-step.active .step-num {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.booking-step.completed .step-num {
+  border-color: var(--color-success);
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.step-label {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.booking-step.active .step-label {
+  color: var(--color-primary);
+}
+.booking-step.completed .step-label {
+  color: var(--color-success);
+}
+
+.booking-step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+  margin: 0 8px;
+  margin-bottom: 22px;
+}
+
+.booking-step-line.completed {
+  background: var(--color-success);
+}
+
+/* Summary card */
+.summary-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.summary-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.summary-card-icon {
+  font-size: 2rem;
+  color: var(--color-accent-light);
+  flex-shrink: 0;
+}
+
+.summary-card-type {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 4px;
+}
+
+.summary-card-name {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  color: var(--color-white);
+  line-height: 1.1;
+}
+
+.summary-details {
+  padding: 8px 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--color-border);
+  gap: 16px;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-label {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.summary-value {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  font-weight: 500;
+  text-align: right;
+}
+
+.summary-row--notice {
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--text-sm);
+  color: var(--color-info);
+  background: var(--color-info-bg);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-top: 4px;
+  border: none;
+}
+
+.summary-row--notice i {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Price breakdown */
+.price-breakdown-card {
+  background: var(--color-accent-xlight);
+  border: 1px solid var(--color-accent-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.price-breakdown-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+  margin-bottom: 16px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  padding: 6px 0;
+}
+
+.price-row-total {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  border-top: 2px solid var(--color-accent-light);
+  margin-top: 12px;
+  padding-top: 16px;
+  font-family: var(--font-heading);
+}
+
+.price-currency {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  font-weight: 400;
+  font-family: var(--font-body);
+  margin-left: 4px;
+}
+
+.price-note {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin: 12px 0 0;
+}
+
+/* Payment method selection */
+.payment-method-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.payment-method-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-bottom: 16px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.payment-option:has(input:checked) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-xlight);
+}
+
+.payment-option input[type="radio"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+  width: 18px;
+  height: 18px;
+}
+
+.payment-option-content {
+  flex: 1;
+}
+
+.payment-option-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.payment-option-title {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+}
+
+.payment-option-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.payment-icon-badge {
+  background: var(--color-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 3px 10px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-light);
+  letter-spacing: 0.04em;
+}
+
+.summary-confirm-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 16px;
+  font-size: var(--text-base);
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.summary-no-charge-note {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  text-align: center;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.summary-no-charge-note i {
+  color: var(--color-success);
+}
+
+/* Trust sidebar */
+.summary-trust-sidebar {
+  position: sticky;
+  top: 90px;
+  background: var(--color-off-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.trust-item:last-of-type {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.trust-icon {
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.trust-title {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.trust-desc {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.trust-whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #25d366;
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 13px;
+  border-radius: var(--radius-md);
+  transition: opacity var(--transition-base);
+  width: 100%;
+}
+
+.trust-whatsapp-btn:hover {
+  opacity: 0.88;
+  color: var(--color-white);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .booking-steps {
+    gap: 0;
+  }
+  .step-label {
+    display: none;
+  }
+  .booking-step-line {
+    margin-bottom: 0;
+  }
+  .summary-card-name {
+    font-size: var(--text-xl);
+  }
+}

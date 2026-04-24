@@ -1,0 +1,113 @@
+{% extends "accounts/dashboard_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Saved" %} — Jadevine{% endblock %}
+{% block topbar_title %}{% trans "Saved" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts/dashboard.css' %}">
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dash-page-header jd-load-reveal" data-delay="1">
+  <div>
+    <p class="eyebrow">{% trans "Account" %}</p>
+    <h1 class="dash-page-title">{% trans "Saved" %}</h1>
+  </div>
+</div>
+
+<div class="jd-load-reveal" data-delay="2">
+  {% if favourites %}
+    <div class="row g-4" id="favouritesGrid">
+      {% for fav in favourites %}
+      <div class="col-sm-6 col-lg-4 fav-item" data-fav-id="{{ fav.id }}"
+           data-item-type="{% if fav.hotel %}hotel{% elif fav.tour_package %}tour{% else %}car{% endif %}"
+           data-item-id="{% if fav.hotel %}{{ fav.hotel.id }}{% elif fav.tour_package %}{{ fav.tour_package.id }}{% else %}{{ fav.car.id }}{% endif %}">
+
+        {% if fav.hotel %}
+          {% with item=fav.hotel item_type="hotel" %}
+          <div class="jd-card fav-card">
+            {% if item.cover_photo %}
+            <div class="fav-card-img">
+              <img src="{{ item.cover_photo.image.url }}" alt="{{ item.name }}" loading="lazy">
+            </div>
+            {% endif %}
+            <div class="fav-card-body">
+              <span class="fav-card-type"><i class="bi bi-building me-1"></i>{% trans "Hotel" %}</span>
+              <h4 class="fav-card-name">{{ item.name }}</h4>
+              <p class="fav-card-location">{{ item.get_location_display }}</p>
+              <div class="fav-card-footer">
+                <a href="{% url 'hotels:detail' item.slug %}" class="btn-ghost-jd">{% trans "View" %}</a>
+                <button class="fav-remove-btn" data-item-type="hotel" data-item-id="{{ item.id }}"
+                        aria-label="{% trans 'Remove from saved' %}">
+                  <i class="bi bi-heart-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endwith %}
+
+        {% elif fav.tour_package %}
+          {% with item=fav.tour_package %}
+          <div class="jd-card fav-card">
+            {% if item.cover_image %}
+            <div class="fav-card-img">
+              <img src="{{ item.cover_image.url }}" alt="{{ item.name_en }}" loading="lazy">
+            </div>
+            {% endif %}
+            <div class="fav-card-body">
+              <span class="fav-card-type"><i class="bi bi-binoculars me-1"></i>{% trans "Safari & Tour" %}</span>
+              <h4 class="fav-card-name">{{ item.name_en }}</h4>
+              <p class="fav-card-location">{{ item.duration_days }} {% trans "days" %}</p>
+              <div class="fav-card-footer">
+                <a href="{% url 'tours:detail' item.slug %}" class="btn-ghost-jd">{% trans "View" %}</a>
+                <button class="fav-remove-btn" data-item-type="tour" data-item-id="{{ item.id }}"
+                        aria-label="{% trans 'Remove from saved' %}">
+                  <i class="bi bi-heart-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endwith %}
+
+        {% elif fav.car %}
+          {% with item=fav.car %}
+          <div class="jd-card fav-card">
+            {% if item.cover_photo %}
+            <div class="fav-card-img">
+              <img src="{{ item.cover_photo.image.url }}" alt="{{ item.name }}" loading="lazy">
+            </div>
+            {% endif %}
+            <div class="fav-card-body">
+              <span class="fav-card-type"><i class="bi bi-car-front me-1"></i>{% trans "Car Rental" %}</span>
+              <h4 class="fav-card-name">{{ item.name }}</h4>
+              <p class="fav-card-location">{{ item.get_vehicle_type_display }}</p>
+              <div class="fav-card-footer">
+                <a href="{% url 'cars:detail' item.slug %}" class="btn-ghost-jd">{% trans "View" %}</a>
+                <button class="fav-remove-btn" data-item-type="car" data-item-id="{{ item.id }}"
+                        aria-label="{% trans 'Remove from saved' %}">
+                  <i class="bi bi-heart-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endwith %}
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="dash-empty-state">
+      <div class="dash-empty-icon"><i class="bi bi-heart"></i></div>
+      <p class="dash-empty-title">{% trans "Nothing saved yet" %}</p>
+      <p class="dash-empty-sub">{% trans "Tap the heart icon on any hotel, tour, or car to save it here." %}</p>
+      <a href="{% url 'hotels:list' %}" class="btn-primary-jd mt-2">{% trans "Explore Hotels" %}</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block dashboard_js %}
+<script src="{% static 'js/accounts/favourites.js' %}"></script>
+{% endblock %}

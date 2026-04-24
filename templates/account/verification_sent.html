@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Verify Your Email" %} — Jadevine{% endblock %}
+{% block meta_description %}{% trans "Check your inbox to verify your email address." %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section section-py">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-7 col-lg-5">
+        <div class="auth-card jd-card text-center">
+
+          <div class="auth-icon-circle auth-icon-primary mx-auto">
+            <i class="bi bi-envelope-paper"></i>
+          </div>
+
+          <h1 class="auth-title mt-3">{% trans "Check your inbox" %}</h1>
+
+          <p class="auth-subtitle mt-2">
+            {% trans "We've sent a verification link to your email address. Click the link to activate your account." %}
+          </p>
+
+          <div class="auth-alert auth-alert-info mt-4" style="text-align:left;">
+            <i class="bi bi-info-circle"></i>
+            <span>
+              {% trans "Didn't receive the email? Check your spam folder. The link expires in 3 days." %}
+            </span>
+          </div>
+
+          <div class="d-flex flex-column gap-3 mt-4">
+            <a href="{% url 'accounts:resend_verification' %}" class="btn-primary-jd d-block w-100">
+              <i class="bi bi-arrow-clockwise me-1"></i>{% trans "Resend Verification Email" %}
+            </a>
+            <a href="{% url 'account_login' %}" class="btn-outline-jd d-block w-100">
+              <i class="bi bi-arrow-left me-1"></i>{% trans "Back to Sign In" %}
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

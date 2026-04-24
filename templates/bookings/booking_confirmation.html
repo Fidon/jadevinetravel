@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Booking Confirmed" %} — Jadevine Travel & Tours{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/bookings/booking_confirmation.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Steps -->
+<div class="booking-breadcrumb">
+  <div class="container">
+    <div class="booking-steps">
+      <div class="booking-step completed">
+        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+        <span class="step-label">{% trans "Select" %}</span>
+      </div>
+      <div class="booking-step-line completed"></div>
+      <div class="booking-step completed">
+        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+        <span class="step-label">{% trans "Review" %}</span>
+      </div>
+      <div class="booking-step-line completed"></div>
+      <div class="booking-step completed">
+        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+        <span class="step-label">{% trans "Payment" %}</span>
+      </div>
+      <div class="booking-step-line completed"></div>
+      <div class="booking-step active">
+        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+        <span class="step-label">{% trans "Confirmed" %}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section-py">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+
+        <!-- Success banner -->
+        <div class="confirmation-banner jd-reveal">
+          <div class="confirmation-check">
+            <i class="bi bi-check-lg"></i>
+          </div>
+
+          {% if booking.payment_mode == 'pay_on_arrival' %}
+          <span class="eyebrow eyebrow-white">{% trans "Reservation Confirmed" %}</span>
+          <h1 class="confirmation-title">{% trans "You're All Set!" %}</h1>
+          <p class="confirmation-subtitle">
+            {% trans "Your reservation is confirmed. Payment will be collected when you arrive in Tanzania." %}
+          </p>
+          {% else %}
+          <span class="eyebrow eyebrow-white">{% trans "Booking Confirmed" %}</span>
+          <h1 class="confirmation-title">{% trans "Booking Confirmed!" %}</h1>
+          <p class="confirmation-subtitle">
+            {% trans "Your booking is confirmed and a confirmation email is on its way to you." %}
+          </p>
+          {% endif %}
+        </div>
+
+        <!-- Reference card -->
+        <div class="confirmation-ref-card jd-reveal">
+          <div class="confirmation-ref-label">{% trans "Your Booking Reference" %}</div>
+          <div class="confirmation-ref-number">{{ booking.reference }}</div>
+          <p class="confirmation-ref-note">
+            {% trans "Save this reference number. You'll need it for any changes or enquiries." %}
+          </p>
+        </div>
+
+        <!-- Booking details -->
+        <div class="confirmation-details-card jd-reveal">
+          <div class="confirmation-details-title">{% trans "Booking Summary" %}</div>
+
+          {% if booking.service_type == 'hotel' %}
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Service" %}</span>
+            <span class="confirmation-value">{% trans "Hotel Booking" %}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Hotel" %}</span>
+            <span class="confirmation-value">{{ booking.hotel.name }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Room Type" %}</span>
+            <span class="confirmation-value">{{ booking.room_type.name }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Check-in" %}</span>
+            <span class="confirmation-value">{{ booking.check_in_date }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Check-out" %}</span>
+            <span class="confirmation-value">{{ booking.check_out_date }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Guests" %}</span>
+            <span class="confirmation-value">{{ booking.num_guests }}</span>
+          </div>
+
+          {% elif booking.service_type == 'car' %}
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Service" %}</span>
+            <span class="confirmation-value">{% trans "Car Rental" %}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Vehicle" %}</span>
+            <span class="confirmation-value">{{ booking.car }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Rental Mode" %}</span>
+            <span class="confirmation-value">{{ booking.get_rental_mode_display }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Pickup Location" %}</span>
+            <span class="confirmation-value">{{ booking.pickup_location }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Pickup Date" %}</span>
+            <span class="confirmation-value">{{ booking.pickup_date }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Return Date" %}</span>
+            <span class="confirmation-value">{{ booking.return_date }}</span>
+          </div>
+          {% endif %}
+
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Payment Method" %}</span>
+            <span class="confirmation-value">{{ booking.get_payment_mode_display }}</span>
+          </div>
+
+          {% if not booking.is_refundable %}
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Refund Policy" %}</span>
+            <span class="confirmation-value">
+              <span class="jd-badge jd-badge-danger">{% trans "Non-refundable" %}</span>
+            </span>
+          </div>
+          {% endif %}
+
+          <div class="confirmation-row confirmation-row-total">
+            <span class="confirmation-label">{% trans "Total" %}</span>
+            <span class="confirmation-value">${{ booking.total_price }} USD</span>
+          </div>
+
+          {% if booking.payment_mode == 'pay_on_arrival' %}
+          <div class="confirmation-poa-notice">
+            <i class="bi bi-cash-coin me-2"></i>
+            {% trans "Payment due on arrival in Tanzania. Our team will be in touch to confirm your booking details." %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Next steps -->
+        <div class="confirmation-next-steps jd-reveal">
+          <div class="confirmation-details-title">{% trans "What Happens Next?" %}</div>
+
+          <div class="next-step-item">
+            <div class="next-step-num">1</div>
+            <div>
+              <div class="next-step-title">{% trans "Confirmation Email" %}</div>
+              <p class="next-step-desc">
+                {% trans "A confirmation email with your booking details has been sent to your registered email address." %}
+              </p>
+            </div>
+          </div>
+
+          {% if booking.service_type == 'tour' %}
+          <div class="next-step-item">
+            <div class="next-step-num">2</div>
+            <div>
+              <div class="next-step-title">{% trans "Date Confirmation" %}</div>
+              <p class="next-step-desc">
+                {% trans "Our team will confirm your preferred tour date within 24–48 hours via email or WhatsApp." %}
+              </p>
+            </div>
+          </div>
+          {% else %}
+          <div class="next-step-item">
+            <div class="next-step-num">2</div>
+            <div>
+              <div class="next-step-title">{% trans "Prepare for Arrival" %}</div>
+              <p class="next-step-desc">
+                {% trans "Your booking is confirmed. Review the details above and contact us if you have any questions." %}
+              </p>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="next-step-item">
+            <div class="next-step-num">3</div>
+            <div>
+              <div class="next-step-title">{% trans "Manage Your Booking" %}</div>
+              <p class="next-step-desc">
+                {% trans "View, download, or cancel your booking anytime from your personal dashboard." %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="confirmation-actions jd-reveal">
+          <a href="{% url 'accounts:dashboard' %}" class="btn-primary-jd">
+            <i class="bi bi-grid me-2"></i>
+            {% trans "Go to My Dashboard" %}
+          </a>
+          <a href="{% url 'tours:list' %}" class="btn-outline-jd">
+            <i class="bi bi-compass me-2"></i>
+            {% trans "Explore More Tours" %}
+          </a>
+        </div>
+
+        <!-- WhatsApp support -->
+        <div class="confirmation-support jd-reveal">
+          <p>{% trans "Questions about your booking?" %}</p>
+          <a href="https://wa.me/255713529019?text=My booking reference is {{ booking.reference }}"
+             target="_blank" rel="noopener" class="confirmation-whatsapp">
+            <i class="bi bi-whatsapp me-2"></i>
+            {% trans "Chat with Us on WhatsApp" %}
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/bookings/booking_confirmation.js' %}"></script>
+{% endblock %}

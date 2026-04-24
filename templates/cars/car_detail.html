@@ -1,0 +1,396 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ car.name }} — {% trans "Car Rentals" %} — Jadevine Travel & Tours{% endblock %}
+{% block meta_description %}{% blocktrans with name=car.name %}Rent a {{ name }} in Zanzibar or Tanzania with Jadevine Travel & Tours.{% endblocktrans %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cars/car_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<div class="car-breadcrumb jd-load-reveal" data-delay="1">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb-list">
+        <li><a href="{% url 'core:home' %}">{% trans "Home" %}</a></li>
+        <li><i class="bi bi-chevron-right"></i></li>
+        <li><a href="{% url 'cars:list' %}">{% trans "Car Rentals" %}</a></li>
+        <li><i class="bi bi-chevron-right"></i></li>
+        <li class="active">{{ car.name }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- Photo Gallery -->
+<section class="car-gallery-section jd-load-reveal" data-delay="2">
+  <div class="container">
+    {% with photos=car.photos.all %}
+    {% if photos %}
+    <div class="car-gallery-grid">
+      <div class="gallery-main">
+        <a href="{{ photos.0.image.url }}" class="gallery-link" data-gallery="car">
+          <img src="{{ photos.0.image.url }}" alt="{{ car.name }}" class="gallery-img-main" loading="eager">
+          <div class="gallery-overlay"><i class="bi bi-fullscreen"></i></div>
+        </a>
+      </div>
+      <div class="gallery-side">
+        {% for photo in photos|slice:"1:5" %}
+        <a href="{{ photo.image.url }}" class="gallery-link gallery-side-item" data-gallery="car">
+          <img src="{{ photo.image.url }}" alt="{{ car.name }}" class="gallery-img-side" loading="lazy">
+          <div class="gallery-overlay">
+            {% if forloop.last and photos|length > 5 %}
+            <span class="gallery-more-label">+{{ photos|length|add:"-5" }} {% trans "photos" %}</span>
+            {% else %}
+            <i class="bi bi-fullscreen"></i>
+            {% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% for photo in photos|slice:"5:" %}
+    <a href="{{ photo.image.url }}" class="gallery-link d-none" data-gallery="car"></a>
+    {% endfor %}
+    {% else %}
+    <div class="car-no-photo">
+      <i class="bi bi-car-front-fill"></i>
+    </div>
+    {% endif %}
+    {% endwith %}
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="section-py-sm">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- LEFT: Car info -->
+      <div class="col-lg-7 jd-load-reveal" data-delay="3">
+
+        <!-- Header -->
+        <div class="car-detail-header">
+          <span class="jd-badge jd-badge-primary mb-3">{{ car.get_vehicle_type_display }}</span>
+          <h1 class="car-detail-name">{{ car.name }}</h1>
+          <p class="car-detail-subtitle">
+            {{ car.year }} · {{ car.make }} {{ car.model }}
+          </p>
+
+          <!-- Rental mode badges -->
+          <div class="d-flex gap-2 mt-3 flex-wrap">
+            {% if car.offers_driver %}
+            <span class="car-mode-badge driver">
+              <i class="bi bi-person-fill me-1"></i>{% trans "With Driver Available" %}
+            </span>
+            {% endif %}
+            {% if car.offers_self_drive %}
+            <span class="car-mode-badge self-drive">
+              <i class="bi bi-key-fill me-1"></i>{% trans "Self Drive Available" %}
+            </span>
+            {% endif %}
+          </div>
+          {% if avg_rating %}
+            <div class="mt-3">
+              <span class="jd-rating-badge" style="font-size:var(--text-sm);padding:6px 14px;">
+                <i class="bi bi-star-fill"></i>
+                {{ avg_rating }} / 10
+                <span class="jd-rating-count">({{ review_count }} {% trans "reviews" %})</span>
+              </span>
+            </div>
+          {% endif %}
+          <div class="jd-divider mt-4 mb-4"></div>
+        </div>
+
+        <!-- Specs grid -->
+        <div class="car-specs-grid jd-reveal">
+          <span class="eyebrow">{% trans "Vehicle Specifications" %}</span>
+          <div class="specs-grid mt-3">
+            <div class="spec-item">
+              <i class="bi bi-people-fill spec-icon"></i>
+              <div class="spec-label">{% trans "Capacity" %}</div>
+              <div class="spec-value">{{ car.capacity }} {% trans "passengers" %}</div>
+            </div>
+            <div class="spec-item">
+              <i class="bi bi-gear-fill spec-icon"></i>
+              <div class="spec-label">{% trans "Transmission" %}</div>
+              <div class="spec-value">{{ car.get_transmission_display }}</div>
+            </div>
+            <div class="spec-item">
+              <i class="bi bi-droplet-fill spec-icon"></i>
+              <div class="spec-label">{% trans "Fuel Type" %}</div>
+              <div class="spec-value">{{ car.get_fuel_type_display }}</div>
+            </div>
+            <div class="spec-item">
+              <i class="bi bi-calendar3 spec-icon"></i>
+              <div class="spec-label">{% trans "Year" %}</div>
+              <div class="spec-value">{{ car.year }}</div>
+            </div>
+            {% if car.driver_speaks_en or car.driver_speaks_fr %}
+            <div class="spec-item">
+              <i class="bi bi-translate spec-icon"></i>
+              <div class="spec-label">{% trans "Driver Languages" %}</div>
+              <div class="spec-value">
+                {% if car.driver_speaks_en %}{% trans "English" %}{% endif %}
+                {% if car.driver_speaks_en and car.driver_speaks_fr %}, {% endif %}
+                {% if car.driver_speaks_fr %}{% trans "French" %}{% endif %}
+              </div>
+            </div>
+            {% endif %}
+            <div class="spec-item">
+              <i class="bi bi-geo-alt-fill spec-icon"></i>
+              <div class="spec-label">{% trans "Pickup Locations" %}</div>
+              <div class="spec-value">{{ pickup_locations|join:", " }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        {% if description %}
+        <div class="car-description mt-5 jd-reveal">
+          <span class="eyebrow">{% trans "About This Vehicle" %}</span>
+          <div class="car-desc-text mt-3">{{ description }}</div>
+        </div>
+        {% endif %}
+
+      </div>
+
+      <!-- RIGHT: Booking form -->
+      <div class="col-lg-5 jd-load-reveal" data-delay="4">
+        <div class="car-booking-panel" id="booking-panel">
+
+          <!-- Price header -->
+          <div class="booking-price-header">
+            <div>
+              <span class="booking-price-from">{% trans "From" %}</span>
+              <span class="booking-price-amount" id="display-price">
+                {% if has_discount %}
+                <span class="jd-price-original" style="font-size:1rem;margin-right:4px;">${{ car.price_per_day }}</span>
+                ${{ display_price }}
+                {% else %}
+                ${{ car.price_per_day }}
+                {% endif %}
+              </span>
+              <span class="booking-price-per">{% trans "/ day" %}</span>
+            </div>
+            <div class="text-end">
+              {% if has_discount %}
+              <span class="jd-discount-badge mb-1">{{ discount_percent }}% {% trans "off" %}</span><br>
+              {% endif %}
+              <span class="jd-badge jd-badge-accent">{{ car.get_vehicle_type_display }}</span>
+            </div>
+          </div>
+
+          <!-- Booking form -->
+          <form id="car-booking-form"
+                method="post"
+                action="{% url 'cars:book' car.slug %}">
+            {% csrf_token %}
+
+            <div class="booking-form-body">
+
+              <!-- Rental mode -->
+              <div class="jd-form-group">
+                <label class="jd-label">{% trans "Rental Mode" %}</label>
+                <div class="rental-mode-selector">
+                  {% if car.offers_driver %}
+                  <label class="rental-mode-option {% if not car.offers_self_drive %}only-option{% endif %}"
+                         id="mode-driver">
+                    <input type="radio" name="rental_mode" value="with_driver"
+                           {% if car.offers_driver %}checked{% endif %}>
+                    <div class="rental-mode-content">
+                      <i class="bi bi-person-fill rental-mode-icon"></i>
+                      <div>
+                        <div class="rental-mode-title">{% trans "With Driver" %}</div>
+                        <div class="rental-mode-desc">
+                          {% if car.driver_speaks_en and car.driver_speaks_fr %}
+                            {% trans "English & French driver" %}
+                          {% elif car.driver_speaks_fr %}
+                            {% trans "French-speaking driver" %}
+                          {% else %}
+                            {% trans "English-speaking driver" %}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </label>
+                  {% endif %}
+
+                  {% if car.offers_self_drive %}
+                  <label class="rental-mode-option {% if not car.offers_driver %}only-option{% endif %}"
+                         id="mode-self-drive">
+                    <input type="radio" name="rental_mode" value="self_drive"
+                           {% if not car.offers_driver %}checked{% endif %}>
+                    <div class="rental-mode-content">
+                      <i class="bi bi-key-fill rental-mode-icon"></i>
+                      <div>
+                        <div class="rental-mode-title">{% trans "Self Drive" %}</div>
+                        <div class="rental-mode-desc">{% trans "Licence required" %}</div>
+                      </div>
+                    </div>
+                  </label>
+                  {% endif %}
+                </div>
+              </div>
+
+              <!-- Pickup location -->
+              <div class="jd-form-group">
+                <label class="jd-label" for="id_pickup_location">{% trans "Pickup Location" %}</label>
+                {% if pickup_locations %}
+                <select name="pickup_location" id="id_pickup_location" class="jd-input">
+                  <option value="">{% trans "Select pickup location" %}</option>
+                  {% for loc in pickup_locations %}
+                  <option value="{{ loc }}"
+                    {% if booking_prefill.pickup_location == loc %}selected{% endif %}>
+                    {{ loc }}
+                  </option>
+                  {% endfor %}
+                </select>
+                {% else %}
+                <input type="text" name="pickup_location" id="id_pickup_location"
+                       class="jd-input"
+                       placeholder="{% trans 'Enter pickup location' %}"
+                       value="{{ booking_prefill.pickup_location|default:'' }}">
+                {% endif %}
+              </div>
+
+              <!-- Dates -->
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="jd-form-group mb-0">
+                    <label class="jd-label" for="id_pickup_date">{% trans "Pickup Date" %}</label>
+                    <div class="jd-input-icon-wrap">
+                      <i class="bi bi-calendar3 jd-input-icon"></i>
+                      <input type="text" name="pickup_date" id="id_pickup_date"
+                             class="jd-input"
+                             placeholder="{% trans 'Select date' %}"
+                             value="{{ booking_prefill.pickup_date|default:'' }}"
+                             autocomplete="off" readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="jd-form-group mb-0">
+                    <label class="jd-label" for="id_return_date">{% trans "Return Date" %}</label>
+                    <div class="jd-input-icon-wrap">
+                      <i class="bi bi-calendar3 jd-input-icon"></i>
+                      <input type="text" name="return_date" id="id_return_date"
+                             class="jd-input"
+                             placeholder="{% trans 'Select date' %}"
+                             value="{{ booking_prefill.return_date|default:'' }}"
+                             autocomplete="off" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Licence number (shown only for self drive) -->
+              <div class="jd-form-group mt-3" id="licence-field" style="display:none;">
+                <label class="jd-label" for="id_driver_licence_number">
+                  {% trans "Driver's Licence Number" %}
+                  <span class="text-danger">*</span>
+                </label>
+                <div class="jd-input-icon-wrap">
+                  <i class="bi bi-card-text jd-input-icon"></i>
+                  <input type="text" name="driver_licence_number" id="id_driver_licence_number"
+                         class="jd-input"
+                         placeholder="{% trans 'Enter your licence number' %}"
+                         value="{{ booking_prefill.driver_licence_number|default:'' }}">
+                </div>
+              </div>
+
+              <!-- Special requests -->
+              <div class="jd-form-group mt-3">
+                <label class="jd-label" for="id_special_requests">
+                  {% trans "Special Requests" %}
+                  <span class="text-muted fw-normal">({% trans "optional" %})</span>
+                </label>
+                <textarea name="special_requests" id="id_special_requests"
+                          class="jd-input" rows="2"
+                          placeholder="{% trans 'Airport pickup time, child seat, any other requests...' %}">{{ booking_prefill.special_requests|default:'' }}</textarea>
+              </div>
+
+              <!-- Price breakdown -->
+              <div class="booking-price-breakdown" id="price-breakdown" style="display:none;">
+                <div class="price-row">
+                  <span id="breakdown-rate-label">—</span>
+                  <span id="breakdown-rate-amount">—</span>
+                </div>
+                <div class="price-row price-row-total">
+                  <span>{% trans "Total" %}</span>
+                  <span id="breakdown-total">—</span>
+                </div>
+              </div>
+
+              {% if not is_refundable %}
+                <div class="jd-nonrefundable-notice">
+                  <i class="bi bi-x-circle-fill"></i>
+                  <div>
+                    <strong>{% trans "Non-refundable" %}</strong>
+                    <p class="mb-0 mt-1" style="font-size:var(--text-xs);">
+                      {% trans "This vehicle is non-refundable. Once booked, no refund will be issued regardless of cancellation date." %}
+                    </p>
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if not allows_pay_on_arrival %}
+                <div class="jd-pay-now-only-notice">
+                  <i class="bi bi-credit-card-fill me-2"></i>
+                  {% trans "This vehicle requires Pay Now — Pay on Arrival is not available." %}
+                </div>
+              {% endif %}
+
+              <!-- Server errors -->
+              {% if booking_prefill %}
+              <div class="booking-server-errors">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                {% trans "Please check your booking details and try again." %}
+              </div>
+              {% endif %}
+
+              <!-- Submit -->
+              <button type="submit" class="btn-accent-jd w-100 justify-content-center booking-submit-btn mt-3">
+                <i class="bi bi-calendar-check me-2"></i>
+                {% trans "Review Booking" %}
+              </button>
+
+              <p class="booking-no-charge-note mt-2">
+                <i class="bi bi-shield-check me-1"></i>
+                {% trans "No charge yet — review before payment" %}
+              </p>
+
+            </div>
+          </form>
+
+          {% if allows_pay_on_arrival %}
+            <div class="poa-note">
+              <i class="bi bi-cash-coin me-2"></i>
+              {% trans "Pay on Arrival available — pay when you reach Tanzania" %}
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+  window.JD_CAR_PRICE_PER_DAY = "{{ display_price }}";
+</script>
+<script src="{% static 'js/cars/car_detail.js' %}"></script>
+{% endblock %}
