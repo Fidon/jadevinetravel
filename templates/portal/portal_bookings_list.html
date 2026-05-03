@@ -1,0 +1,219 @@
+{% extends "portal/portal_base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Bookings" %}{% endblock %}
+{% block nav_bookings %}active{% endblock %}
+
+{% block page_title %}{% trans "Bookings" %}{% endblock %}
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    {{ total }} {% trans "booking(s) found" %}
+    {% if pending_cnt > 0 %}
+    &middot; <span style="color:var(--color-danger);font-weight:600;">
+      {{ pending_cnt }} {% trans "need attention" %}
+    </span>
+    {% endif %}
+  </p>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_bookings.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# ── Filters ── #}
+<form method="get" class="portal-card mb-4" style="padding:1rem 1.5rem;">
+  <div class="d-flex align-items-end gap-3 flex-wrap">
+
+    <div class="jd-form-group mb-0" style="flex:2;min-width:200px;">
+      <label class="jd-label">{% trans "Search" %}</label>
+      <div class="jd-input-icon-wrap">
+        <i class="bi bi-search jd-input-icon"></i>
+        <input type="text" name="q" class="jd-input"
+               value="{{ search_query|default:'' }}"
+               placeholder="{% trans 'Reference, name, or email...' %}">
+      </div>
+    </div>
+
+    <div class="jd-form-group mb-0" style="flex:1;min-width:140px;">
+      <label class="jd-label">{% trans "Service" %}</label>
+      <select name="service" class="jd-input portal-autosubmit">
+        <option value="">{% trans "All" %}</option>
+        {% for val, label in service_choices %}
+        <option value="{{ val }}" {% if service_filter == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="jd-form-group mb-0" style="flex:1;min-width:140px;">
+      <label class="jd-label">{% trans "Status" %}</label>
+      <select name="status" class="jd-input portal-autosubmit">
+        <option value="">{% trans "All" %}</option>
+        {% for val, label in status_choices %}
+        <option value="{{ val }}" {% if status_filter == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="jd-form-group mb-0" style="flex:1;min-width:140px;">
+      <label class="jd-label">{% trans "Payment" %}</label>
+      <select name="payment" class="jd-input portal-autosubmit">
+        <option value="">{% trans "All" %}</option>
+        {% for val, label in payment_choices %}
+        <option value="{{ val }}" {% if payment_filter == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="jd-form-group mb-0" style="min-width:130px;">
+      <label class="jd-label">{% trans "From" %}</label>
+      <input type="date" name="date_from" class="jd-input"
+             value="{{ date_from|default:'' }}">
+    </div>
+
+    <div class="jd-form-group mb-0" style="min-width:130px;">
+      <label class="jd-label">{% trans "To" %}</label>
+      <input type="date" name="date_to" class="jd-input"
+             value="{{ date_to|default:'' }}">
+    </div>
+
+    <div class="d-flex gap-2 align-self-flex-end" style="align-self:flex-end;">
+      <button type="submit" class="btn-primary-jd"
+              style="padding:0.5rem 1rem;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:0.35rem;">
+        <i class="bi bi-funnel"></i> {% trans "Filter" %}
+      </button>
+      {% if service_filter or status_filter or payment_filter or date_from or date_to or search_query %}
+      <a href="{% url 'portal:booking_list' %}" class="btn-outline-jd"
+         style="padding:0.5rem 0.85rem;font-size:var(--text-sm);">
+        <i class="bi bi-x-lg"></i>
+      </a>
+      {% endif %}
+    </div>
+
+  </div>
+</form>
+
+{# ── Table ── #}
+<div class="portal-table-wrap table-responsive">
+  {% if bookings %}
+  <table id="bookings-table" class="table mb-0" style="width:100%;">
+    <thead>
+      <tr>
+        <th>{% trans "Reference" %}</th>
+        <th>{% trans "Customer" %}</th>
+        <th>{% trans "Service" %}</th>
+        <th>{% trans "Total" %}</th>
+        <th>{% trans "Payment" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Service Date" %}</th>
+        <th>{% trans "Booked" %}</th>
+        <th>{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for booking in bookings %}
+      <tr class="{% if booking.status == 'cancellation_requested' %}booking-row--attention{% endif %}">
+
+        <td class="text-nowrap-custom">
+          <a href="{% url 'portal:booking_detail' booking.pk %}"
+             style="font-weight:700;color:var(--color-primary);text-decoration:none;font-family:monospace;font-size:var(--text-sm);">
+            {{ booking.reference }}
+          </a>
+          {% if booking.payment_mode == 'pay_on_arrival' %}
+          <span style="display:block;font-size:0.65rem;color:var(--color-muted);font-weight:500;letter-spacing:0.06em;text-transform:uppercase;">
+            {% trans "Pay on Arrival" %}
+          </span>
+          {% endif %}
+        </td>
+
+        <td class="text-nowrap-custom">
+          <div style="font-weight:500;">{{ booking.user.get_full_name|default:booking.user.email }}</div>
+          <div style="font-size:var(--text-xs);color:var(--color-muted);">{{ booking.user.email }}</div>
+        </td>
+
+        <td class="text-truncate-container">
+          <div class="d-flex align-items-center gap-1">
+            <i class="bi {{ booking.service_icon }}" style="color:var(--color-muted);"></i>
+            <span style="font-size:var(--text-sm);" class="text-truncate-line">{{ booking.service_name }}</span>
+          </div>
+          <div style="font-size:var(--text-xs);color:var(--color-muted);" class="text-truncate-line">
+            {{ booking.get_service_type_display }}
+          </div>
+        </td>
+
+        <td style="font-weight:600;white-space:nowrap;">
+          {{ booking.currency }} {{ booking.total_price|floatformat:2 }}
+        </td>
+
+        <td>
+          {% if booking.payment_status == 'paid' %}
+            <span class="booking-status-badge booking-status-badge--paid">
+              <i class="bi bi-check-circle-fill"></i> {% trans "Paid" %}
+            </span>
+          {% elif booking.payment_status == 'pending' %}
+            <span class="booking-status-badge booking-status-badge--pending">
+              {% trans "Pending" %}
+            </span>
+          {% elif booking.payment_status == 'refunded' %}
+            <span class="booking-status-badge booking-status-badge--refunded">
+              {% trans "Refunded" %}
+            </span>
+          {% else %}
+            <span class="booking-status-badge booking-status-badge--failed">
+              {% trans "Failed" %}
+            </span>
+          {% endif %}
+        </td>
+
+        <td>
+          {% if booking.status == 'confirmed' %}
+            <span class="booking-status-badge booking-status-badge--confirmed">{% trans "Confirmed" %}</span>
+          {% elif booking.status == 'pending_confirmation' %}
+            <span class="booking-status-badge booking-status-badge--pending">{% trans "Pending" %}</span>
+          {% elif booking.status == 'cancellation_requested' %}
+            <span class="booking-status-badge booking-status-badge--cancel-req">
+              <i class="bi bi-exclamation-triangle-fill"></i> {% trans "Cancel Requested" %}
+            </span>
+          {% elif booking.status == 'cancelled' %}
+            <span class="booking-status-badge booking-status-badge--cancelled">{% trans "Cancelled" %}</span>
+          {% elif booking.status == 'completed' %}
+            <span class="booking-status-badge booking-status-badge--completed">{% trans "Completed" %}</span>
+          {% elif booking.status == 'no_show' %}
+            <span class="booking-status-badge booking-status-badge--noshow">{% trans "No Show" %}</span>
+          {% endif %}
+        </td>
+
+        <td style="font-size:var(--text-xs);color:var(--color-muted);white-space:nowrap;" class="text-nowrap-custom">
+          {{ booking.service_date|date:"d M Y"|default:"—" }}
+        </td>
+
+        <td style="font-size:var(--text-xs);color:var(--color-muted);white-space:nowrap;" class="text-nowrap-custom">
+          {{ booking.created_at|date:"d M Y" }}
+        </td>
+
+        <td class="text-center">
+          <a href="{% url 'portal:booking_detail' booking.pk %}"
+             class="portal-icon-btn" title="{% trans 'View' %}">
+            <i class="bi bi-eye"></i>
+          </a>
+        </td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <div class="portal-empty-state">
+    <i class="bi bi-calendar-x"></i>
+    <p>{% trans "No bookings found matching your filters." %}</p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portal/portal_bookings.js' %}"></script>
+{% endblock %}

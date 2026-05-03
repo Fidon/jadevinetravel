@@ -34,6 +34,8 @@ from apps.cars.models import CarRental
 from apps.core.models import SavedFavourite
 from apps.accounts.forms import ProfileUpdateForm, CancellationForm
 
+from apps.reviews.forms import ReviewForm
+
 User = get_user_model()
 
 
@@ -180,11 +182,20 @@ class BookingDetailView(LoginRequiredMixin, View):
             booking.service_date and
             booking.service_date > date.today()
         )
+        
+        # Review state — determines which UI block to render
+        existing_review = getattr(booking, 'review', None)
+        can_review = (
+            booking.status == 'completed' and
+            existing_review is None
+        )
 
         return render(request, self.template_name, {
             'booking': booking,
             'refund_info': refund_info,
             'cancellable': cancellable,
+            'existing_review': existing_review,
+            'can_review': can_review,
         })
 
 

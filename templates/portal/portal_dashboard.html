@@ -1,2 +1,318 @@
-<!DOCTYPE html>
-<html><body><h1>Portal Dashboard</h1></body></html>
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Dashboard" %}{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block page_title %}{% trans "Dashboard" %}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% blocktrans with name=request.user.get_full_name|default:request.user.username %}
+    Welcome back, {{ name }}
+  {% endblocktrans %}
+</p>
+{% endblock %}
+
+{% block content %}
+
+{% comment %} PENDING APPROVALS — Super Admin only, shown at top as highest priority {% endcomment %}
+{% if not mini_admin %}
+<div class="portal-card mb-4" id="pending">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">
+      <i class="bi bi-hourglass-split me-2"></i>{% trans "Pending Approvals" %}
+    </h2>
+    {% if pending_total > 0 %}
+    <span class="approval-badge approval-badge--pending">
+      <span class="js-pending-total-count">{{ pending_total }}</span>
+      {% trans "awaiting review" %}
+    </span>
+    {% else %}
+    <span class="approval-badge approval-badge--approved">
+      <i class="bi bi-check-circle-fill"></i> {% trans "All listings reviewed" %}
+    </span>
+    {% endif %}
+  </div>
+
+  <div class="row g-3">
+    {% comment %} Hotels pending {% endcomment %}
+    <div class="col-sm-6">
+      <div class="d-flex align-items-center justify-content-between p-3 rounded"
+           style="background:var(--color-off-white);border:1px solid var(--color-border);">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-building" style="font-size:1.25rem;color:var(--color-primary);"></i>
+          <span style="font-size:var(--text-sm);font-weight:500;">{% trans "Hotels" %}</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <strong class="js-pending-hotels-count"
+                  style="font-size:var(--text-lg);color:{% if pending_hotels > 0 %}var(--color-danger){% else %}var(--color-success){% endif %};">
+            {{ pending_hotels }}
+          </strong>
+          {% if pending_hotels > 0 %}
+          <a href="{% url 'portal:pending_hotels' %}" class="btn-accent-jd"
+             style="font-size:var(--text-xs);padding:0.25rem 0.75rem;">
+            {% trans "Review" %}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% comment %} Cars pending {% endcomment %}
+    <div class="col-sm-6">
+      <div class="d-flex align-items-center justify-content-between p-3 rounded"
+           style="background:var(--color-off-white);border:1px solid var(--color-border);">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-car-front" style="font-size:1.25rem;color:var(--color-primary);"></i>
+          <span style="font-size:var(--text-sm);font-weight:500;">{% trans "Car Rentals" %}</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <strong class="js-pending-cars-count"
+                  style="font-size:var(--text-lg);color:{% if pending_cars > 0 %}var(--color-danger){% else %}var(--color-success){% endif %};">
+            {{ pending_cars }}
+          </strong>
+          {% if pending_cars > 0 %}
+          <a href="{% url 'portal:pending_cars' %}" class="btn-accent-jd"
+             style="font-size:var(--text-xs);padding:0.25rem 0.75rem;">
+            {% trans "Review" %}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+{% comment %} BOOKING STATS {% endcomment %}
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--primary">
+        <i class="bi bi-calendar-day"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ stats.today }}</div>
+        <p class="portal-stat-label">{% trans "Today" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--accent">
+        <i class="bi bi-calendar-week"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ stats.this_week }}</div>
+        <p class="portal-stat-label">{% trans "This Week" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--success">
+        <i class="bi bi-calendar-month"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ stats.this_month }}</div>
+        <p class="portal-stat-label">{% trans "This Month" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--accent">
+        <i class="bi bi-currency-dollar"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">${{ revenue_usd|floatformat:0 }}</div>
+        <p class="portal-stat-label">{% trans "Revenue (USD)" %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% comment %} STATUS BREAKDOWN + UNREAD MESSAGES (Super Admin) / OWN LISTINGS (Mini-Admin) {% endcomment %}
+<div class="row g-3 mb-4">
+
+  {% comment %} Booking status breakdown {% endcomment %}
+  <div class="col-lg-8">
+    <div class="portal-card h-100">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Bookings by Status" %}</h2>
+        <a href="{% url 'portal:booking_list' %}"
+           style="font-size:var(--text-sm);color:var(--color-primary);text-decoration:none;font-weight:500;">
+          {% trans "View all" %} <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div class="row g-2">
+        {% with confirmed=status_map.confirmed|default:0 pending_conf=status_map.pending_confirmation|default:0 cancelled=status_map.cancelled|default:0 completed=status_map.completed|default:0 %}
+        <div class="col-6 col-sm-3">
+          <div class="text-center p-2 rounded" style="background:var(--color-success-bg);">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--color-success);">{{ confirmed }}</div>
+            <div style="font-size:var(--text-xs);color:var(--color-success);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">{% trans "Confirmed" %}</div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-3">
+          <div class="text-center p-2 rounded" style="background:var(--color-warning-bg);">
+            <div style="font-size:1.5rem;font-weight:700;color:#7a5200;">{{ pending_conf }}</div>
+            <div style="font-size:var(--text-xs);color:#7a5200;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">{% trans "Pending" %}</div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-3">
+          <div class="text-center p-2 rounded" style="background:var(--color-danger-bg);">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--color-danger);">{{ cancelled }}</div>
+            <div style="font-size:var(--text-xs);color:var(--color-danger);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">{% trans "Cancelled" %}</div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-3">
+          <div class="text-center p-2 rounded" style="background:var(--color-info-bg);">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--color-info);">{{ completed }}</div>
+            <div style="font-size:var(--text-xs);color:var(--color-info);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">{% trans "Completed" %}</div>
+          </div>
+        </div>
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Super Admin: unread messages + quick links / Mini-Admin: listing statuses {% endcomment %}
+  <div class="col-lg-4">
+    {% if not mini_admin %}
+    <div class="portal-card h-100">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Quick Actions" %}</h2>
+      </div>
+      <div class="d-flex flex-column gap-2">
+        <a href="{% url 'portal:message_list' %}"
+           class="d-flex align-items-center justify-content-between p-2 rounded text-decoration-none"
+           style="background:var(--color-off-white);border:1px solid var(--color-border);">
+          <span style="font-size:var(--text-sm);color:var(--color-text);"><i class="bi bi-envelope me-2 text-muted"></i>{% trans "Unread Messages" %}</span>
+          <span style="font-weight:700;color:{% if unread_messages > 0 %}var(--color-danger){% else %}var(--color-success){% endif %};">{{ unread_messages }}</span>
+        </a>
+        <a href="{% url 'portal:hotel_add' %}"
+           class="d-flex align-items-center gap-2 p-2 rounded text-decoration-none"
+           style="background:var(--color-off-white);border:1px solid var(--color-border);font-size:var(--text-sm);color:var(--color-text);">
+          <i class="bi bi-plus-circle text-muted"></i> {% trans "Add Hotel" %}
+        </a>
+        <a href="{% url 'portal:tour_add' %}"
+           class="d-flex align-items-center gap-2 p-2 rounded text-decoration-none"
+           style="background:var(--color-off-white);border:1px solid var(--color-border);font-size:var(--text-sm);color:var(--color-text);">
+          <i class="bi bi-plus-circle text-muted"></i> {% trans "Add Tour Package" %}
+        </a>
+        <a href="{% url 'portal:car_add' %}"
+           class="d-flex align-items-center gap-2 p-2 rounded text-decoration-none"
+           style="background:var(--color-off-white);border:1px solid var(--color-border);font-size:var(--text-sm);color:var(--color-text);">
+          <i class="bi bi-plus-circle text-muted"></i> {% trans "Add Car Rental" %}
+        </a>
+      </div>
+    </div>
+    {% else %}
+    {% comment %} Mini-admin: show own listing approval statuses {% endcomment %}
+    <div class="portal-card h-100">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "My Listings" %}</h2>
+      </div>
+      <div class="d-flex flex-column gap-2">
+        {% for row in mini_admin_hotels %}
+        <div class="d-flex align-items-center justify-content-between p-2 rounded"
+             style="background:var(--color-off-white);border:1px solid var(--color-border);">
+          <span style="font-size:var(--text-sm);"><i class="bi bi-building me-2 text-muted"></i>{% trans "Hotels" %} — {{ row.approval_status|title }}</span>
+          <strong style="font-size:var(--text-sm);">{{ row.count }}</strong>
+        </div>
+        {% empty %}
+        <p style="font-size:var(--text-sm);color:var(--color-muted);">{% trans "No hotel listings yet." %}</p>
+        {% endfor %}
+        {% for row in mini_admin_cars %}
+        <div class="d-flex align-items-center justify-content-between p-2 rounded"
+             style="background:var(--color-off-white);border:1px solid var(--color-border);">
+          <span style="font-size:var(--text-sm);"><i class="bi bi-car-front me-2 text-muted"></i>{% trans "Cars" %} — {{ row.approval_status|title }}</span>
+          <strong style="font-size:var(--text-sm);">{{ row.count }}</strong>
+        </div>
+        {% empty %}
+        <p style="font-size:var(--text-sm);color:var(--color-muted);">{% trans "No car listings yet." %}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+
+{% comment %} RECENT BOOKINGS TABLE {% endcomment %}
+<div class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">{% trans "Recent Bookings" %}</h2>
+    <a href="{% url 'portal:booking_list' %}"
+       style="font-size:var(--text-sm);color:var(--color-primary);text-decoration:none;font-weight:500;">
+      {% trans "View all" %} <i class="bi bi-arrow-right"></i>
+    </a>
+  </div>
+
+  {% if recent_bookings %}
+  <div class="table-responsive">
+    <table class="table table-hover mb-0" style="font-size:var(--text-sm);">
+      <thead>
+        <tr style="background:var(--color-off-white);">
+          <th style="padding:0.75rem 1rem;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-light);font-weight:700;border-bottom:2px solid var(--color-border);">{% trans "Reference" %}</th>
+          <th style="padding:0.75rem 1rem;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-light);font-weight:700;border-bottom:2px solid var(--color-border);">{% trans "Customer" %}</th>
+          <th style="padding:0.75rem 1rem;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-light);font-weight:700;border-bottom:2px solid var(--color-border);">{% trans "Service" %}</th>
+          <th style="padding:0.75rem 1rem;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-light);font-weight:700;border-bottom:2px solid var(--color-border);">{% trans "Amount" %}</th>
+          <th style="padding:0.75rem 1rem;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-light);font-weight:700;border-bottom:2px solid var(--color-border);">{% trans "Status" %}</th>
+          <th style="padding:0.75rem 1rem;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-light);font-weight:700;border-bottom:2px solid var(--color-border);">{% trans "Date" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in recent_bookings %}
+        <tr>
+          <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--color-border);vertical-align:middle;">
+            <a href="{% url 'portal:booking_detail' booking.pk %}"
+               style="font-weight:600;color:var(--color-primary);text-decoration:none;font-family:monospace;">
+              {{ booking.reference }}
+            </a>
+          </td>
+          <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--color-border);vertical-align:middle;">
+            {{ booking.user.get_full_name|default:booking.user.email }}
+          </td>
+          <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--color-border);vertical-align:middle;">
+            {% if booking.service_type == 'hotel' %}
+              <i class="bi bi-building me-1 text-muted"></i>{{ booking.hotel.name|default:"—" }}
+            {% elif booking.service_type == 'tour' %}
+              <i class="bi bi-compass me-1 text-muted"></i>{{ booking.ttour_name_display|default:"—" }}
+            {% elif booking.service_type == 'car' %}
+              <i class="bi bi-car-front me-1 text-muted"></i>{{ booking.car.name|default:"—" }}
+            {% endif %}
+          </td>
+          <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--color-border);vertical-align:middle;font-weight:600;">
+            {{ booking.currency }} {{ booking.total_price|floatformat:2 }}
+          </td>
+          <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--color-border);vertical-align:middle;">
+            {% if booking.status == 'confirmed' %}
+              <span class="approval-badge approval-badge--approved">{% trans "Confirmed" %}</span>
+            {% elif booking.status == 'pending_confirmation' %}
+              <span class="approval-badge approval-badge--pending">{% trans "Pending" %}</span>
+            {% elif booking.status == 'cancelled' %}
+              <span class="approval-badge approval-badge--rejected">{% trans "Cancelled" %}</span>
+            {% else %}
+              <span class="approval-badge" style="background:var(--color-info-bg);color:var(--color-info);">{{ booking.get_status_display }}</span>
+            {% endif %}
+          </td>
+          <td style="padding:0.75rem 1rem;border-bottom:1px solid var(--color-border);vertical-align:middle;color:var(--color-muted);font-size:var(--text-xs);">
+            {{ booking.created_at|date:"d M Y" }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="portal-empty-state">
+    <i class="bi bi-calendar-x"></i>
+    <p>{% trans "No bookings yet." %}</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

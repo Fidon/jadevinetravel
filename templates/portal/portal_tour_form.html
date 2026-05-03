@@ -1,0 +1,214 @@
+{% extends "portal/portal_base.html" %}
+{% load static i18n %}
+
+{% block title %}{% if is_edit %}{% trans "Edit Tour" %}{% else %}{% trans "Add Tour Package" %}{% endif %}{% endblock %}
+{% block nav_tours %}active{% endblock %}
+
+{% block page_title %}
+  {% if is_edit %}{% trans "Edit Tour Package" %}{% else %}{% trans "Add Tour Package" %}{% endif %}
+{% endblock %}
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    {% if is_edit %}{{ tour.name_en }}{% else %}{% trans "All fields are for Jadevine-managed packages only." %}{% endif %}
+  </p>
+{% endblock %}
+
+{% block page_actions %}
+  {% if is_edit %}
+  <a href="{% url 'portal:tour_detail' tour.pk %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "Back" %}
+  </a>
+  {% else %}
+  <a href="{% url 'portal:tour_list' %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "Back to Tours" %}
+  </a>
+  {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_tours.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<form method="post" action="" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+
+  {# Section 1: Package identity #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-compass me-2"></i>{% trans "Package Identity" %}
+    </h3>
+
+    <div class="jd-form-group">
+      {{ form.name_en.label_tag }}
+      {{ form.name_en }}
+      {% if form.name_en.errors %}<p class="field-error">{{ form.name_en.errors.0 }}</p>{% endif %}
+    </div>
+
+    <ul class="nav nav-tabs mt-3 mb-3" style="border-color:var(--color-border);">
+      <li class="nav-item">
+        <button class="nav-link active lang-tab" data-target="#tour-name-fr" type="button">
+          🇫🇷 {% trans "French" %}
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link lang-tab" data-target="#tour-name-ru" type="button">
+          🇷🇺 {% trans "Russian" %}
+        </button>
+      </li>
+    </ul>
+    <div id="tour-name-fr">
+      <div class="jd-form-group mb-0">{{ form.name_fr.label_tag }}{{ form.name_fr }}</div>
+    </div>
+    <div id="tour-name-ru" style="display:none;">
+      <div class="jd-form-group mb-0">{{ form.name_ru.label_tag }}{{ form.name_ru }}</div>
+    </div>
+
+    <div class="portal-field-row portal-field-row--3 mt-3">
+      <div class="jd-form-group mb-0">
+        {{ form.tour_type.label_tag }}{{ form.tour_type }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.duration_days.label_tag }}{{ form.duration_days }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.group_size_max.label_tag }}{{ form.group_size_max }}
+      </div>
+    </div>
+
+    <div class="portal-field-row portal-field-row--2 mt-3">
+      <div class="jd-form-group mb-0">
+        {{ form.price_per_person.label_tag }}
+        <div class="jd-input-icon-wrap">
+          <i class="bi bi-currency-dollar jd-input-icon"></i>
+          {{ form.price_per_person }}
+        </div>
+        {% if form.price_per_person.errors %}<p class="field-error">{{ form.price_per_person.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.cover_image.label_tag }}
+        {{ form.cover_image }}
+        {% if is_edit and tour.cover_image %}
+        <p style="font-size:var(--text-xs);color:var(--color-muted);margin-top:0.25rem;">
+          {% trans "Current:" %} <a href="{{ tour.cover_image.url }}" target="_blank" rel="noopener">{% trans "View" %}</a>
+        </p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="d-flex gap-4 flex-wrap mt-3">
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.is_active }} <span>{{ form.is_active.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.is_featured }} <span>{{ form.is_featured.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.is_refundable }} <span>{{ form.is_refundable.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.allows_pay_on_arrival }} <span>{{ form.allows_pay_on_arrival.label }}</span>
+      </label>
+    </div>
+  </div>
+
+  {# Section 2: Descriptions #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-file-text me-2"></i>{% trans "Descriptions" %}
+    </h3>
+
+    <div class="jd-form-group">
+      {{ form.description_en.label_tag }}{{ form.description_en }}
+      {% if form.description_en.errors %}<p class="field-error">{{ form.description_en.errors.0 }}</p>{% endif %}
+    </div>
+
+    <ul class="nav nav-tabs mt-3 mb-3" style="border-color:var(--color-border);">
+      <li class="nav-item"><button class="nav-link active lang-tab" data-target="#desc-lang-fr" type="button">🇫🇷 {% trans "French" %}</button></li>
+      <li class="nav-item"><button class="nav-link lang-tab" data-target="#desc-lang-ru" type="button">🇷🇺 {% trans "Russian" %}</button></li>
+    </ul>
+    <div id="desc-lang-fr">
+      <div class="jd-form-group mb-0">{{ form.description_fr.label_tag }}{{ form.description_fr }}</div>
+    </div>
+    <div id="desc-lang-ru" style="display:none;">
+      <div class="jd-form-group mb-0">{{ form.description_ru.label_tag }}{{ form.description_ru }}</div>
+    </div>
+  </div>
+
+  {# Section 3: Highlights / Inclusions / Exclusions / What to bring #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-list-check me-2"></i>{% trans "Highlights, Inclusions & Exclusions" %}
+    </h3>
+    <p style="font-size:var(--text-sm);color:var(--color-muted);margin-bottom:1.25rem;">
+      {% trans "Enter each item on a new line." %}
+    </p>
+
+    {# Highlights #}
+    <div class="portal-field-row portal-field-row--3">
+      <div class="jd-form-group mb-0">{{ form.highlights_en_text.label_tag }}{{ form.highlights_en_text }}</div>
+      <div class="jd-form-group mb-0">{{ form.highlights_fr_text.label_tag }}{{ form.highlights_fr_text }}</div>
+      <div class="jd-form-group mb-0">{{ form.highlights_ru_text.label_tag }}{{ form.highlights_ru_text }}</div>
+    </div>
+
+    {# Inclusions #}
+    <div class="portal-field-row portal-field-row--3 mt-3">
+      <div class="jd-form-group mb-0">{{ form.inclusions_en_text.label_tag }}{{ form.inclusions_en_text }}</div>
+      <div class="jd-form-group mb-0">{{ form.inclusions_fr_text.label_tag }}{{ form.inclusions_fr_text }}</div>
+      <div class="jd-form-group mb-0">{{ form.inclusions_ru_text.label_tag }}{{ form.inclusions_ru_text }}</div>
+    </div>
+
+    {# Exclusions #}
+    <div class="portal-field-row portal-field-row--3 mt-3">
+      <div class="jd-form-group mb-0">{{ form.exclusions_en_text.label_tag }}{{ form.exclusions_en_text }}</div>
+      <div class="jd-form-group mb-0">{{ form.exclusions_fr_text.label_tag }}{{ form.exclusions_fr_text }}</div>
+      <div class="jd-form-group mb-0">{{ form.exclusions_ru_text.label_tag }}{{ form.exclusions_ru_text }}</div>
+    </div>
+
+    {# What to bring #}
+    <div class="portal-field-row portal-field-row--3 mt-3">
+      <div class="jd-form-group mb-0">{{ form.what_to_bring_en.label_tag }}{{ form.what_to_bring_en }}</div>
+      <div class="jd-form-group mb-0">{{ form.what_to_bring_fr.label_tag }}{{ form.what_to_bring_fr }}</div>
+      <div class="jd-form-group mb-0">{{ form.what_to_bring_ru.label_tag }}{{ form.what_to_bring_ru }}</div>
+    </div>
+  </div>
+
+  {# Section 4: Discount #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-tag me-2"></i>{% trans "Discount" %}
+    </h3>
+    <div class="portal-field-row portal-field-row--2">
+      <div class="jd-form-group mb-0">
+        {{ form.discount_percent.label_tag }}{{ form.discount_percent }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.discount_expires_at.label_tag }}{{ form.discount_expires_at }}
+        <p style="font-size:var(--text-xs);color:var(--color-muted);margin-top:0.25rem;">{% trans "Leave blank for permanent." %}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-3 mt-2">
+    {% if is_edit %}
+    <a href="{% url 'portal:tour_detail' tour.pk %}" class="btn-outline-jd">{% trans "Cancel" %}</a>
+    {% else %}
+    <a href="{% url 'portal:tour_list' %}" class="btn-outline-jd">{% trans "Cancel" %}</a>
+    {% endif %}
+    <button type="submit" class="btn-primary-jd"
+            style="display:inline-flex;align-items:center;gap:0.5rem;">
+      <i class="bi bi-check-lg"></i>
+      {% if is_edit %}{% trans "Save Changes" %}{% else %}{% trans "Create Package" %}{% endif %}
+    </button>
+  </div>
+
+</form>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portal/portal_tours.js' %}"></script>
+{% endblock %}

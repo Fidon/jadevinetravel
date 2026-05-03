@@ -1,0 +1,319 @@
+{% extends "portal/portal_base.html" %}
+{% load static i18n %}
+
+{% block title %}{% if pending_only %}{% trans "Pending Approvals" %}{% else %}{% trans "Hotels" %}{% endif %}{% endblock %}
+
+{% block nav_hotels %}{% if not pending_only %}active{% endif %}{% endblock %}
+{% block nav_pending %}{% if pending_only %}active{% endif %}{% endblock %}
+
+{% block page_title %}
+  {% if pending_only %}{% trans "Pending Hotel Approvals" %}{% else %}{% trans "Hotels" %}{% endif %}
+{% endblock %}
+
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    {% if pending_only %}
+      {% blocktrans with count=pending_count %}{{ count }} hotel listing(s) awaiting your review{% endblocktrans %}
+    {% else %}
+      {% blocktrans with count=hotels|length %}{{ count }} hotel(s) in your listings{% endblocktrans %}
+    {% endif %}
+  </p>
+{% endblock %}
+
+{% block page_actions %}
+  <a href="{% url 'portal:hotel_add' %}" class="btn-primary-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-plus-lg"></i> {% trans "Add Hotel" %}
+  </a>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_hotels.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ── Filters — hidden on pending-only view ── -->
+{% if not pending_only %}
+<form method="get" class="portal-card mb-4" style="padding:1rem 1.5rem;">
+  <div class="d-flex align-items-end gap-3 flex-wrap">
+
+    <div class="jd-form-group mb-0" style="flex:2;min-width:200px;">
+      <label class="jd-label">{% trans "Search" %}</label>
+      <div class="jd-input-icon-wrap">
+        <i class="bi bi-search jd-input-icon"></i>
+        <input type="text" name="q" class="jd-input"
+               value="{{ search_query|default:'' }}"
+               placeholder="{% trans 'Hotel name...' %}">
+      </div>
+    </div>
+
+    <div class="jd-form-group mb-0" style="flex:1;min-width:160px;">
+      <label class="jd-label">{% trans "Status" %}</label>
+      <select name="status" class="jd-input portal-autosubmit">
+        <option value="">{% trans "All Statuses" %}</option>
+        <option value="approved"  {% if status_filter == 'approved'  %}selected{% endif %}>{% trans "Approved" %}</option>
+        <option value="pending"   {% if status_filter == 'pending'   %}selected{% endif %}>{% trans "Pending" %}</option>
+        <option value="rejected"  {% if status_filter == 'rejected'  %}selected{% endif %}>{% trans "Rejected" %}</option>
+      </select>
+    </div>
+
+    <div class="jd-form-group mb-0" style="flex:1;min-width:160px;">
+      <label class="jd-label">{% trans "Location" %}</label>
+      <select name="location" class="jd-input portal-autosubmit">
+        <option value="">{% trans "All Locations" %}</option>
+        {% for val, label in location_choices %}
+        <option value="{{ val }}" {% if location_filter == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% if status_filter or location_filter %}
+    <a href="{% url 'portal:hotel_list' %}" class="btn-outline-jd"
+       style="padding:0.5rem 1rem;white-space:nowrap;align-self:flex-end;">
+      <i class="bi bi-x-lg"></i> {% trans "Clear" %}
+    </a>
+    {% endif %}
+
+  </div>
+</form>
+{% endif %}
+
+<!-- ── Hotel table ── -->
+<div class="portal-table-wrap table-responsive">
+  {% if hotels %}
+  <table id="hotels-table" class="table mb-0" style="width:100%;">
+    <thead>
+      <tr>
+        <th>{% trans "Hotel" %}</th>
+        <th>{% trans "Location" %}</th>
+        <th>{% trans "Stars" %}</th>
+        {% if not mini_admin %}<th>{% trans "Owner" %}</th>{% endif %}
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Visible" %}</th>
+        <th>{% trans "Added" %}</th>
+        <th>{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for hotel in hotels %}
+      <tr>
+        <!-- Hotel name + cover thumb -->
+        <td>
+          <div class="d-flex align-items-center gap-2 text-truncate-container">
+            {% if hotel.cover_photo %}
+            <img src="{{ hotel.cover_photo.image.url }}"
+                 alt="{{ hotel.name }}"
+                 class="hotel-thumb"
+                 loading="lazy">
+            {% else %}
+            <div class="hotel-thumb hotel-thumb--placeholder">
+              <i class="bi bi-building"></i>
+            </div>
+            {% endif %}
+            <div class="text-truncate-container">
+              <div class="text-truncate-line" style="font-weight:600;color:var(--color-text);" title="{{ hotel.name }}">
+                {{ hotel.name }}
+              </div>
+              {% if hotel.approval_status == 'rejected' and hotel.rejection_reason %}
+              <div style="font-size:var(--text-xs);color:var(--color-danger);">
+                <i class="bi bi-info-circle me-1"></i>{{ hotel.rejection_reason|truncatechars:60 }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </td>
+
+        <td class="text-nowrap-custom">{{ hotel.get_location_display }}</td>
+
+        <td>
+          <span style="color:var(--color-accent);letter-spacing:1px;">
+            {% for i in "12345" %}{% if forloop.counter <= hotel.stars %}★{% else %}☆{% endif %}{% endfor %}
+          </span>
+        </td>
+
+        {% if not mini_admin %}
+        <td class="text-nowrap-custom">
+          {% if hotel.created_by %}
+            {{ hotel.created_by.get_full_name|default:hotel.created_by.username }}
+            <span style="font-size:var(--text-xs);color:var(--color-muted);display:block;">
+              {% trans "Partner" %}
+            </span>
+          {% else %}
+            <span style="color:var(--color-muted);">{% trans "Jadevine (direct)" %}</span>
+          {% endif %}
+        </td>
+        {% endif %}
+
+        <td>
+          {% if hotel.approval_status == 'approved' %}
+            <span class="approval-badge approval-badge--approved">
+              <i class="bi bi-check-circle-fill"></i> {% trans "Approved" %}
+            </span>
+          {% elif hotel.approval_status == 'pending' %}
+            <span class="approval-badge approval-badge--pending">
+              <i class="bi bi-hourglass-split"></i> {% trans "Pending" %}
+            </span>
+          {% else %}
+            <span class="approval-badge approval-badge--rejected">
+              <i class="bi bi-x-circle-fill"></i> {% trans "Rejected" %}
+            </span>
+          {% endif %}
+        </td>
+
+        <td class="text-center">
+          {% if hotel.is_active %}
+            <span style="color:var(--color-success);font-size:1rem;"><i class="bi bi-eye-fill"></i></span>
+          {% else %}
+            <span style="color:var(--color-muted);font-size:1rem;"><i class="bi bi-eye-slash"></i></span>
+          {% endif %}
+        </td>
+
+        <td style="color:var(--color-muted);font-size:var(--text-xs);" class="text-nowrap-custom">
+          {{ hotel.created_at|date:"d M Y" }}
+        </td>
+
+        <td>
+          <div class="portal-row-actions">
+            <!-- View -->
+            <a href="{% url 'portal:hotel_detail' hotel.pk %}"
+               class="portal-icon-btn" title="{% trans 'View' %}">
+              <i class="bi bi-eye"></i>
+            </a>
+            <!-- Edit -->
+            <a href="{% url 'portal:hotel_edit' hotel.pk %}"
+               class="portal-icon-btn" title="{% trans 'Edit' %}">
+              <i class="bi bi-pencil"></i>
+            </a>
+
+            {% if not mini_admin %}
+            <!-- Approve — only if pending -->
+            {% if hotel.approval_status == 'pending' %}
+            <form method="post" action="{% url 'portal:hotel_approve' hotel.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{% if pending_only %}pending{% endif %}">
+              <button type="submit" class="portal-icon-btn portal-icon-btn--accent"
+                      title="{% trans 'Approve' %}"
+                      data-confirm="{% trans 'Approve this hotel listing and make it live?' %}">
+                <i class="bi bi-check-lg"></i>
+              </button>
+            </form>
+            <!-- Reject — opens modal -->
+            <button type="button"
+                    class="portal-icon-btn portal-icon-btn--danger"
+                    title="{% trans 'Reject' %}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#rejectModal"
+                    data-hotel-pk="{{ hotel.pk }}"
+                    data-hotel-name="{{ hotel.name }}"
+                    data-next="{% if pending_only %}pending{% endif %}">
+              <i class="bi bi-x-lg"></i>
+            </button>
+            {% endif %}
+
+            <!-- Delete -->
+            <form method="post" action="{% url 'portal:hotel_delete' hotel.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="portal-icon-btn portal-icon-btn--danger"
+                      title="{% trans 'Delete' %}"
+                      data-confirm="{% trans 'Permanently delete this hotel? This cannot be undone.' %}"
+                      data-confirm-title="{% trans 'Delete Hotel' %}">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </form>
+            {% endif %}
+
+            <!-- Resubmit — mini-admin, rejected only -->
+            {% if mini_admin and hotel.approval_status == 'rejected' %}
+            <form method="post" action="{% url 'portal:hotel_resubmit' hotel.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="portal-icon-btn portal-icon-btn--accent"
+                      title="{% trans 'Resubmit for Approval' %}"
+                      data-confirm="{% trans 'Resubmit this listing for review?' %}">
+                <i class="bi bi-arrow-repeat"></i>
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <div class="portal-empty-state">
+    <i class="bi bi-building-x"></i>
+    <p>
+      {% if pending_only %}
+        {% trans "No hotels pending review — you're all caught up." %}
+      {% else %}
+        {% trans "No hotels found. Add your first hotel listing." %}
+      {% endif %}
+    </p>
+    {% if not pending_only %}
+    <a href="{% url 'portal:hotel_add' %}" class="btn-primary-jd mt-2"
+       style="display:inline-flex;align-items:center;gap:0.4rem;padding:0 1.25rem;">
+      <i class="bi bi-plus-lg"></i> {% trans "Add Hotel" %}
+    </a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- ── Rejection modal — Super Admin only ── -->
+{% if not mini_admin %}
+<div class="modal fade portal-modal portal-modal--danger"
+     id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectModalLabel">
+          <i class="bi bi-x-circle me-2"></i>{% trans "Reject Listing" %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="post" id="reject-form" action="">
+        {% csrf_token %}
+        <input type="hidden" name="next" id="reject-next" value="">
+        <div class="modal-body" style="padding:1.5rem;">
+          <p style="font-size:var(--text-sm);color:var(--color-text-light);margin-bottom:1rem;">
+            {% trans "You are rejecting:" %}
+            <strong id="reject-hotel-name"></strong>
+          </p>
+          <div class="jd-form-group mb-0">
+            <label class="jd-label" for="id_rejection_reason">
+              {% trans "Rejection Reason" %}
+              <span style="color:var(--color-danger);">*</span>
+            </label>
+            <textarea name="rejection_reason"
+                      id="id_rejection_reason"
+                      class="jd-input"
+                      rows="4"
+                      required
+                      minlength="10"
+                      placeholder="{% trans 'Explain clearly why this listing is rejected so the partner can correct and resubmit.' %}"></textarea>
+            <p style="font-size:var(--text-xs);color:var(--color-muted);margin-top:0.35rem;">
+              {% trans "This reason will be sent to the partner by email." %}
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd" data-bs-dismiss="modal">
+            {% trans "Cancel" %}
+          </button>
+          <button type="submit" class="btn-danger-jd" id="reject-submit-btn" disabled>
+            <i class="bi bi-x-circle me-1"></i> {% trans "Confirm Rejection" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portal/portal_hotels.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% if is_edit %}{% trans "Edit Hotel" %}{% else %}{% trans "Add Hotel" %}{% endif %}{% endblock %}
+{% block nav_hotels %}active{% endblock %}
+
+{% block page_title %}
+  {% if is_edit %}{% trans "Edit Hotel" %}{% else %}{% trans "Add New Hotel" %}{% endif %}
+{% endblock %}
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    {% if is_edit %}{{ hotel.name }}{% else %}{% trans "Fill in the details below. English description is required." %}{% endif %}
+  </p>
+{% endblock %}
+
+{% block page_actions %}
+  {% if is_edit %}
+  <a href="{% url 'portal:hotel_detail' hotel.pk %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "Back to Hotel" %}
+  </a>
+  {% else %}
+  <a href="{% url 'portal:hotel_list' %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "Back to Hotels" %}
+  </a>
+  {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_hotels.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Approved listing edit warning for mini-admins -->
+{% if show_approval_warning %}
+<div class="portal-edit-warning mb-4">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  <div>
+    <strong>{% trans "Warning: This listing is currently live." %}</strong>
+    <p class="mb-0 mt-1" style="font-size:var(--text-sm);">
+      {% trans "Saving changes will remove this hotel from the public site until it is re-approved by the administrator. The review is usually completed within 24 hours." %}
+    </p>
+  </div>
+</div>
+{% endif %}
+
+<form method="post" action="" novalidate>
+  {% csrf_token %}
+
+  <!-- ── Section 1: Basic info ── -->
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-building me-2"></i>{% trans "Basic Information" %}
+    </h3>
+
+    <div class="portal-field-row portal-field-row--2">
+      <div class="jd-form-group mb-0">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% if form.name.errors %}
+        <p class="field-error">{{ form.name.errors.0 }}</p>
+        {% endif %}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.location.label_tag }}
+        {{ form.location }}
+        {% if form.location.errors %}
+        <p class="field-error">{{ form.location.errors.0 }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="portal-field-row portal-field-row--2 mt-3">
+      <div class="jd-form-group mb-0">
+        {{ form.stars.label_tag }}
+        {{ form.stars }}
+        {% if form.stars.errors %}
+        <p class="field-error">{{ form.stars.errors.0 }}</p>
+        {% endif %}
+      </div>
+      <div class="jd-form-group mb-0">
+        <label class="jd-label">
+          {{ form.price_per_night.label }}
+        </label>
+        <div class="jd-input-icon-wrap">
+          <i class="bi bi-currency-dollar jd-input-icon"></i>
+          {{ form.price_per_night }}
+        </div>
+        {% if form.price_per_night.errors %}
+        <p class="field-error">{{ form.price_per_night.errors.0 }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="jd-form-group mt-3">
+      {{ form.address.label_tag }}
+      {{ form.address }}
+      {% if form.address.errors %}
+      <p class="field-error">{{ form.address.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <div class="portal-field-row portal-field-row--2 mt-3">
+      <div class="jd-form-group mb-0">
+        {{ form.latitude.label_tag }}
+        {{ form.latitude }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.longitude.label_tag }}
+        {{ form.longitude }}
+      </div>
+    </div>
+
+    <div class="jd-form-group mt-3">
+      {{ form.tripadvisor_url.label_tag }}
+      {{ form.tripadvisor_url }}
+    </div>
+  </div>
+
+  <!-- ── Section 2: Descriptions ── -->
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-translate me-2"></i>{% trans "Descriptions" %}
+    </h3>
+    <p style="font-size:var(--text-sm);color:var(--color-muted);margin-bottom:1.25rem;">
+      {% trans "English is required. French and Russian are optional — the site falls back to English if not provided." %}
+    </p>
+
+    <div class="jd-form-group">
+      {{ form.description_en.label_tag }}
+      {{ form.description_en }}
+      {% if form.description_en.errors %}
+      <p class="field-error">{{ form.description_en.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Language tabs for FR / RU -->
+    <ul class="nav nav-tabs mt-4 mb-3" style="border-color:var(--color-border);">
+      <li class="nav-item">
+        <button class="nav-link active lang-tab" data-target="#desc-fr" type="button">
+          🇫🇷 {% trans "French" %}
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link lang-tab" data-target="#desc-ru" type="button">
+          🇷🇺 {% trans "Russian" %}
+        </button>
+      </li>
+    </ul>
+
+    <div id="desc-fr">
+      <div class="jd-form-group mb-0">
+        {{ form.description_fr.label_tag }}
+        {{ form.description_fr }}
+      </div>
+    </div>
+    <div id="desc-ru" style="display:none;">
+      <div class="jd-form-group mb-0">
+        {{ form.description_ru.label_tag }}
+        {{ form.description_ru }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Submit ── -->
+  <div class="d-flex align-items-center justify-content-end gap-3 mt-2">
+    {% if is_edit %}
+    <a href="{% url 'portal:hotel_detail' hotel.pk %}" class="btn-outline-jd">
+      {% trans "Cancel" %}
+    </a>
+    {% else %}
+    <a href="{% url 'portal:hotel_list' %}" class="btn-outline-jd">
+      {% trans "Cancel" %}
+    </a>
+    {% endif %}
+    <button type="submit" class="btn-primary-jd"
+            style="display:inline-flex;align-items:center;gap:0.5rem;"
+            {% if show_approval_warning %}id="submit-with-warning"{% endif %}>
+      <i class="bi bi-check-lg"></i>
+      {% if is_edit %}{% trans "Save Changes" %}{% else %}{% trans "Create Hotel" %}{% endif %}
+    </button>
+  </div>
+
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portal/portal_hotels.js' %}"></script>
+{% endblock %}

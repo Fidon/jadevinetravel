@@ -65,7 +65,7 @@
                 <input type="email" name="login" id="id_login"
                        class="jd-input {% if form.login.errors %}jd-input-error{% endif %}"
                        placeholder="{% trans 'your@email.com' %}"
-                       autocomplete="email" value="{{ form.login.value|default:'' }}">
+                       autocomplete="email" value="{{ form.login.value|default:'' }}" autofocus>
               </div>
               {% if form.login.errors %}
               <span class="jd-field-error">{{ form.login.errors|join:", " }}</span>

@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<div class="jd-form-group">
+  {{ form.day_number.label_tag }}
+  {{ form.day_number }}
+</div>
+
+<div class="portal-field-row portal-field-row--3 mt-3">
+  <div class="jd-form-group mb-0">{{ form.title_en.label_tag }}{{ form.title_en }}</div>
+  <div class="jd-form-group mb-0">{{ form.title_fr.label_tag }}{{ form.title_fr }}</div>
+  <div class="jd-form-group mb-0">{{ form.title_ru.label_tag }}{{ form.title_ru }}</div>
+</div>
+
+<div class="jd-form-group mt-3">
+  {{ form.description_en.label_tag }}
+  {{ form.description_en }}
+</div>
+
+<div class="portal-field-row portal-field-row--2 mt-3">
+  <div class="jd-form-group mb-0">{{ form.description_fr.label_tag }}{{ form.description_fr }}</div>
+  <div class="jd-form-group mb-0">{{ form.description_ru.label_tag }}{{ form.description_ru }}</div>
+</div>

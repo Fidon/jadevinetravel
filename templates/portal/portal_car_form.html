@@ -1,0 +1,230 @@
+{% extends "portal/portal_base.html" %}
+{% load static i18n %}
+
+{% block title %}{% if is_edit %}{% trans "Edit Vehicle" %}{% else %}{% trans "Add Car Rental" %}{% endif %}{% endblock %}
+{% block nav_cars %}active{% endblock %}
+
+{% block page_title %}
+  {% if is_edit %}{% trans "Edit Vehicle" %}{% else %}{% trans "Add Car Rental" %}{% endif %}
+{% endblock %}
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    {% if is_edit %}{{ car.name }}{% else %}{% trans "Fill in the vehicle details. English description is required." %}{% endif %}
+  </p>
+{% endblock %}
+
+{% block page_actions %}
+  {% if is_edit %}
+  <a href="{% url 'portal:car_detail' car.pk %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "Back to Vehicle" %}
+  </a>
+  {% else %}
+  <a href="{% url 'portal:car_list' %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "Back to Cars" %}
+  </a>
+  {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_cars.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% if show_approval_warning %}
+<div class="portal-edit-warning mb-4">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  <div>
+    <strong>{% trans "Warning: This listing is currently live." %}</strong>
+    <p class="mb-0 mt-1" style="font-size:var(--text-sm);">
+      {% trans "Saving changes will remove this vehicle from the public site until re-approved by the administrator." %}
+    </p>
+  </div>
+</div>
+{% endif %}
+
+<form method="post" action="" novalidate>
+  {% csrf_token %}
+
+  {# Section 1: Vehicle identity #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-car-front me-2"></i>{% trans "Vehicle Details" %}
+    </h3>
+
+    <div class="portal-field-row portal-field-row--2">
+      <div class="jd-form-group mb-0">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% if form.name.errors %}<p class="field-error">{{ form.name.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.vehicle_type.label_tag }}
+        {{ form.vehicle_type }}
+      </div>
+    </div>
+
+    <div class="portal-field-row portal-field-row--3 mt-3">
+      <div class="jd-form-group mb-0">
+        {{ form.make.label_tag }}
+        {{ form.make }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.model.label_tag }}
+        {{ form.model }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.year.label_tag }}
+        {{ form.year }}
+      </div>
+    </div>
+
+    <div class="portal-field-row portal-field-row--3 mt-3">
+      <div class="jd-form-group mb-0">
+        {{ form.capacity.label_tag }}
+        {{ form.capacity }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.fuel_type.label_tag }}
+        {{ form.fuel_type }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.transmission.label_tag }}
+        {{ form.transmission }}
+      </div>
+    </div>
+
+    <div class="portal-field-row portal-field-row--2 mt-3">
+      <div class="jd-form-group mb-0">
+        {{ form.price_per_day.label_tag }}
+        <div class="jd-input-icon-wrap">
+          <i class="bi bi-currency-dollar jd-input-icon"></i>
+          {{ form.price_per_day }}
+        </div>
+        {% if form.price_per_day.errors %}<p class="field-error">{{ form.price_per_day.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.pickup_locations_text.label_tag }}
+        {{ form.pickup_locations_text }}
+        <p style="font-size:var(--text-xs);color:var(--color-muted);margin-top:0.25rem;">
+          {% trans "Enter each pickup location on a new line." %}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {# Section 2: Driver options #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-person-badge me-2"></i>{% trans "Driver & Rental Options" %}
+    </h3>
+
+    <div class="d-flex gap-4 flex-wrap">
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.offers_self_drive }} <span>{{ form.offers_self_drive.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.offers_driver }} <span>{{ form.offers_driver.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.driver_speaks_en }} <span>{{ form.driver_speaks_en.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.driver_speaks_fr }} <span>{{ form.driver_speaks_fr.label }}</span>
+      </label>
+    </div>
+  </div>
+
+  {# Section 3: Descriptions #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-translate me-2"></i>{% trans "Descriptions" %}
+    </h3>
+
+    <div class="jd-form-group">
+      {{ form.description_en.label_tag }}
+      {{ form.description_en }}
+      {% if form.description_en.errors %}<p class="field-error">{{ form.description_en.errors.0 }}</p>{% endif %}
+    </div>
+
+    <ul class="nav nav-tabs mt-4 mb-3" style="border-color:var(--color-border);">
+      <li class="nav-item">
+        <button class="nav-link active lang-tab" data-target="#car-desc-fr" type="button">
+          🇫🇷 {% trans "French" %}
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link lang-tab" data-target="#car-desc-ru" type="button">
+          🇷🇺 {% trans "Russian" %}
+        </button>
+      </li>
+    </ul>
+
+    <div id="car-desc-fr">
+      <div class="jd-form-group mb-0">
+        {{ form.description_fr.label_tag }}
+        {{ form.description_fr }}
+      </div>
+    </div>
+    <div id="car-desc-ru" style="display:none;">
+      <div class="jd-form-group mb-0">
+        {{ form.description_ru.label_tag }}
+        {{ form.description_ru }}
+      </div>
+    </div>
+  </div>
+
+  {# Section 4: Pricing policy #}
+  <div class="portal-form-section">
+    <h3 class="portal-form-section-title">
+      <i class="bi bi-tag me-2"></i>{% trans "Discount & Booking Policy" %}
+    </h3>
+
+    <div class="portal-field-row portal-field-row--2">
+      <div class="jd-form-group mb-0">
+        {{ form.discount_percent.label_tag }}
+        {{ form.discount_percent }}
+      </div>
+      <div class="jd-form-group mb-0">
+        {{ form.discount_expires_at.label_tag }}
+        {{ form.discount_expires_at }}
+        <p style="font-size:var(--text-xs);color:var(--color-muted);margin-top:0.25rem;">
+          {% trans "Leave blank for permanent discount." %}
+        </p>
+      </div>
+    </div>
+
+    <div class="d-flex gap-4 flex-wrap mt-3">
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.is_refundable }} <span>{{ form.is_refundable.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.allows_pay_on_arrival }} <span>{{ form.allows_pay_on_arrival.label }}</span>
+      </label>
+      <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:var(--text-sm);">
+        {{ form.is_available }} <span>{{ form.is_available.label }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-end gap-3 mt-2">
+    {% if is_edit %}
+    <a href="{% url 'portal:car_detail' car.pk %}" class="btn-outline-jd">{% trans "Cancel" %}</a>
+    {% else %}
+    <a href="{% url 'portal:car_list' %}" class="btn-outline-jd">{% trans "Cancel" %}</a>
+    {% endif %}
+    <button type="submit" class="btn-primary-jd"
+            style="display:inline-flex;align-items:center;gap:0.5rem;">
+      <i class="bi bi-check-lg"></i>
+      {% if is_edit %}{% trans "Save Changes" %}{% else %}{% trans "Create Vehicle" %}{% endif %}
+    </button>
+  </div>
+
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portal/portal_cars.js' %}"></script>
+{% endblock %}

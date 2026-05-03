@@ -436,6 +436,26 @@
   font-size: 14px;
 }
 
+/* Full-card click target */
+.dash-booking-card {
+  position: relative;
+}
+
+.dash-booking-card-link {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  z-index: 1;
+}
+
+/* Lift any interactive children above the stretched link */
+.dash-booking-card .dash-booking-arrow,
+.dash-booking-card .jd-badge,
+.dash-booking-card button {
+  position: relative;
+  z-index: 2;
+}
+
 /* Badge status colours for bookings */
 .jd-badge-pending_confirmation {
   background: var(--color-warning-bg);
@@ -1057,4 +1077,158 @@
   transition:
     opacity 0.3s,
     transform 0.3s;
+}
+
+/* ── Review section ────────────────────────────────────────────────────── */
+
+.dash-review-submitted {
+  padding: 0.5rem 0;
+}
+
+.dash-review-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dash-star {
+  font-size: 1.4rem;
+  color: var(--color-border);
+  line-height: 1;
+}
+
+.dash-star-filled:nth-child(1) {
+  color: #e53935;
+}
+.dash-star-filled:nth-child(2) {
+  color: #ef5350;
+}
+.dash-star-filled:nth-child(3) {
+  color: #fb8c00;
+}
+.dash-star-filled:nth-child(4) {
+  color: #ffa726;
+}
+.dash-star-filled:nth-child(5) {
+  color: #ffca28;
+}
+.dash-star-filled:nth-child(6) {
+  color: #d4e157;
+}
+.dash-star-filled:nth-child(7) {
+  color: #9ccc65;
+}
+.dash-star-filled:nth-child(8) {
+  color: #66bb6a;
+}
+.dash-star-filled:nth-child(9) {
+  color: #43a047;
+}
+.dash-star-filled:nth-child(10) {
+  color: #2e7d32;
+}
+
+.dash-review-score {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+}
+
+.dash-review-comment {
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  border-left: 3px solid var(--color-accent-light);
+  padding-left: 0.75rem;
+  margin-bottom: 0;
+}
+
+.dash-review-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Star picker */
+.dash-review-form-wrap {
+  padding: 0.25rem 0;
+}
+
+.dash-review-prompt {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+}
+
+.dash-star-picker {
+  display: flex;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.dash-star-btn {
+  background: none;
+  border: none;
+  padding: 2px;
+  font-size: 2rem;
+  color: var(--color-border);
+  cursor: pointer;
+  line-height: 1;
+  transition:
+    color 0.12s ease,
+    transform 0.1s ease;
+}
+
+.dash-star-btn:nth-child(1) {
+  --star-color: #e53935;
+}
+.dash-star-btn:nth-child(2) {
+  --star-color: #ef5350;
+}
+.dash-star-btn:nth-child(3) {
+  --star-color: #fb8c00;
+}
+.dash-star-btn:nth-child(4) {
+  --star-color: #ffa726;
+}
+.dash-star-btn:nth-child(5) {
+  --star-color: #ffca28;
+}
+.dash-star-btn:nth-child(6) {
+  --star-color: #d4e157;
+}
+.dash-star-btn:nth-child(7) {
+  --star-color: #9ccc65;
+}
+.dash-star-btn:nth-child(8) {
+  --star-color: #66bb6a;
+}
+.dash-star-btn:nth-child(9) {
+  --star-color: #43a047;
+}
+.dash-star-btn:nth-child(10) {
+  --star-color: #2e7d32;
+}
+
+.dash-star-btn.dash-star-hover,
+.dash-star-btn.dash-star-active {
+  color: var(--star-color);
+  transform: scale(1.15);
+}
+
+.dash-star-label {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-top: 0.4rem;
+  min-height: 1.2em;
+  transition: color 0.15s;
+}
+
+/* Responsive: tighten stars on small screens */
+@media (max-width: 400px) {
+  .dash-star-btn {
+    font-size: 1.5rem;
+  }
 }

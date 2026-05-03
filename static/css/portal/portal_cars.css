@@ -1,0 +1,40 @@
+/* Car thumbnail in table */
+.car-thumb {
+  width: 48px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.car-thumb--placeholder {
+  background: var(--color-light);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.field-error {
+  font-size: var(--text-xs);
+  color: var(--color-danger);
+  margin: 0.25rem 0 0;
+}
+
+.detail-label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.2rem;
+}
+
+.detail-value {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}

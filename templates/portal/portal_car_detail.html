@@ -1,0 +1,268 @@
+{% extends "portal/portal_base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ car.name }}{% endblock %}
+{% block nav_cars %}active{% endblock %}
+
+{% block page_title %}{{ car.name }}{% endblock %}
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    {{ car.get_vehicle_type_display }} &middot;
+    {{ car.make }} {{ car.model }} {{ car.year }} &middot;
+    {% if car.approval_status == 'approved' %}
+      <span style="color:var(--color-success);">{% trans "Live" %}</span>
+    {% elif car.approval_status == 'pending' %}
+      <span style="color:#7a5200;">{% trans "Pending Review" %}</span>
+    {% else %}
+      <span style="color:var(--color-danger);">{% trans "Rejected" %}</span>
+    {% endif %}
+  </p>
+{% endblock %}
+
+{% block page_actions %}
+  <a href="{% url 'portal:car_edit' car.pk %}" class="btn-primary-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-pencil"></i> {% trans "Edit" %}
+  </a>
+
+  {% if not mini_admin and car.approval_status == 'pending' %}
+  <form method="post" action="{% url 'portal:car_approve' car.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn-accent-jd"
+            style="display:inline-flex;align-items:center;gap:0.4rem;"
+            data-confirm="{% trans 'Approve and publish this vehicle?' %}"
+            data-confirm-title="{% trans 'Approve Vehicle' %}">
+      <i class="bi bi-check-lg"></i> {% trans "Approve" %}
+    </button>
+  </form>
+  <button type="button" class="btn-outline-jd"
+          style="display:inline-flex;align-items:center;gap:0.4rem;border-color:var(--color-danger);color:var(--color-danger);"
+          data-bs-toggle="modal" data-bs-target="#rejectCarModal"
+          data-car-pk="{{ car.pk }}"
+          data-car-name="{{ car.name }}"
+          data-next="">
+    <i class="bi bi-x-lg"></i> {% trans "Reject" %}
+  </button>
+  {% endif %}
+
+  {% if mini_admin and car.approval_status == 'rejected' %}
+  <form method="post" action="{% url 'portal:car_resubmit' car.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn-accent-jd"
+            style="display:inline-flex;align-items:center;gap:0.4rem;"
+            data-confirm="{% trans 'Resubmit this listing for review?' %}"
+            data-confirm-title="{% trans 'Resubmit Listing' %}">
+      <i class="bi bi-arrow-repeat"></i> {% trans "Resubmit" %}
+    </button>
+  </form>
+  {% endif %}
+
+  <a href="{% url 'portal:car_list' %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "All Cars" %}
+  </a>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_cars.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% if car.approval_status == 'rejected' and car.rejection_reason %}
+<div class="portal-alert portal-alert--error mb-4">
+  <i class="bi bi-x-circle-fill"></i>
+  <div><strong>{% trans "Rejection Reason:" %}</strong> {{ car.rejection_reason }}</div>
+</div>
+{% endif %}
+
+{% if mini_admin and car.approval_status == 'approved' %}
+<div class="portal-edit-warning mb-4">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  <p class="mb-0">
+    {% trans "Editing this vehicle will remove it from the public site until re-approved." %}
+  </p>
+</div>
+{% endif %}
+
+<div class="row g-4">
+
+  {# Left: details #}
+  <div class="col-lg-7">
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Vehicle Details" %}</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Type:" %}</span>
+          <span class="detail-value">{{ car.get_vehicle_type_display }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Make:" %}</span>
+          <span class="detail-value">{{ car.make }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Model:" %}</span>
+          <span class="detail-value">{{ car.model }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Year:" %}</span>
+          <span class="detail-value">{{ car.year }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Capacity:" %}</span>
+          <span class="detail-value">{{ car.capacity }} {% trans "passengers" %}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Transmission:" %}</span>
+          <span class="detail-value">{{ car.get_transmission_display }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Fuel type:" %}</span>
+          <span class="detail-value">{{ car.get_fuel_type_display }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Price Per Day:" %}</span>
+          <span class="detail-value" style="font-weight:600;">${{ car.price_per_day }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Available for Booking:" %}</span>
+          <span class="detail-value">
+            {% if car.is_available %}
+              <span style="color:var(--color-success);"><i class="bi bi-check-circle-fill"></i> {% trans "Yes" %}</span>
+            {% else %}
+              <span style="color:var(--color-danger);"><i class="bi bi-x-circle-fill"></i> {% trans "No" %}</span>
+            {% endif %}
+          </span>
+        </div>
+        <div class="col-12">
+          <span class="detail-label">{% trans "Pickup Locations:" %}</span>
+          <span class="detail-value">
+            {% if car.pickup_locations %}
+              {{ car.pickup_locations|join:", " }}
+            {% else %}—{% endif %}
+          </span>
+        </div>
+        <div class="col-12">
+          <span class="detail-label">{% trans "Options:" %}</span>
+          <div class="d-flex gap-2 flex-wrap mt-1">
+            {% if car.offers_self_drive %}
+            <span class="approval-badge approval-badge--approved">{% trans "Self-Drive" %}</span>
+            {% endif %}
+            {% if car.offers_driver %}
+            <span class="approval-badge approval-badge--approved">{% trans "With Driver" %}</span>
+            {% endif %}
+            {% if not car.is_refundable %}
+            <span class="approval-badge approval-badge--rejected">{% trans "Non-refundable" %}</span>
+            {% endif %}
+            {% if not car.allows_pay_on_arrival %}
+            <span class="approval-badge approval-badge--pending">{% trans "Pay Now only" %}</span>
+            {% endif %}
+            {% if car.has_active_discount %}
+            <span class="approval-badge" style="background:var(--color-danger-bg);color:var(--color-danger);">
+              {{ car.discount_percent }}% {% trans "discount active" %}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Right: photos #}
+  <div class="col-lg-5">
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Photos" %}</h2>
+        <span style="font-size:var(--text-xs);color:var(--color-muted);">
+          {% trans "Drag to reorder." %}
+        </span>
+      </div>
+
+      <div class="photo-upload-area" id="photo-upload-area">
+        <input type="file" id="photo-file-input" accept="image/jpeg,image/png,image/webp" multiple>
+        <i class="bi bi-cloud-upload" style="font-size:1.5rem;"></i>
+        <span>{% trans "Click to upload or drag & drop" %}</span>
+        <span style="font-size:var(--text-xs);">{% trans "JPEG, PNG, WebP — max 8 MB each" %}</span>
+        <div class="photo-upload-spinner" id="upload-spinner"></div>
+      </div>
+
+      <div class="photo-grid mt-3" id="photo-grid">
+        {% for photo in photos %}
+        <div class="photo-item {% if photo.is_cover %}is-cover{% endif %}"
+             data-photo-id="{{ photo.pk }}">
+          <img src="{{ photo.image.url }}" alt="{{ car.name }}">
+          {% if photo.is_cover %}
+          <span class="photo-cover-badge">{% trans "Cover" %}</span>
+          {% endif %}
+          <div class="photo-item-actions">
+            <button type="button" class="photo-action-btn photo-action-btn--cover js-set-cover"
+                    data-photo-id="{{ photo.pk }}" title="{% trans 'Set as cover' %}">
+              <i class="bi bi-star-fill"></i>
+            </button>
+            <button type="button" class="photo-action-btn photo-action-btn--delete js-delete-photo"
+                    data-photo-id="{{ photo.pk }}" title="{% trans 'Delete photo' %}">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{# Rejection modal #}
+{% if not mini_admin %}
+<div class="modal fade portal-modal portal-modal--danger"
+     id="rejectCarModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-content">
+      <form method="post" action="{% url 'portal:car_reject' car.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-x-circle me-2"></i>{% trans "Reject Listing" %}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding:1.5rem;">
+          <div class="jd-form-group mb-0">
+            <label class="jd-label">
+              {% trans "Rejection Reason" %} <span style="color:var(--color-danger);">*</span>
+            </label>
+            <textarea name="rejection_reason" class="jd-input" rows="4"
+                      required minlength="10"
+                      id="id_car_rejection_reason"
+                      placeholder="{% trans 'Explain clearly so the partner can correct and resubmit.' %}"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" class="btn-danger-jd" id="reject-car-submit" disabled
+                  style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <i class="bi bi-x-circle"></i> {% trans "Confirm Rejection" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.CAR_URLS = {
+    photoUpload:   '{% url "portal:car_photo_upload" car.pk %}',
+    photoDelete:   '/portal/cars/{{ car.pk }}/photos/__ID__/delete/',
+    photoSetCover: '/portal/cars/{{ car.pk }}/photos/__ID__/cover/',
+    photoReorder:  '{% url "portal:car_photo_reorder" car.pk %}',
+  };
+</script>
+<script src="{% static 'js/portal/portal_cars.js' %}"></script>
+{% endblock %}

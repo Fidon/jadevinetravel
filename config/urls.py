@@ -6,16 +6,10 @@ from django.conf.urls.i18n import i18n_patterns
 from apps.accounts.views import JadevineLoginView
 
 urlpatterns = [
-    # Django built-in admin — developer use only
     path('admin/', admin.site.urls),
-    
-    # PesaPal IPN callback — NOT language-prefixed
     path('book/', include('apps.bookings.urls')),
-    
-    # Portal — NOT language-prefixed
+    path('reviews/', include('apps.reviews.urls')),
     path('portal/', include('apps.portal.urls')),
-    
-    # i18n language switching
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 

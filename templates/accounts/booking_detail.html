@@ -169,10 +169,98 @@
       </div>
     </div>
 
+    <!-- Review section — only for completed bookings -->
+    {% if can_review or existing_review %}
+    <div class="dash-detail-card jd-card mt-4 jd-load-reveal" data-delay="4">
+      <div class="dash-detail-card-header">
+        <div class="dash-detail-card-icon" style="background: var(--color-accent-xlight); color: var(--color-accent-dark);">
+          <i class="bi bi-star-fill"></i>
+        </div>
+        <div>
+          <span class="dash-detail-card-type">{% trans "Your Review" %}</span>
+          <h3 class="dash-detail-card-name">
+            {% if existing_review %}{% trans "Review Submitted" %}
+            {% else %}{% trans "Share Your Experience" %}{% endif %}
+          </h3>
+        </div>
+      </div>
+
+      {% if existing_review %}
+        <!-- Already reviewed — show submitted review read-only -->
+        <div class="dash-review-submitted">
+          <div class="dash-review-stars" aria-label="{{ existing_review.rating }} out of 10">
+            {% for i in "1234567890" %}
+              {% with forloop.counter as n %}
+              <span class="dash-star {% if n <= existing_review.rating %}dash-star-filled{% endif %}">★</span>
+              {% endwith %}
+            {% endfor %}
+            <span class="dash-review-score ms-2">{{ existing_review.rating }}/10</span>
+          </div>
+          {% if existing_review.comment %}
+          <p class="dash-review-comment mt-2">{{ existing_review.comment }}</p>
+          {% endif %}
+          <div class="dash-review-status mt-2">
+            <span class="jd-badge
+              {% if existing_review.status == 'approved' %}jd-badge-success
+              {% elif existing_review.status == 'rejected' %}jd-badge-danger
+              {% else %}jd-badge-warning{% endif %}">
+              {{ existing_review.get_status_display }}
+            </span>
+            {% if existing_review.status == 'pending' %}
+            <small class="text-muted ms-2">{% trans "Your review is awaiting moderation." %}</small>
+            {% elif existing_review.status == 'rejected' and existing_review.rejection_reason %}
+            <small class="text-muted ms-2">{{ existing_review.rejection_reason }}</small>
+            {% endif %}
+          </div>
+        </div>
+
+      {% else %}
+        <!-- Can review — show star picker + form -->
+        <div class="dash-review-form-wrap">
+          <p class="dash-review-prompt">
+            {% trans "How would you rate your experience? Tap a star to select your rating." %}
+          </p>
+
+          <!-- Star picker — sets hidden rating input via JS -->
+          <div class="dash-star-picker" id="starPicker" role="group" aria-label="{% trans 'Rating' %}">
+            {% for i in "1234567890" %}
+            <button type="button"
+                    class="dash-star-btn"
+                    data-value="{{ forloop.counter }}"
+                    aria-label="{{ forloop.counter }} {% trans 'out of 10' %}">★</button>
+            {% endfor %}
+          </div>
+          <p class="dash-star-label" id="starLabel">{% trans "No rating selected" %}</p>
+
+          <form method="post"
+                action="{% url 'reviews:submit' booking.reference %}"
+                id="reviewForm"
+                novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="rating" id="id_rating" value="">
+            <div class="jd-form-group mt-3">
+              <label class="jd-label" for="id_comment">
+                {% trans "Comment (optional)" %}
+              </label>
+              <textarea name="comment"
+                        id="id_comment"
+                        class="jd-input"
+                        rows="4"
+                        placeholder="{% trans 'Tell us about your experience…' %}"></textarea>
+            </div>
+            <button type="submit" class="btn-primary-jd w-100 mt-2" id="reviewSubmitBtn" disabled>
+              <i class="bi bi-send me-1"></i>{% trans "Submit Review" %}
+            </button>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
   </div>
 
   <!-- Right column: payment + refund info -->
-  <div class="col-lg-4 jd-load-reveal" data-delay="4">
+  <div class="col-lg-4 jd-load-reveal" data-delay="5">
 
     <!-- Payment card -->
     <div class="dash-detail-card jd-card mb-4">
@@ -275,5 +363,20 @@
 {% endblock %}
 
 {% block dashboard_js %}
+<script>
+  window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.processing    = "{% trans 'Processing…' %}";
+  window.JD_STRINGS.ratingRequired = "{% trans 'Please select a rating before submitting.' %}";
+  window.JD_STRINGS.rating1  = "{% trans 'Terrible' %}";
+  window.JD_STRINGS.rating2  = "{% trans 'Very Poor' %}";
+  window.JD_STRINGS.rating3  = "{% trans 'Poor' %}";
+  window.JD_STRINGS.rating4  = "{% trans 'Below Average' %}";
+  window.JD_STRINGS.rating5  = "{% trans 'Average' %}";
+  window.JD_STRINGS.rating6  = "{% trans 'Good' %}";
+  window.JD_STRINGS.rating7  = "{% trans 'Very Good' %}";
+  window.JD_STRINGS.rating8  = "{% trans 'Excellent' %}";
+  window.JD_STRINGS.rating9  = "{% trans 'Outstanding' %}";
+  window.JD_STRINGS.rating10 = "{% trans 'Perfect' %}";
+</script>
 <script src="{% static 'js/accounts/booking_detail.js' %}"></script>
 {% endblock %}

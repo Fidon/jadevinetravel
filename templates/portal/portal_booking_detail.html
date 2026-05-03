@@ -1,0 +1,325 @@
+{% extends "portal/portal_base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ booking.reference }}{% endblock %}
+{% block nav_bookings %}active{% endblock %}
+
+{% block page_title %}{{ booking.reference }}{% endblock %}
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    <i class="bi {{ booking.service_icon }} me-1"></i>
+    {{ booking.service_name }} &middot;
+    {{ booking.user.get_full_name|default:booking.user.email }}
+  </p>
+{% endblock %}
+
+{% block page_actions %}
+  <a href="{% url 'portal:booking_list' %}" class="btn-outline-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "All Bookings" %}
+  </a>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_bookings.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# Cancellation requested — needs attention banner #}
+{% if booking.status == 'cancellation_requested' %}
+<div class="portal-alert portal-alert--warning mb-4">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  <div>
+    <strong>{% trans "Cancellation Requested" %}</strong>
+    <p class="mb-0 mt-1" style="font-size:var(--text-sm);">
+      {% trans "The customer has requested cancellation. Review and resolve below." %}
+      {% if booking.cancellation_reason %}
+      {% trans "Reason:" %} <em>{{ booking.cancellation_reason }}</em>
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% endif %}
+
+<div class="row g-4">
+
+  {# Left: booking info #}
+  <div class="col-lg-8">
+
+    {# Core details #}
+    <div class="portal-card mb-4">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Booking Details" %}</h2>
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+          {# Payment status badge #}
+          {% if booking.payment_status == 'paid' %}
+            <span class="booking-status-badge booking-status-badge--paid">
+              <i class="bi bi-check-circle-fill"></i> {% trans "Paid" %}
+            </span>
+          {% elif booking.payment_status == 'pending' %}
+            <span class="booking-status-badge booking-status-badge--pending">{% trans "Payment Pending" %}</span>
+          {% elif booking.payment_status == 'refunded' %}
+            <span class="booking-status-badge booking-status-badge--refunded">{% trans "Refunded" %}</span>
+          {% else %}
+            <span class="booking-status-badge booking-status-badge--failed">{% trans "Payment Failed" %}</span>
+          {% endif %}
+          {# Booking status badge #}
+          {% if booking.status == 'confirmed' %}
+            <span class="booking-status-badge booking-status-badge--confirmed">{% trans "Confirmed" %}</span>
+          {% elif booking.status == 'pending_confirmation' %}
+            <span class="booking-status-badge booking-status-badge--pending">{% trans "Pending Confirmation" %}</span>
+          {% elif booking.status == 'cancellation_requested' %}
+            <span class="booking-status-badge booking-status-badge--cancel-req">{% trans "Cancel Requested" %}</span>
+          {% elif booking.status == 'cancelled' %}
+            <span class="booking-status-badge booking-status-badge--cancelled">{% trans "Cancelled" %}</span>
+          {% elif booking.status == 'completed' %}
+            <span class="booking-status-badge booking-status-badge--completed">{% trans "Completed" %}</span>
+          {% elif booking.status == 'no_show' %}
+            <span class="booking-status-badge booking-status-badge--noshow">{% trans "No Show" %}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Reference:" %}</span>
+          <span class="detail-value" style="font-family:monospace;font-weight:700;">
+            {{ booking.reference }}
+          </span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Service:" %}</span>
+          <span class="detail-value">{{ booking.service_name }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Service Type:" %}</span>
+          <span class="detail-value">{{ booking.get_service_type_display }}</span>
+        </div>
+
+        {# Service-specific dates #}
+        {% if booking.service_type == 'hotel' %}
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Check-in:" %}</span>
+          <span class="detail-value">{{ booking.check_in_date|date:"d M Y"|default:"—" }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Check-out:" %}</span>
+          <span class="detail-value">{{ booking.check_out_date|date:"d M Y"|default:"—" }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Guests:" %}</span>
+          <span class="detail-value">{{ booking.num_guests|default:"—" }} {% trans "guests" %}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Nights:" %}</span>
+          <span class="detail-value">{{ booking.nights|default:"—" }} {% trans "nights" %}</span>
+        </div>
+        {% if booking.room_type %}
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Room Type:" %}</span>
+          <span class="detail-value">{{ booking.room_type.name }}</span>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if booking.service_type == 'tour' %}
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Preferred Date:" %}</span>
+          <span class="detail-value">{{ booking.preferred_date|date:"d M Y"|default:"—" }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Participants:" %}</span>
+          <span class="detail-value">{{ booking.num_participants|default:"—" }}</span>
+        </div>
+        {% endif %}
+
+        {% if booking.service_type == 'car' %}
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Pickup Date:" %}</span>
+          <span class="detail-value">{{ booking.pickup_date|date:"d M Y"|default:"—" }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Return Date:" %}</span>
+          <span class="detail-value">{{ booking.return_date|date:"d M Y"|default:"—" }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Days:" %}</span>
+          <span class="detail-value">{{ booking.num_days|default:"—" }} {% trans "day(s)" %}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Mode:" %}</span>
+          <span class="detail-value">{{ booking.get_rental_mode_display|default:"—" }}</span>
+        </div>
+        {% if booking.pickup_location %}
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Pickup Location:" %}</span>
+          <span class="detail-value">{{ booking.pickup_location }}</span>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Payment Mode:" %}</span>
+          <span class="detail-value">{{ booking.get_payment_mode_display }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Booked On:" %}</span>
+          <span class="detail-value">{{ booking.created_at|date:"d M Y, H:i" }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <span class="detail-label">{% trans "Refundable:" %}</span>
+          <span class="detail-value">
+            {% if booking.is_refundable %}
+              <span style="color:var(--color-success);"><i class="bi-check-circle-fill"></i> {% trans "Yes" %}</span>
+            {% else %}
+              <span style="color:var(--color-danger);"><i class="bi-x-circle-fill"></i> {% trans "No (snapshotted)" %}</span>
+            {% endif %}
+          </span>
+        </div>
+
+        {% if booking.special_requests %}
+        <div class="col-12">
+          <span class="detail-label">{% trans "Special Requests:" %}</span>
+          <span class="detail-value" style="font-style:italic;">{{ booking.special_requests }}</span>
+        </div>
+        {% endif %}
+
+        {% if booking.cancellation_reason %}
+        <div class="col-12">
+          <span class="detail-label">{% trans "Cancellation Reason:" %}</span>
+          <span class="detail-value">{{ booking.cancellation_reason }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Customer info #}
+    <div class="portal-card mb-4">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Customer" %}</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Name:" %}</span>
+          <span class="detail-value">{{ booking.user.get_full_name|default:"—" }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Email:" %}</span>
+          <span class="detail-value">
+            <a href="mailto:{{ booking.user.email }}"
+               style="color:var(--color-primary);">{{ booking.user.email }}</a>
+          </span>
+        </div>
+        {% if booking.user.phone %}
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Phone:" %}</span>
+          <span class="detail-value">{{ booking.user.phone }}</span>
+        </div>
+        {% endif %}
+        {% if booking.user.nationality %}
+        <div class="col-sm-6">
+          <span class="detail-label">{% trans "Nationality:" %}</span>
+          <span class="detail-value">{{ booking.user.nationality }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+  {# Right: pricing + actions #}
+  <div class="col-lg-4">
+
+    {# Pricing card #}
+    <div class="portal-card mb-4">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Pricing" %}</h2>
+      </div>
+      <div class="booking-price-breakdown">
+        <div class="price-row">
+          <span>{% trans "Base Price" %}</span>
+          <span>{{ booking.currency }} {{ booking.base_price|floatformat:2 }}</span>
+        </div>
+        <div class="price-row price-row--total">
+          <span><strong>{% trans "Total" %}</strong></span>
+          <span><strong>{{ booking.currency }} {{ booking.total_price|floatformat:2 }}</strong></span>
+        </div>
+      </div>
+      {% if booking.pesapal_order_id %}
+      <div style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--color-border);">
+        <span class="detail-label">{% trans "PesaPal Order ID" %}</span>
+        <span class="detail-value" style="font-family:monospace;font-size:var(--text-xs);">
+          {{ booking.pesapal_order_id }}
+        </span>
+      </div>
+      {% endif %}
+    </div>
+
+    {# Mark as paid — Pay on Arrival only #}
+    {% if can_mark_paid %}
+    <div class="portal-card mb-4" style="border-color:var(--color-accent);">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title" style="color:var(--color-accent-dark);">
+          <i class="bi bi-cash-coin me-2"></i>{% trans "Mark as Paid" %}
+        </h2>
+      </div>
+      <p style="font-size:var(--text-sm);color:var(--color-text-light);margin-bottom:1rem;">
+        {% trans "Confirm that the customer has paid the full amount on arrival." %}
+      </p>
+      <form method="post" action="{% url 'portal:booking_mark_paid' booking.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-accent-jd w-100"
+                style="display:flex;align-items:center;justify-content:center;gap:0.4rem;"
+                data-confirm="{% trans 'Confirm this booking has been paid in full?' %}"
+                data-confirm-title="{% trans 'Mark as Paid' %}">
+          <i class="bi bi-check-circle"></i> {% trans "Confirm Full Payment" %}
+        </button>
+      </form>
+    </div>
+    {% endif %}
+
+    {# Status update #}
+    {% if valid_transitions %}
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Update Status" %}</h2>
+      </div>
+      <form method="post" action="{% url 'portal:booking_status' booking.pk %}">
+        {% csrf_token %}
+        <div class="jd-form-group">
+          {{ status_form.status.label_tag }}
+          {{ status_form.status }}
+        </div>
+        <div class="jd-form-group mt-3">
+          {{ status_form.admin_note.label_tag }}
+          {{ status_form.admin_note }}
+        </div>
+        <button type="submit" class="btn-primary-jd w-100 mt-3"
+                style="display:flex;align-items:center;justify-content:center;gap:0.4rem;"
+                data-confirm="{% trans 'Update the status of this booking?' %}"
+                data-confirm-title="{% trans 'Update Status' %}">
+          <i class="bi bi-arrow-right-circle"></i> {% trans "Apply Status" %}
+        </button>
+      </form>
+    </div>
+    {% else %}
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Status" %}</h2>
+      </div>
+      <p style="font-size:var(--text-sm);color:var(--color-muted);margin:0;">
+        <i class="bi bi-lock me-1"></i>
+        {% trans "This booking has reached a terminal status and cannot be changed." %}
+      </p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portal/portal_bookings.js' %}"></script>
+{% endblock %}

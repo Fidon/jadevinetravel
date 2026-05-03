@@ -1,0 +1,158 @@
+{% extends "portal/portal_base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Tours & Safaris" %}{% endblock %}
+{% block nav_tours %}active{% endblock %}
+
+{% block page_title %}{% trans "Tours & Safaris" %}{% endblock %}
+{% block page_subtitle %}
+  <p class="portal-page-subtitle">
+    {% blocktrans with count=tours|length %}{{ count }} package(s) — managed by Jadevine{% endblocktrans %}
+  </p>
+{% endblock %}
+
+{% block page_actions %}
+  <a href="{% url 'portal:tour_add' %}" class="btn-primary-jd"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-plus-lg"></i> {% trans "Add Tour Package" %}
+  </a>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_tours.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<form method="get" class="portal-card mb-4" style="padding:1rem 1.5rem;">
+  <div class="d-flex align-items-end gap-3 flex-wrap">
+
+    <div class="jd-form-group mb-0" style="flex:2;min-width:200px;">
+      <label class="jd-label">{% trans "Search" %}</label>
+      <div class="jd-input-icon-wrap">
+        <i class="bi bi-search jd-input-icon"></i>
+        <input type="text" name="q" class="jd-input"
+               value="{{ search_query|default:'' }}"
+               placeholder="{% trans 'Package name...' %}">
+      </div>
+    </div>
+
+    <div class="jd-form-group mb-0" style="flex:1;min-width:160px;">
+      <label class="jd-label">{% trans "Tour Type" %}</label>
+      <select name="tour_type" class="jd-input portal-autosubmit">
+        <option value="">{% trans "All Types" %}</option>
+        {% for val, label in tour_type_choices %}
+        <option value="{{ val }}" {% if tour_type_filter == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% if tour_type_filter or search_query %}
+    <a href="{% url 'portal:tour_list' %}" class="btn-outline-jd"
+       style="padding:0.5rem 1rem;white-space:nowrap;align-self:flex-end;">
+      <i class="bi bi-x-lg"></i> {% trans "Clear" %}
+    </a>
+    {% endif %}
+
+  </div>
+</form>
+
+<div class="portal-table-wrap table-responsive">
+  {% if tours %}
+  <table id="tours-table" class="table mb-0" style="width:100%;">
+    <thead>
+      <tr>
+        <th style="min-width: 150px;">{% trans "Package" %}</th>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "Duration" %}</th>
+        <th>{% trans "Max Group" %}</th>
+        <th>{% trans "Price/Person" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Featured" %}</th>
+        <th>{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tour in tours %}
+      <tr>
+        <td>
+          <div class="d-flex align-items-center gap-2 text-truncate-container">
+            {% if tour.cover_image %}
+            <img src="{{ tour.cover_image.url }}" alt="{{ tour.name_en }}"
+                 class="tour-thumb" loading="lazy">
+            {% else %}
+            <div class="tour-thumb tour-thumb--placeholder">
+              <i class="bi bi-compass"></i>
+            </div>
+            {% endif %}
+            <span style="font-weight:600;" class="text-truncate" title="{{ tour.name_en }}">{{ tour.name_en }}</span>
+          </div>
+        </td>
+        <td class="text-nowrap-custom">{{ tour.get_tour_type_display }}</td>
+        <td>{% blocktrans with d=tour.duration_days %}{{ d }} day(s){% endblocktrans %}</td>
+        <td>{{ tour.group_size_max }}</td>
+        <td style="font-weight:600;">${{ tour.price_per_person }}</td>
+        <td>
+          {% if tour.is_active %}
+          <span class="approval-badge approval-badge--approved">{% trans "Published" %}</span>
+          {% else %}
+          <span class="approval-badge approval-badge--pending">{% trans "Hidden" %}</span>
+          {% endif %}
+        </td>
+        <td class="text-center">
+          {% if tour.is_featured %}
+          <i class="bi bi-star-fill" style="color:var(--color-accent);font-size:1rem;" title="Featured"></i>
+          {% else %}
+          <i class="bi bi-star" style="color:var(--color-border);font-size:1rem;" title="Not featured"></i>
+          {% endif %}
+        </td>
+        <td>
+          <div class="portal-row-actions">
+            <a href="{% url 'portal:tour_detail' tour.pk %}"
+               class="portal-icon-btn" title="{% trans 'View' %}">
+              <i class="bi bi-eye"></i>
+            </a>
+            <a href="{% url 'portal:tour_edit' tour.pk %}"
+               class="portal-icon-btn" title="{% trans 'Edit' %}">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <form method="post" action="{% url 'portal:tour_toggle_featured' tour.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="portal-icon-btn portal-icon-btn--accent"
+                      title="{% if tour.is_featured %}{% trans 'Remove from featured' %}{% else %}{% trans 'Mark as featured' %}{% endif %}">
+                <i class="bi bi-star{% if tour.is_featured %}-fill{% endif %}"></i>
+              </button>
+            </form>
+            <form method="post" action="{% url 'portal:tour_delete' tour.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="portal-icon-btn portal-icon-btn--danger"
+                      title="{% trans 'Delete' %}"
+                      data-confirm="{% trans 'Permanently delete this tour package? All itinerary days and photos will be lost.' %}"
+                      data-confirm-title="{% trans 'Delete Tour Package' %}">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <div class="portal-empty-state">
+    <i class="bi bi-compass"></i>
+    <p>{% trans "No tour packages yet. Add your first package." %}</p>
+    <a href="{% url 'portal:tour_add' %}" class="btn-primary-jd mt-2"
+       style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1.25rem;font-size:var(--text-sm);">
+      <i class="bi bi-plus-lg"></i> {% trans "Add Tour Package" %}
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portal/portal_tours.js' %}"></script>
+{% endblock %}

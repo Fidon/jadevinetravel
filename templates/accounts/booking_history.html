@@ -39,33 +39,37 @@
   {% if page_obj.object_list %}
     <div class="dash-bookings-list" id="bookingsList">
       {% for booking in page_obj %}
-      <div class="dash-booking-card">
-        <div class="dash-booking-icon dash-booking-icon-{{ booking.service_type }}">
-          {% if booking.service_type == 'hotel' %}<i class="bi bi-building"></i>
-          {% elif booking.service_type == 'tour' %}<i class="bi bi-binoculars"></i>
-          {% else %}<i class="bi bi-car-front"></i>{% endif %}
-        </div>
-        <div class="dash-booking-info">
-          <span class="dash-booking-name">
-            {% if booking.service_type == 'hotel' and booking.hotel %}{{ booking.hotel.name }}
-            {% elif booking.service_type == 'tour' and booking.tour_package %}{{ booking.tour_package.name_en }}
-            {% elif booking.service_type == 'car' and booking.car %}{{ booking.car.name }}
-            {% else %}—{% endif %}
+        <div class="dash-booking-card">
+          <a href="{% url 'accounts:booking_detail' booking.reference %}"
+            class="dash-booking-card-link"
+            aria-label="{% trans 'View booking' %}: {{ booking.reference }}"></a>
+          <div class="dash-booking-icon dash-booking-icon-{{ booking.service_type }}">
+            {% if booking.service_type == 'hotel' %}<i class="bi bi-building"></i>
+            {% elif booking.service_type == 'tour' %}<i class="bi bi-binoculars"></i>
+            {% else %}<i class="bi bi-car-front"></i>{% endif %}
+          </div>
+          <div class="dash-booking-info">
+            <span class="dash-booking-name">
+              {% if booking.service_type == 'hotel' and booking.hotel %}{{ booking.hotel.name }}
+              {% elif booking.service_type == 'tour' and booking.tour_package %}{{ booking.tour_package.name_en }}
+              {% elif booking.service_type == 'car' and booking.car %}{{ booking.car.name }}
+              {% else %}—{% endif %}
+            </span>
+            <span class="dash-booking-date">
+              {% if booking.service_date %}
+                <i class="bi bi-calendar3 me-1"></i>{{ booking.service_date|date:"d M Y" }}
+              {% endif %}
+            </span>
+            <span class="dash-booking-ref">{{ booking.reference }}</span>
+          </div>
+          <div class="dash-booking-meta">
+            <span class="jd-badge jd-badge-{{ booking.status }}">{{ booking.get_status_display }}</span>
+            <span class="dash-booking-total">{{ booking.currency }} {{ booking.total_price }}</span>
+          </div>
+          <span class="dash-booking-arrow" aria-hidden="true">
+            <i class="bi bi-chevron-right"></i>
           </span>
-          <span class="dash-booking-date">
-            {% if booking.service_date %}
-              <i class="bi bi-calendar3 me-1"></i>{{ booking.service_date|date:"d M Y" }}
-            {% endif %}
-          </span>
-          <span class="dash-booking-ref">{{ booking.reference }}</span>
         </div>
-        <div class="dash-booking-meta">
-          <span class="jd-badge jd-badge-{{ booking.status }}">{{ booking.get_status_display }}</span>
-          <span class="dash-booking-total">{{ booking.currency }} {{ booking.total_price }}</span>
-        </div>
-        <a href="{% url 'accounts:booking_detail' booking.reference %}"
-           class="dash-booking-arrow"><i class="bi bi-chevron-right"></i></a>
-      </div>
       {% endfor %}
     </div>
 

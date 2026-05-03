@@ -1,0 +1,149 @@
+/* Row highlight for bookings needing attention */
+.booking-row--attention td {
+  background: var(--color-warning-bg);
+}
+
+/* Booking status badges — different vocabulary from approval badges */
+.booking-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.booking-status-badge--confirmed {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+.booking-status-badge--pending {
+  background: var(--color-warning-bg);
+  color: #7a5200;
+}
+.booking-status-badge--cancel-req {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+.booking-status-badge--cancelled {
+  background: var(--color-light);
+  color: var(--color-muted);
+}
+.booking-status-badge--completed {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+.booking-status-badge--noshow {
+  background: var(--color-dark);
+  color: #fff;
+}
+.booking-status-badge--paid {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+.booking-status-badge--refunded {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+.booking-status-badge--failed {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+/* Pricing breakdown in detail page */
+.booking-price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.price-row:last-child {
+  border-bottom: none;
+}
+
+.price-row--total {
+  font-size: var(--text-md);
+  color: var(--color-text);
+  padding-top: 0.5rem;
+}
+
+/* Length menu select — match jd-input style */
+#bookings-table_length select {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 2rem 0.35rem 0.75rem;
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-white);
+  outline: none;
+  cursor: pointer;
+  appearance: auto;
+  transition: border-color 0.2s;
+}
+
+#bookings-table_length select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26, 77, 46, 0.08);
+}
+
+/* Keep length label and select on one line */
+#bookings-table_length {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+
+/* Pagination buttons */
+#table_paginate a {
+  text-decoration: none;
+}
+
+#bookings-table_paginate .paginate_button a {
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-white) !important;
+  color: var(--color-text-light) !important;
+  font-size: var(--text-sm) !important;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+  margin: 0 2px;
+}
+
+#bookings-table_paginate .paginate_button a:hover:not(.disabled) {
+  background: var(--color-primary-xlight) !important;
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary-light) !important;
+}
+
+#bookings-table_paginate .paginate_button.active a {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  border-color: var(--color-primary) !important;
+  font-weight: 600 !important;
+}
+
+#bookings-table_paginate .paginate_button.disabled,
+#bookings-table_paginate .paginate_button.disabled a {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
