@@ -177,9 +177,12 @@
         </a>
 
         <a href="{% url 'portal:review_list' %}"
-           class="portal-nav-link {% block nav_reviews %}{% endblock %}">
+          class="portal-nav-link {% block nav_reviews %}{% endblock %}">
           <i class="bi bi-star-half"></i>
           <span>{% trans "Reviews" %}</span>
+          {% if pending_reviews > 0 %}
+          <span class="portal-nav-badge portal-nav-badge--accent">{{ pending_reviews }}</span>
+          {% endif %}
         </a>
       </div>
 
@@ -344,6 +347,7 @@
     csrfToken: '{{ csrf_token }}',
     isMiniAdmin: {{ mini_admin|yesno:"true,false" }},
     pendingTotal: {{ pending_total|default:0 }},
+    pendingReviews: {{ pending_reviews|default:0 }},
     urls: {
       pendingCount: '{% url "portal:pending_count" %}',
       dashboard: '{% url "portal:dashboard" %}',

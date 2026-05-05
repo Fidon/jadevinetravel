@@ -1,7 +1,582 @@
 {% extends 'base.html' %}
-{% block title %}About Us — Jadevine Travel & Tours{% endblock %}
+{% load static i18n %}
+
+{% block title %}{% trans "About Us — Jadevine Travel & Tours" %}{% endblock %}
+{% block meta_description %}{% trans "Learn about Jadevine Travel & Tours — our story, mission, values, and the team behind your perfect Tanzania experience." %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/core/about.css' %}">
+{% endblock %}
+
 {% block content %}
-<div style="padding:160px 0 80px;" class="container text-center">
-  <h1>About Us</h1><p>Coming soon.</p>
-</div>
+
+<!-- ============================================================
+     1. PAGE HERO
+     ============================================================ -->
+<section class="about-hero">
+  <div class="about-hero-bg"></div>
+  <div class="about-hero-overlay"></div>
+  <div class="container about-hero-content">
+    <div class="jd-load-reveal" data-delay="1">
+      <span class="eyebrow eyebrow-white">{% trans "Our Story" %}</span>
+    </div>
+    <h1 class="about-hero-title jd-load-reveal" data-delay="2">
+      {% trans "Passion for" %} <em>{% trans "Tanzania" %}</em>
+    </h1>
+    <p class="about-hero-subtitle jd-load-reveal" data-delay="3">
+      {% trans "Born in Zanzibar. Built for the world. We exist to share the beauty, culture, and wildlife of East Africa with every traveller who trusts us." %}
+    </p>
+    <div class="about-hero-divider jd-load-reveal" data-delay="4"></div>
+  </div>
+  <div class="about-hero-scroll-line"></div>
+</section>
+
+
+<!-- ============================================================
+     2. COMPANY STORY
+     ============================================================ -->
+<section class="section-py bg-off-white">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+
+      <!-- Image mosaic -->
+      <div class="col-lg-5 jd-reveal">
+        <div class="about-mosaic">
+          <div class="about-mosaic-main">
+            <img src="{% static 'images/niedblog-de-xXxRIgXzBy8-unsplash.jpg' %}"
+                 alt="{% trans 'Serengeti Safari' %}" loading="lazy">
+          </div>
+          <div class="about-mosaic-secondary">
+            <img src="{% static 'images/seiko-yamada-Sk2j5QWUKHQ-unsplash.jpg' %}"
+                 alt="{% trans 'Zanzibar Beach' %}" loading="lazy">
+            <img src="{% static 'images/sheila-c-juBa8joHwOE-unsplash.jpg' %}"
+                 alt="{% trans 'Stone Town Zanzibar' %}" loading="lazy">
+          </div>
+          <div class="about-mosaic-badge">
+            <div class="about-mosaic-badge-num">8<sup>+</sup></div>
+            <div class="about-mosaic-badge-lbl">{% trans "Years of Excellence" %}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="col-lg-7">
+        <div class="jd-reveal">
+          <span class="eyebrow">{% trans "Who We Are" %}</span>
+          <h2 class="section-heading">
+            {% trans "More Than a" %} <em>{% trans "Travel Agency" %}</em>
+          </h2>
+        </div>
+        <div class="jd-reveal jd-reveal-delay-1">
+          <p class="about-story-text">
+            {% trans "Jadevine Travel & Tours was founded in Zanzibar by a team of passionate locals who believe that travel, done well, changes lives. Since 2016, we have been crafting journeys across Tanzania's most extraordinary destinations — from the spice-scented alleys of Stone Town to the vast, lion-prowled plains of the Serengeti." %}
+          </p>
+          <p class="about-story-text">
+            {% trans "We started small — a handful of safari packages and a deep commitment to personal service. Today, we are a full-service platform handling hotels, tours, car rentals, and more, with a growing network of trusted local partners across Zanzibar and mainland Tanzania." %}
+          </p>
+          <p class="about-story-text">
+            {% trans "What has never changed is our promise: every client is treated as a guest, not a booking reference. We respond within 24 hours, we are available on WhatsApp, and we do not rest until your experience is exactly as you imagined it." %}
+          </p>
+        </div>
+        <div class="about-story-highlights jd-reveal jd-reveal-delay-2">
+          <div class="about-highlight-item">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>{% trans "Headquartered in Stone Town, Zanzibar" %}</span>
+          </div>
+          <div class="about-highlight-item">
+            <i class="bi bi-award-fill"></i>
+            <span>{% trans "Licensed by the Tanzania Tourism Board" %}</span>
+          </div>
+          <div class="about-highlight-item">
+            <i class="bi bi-translate"></i>
+            <span>{% trans "Serving clients in English, French, and Russian" %}</span>
+          </div>
+          <div class="about-highlight-item">
+            <i class="bi bi-whatsapp"></i>
+            <span>{% trans "Available via WhatsApp around the clock" %}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     3. MISSION & VISION
+     ============================================================ -->
+<section class="section-py about-mission-section">
+  <div class="container">
+    <div class="text-center mb-5 jd-reveal">
+      <span class="eyebrow eyebrow-white">{% trans "What Drives Us" %}</span>
+      <h2 class="section-heading" style="color:var(--color-white);">
+        {% trans "Mission &" %} <em style="color:var(--color-accent-light);">{% trans "Vision" %}</em>
+      </h2>
+    </div>
+    <div class="row g-4 justify-content-center">
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-1">
+        <div class="about-mission-card">
+          <div class="about-mission-icon">
+            <i class="bi bi-compass"></i>
+          </div>
+          <h3 class="about-mission-title">{% trans "Our Mission" %}</h3>
+          <p class="about-mission-text">
+            {% trans "To make Tanzania's extraordinary natural and cultural heritage accessible to travellers from every corner of the world — through honest pricing, expert local knowledge, and a service that never lets you feel alone." %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-2">
+        <div class="about-mission-card about-mission-card--accent">
+          <div class="about-mission-icon">
+            <i class="bi bi-eye"></i>
+          </div>
+          <h3 class="about-mission-title">{% trans "Our Vision" %}</h3>
+          <p class="about-mission-text">
+            {% trans "To become East Africa's most trusted travel partner — known not for size, but for the depth of care we put into every single journey we plan, from the first enquiry to the final farewell." %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-3">
+        <div class="about-mission-card">
+          <div class="about-mission-icon">
+            <i class="bi bi-heart"></i>
+          </div>
+          <h3 class="about-mission-title">{% trans "Our Commitment" %}</h3>
+          <p class="about-mission-text">
+            {% trans "Responsible tourism that respects local communities, protects wildlife habitats, and ensures the Tanzania we love today remains a wonder for generations to come." %}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     4. CORE VALUES
+     ============================================================ -->
+<section class="section-py bg-off-white">
+  <div class="container">
+
+    <div class="text-center mb-5 jd-reveal">
+      <span class="eyebrow">{% trans "What We Stand For" %}</span>
+      <h2 class="section-heading">
+        {% trans "Our Core" %} <em>{% trans "Values" %}</em>
+      </h2>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-1">
+        <div class="about-value-card">
+          <span class="about-value-number">01</span>
+          <div class="about-value-icon-wrap">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h4 class="about-value-title">{% trans "Integrity" %}</h4>
+          <p class="about-value-text">
+            {% trans "We quote honest prices, give honest advice, and never recommend something we would not choose ourselves. No hidden fees. No false promises." %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-2">
+        <div class="about-value-card">
+          <span class="about-value-number">02</span>
+          <div class="about-value-icon-wrap">
+            <i class="bi bi-stars"></i>
+          </div>
+          <h4 class="about-value-title">{% trans "Excellence" %}</h4>
+          <p class="about-value-text">
+            {% trans "Every detail matters — from the vehicle we send to pick you up, to the hotel we recommend for your honeymoon. We take pride in getting it exactly right." %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-3">
+        <div class="about-value-card">
+          <span class="about-value-number">03</span>
+          <div class="about-value-icon-wrap">
+            <i class="bi bi-people"></i>
+          </div>
+          <h4 class="about-value-title">{% trans "Community" %}</h4>
+          <p class="about-value-text">
+            {% trans "We partner with locally-owned hotels, guides, and operators. Tourism should benefit the communities it passes through, not bypass them." %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-1">
+        <div class="about-value-card">
+          <span class="about-value-number">04</span>
+          <div class="about-value-icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-leaf" viewBox="0 0 16 16">
+              <path d="M1.4 1.7c.216.289.65.84 1.725 1.274 1.093.44 2.884.774 5.834.528l.37-.023c1.823-.06 3.117.598 3.956 1.579C14.16 6.082 14.5 7.41 14.5 8.5c0 .58-.032 1.285-.229 1.997q.198.248.382.54c.756 1.2 1.19 2.563 1.348 3.966a1 1 0 0 1-1.98.198c-.13-.97-.397-1.913-.868-2.77C12.173 13.386 10.565 14 8 14c-1.854 0-3.32-.544-4.45-1.435-1.125-.887-1.89-2.095-2.391-3.383C.16 6.62.16 3.646.509 1.902L.73.806zm-.05 1.39c-.146 1.609-.008 3.809.74 5.728.457 1.17 1.13 2.213 2.079 2.961.942.744 2.185 1.22 3.83 1.221 2.588 0 3.91-.66 4.609-1.445-1.789-2.46-4.121-1.213-6.342-2.68-.74-.488-1.735-1.323-1.844-2.308-.023-.214.237-.274.38-.112 1.4 1.6 3.573 1.757 5.59 2.045 1.227.215 2.21.526 3.033 1.158.058-.39.075-.782.075-1.158 0-.91-.288-1.988-.975-2.792-.626-.732-1.622-1.281-3.167-1.229l-.316.02c-3.05.253-5.01-.08-6.291-.598a5.3 5.3 0 0 1-1.4-.811"/>
+            </svg>
+          </div>
+          <h4 class="about-value-title">{% trans "Sustainability" %}</h4>
+          <p class="about-value-text">
+            {% trans "We actively support conservation initiatives in the Serengeti and Zanzibar's marine parks. Your trip with us contributes, not depletes." %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-2">
+        <div class="about-value-card">
+          <span class="about-value-number">05</span>
+          <div class="about-value-icon-wrap">
+            <i class="bi bi-lightning-charge"></i>
+          </div>
+          <h4 class="about-value-title">{% trans "Responsiveness" %}</h4>
+          <p class="about-value-text">
+            {% trans "Travel questions rarely follow office hours. We are reachable via WhatsApp and email at any hour, and we respond with speed and substance." %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-3">
+        <div class="about-value-card">
+          <span class="about-value-number">06</span>
+          <div class="about-value-icon-wrap">
+            <i class="bi bi-hand-thumbs-up"></i>
+          </div>
+          <h4 class="about-value-title">{% trans "Transparency" %}</h4>
+          <p class="about-value-text">
+            {% trans "Our prices are clear, our cancellation policies are fair, and every inclusion and exclusion is spelled out before you confirm. No surprises." %}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     5. STATS STRIP
+     ============================================================ -->
+<section class="about-stats-section">
+  <div class="container">
+    <div class="about-stats-grid">
+
+      <div class="about-stat-item jd-reveal jd-reveal-delay-1">
+        <div class="about-stat-number">500<span>+</span></div>
+        <div class="about-stat-label">{% trans "Happy Clients" %}</div>
+      </div>
+
+      <div class="about-stat-divider"></div>
+
+      <div class="about-stat-item jd-reveal jd-reveal-delay-2">
+        <div class="about-stat-number">40<span>+</span></div>
+        <div class="about-stat-label">{% trans "Tour Packages" %}</div>
+      </div>
+
+      <div class="about-stat-divider"></div>
+
+      <div class="about-stat-item jd-reveal jd-reveal-delay-3">
+        <div class="about-stat-number">8<span>+</span></div>
+        <div class="about-stat-label">{% trans "Years in Business" %}</div>
+      </div>
+
+      <div class="about-stat-divider"></div>
+
+      <div class="about-stat-item jd-reveal jd-reveal-delay-4">
+        <div class="about-stat-number">15<span>+</span></div>
+        <div class="about-stat-label">{% trans "Hotel Partners" %}</div>
+      </div>
+
+      <div class="about-stat-divider"></div>
+
+      <div class="about-stat-item jd-reveal jd-reveal-delay-5">
+        <div class="about-stat-number">3</div>
+        <div class="about-stat-label">{% trans "Languages Served" %}</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6. TEAM
+     ============================================================ -->
+<section class="section-py bg-off-white">
+  <div class="container">
+
+    <div class="text-center mb-5 jd-reveal">
+      <span class="eyebrow">{% trans "The People Behind It" %}</span>
+      <h2 class="section-heading">
+        {% trans "Meet the" %} <em>{% trans "Team" %}</em>
+      </h2>
+      <p class="section-subheading mx-auto">
+        {% trans "Our small, dedicated team brings together decades of combined experience in Tanzanian travel, hospitality, and customer care." %}
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+      <!-- Team member placeholder cards -->
+      <!-- I'll replace src, name, role, bio with real content from Jadevine -->
+      {% for member in team_members %}
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-{{ forloop.counter }}">
+        <div class="about-team-card">
+          <div class="about-team-photo-wrap">
+            {% if member.photo %}
+            <img src="{{ member.photo }}" alt="{{ member.name }}" loading="lazy">
+            {% else %}
+            <div class="about-team-photo-placeholder">
+              <i class="bi bi-person"></i>
+            </div>
+            {% endif %}
+          </div>
+          <div class="about-team-body">
+            <h4 class="about-team-name">{{ member.name }}</h4>
+            <p class="about-team-role">{{ member.role }}</p>
+            {% if member.bio %}
+            <p class="about-team-bio">{{ member.bio }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <!-- Static placeholder team until Jadevine provides real content -->
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-1">
+        <div class="about-team-card">
+          <div class="about-team-photo-wrap">
+            <div class="about-team-photo-placeholder">
+              <i class="bi bi-person"></i>
+            </div>
+          </div>
+          <div class="about-team-body">
+            <h4 class="about-team-name">{% trans "Team Member" %}</h4>
+            <p class="about-team-role">{% trans "Founder & Managing Director" %}</p>
+            <p class="about-team-bio">{% trans "Born and raised in Zanzibar with over a decade of experience crafting unforgettable East Africa journeys." %}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-2">
+        <div class="about-team-card">
+          <div class="about-team-photo-wrap">
+            <div class="about-team-photo-placeholder">
+              <i class="bi bi-person"></i>
+            </div>
+          </div>
+          <div class="about-team-body">
+            <h4 class="about-team-name">{% trans "Team Member" %}</h4>
+            <p class="about-team-role">{% trans "Safari & Tours Specialist" %}</p>
+            <p class="about-team-bio">{% trans "Expert guide with deep knowledge of the Serengeti, Ngorongoro, and Zanzibar's hidden gems." %}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 jd-reveal jd-reveal-delay-3">
+        <div class="about-team-card">
+          <div class="about-team-photo-wrap">
+            <div class="about-team-photo-placeholder">
+              <i class="bi bi-person"></i>
+            </div>
+          </div>
+          <div class="about-team-body">
+            <h4 class="about-team-name">{% trans "Team Member" %}</h4>
+            <p class="about-team-role">{% trans "Customer Relations Manager" %}</p>
+            <p class="about-team-bio">{% trans "Your first point of contact. Fluent in English and French, dedicated to making every client feel at home." %}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     7. CERTIFICATIONS & PARTNERSHIPS
+     ============================================================ -->
+<section class="section-py-sm about-certs-section">
+  <div class="container">
+
+    <div class="text-center mb-4 jd-reveal">
+      <span class="eyebrow">{% trans "Trust & Credentials" %}</span>
+      <h3 class="section-heading">
+        {% trans "Licensed &" %} <em>{% trans "Accredited" %}</em>
+      </h3>
+    </div>
+
+    <div class="about-certs-grid jd-reveal jd-reveal-delay-1">
+
+      <div class="about-cert-item">
+        <div class="about-cert-icon">
+          <i class="bi bi-patch-check-fill"></i>
+        </div>
+        <div class="about-cert-body">
+          <div class="about-cert-title">{% trans "Tanzania Tourism Board" %}</div>
+          <div class="about-cert-desc">{% trans "Officially registered and licensed travel operator in Tanzania." %}</div>
+        </div>
+      </div>
+
+      <div class="about-cert-item">
+        <div class="about-cert-icon">
+          <i class="bi bi-shield-fill-check"></i>
+        </div>
+        <div class="about-cert-body">
+          <div class="about-cert-title">{% trans "Secure Payments" %}</div>
+          <div class="about-cert-desc">{% trans "All transactions processed via PesaPal — Visa, Mastercard, and mobile money." %}</div>
+        </div>
+      </div>
+
+      <div class="about-cert-item">
+        <div class="about-cert-icon">
+          <i class="bi bi-star-fill"></i>
+        </div>
+        <div class="about-cert-body">
+          <div class="about-cert-title">{% trans "TripAdvisor Listed" %}</div>
+          <div class="about-cert-desc">{% trans "Verified business listing with genuine customer reviews." %}</div>
+        </div>
+      </div>
+
+      <div class="about-cert-item">
+        <div class="about-cert-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-leaf" viewBox="0 0 16 16">
+            <path d="M1.4 1.7c.216.289.65.84 1.725 1.274 1.093.44 2.884.774 5.834.528l.37-.023c1.823-.06 3.117.598 3.956 1.579C14.16 6.082 14.5 7.41 14.5 8.5c0 .58-.032 1.285-.229 1.997q.198.248.382.54c.756 1.2 1.19 2.563 1.348 3.966a1 1 0 0 1-1.98.198c-.13-.97-.397-1.913-.868-2.77C12.173 13.386 10.565 14 8 14c-1.854 0-3.32-.544-4.45-1.435-1.125-.887-1.89-2.095-2.391-3.383C.16 6.62.16 3.646.509 1.902L.73.806zm-.05 1.39c-.146 1.609-.008 3.809.74 5.728.457 1.17 1.13 2.213 2.079 2.961.942.744 2.185 1.22 3.83 1.221 2.588 0 3.91-.66 4.609-1.445-1.789-2.46-4.121-1.213-6.342-2.68-.74-.488-1.735-1.323-1.844-2.308-.023-.214.237-.274.38-.112 1.4 1.6 3.573 1.757 5.59 2.045 1.227.215 2.21.526 3.033 1.158.058-.39.075-.782.075-1.158 0-.91-.288-1.988-.975-2.792-.626-.732-1.622-1.281-3.167-1.229l-.316.02c-3.05.253-5.01-.08-6.291-.598a5.3 5.3 0 0 1-1.4-.811"/>
+          </svg>
+        </div>
+        <div class="about-cert-body">
+          <div class="about-cert-title">{% trans "Eco-Conscious Travel" %}</div>
+          <div class="about-cert-desc">{% trans "Committed to responsible tourism and conservation in every tour we run." %}</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     8. OFFICE LOCATION
+     ============================================================ -->
+<section class="section-py bg-off-white">
+  <div class="container">
+
+    <div class="row g-5 align-items-center">
+
+      <div class="col-lg-5 jd-reveal">
+        <span class="eyebrow">{% trans "Find Us" %}</span>
+        <h2 class="section-heading">
+          {% trans "Visit Our" %} <em>{% trans "Office" %}</em>
+        </h2>
+        <p class="section-subheading" style="max-width:100%;">
+          {% trans "We are located in the heart of Stone Town — Zanzibar's historic centre, a UNESCO World Heritage Site. Come say hello, or reach us remotely — we are always available." %}
+        </p>
+
+        <div class="about-contact-list">
+          <div class="about-contact-item">
+            <div class="about-contact-icon">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div>
+              <div class="about-contact-label">{% trans "Address" %}</div>
+              <div class="about-contact-value">{% trans "Stone Town, Zanzibar, Tanzania" %}</div>
+            </div>
+          </div>
+          <div class="about-contact-item">
+            <div class="about-contact-icon">
+              <i class="bi bi-whatsapp"></i>
+            </div>
+            <div>
+              <div class="about-contact-label">{% trans "WhatsApp" %}</div>
+              <a href="https://wa.me/255713529019"
+                 class="about-contact-value about-contact-link">
+                +255 713 529 019
+              </a>
+            </div>
+          </div>
+          <div class="about-contact-item">
+            <div class="about-contact-icon">
+              <i class="bi bi-envelope-fill"></i>
+            </div>
+            <div>
+              <div class="about-contact-label">{% trans "Email" %}</div>
+              <a href="mailto:info@jadevinetours.com"
+                 class="about-contact-value about-contact-link">
+                info@jadevinetours.com
+              </a>
+            </div>
+          </div>
+          <div class="about-contact-item">
+            <div class="about-contact-icon">
+              <i class="bi bi-clock-fill"></i>
+            </div>
+            <div>
+              <div class="about-contact-label">{% trans "Response Time" %}</div>
+              <div class="about-contact-value">{% trans "Within 24 hours" %}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4" style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <a href="{% url 'contact:contact' %}" class="btn-primary-jd">
+            <i class="bi bi-envelope"></i> {% trans "Send a Message" %}
+          </a>
+          <a href="https://wa.me/255713529019" class="btn-outline-jd"
+             target="_blank" rel="noopener">
+            <i class="bi bi-whatsapp"></i> {% trans "WhatsApp Us" %}
+          </a>
+        </div>
+      </div>
+
+      <!-- Map embed -->
+      <div class="col-lg-7 jd-reveal jd-reveal-delay-2">
+        <div class="about-map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.8!2d39.1948!3d-6.1622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cd0a73e1b0975%3A0xa6c5e8a67b6fd0b0!2sStone%20Town%2C%20Zanzibar!5e0!3m2!1sen!2stz!4v1620000000000!5m2!1sen!2stz"
+            width="100%"
+            height="420"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="{% trans 'Jadevine Travel & Tours office location' %}">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     9. CTA STRIP
+     ============================================================ -->
+<section class="about-cta-section">
+  <div class="about-cta-bg"></div>
+  <div class="about-cta-overlay"></div>
+  <div class="container about-cta-content jd-reveal">
+    <span class="eyebrow eyebrow-white">{% trans "Ready to Explore?" %}</span>
+    <h2 class="about-cta-title">
+      {% trans "Start Your Tanzania" %} <em>{% trans "Adventure" %}</em>
+    </h2>
+    <p class="about-cta-subtitle">
+      {% trans "Browse our safari packages, find the perfect hotel, or simply reach out — we will plan the rest." %}
+    </p>
+    <div class="about-cta-actions">
+      <a href="{% url 'tours:list' %}" class="btn-accent-jd">
+        <i class="bi bi-compass"></i> {% trans "View Safari Packages" %}
+      </a>
+      <a href="{% url 'contact:contact' %}" class="btn-outline-white-jd">
+        {% trans "Plan My Trip" %}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/core/about.js' %}"></script>
 {% endblock %}

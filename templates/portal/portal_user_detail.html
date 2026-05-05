@@ -1,0 +1,247 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ customer.get_full_name|default:customer.email }}{% endblock %}
+{% block nav_users %}active{% endblock %}
+
+{% block page_title %}{{ customer.get_full_name|default:customer.email }}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">{{ customer.email }}</p>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'portal:user_list' %}" class="btn-outline-jd"
+   style="display:inline-flex;align-items:center;gap:0.4rem;">
+  <i class="bi bi-arrow-left"></i> {% trans "Back to Customers" %}
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_users.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+  <!-- ── Left: Profile card ─────────────────────────────────────────────── -->
+  <div class="col-lg-4">
+    <div class="portal-card user-profile-card">
+
+      <!-- Avatar -->
+      <div class="user-detail-avatar">
+        {% if customer.profile_photo %}
+        <img src="{{ customer.profile_photo.url }}" alt=""
+             class="user-detail-photo">
+        {% else %}
+        <div class="user-detail-initials">
+          {{ customer.first_name|first|upper }}{{ customer.last_name|first|upper }}
+        </div>
+        {% endif %}
+      </div>
+
+      <h2 class="user-detail-name">
+        {{ customer.get_full_name|default:"—" }}
+      </h2>
+      <p class="user-detail-email">{{ customer.email }}</p>
+
+      <!-- Status badge -->
+      <div class="mb-3">
+        {% if customer.is_active %}
+        <span class="approval-badge approval-badge--approved">
+          <i class="bi bi-check-circle-fill"></i> {% trans "Active" %}
+        </span>
+        {% else %}
+        <span class="approval-badge approval-badge--rejected">
+          <i class="bi bi-x-circle-fill"></i> {% trans "Inactive" %}
+        </span>
+        {% endif %}
+      </div>
+
+      <!-- Profile fields -->
+      <table class="user-detail-table">
+        <tr>
+          <td class="user-detail-label">{% trans "Phone" %}</td>
+          <td class="user-detail-value">{{ customer.phone|default:"—" }}</td>
+        </tr>
+        <tr>
+          <td class="user-detail-label">{% trans "Nationality" %}</td>
+          <td class="user-detail-value">{{ customer.nationality|default:"—" }}</td>
+        </tr>
+        <tr>
+          <td class="user-detail-label">{% trans "Language" %}</td>
+          <td class="user-detail-value">
+            {{ customer.preferred_language|upper }}
+          </td>
+        </tr>
+        <tr>
+          <td class="user-detail-label">{% trans "Joined" %}</td>
+          <td class="user-detail-value">
+            {{ customer.date_joined|date:"d M Y" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="user-detail-label">{% trans "Last Login" %}</td>
+          <td class="user-detail-value">
+            {{ customer.last_login|date:"d M Y H:i"|default:"—" }}
+          </td>
+        </tr>
+      </table>
+
+      <!-- Booking stats -->
+      <div class="user-booking-stats">
+        <div class="user-stat-pill">
+          <span class="user-stat-num">{{ booking_count }}</span>
+          <span class="user-stat-lbl">{% trans "Total" %}</span>
+        </div>
+        <div class="user-stat-pill user-stat-pill--success">
+          <span class="user-stat-num">{{ confirmed_count }}</span>
+          <span class="user-stat-lbl">{% trans "Confirmed" %}</span>
+        </div>
+        <div class="user-stat-pill user-stat-pill--danger">
+          <span class="user-stat-num">{{ cancelled_count }}</span>
+          <span class="user-stat-lbl">{% trans "Cancelled" %}</span>
+        </div>
+        <div class="user-stat-pill user-stat-pill--accent">
+          <span class="user-stat-num">{{ completed_count }}</span>
+          <span class="user-stat-lbl">{% trans "Completed" %}</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="user-detail-actions">
+        <form method="post"
+              action="{% url 'portal:user_reset_password' customer.pk %}">
+          {% csrf_token %}
+          <button type="submit" class="btn-outline-jd"
+                  style="width:100%;display:flex;align-items:center;
+                         justify-content:center;gap:0.4rem;margin-bottom:0.6rem;">
+            <i class="bi bi-key"></i> {% trans "Send Password Reset" %}
+          </button>
+        </form>
+
+        <form method="post"
+              action="{% url 'portal:user_deactivate' customer.pk %}">
+          {% csrf_token %}
+          <button type="submit"
+                  class="{% if customer.is_active %}btn-danger-jd{% else %}btn-outline-jd{% endif %}"
+                  data-confirm="{% if customer.is_active %}{% trans 'Deactivate this account? The customer will not be able to log in.' %}{% else %}{% trans 'Reactivate this account?' %}{% endif %}"
+                  data-confirm-title="{% if customer.is_active %}{% trans 'Deactivate Account' %}{% else %}{% trans 'Reactivate Account' %}{% endif %}"
+                  style="width:100%;display:flex;align-items:center;
+                         justify-content:center;gap:0.4rem;">
+            {% if customer.is_active %}
+            <i class="bi bi-person-x"></i> {% trans "Deactivate Account" %}
+            {% else %}
+            <i class="bi bi-person-check"></i> {% trans "Reactivate Account" %}
+            {% endif %}
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Right: Booking history ─────────────────────────────────────────── -->
+  <div class="col-lg-8">
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Booking History" %}</h2>
+        <span style="font-size:var(--text-sm);color:var(--color-muted);">
+          {{ booking_count }} {% trans "booking(s)" %}
+        </span>
+      </div>
+
+      {% if bookings %}
+      <div class="portal-table-wrap table-responsive">
+        <table id="user-bookings-table"
+               class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>{% trans "Reference" %}</th>
+              <th>{% trans "Service" %}</th>
+              <th>{% trans "Date" %}</th>
+              <th>{% trans "Total" %}</th>
+              <th>{% trans "Payment" %}</th>
+              <th>{% trans "Status" %}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for booking in bookings %}
+            <tr>
+              <td>
+                <span style="font-family:var(--font-heading);font-weight:600;
+                             font-size:var(--text-sm);color:var(--color-primary);">
+                  {{ booking.reference }}
+                </span>
+              </td>
+              <td>
+                <span style="font-size:var(--text-xs);font-weight:600;
+                             text-transform:uppercase;letter-spacing:0.06em;
+                             color:var(--color-muted);">
+                  {{ booking.get_service_type_display }}
+                </span>
+              </td>
+              <td style="font-size:var(--text-xs);color:var(--color-muted);
+                         white-space:nowrap;">
+                {{ booking.created_at|date:"d M Y" }}
+              </td>
+              <td style="font-size:var(--text-sm);font-weight:600;">
+                {{ booking.currency }} {{ booking.total_price }}
+              </td>
+              <td>
+                <span class="approval-badge
+                  {% if booking.payment_status == 'paid' %}approval-badge--approved
+                  {% elif booking.payment_status == 'pending' %}approval-badge--pending
+                  {% else %}approval-badge--rejected{% endif %}">
+                  {{ booking.get_payment_status_display }}
+                </span>
+              </td>
+              <td>
+                <span class="approval-badge
+                  {% if booking.status == 'confirmed' or booking.status == 'completed' %}approval-badge--approved
+                  {% elif booking.status == 'cancelled' or booking.status == 'no_show' %}approval-badge--rejected
+                  {% else %}approval-badge--pending{% endif %}">
+                  {{ booking.get_status_display }}
+                </span>
+              </td>
+              <td>
+                <a href="{% url 'portal:booking_detail' booking.pk %}"
+                   class="portal-icon-btn"
+                   title="{% trans 'View booking' %}">
+                  <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="portal-empty-state" style="padding:2.5rem 1rem;">
+        <i class="bi bi-calendar-x"></i>
+        <p>{% trans "This customer has no bookings yet." %}</p>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+{% if bookings %}
+<script>
+  if ($.fn.DataTable) {
+    PORTAL.initDataTable('#user-bookings-table', {
+      pageLength: 10,
+      order: [[2, 'desc']],
+      columnDefs: [{ orderable: false, targets: -1 }],
+      exportOptions: { columns: ':not(:last-child)' },
+    });
+  }
+</script>
+{% endif %}
+{% endblock %}

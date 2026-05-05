@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.translation import gettext_lazy as _
 from apps.portal.mixins import PortalRequiredMixin
+from django.contrib.auth.views import PasswordResetConfirmView
+from django.urls import reverse_lazy
 
 
 class PortalLoginView(View):
@@ -71,3 +73,24 @@ class PortalLogoutView(PortalRequiredMixin, View):
     def post(self, request):
         logout(request)
         return redirect('portal:login')
+    
+    
+class PortalPasswordSetView(PasswordResetConfirmView):
+    """
+    Handles the password-set link sent in the mini-admin welcome email.
+    Uses Django's built-in PasswordResetConfirmView — completely separate
+    from allauth so there is no token validation conflict.
+    Uses the public base.html so the page is accessible before login.
+    """
+    template_name = 'portal/portal_set_password.html'
+    success_url = reverse_lazy('portal:login')
+    post_reset_login = False
+
+    def form_valid(self, form):
+        from django.contrib import messages
+        response = super().form_valid(form)
+        messages.success(
+            self.request,
+            _('Password set successfully. You can now log in.')
+        )
+        return response

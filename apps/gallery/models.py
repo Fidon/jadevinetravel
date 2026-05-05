@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
 
 
 class GalleryCategory(models.Model):
@@ -19,6 +20,17 @@ class GalleryCategory(models.Model):
 
     def get_name(self, lang='en'):
         return getattr(self, f'name_{lang}', None) or self.name_en
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = slugify(self.name_en)
+            slug = base
+            counter = 1
+            while GalleryCategory.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f'{base}-{counter}'
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
 
 
 class GalleryItem(models.Model):

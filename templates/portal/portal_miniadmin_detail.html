@@ -1,0 +1,271 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ partner.get_full_name|default:partner.username }}{% endblock %}
+{% block nav_miniadmins %}active{% endblock %}
+
+{% block page_title %}{{ partner.get_full_name|default:partner.username }}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  @{{ partner.username }} &mdash; {{ partner.email }}
+</p>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'portal:miniadmin_list' %}" class="btn-outline-jd"
+   style="display:inline-flex;align-items:center;gap:0.4rem;">
+  <i class="bi bi-arrow-left"></i> {% trans "Back to Partners" %}
+</a>
+<a href="{% url 'portal:miniadmin_edit' partner.pk %}" class="btn-primary-jd"
+   style="display:inline-flex;align-items:center;gap:0.4rem;">
+  <i class="bi bi-pencil"></i> {% trans "Edit" %}
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_miniadmins.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+  <!-- ── Left: Profile card ─────────────────────────────────────────────── -->
+  <div class="col-lg-4">
+    <div class="portal-card partner-profile-card">
+
+      <div class="partner-detail-avatar">
+        {{ partner.first_name|first|upper }}{{ partner.last_name|first|upper }}
+      </div>
+
+      <h2 class="partner-detail-name">
+        {{ partner.get_full_name|default:partner.username }}
+      </h2>
+      <code class="partner-detail-username">@{{ partner.username }}</code>
+      <p class="partner-detail-email">{{ partner.email }}</p>
+
+      <div class="mb-3">
+        {% if partner.is_active %}
+        <span class="approval-badge approval-badge--approved">
+          <i class="bi bi-check-circle-fill"></i> {% trans "Active" %}
+        </span>
+        {% else %}
+        <span class="approval-badge approval-badge--rejected">
+          <i class="bi bi-x-circle-fill"></i> {% trans "Inactive" %}
+        </span>
+        {% endif %}
+      </div>
+
+      <!-- Stats -->
+      <div class="partner-stat-grid">
+        <div class="partner-stat-cell">
+          <span class="partner-stat-num">{{ hotel_count }}</span>
+          <span class="partner-stat-lbl">{% trans "Hotels" %}</span>
+        </div>
+        <div class="partner-stat-cell">
+          <span class="partner-stat-num">{{ car_count }}</span>
+          <span class="partner-stat-lbl">{% trans "Cars" %}</span>
+        </div>
+        <div class="partner-stat-cell partner-stat-cell--success">
+          <span class="partner-stat-num">
+            {{ approved_hotels|add:approved_cars }}
+          </span>
+          <span class="partner-stat-lbl">{% trans "Live" %}</span>
+        </div>
+        <div class="partner-stat-cell partner-stat-cell--warning">
+          <span class="partner-stat-num">
+            {{ pending_hotels|add:pending_cars }}
+          </span>
+          <span class="partner-stat-lbl">{% trans "Pending" %}</span>
+        </div>
+      </div>
+
+      <!-- Meta -->
+      <table class="partner-meta-table">
+        <tr>
+          <td class="partner-meta-label">{% trans "Phone" %}</td>
+          <td class="partner-meta-value">{{ partner.phone|default:"—" }}</td>
+        </tr>
+        <tr>
+          <td class="partner-meta-label">{% trans "Added" %}</td>
+          <td class="partner-meta-value">
+            {{ partner.miniadminprofile.created_at|date:"d M Y" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="partner-meta-label">{% trans "Added By" %}</td>
+          <td class="partner-meta-value">
+            {{ partner.miniadminprofile.created_by.get_full_name|default:"—" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="partner-meta-label">{% trans "Last Login" %}</td>
+          <td class="partner-meta-value">
+            {{ partner.last_login|date:"d M Y H:i"|default:"Never" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="partner-meta-label">{% trans "Bookings" %}</td>
+          <td class="partner-meta-value">{{ booking_count }}</td>
+        </tr>
+      </table>
+
+      <!-- Actions -->
+      <div class="partner-detail-actions">
+        <form method="post"
+              action="{% url 'portal:miniadmin_reset_password' partner.pk %}">
+          {% csrf_token %}
+          <button type="submit" class="btn-outline-jd"
+                  style="width:100%;display:flex;align-items:center;
+                         justify-content:center;gap:0.4rem;margin-bottom:0.6rem;">
+            <i class="bi bi-key"></i> {% trans "Send Password Reset" %}
+          </button>
+        </form>
+
+        <form method="post"
+              action="{% url 'portal:miniadmin_deactivate' partner.pk %}">
+          {% csrf_token %}
+          <button type="submit"
+                  class="{% if partner.is_active %}btn-danger-jd{% else %}btn-outline-jd{% endif %}"
+                  data-confirm="{% if partner.is_active %}{% trans 'Deactivate this partner? They will not be able to log in, but their listings remain.' %}{% else %}{% trans 'Reactivate this partner account?' %}{% endif %}"
+                  data-confirm-title="{% if partner.is_active %}{% trans 'Deactivate Partner' %}{% else %}{% trans 'Reactivate Partner' %}{% endif %}"
+                  style="width:100%;display:flex;align-items:center;
+                         justify-content:center;gap:0.4rem;">
+            {% if partner.is_active %}
+            <i class="bi bi-person-x"></i> {% trans "Deactivate Account" %}
+            {% else %}
+            <i class="bi bi-person-check"></i> {% trans "Reactivate Account" %}
+            {% endif %}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: Listings ────────────────────────────────────────────────── -->
+  <div class="col-lg-8">
+
+    <!-- Hotels -->
+    <div class="portal-card mb-4">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Hotels" %}</h2>
+        <span style="font-size:var(--text-sm);color:var(--color-muted);">
+          {{ hotel_count }} {% trans "listing(s)" %}
+        </span>
+      </div>
+
+      {% if hotels %}
+      <div class="portal-table-wrap table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>{% trans "Name" %}</th>
+              <th>{% trans "Location" %}</th>
+              <th>{% trans "Stars" %}</th>
+              <th>{% trans "Status" %}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for hotel in hotels %}
+            <tr>
+              <td style="font-size:var(--text-sm);font-weight:600;">
+                {{ hotel.name }}
+              </td>
+              <td style="font-size:var(--text-sm);color:var(--color-text-light);">
+                {{ hotel.get_location_display }}
+              </td>
+              <td style="font-size:var(--text-sm);">
+                {{ hotel.stars }} ★
+              </td>
+              <td>
+                <span class="approval-badge
+                  {% if hotel.approval_status == 'approved' %}approval-badge--approved
+                  {% elif hotel.approval_status == 'pending' %}approval-badge--pending
+                  {% else %}approval-badge--rejected{% endif %}">
+                  {{ hotel.get_approval_status_display }}
+                </span>
+              </td>
+              <td>
+                <a href="{% url 'portal:hotel_detail' hotel.pk %}"
+                   class="portal-icon-btn" title="{% trans 'View' %}">
+                  <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="portal-empty-state" style="padding:2rem 1rem;">
+        <i class="bi bi-building"></i>
+        <p>{% trans "No hotel listings yet." %}</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Cars -->
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Car Rentals" %}</h2>
+        <span style="font-size:var(--text-sm);color:var(--color-muted);">
+          {{ car_count }} {% trans "listing(s)" %}
+        </span>
+      </div>
+
+      {% if cars %}
+      <div class="portal-table-wrap table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>{% trans "Vehicle" %}</th>
+              <th>{% trans "Type" %}</th>
+              <th>{% trans "Price/Day" %}</th>
+              <th>{% trans "Status" %}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for car in cars %}
+            <tr>
+              <td style="font-size:var(--text-sm);font-weight:600;">
+                {{ car.name }}
+              </td>
+              <td style="font-size:var(--text-sm);color:var(--color-text-light);">
+                {{ car.get_vehicle_type_display }}
+              </td>
+              <td style="font-size:var(--text-sm);">
+                USD {{ car.price_per_day }}
+              </td>
+              <td>
+                <span class="approval-badge
+                  {% if car.approval_status == 'approved' %}approval-badge--approved
+                  {% elif car.approval_status == 'pending' %}approval-badge--pending
+                  {% else %}approval-badge--rejected{% endif %}">
+                  {{ car.get_approval_status_display }}
+                </span>
+              </td>
+              <td>
+                <a href="{% url 'portal:car_detail' car.pk %}"
+                   class="portal-icon-btn" title="{% trans 'View' %}">
+                  <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="portal-empty-state" style="padding:2rem 1rem;">
+        <i class="bi bi-car-front"></i>
+        <p>{% trans "No car rental listings yet." %}</p>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

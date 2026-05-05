@@ -13,8 +13,6 @@
 .jd-hero-bg {
   position: absolute;
   inset: 0;
-  /* background-image: url("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1800&q=80"); */
-  /* background-image: url("https://images.unsplash.com/photo-1537726235470-8504e3beef77?w=1800&q=80"); */
   background-image: url("../../images/home-hero-image.jpg");
   background-size: cover;
   background-position: center 30%;

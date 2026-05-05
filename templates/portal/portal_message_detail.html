@@ -1,0 +1,203 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ message.subject }}{% endblock %}
+{% block nav_messages %}active{% endblock %}
+
+{% block page_title %}{{ message.subject }}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% trans "From" %} {{ message.name }} &mdash; {{ message.email }}
+</p>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'portal:message_list' %}" class="btn-outline-jd"
+   style="display:inline-flex;align-items:center;gap:0.4rem;">
+  <i class="bi bi-arrow-left"></i> {% trans "Back to Messages" %}
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_messages.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+  <!-- ── Left: Message content ──────────────────────────────────────────── -->
+  <div class="col-lg-8">
+
+    <!-- Original message -->
+    <div class="portal-card mb-4">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Message" %}</h2>
+        <span class="approval-badge
+          {% if message.status == 'resolved' %}approval-badge--approved
+          {% elif message.status == 'in_progress' %}approval-badge--pending
+          {% else %}approval-badge--rejected{% endif %}">
+          {{ message.get_status_display }}
+        </span>
+      </div>
+
+      <div class="msg-detail-meta">
+        <div class="msg-meta-row">
+          <span class="msg-meta-label">{% trans "From" %}</span>
+          <span class="msg-meta-value">
+            {{ message.name }}
+            <a href="mailto:{{ message.email }}"
+               style="color:var(--color-accent);font-size:var(--text-xs);">
+              {{ message.email }}
+            </a>
+            {% if message.phone %}
+            &mdash;
+            <a href="tel:{{ message.phone }}"
+               style="color:var(--color-accent);font-size:var(--text-xs);">
+              {{ message.phone }}
+            </a>
+            {% endif %}
+          </span>
+        </div>
+        <div class="msg-meta-row">
+          <span class="msg-meta-label">{% trans "Type" %}</span>
+          <span class="msg-inquiry-badge msg-inquiry-badge--{{ message.inquiry_type }}">
+            {{ message.get_inquiry_type_display }}
+          </span>
+        </div>
+        <div class="msg-meta-row">
+          <span class="msg-meta-label">{% trans "Language" %}</span>
+          <span class="msg-meta-value">
+            {{ message.preferred_lang|upper }}
+          </span>
+        </div>
+        <div class="msg-meta-row">
+          <span class="msg-meta-label">{% trans "Received" %}</span>
+          <span class="msg-meta-value">
+            {{ message.created_at|date:"d M Y, H:i" }}
+          </span>
+        </div>
+      </div>
+
+      <div class="msg-body-text">{{ message.message }}</div>
+    </div>
+
+    <!-- Admin notes / reply history -->
+    {% if message.admin_notes %}
+    <div class="portal-card mb-4">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Reply History" %}</h2>
+      </div>
+      <div class="msg-notes-text">{{ message.admin_notes }}</div>
+    </div>
+    {% endif %}
+
+    <!-- Reply form -->
+    {% if message.status != 'resolved' %}
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">
+          <i class="bi bi-reply me-2"></i>{% trans "Send Reply" %}
+        </h2>
+      </div>
+      <form method="post"
+            action="{% url 'portal:message_reply' message.pk %}">
+        {% csrf_token %}
+        <div class="jd-form-group">
+          <label class="jd-label">
+            {% trans "Reply to" %} {{ message.name }}
+            <span style="color:var(--color-danger);">*</span>
+          </label>
+          <textarea name="reply_text" class="jd-input" rows="6"
+                    id="replyTextarea"
+                    placeholder="{% trans 'Type your reply here…' %}"
+                    required></textarea>
+          <div class="msg-char-count" id="replyCharCount">0 {% trans "characters" %}</div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:0.75rem;
+                    margin-top:1rem;padding-top:1rem;
+                    border-top:1px solid var(--color-border);">
+          <button type="submit" class="btn-primary-jd"
+                  style="display:inline-flex;align-items:center;gap:0.4rem;"
+                  id="replySubmitBtn">
+            <i class="bi bi-send"></i> {% trans "Send Reply" %}
+          </button>
+        </div>
+      </form>
+    </div>
+    {% else %}
+    <div class="portal-alert portal-alert--success">
+      <i class="bi bi-check-circle-fill"></i>
+      {% trans "This message has been resolved." %}
+    </div>
+    {% endif %}
+
+  </div>
+
+  <!-- ── Right: Status management ───────────────────────────────────────── -->
+  <div class="col-lg-4">
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Update Status" %}</h2>
+      </div>
+
+      <form method="post"
+            action="{% url 'portal:message_status' message.pk %}">
+        {% csrf_token %}
+        <div class="jd-form-group">
+          <label class="jd-label">{% trans "Status" %}</label>
+          <select name="status" class="jd-input">
+            {% for val, label in message.STATUS_CHOICES %}
+            <option value="{{ val }}"
+                    {% if message.status == val %}selected{% endif %}>
+              {{ label }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn-outline-jd"
+                style="width:100%;display:flex;align-items:center;
+                       justify-content:center;gap:0.4rem;">
+          <i class="bi bi-arrow-repeat"></i> {% trans "Update Status" %}
+        </button>
+      </form>
+
+      <!-- Sender quick-contact -->
+      <div style="margin-top:1.5rem;padding-top:1.25rem;
+                  border-top:1px solid var(--color-border);">
+        <div style="font-size:var(--text-xs);font-weight:700;
+                    text-transform:uppercase;letter-spacing:0.1em;
+                    color:var(--color-muted);margin-bottom:0.75rem;">
+          {% trans "Quick Contact" %}
+        </div>
+        <a href="mailto:{{ message.email }}" class="msg-quick-link">
+          <i class="bi bi-envelope"></i> {{ message.email }}
+        </a>
+        {% if message.phone %}
+        <a href="https://wa.me/{{ message.phone|cut:'+' }}"
+           class="msg-quick-link" target="_blank" rel="noopener">
+          <i class="bi bi-whatsapp"></i> {{ message.phone }}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function ($) {
+  'use strict';
+  var $ta    = $('#replyTextarea');
+  var $count = $('#replyCharCount');
+  if ($ta.length) {
+    $ta.on('input', function () {
+      $count.text($(this).val().length + ' {% trans "characters" %}');
+    });
+  }
+})(jQuery);
+</script>
+{% endblock %}

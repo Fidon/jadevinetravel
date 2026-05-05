@@ -1,0 +1,204 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Customers" %}{% endblock %}
+{% block nav_users %}active{% endblock %}
+
+{% block page_title %}{% trans "Customers" %}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% trans "View and manage registered customer accounts." %}
+</p>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_users.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Stat bar -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--primary">
+        <i class="bi bi-people"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ total_count }}</div>
+        <p class="portal-stat-label">{% trans "Total" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--success">
+        <i class="bi bi-person-check"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ active_count }}</div>
+        <p class="portal-stat-label">{% trans "Active" %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<form method="get" class="portal-card mb-4" style="padding:1.25rem 1.5rem;">
+  <div class="users-filter-row">
+    <div class="jd-form-group mb-0" style="flex:1;min-width:200px;">
+      <label class="jd-label">{% trans "Search" %}</label>
+      <div style="position:relative;">
+        <i class="bi bi-search jd-input-icon"></i>
+        <input type="text" name="q" value="{{ search }}"
+               class="jd-input jd-input-icon-wrap"
+               placeholder="{% trans 'Name or email…' %}">
+      </div>
+    </div>
+    <div class="jd-form-group mb-0" style="min-width:160px;">
+      <label class="jd-label">{% trans "Status" %}</label>
+      <select name="active" class="jd-input" onchange="this.form.submit()">
+        <option value="">{% trans "All" %}</option>
+        <option value="1" {% if active_filter == '1' %}selected{% endif %}>
+          {% trans "Active" %}
+        </option>
+        <option value="0" {% if active_filter == '0' %}selected{% endif %}>
+          {% trans "Inactive" %}
+        </option>
+      </select>
+    </div>
+    <div class="jd-form-group mb-0" style="align-self:flex-end;">
+      <button type="submit" class="btn-primary-jd"
+              style="display:inline-flex;align-items:center;gap:0.4rem;
+                     padding:0.55rem 1.1rem;">
+        <i class="bi bi-search"></i> {% trans "Search" %}
+      </button>
+      {% if search or active_filter %}
+      <a href="{% url 'portal:user_list' %}" class="btn-outline-jd"
+         style="display:inline-flex;align-items:center;gap:0.4rem;
+                padding:0.55rem 1.1rem;margin-left:0.5rem;">
+        <i class="bi bi-x-circle"></i> {% trans "Clear" %}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</form>
+
+<!-- Table -->
+{% if page_obj.object_list %}
+<div class="portal-table-wrap table-responsive">
+  <table id="users-table" class="table table-hover align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "Customer" %}</th>
+        <th>{% trans "Phone" %}</th>
+        <th>{% trans "Language" %}</th>
+        <th>{% trans "Joined" %}</th>
+        <th>{% trans "Bookings" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in page_obj %}
+      <tr>
+        <td>
+          <div class="user-name-primary">
+            {{ customer.get_full_name|default:"—" }}
+          </div>
+          <div class="user-email">{{ customer.email }}</div>
+        </td>
+        <td style="font-size:var(--text-sm);color:var(--color-text-light);">
+          {{ customer.phone|default:"—" }}
+        </td>
+        <td>
+          <span class="user-lang-badge">
+            {{ customer.preferred_language|upper }}
+          </span>
+        </td>
+        <td style="font-size:var(--text-xs);color:var(--color-muted);
+                   white-space:nowrap;">
+          {{ customer.date_joined|date:"d M Y" }}
+        </td>
+        <td>
+          <span class="user-booking-count">
+            {{ customer.booking_count }}
+          </span>
+        </td>
+        <td>
+          {% if customer.is_active %}
+          <span class="approval-badge approval-badge--approved">
+            <i class="bi bi-check-circle-fill"></i> {% trans "Active" %}
+          </span>
+          {% else %}
+          <span class="approval-badge approval-badge--rejected">
+            <i class="bi bi-x-circle-fill"></i> {% trans "Inactive" %}
+          </span>
+          {% endif %}
+        </td>
+        <td>
+          <div class="portal-row-actions">
+            <a href="{% url 'portal:user_detail' customer.pk %}"
+               class="portal-icon-btn" title="{% trans 'View detail' %}">
+              <i class="bi bi-eye"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<nav class="users-pagination" aria-label="{% trans 'Pagination' %}">
+  <ul class="pagination pagination-sm justify-content-center mb-0 mt-3">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link"
+         href="?page={{ page_obj.previous_page_number }}{% if search %}&q={{ search }}{% endif %}{% if active_filter %}&active={{ active_filter }}{% endif %}">
+        <i class="bi bi-chevron-left"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <li class="page-item active">
+      <span class="page-link">{{ num }}</span>
+    </li>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <li class="page-item">
+      <a class="page-link"
+         href="?page={{ num }}{% if search %}&q={{ search }}{% endif %}{% if active_filter %}&active={{ active_filter }}{% endif %}">
+        {{ num }}
+      </a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link"
+         href="?page={{ page_obj.next_page_number }}{% if search %}&q={{ search }}{% endif %}{% if active_filter %}&active={{ active_filter }}{% endif %}">
+        <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="portal-card portal-empty-state">
+  <i class="bi bi-people"></i>
+  <p>
+    {% if search or active_filter %}
+      {% trans "No customers match your search." %}
+    {% else %}
+      {% trans "No registered customers yet." %}
+    {% endif %}
+  </p>
+</div>
+{% endif %}
+
+{% endblock %}

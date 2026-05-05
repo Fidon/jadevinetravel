@@ -99,7 +99,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-
+DEFAULT_SITE_URL = os.environ.get('DEFAULT_SITE_URL', 'http://127.0.0.1:8000')
 ACCOUNT_ADAPTER = 'apps.accounts.adapters.AccountAdapter'
 ACCOUNT_FORMS = {'signup': 'apps.accounts.forms.CustomSignupForm'}
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True

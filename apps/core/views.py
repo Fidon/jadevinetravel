@@ -28,3 +28,11 @@ class HomeView(TemplateView):
 
 class AboutView(TemplateView):
     template_name = 'core/about.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        # Placeholder until Jadevine provides real team data.
+        # I'll replace with actual team member dicts:
+        # {'name': '...', 'role': '...', 'bio': '...', 'photo': '...'}
+        ctx['team_members'] = []
+        return ctx

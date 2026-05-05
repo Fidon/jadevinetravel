@@ -1,0 +1,219 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Messages" %}{% endblock %}
+{% block nav_messages %}active{% endblock %}
+
+{% block page_title %}{% trans "Contact Messages" %}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% trans "Inquiries submitted through the public Contact Us page." %}
+</p>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_messages.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Stat bar -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--warning">
+        <i class="bi bi-envelope-exclamation"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ new_count }}</div>
+        <p class="portal-stat-label">{% trans "Unread" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--primary">
+        <i class="bi bi-envelope"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ total_count }}</div>
+        <p class="portal-stat-label">{% trans "Total" %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<form method="get" class="portal-card mb-4" style="padding:1.25rem 1.5rem;">
+  <div class="msg-filter-row">
+    <div class="jd-form-group mb-0" style="flex:1;min-width:180px;">
+      <label class="jd-label">{% trans "Search" %}</label>
+      <div style="position:relative;">
+        <i class="bi bi-search jd-input-icon"></i>
+        <input type="text" name="q" value="{{ search }}"
+               class="jd-input jd-input-icon-wrap"
+               placeholder="{% trans 'Name, email or subject…' %}">
+      </div>
+    </div>
+    <div class="jd-form-group mb-0" style="min-width:150px;">
+      <label class="jd-label">{% trans "Status" %}</label>
+      <select name="status" class="jd-input" onchange="this.form.submit()">
+        <option value="">{% trans "All" %}</option>
+        {% for val, label in status_choices %}
+        <option value="{{ val }}"
+                {% if status_filter == val %}selected{% endif %}>
+          {{ label }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="jd-form-group mb-0" style="min-width:160px;">
+      <label class="jd-label">{% trans "Inquiry Type" %}</label>
+      <select name="inquiry_type" class="jd-input" onchange="this.form.submit()">
+        <option value="">{% trans "All Types" %}</option>
+        {% for val, label in inquiry_choices %}
+        <option value="{{ val }}"
+                {% if inquiry_filter == val %}selected{% endif %}>
+          {{ label }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="jd-form-group mb-0" style="align-self:flex-end;">
+      <button type="submit" class="btn-primary-jd"
+              style="display:inline-flex;align-items:center;gap:0.4rem;
+                     padding:0.55rem 1.1rem;">
+        <i class="bi bi-search"></i> {% trans "Search" %}
+      </button>
+      {% if search or status_filter or inquiry_filter %}
+      <a href="{% url 'portal:message_list' %}" class="btn-outline-jd"
+         style="display:inline-flex;align-items:center;gap:0.4rem;
+                padding:0.55rem 1.1rem;margin-left:0.5rem;">
+        <i class="bi bi-x-circle"></i> {% trans "Clear" %}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</form>
+
+<!-- Table -->
+{% if page_obj.object_list %}
+<div class="portal-table-wrap table-responsive">
+  <table class="table table-hover align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "From" %}</th>
+        <th>{% trans "Subject" %}</th>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "Received" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for msg in page_obj %}
+      <tr class="msg-row msg-row--{{ msg.status }}">
+        <td>
+          <div class="msg-sender-name">{{ msg.name }}</div>
+          <div class="msg-sender-email">{{ msg.email }}</div>
+        </td>
+        <td class="text-truncate-container">
+          <span class="text-truncate-line msg-subject"
+                style="max-width:240px;">
+            {% if msg.status == 'new' %}
+            <i class="bi bi-circle-fill msg-unread-dot"
+               title="{% trans 'Unread' %}"></i>
+            {% endif %}
+            {{ msg.subject }}
+          </span>
+        </td>
+        <td>
+          <span class="msg-inquiry-badge msg-inquiry-badge--{{ msg.inquiry_type }}">
+            {{ msg.get_inquiry_type_display }}
+          </span>
+        </td>
+        <td style="font-size:var(--text-xs);color:var(--color-muted);
+                   white-space:nowrap;">
+          {{ msg.created_at|date:"d M Y H:i" }}
+        </td>
+        <td>
+          <span class="approval-badge
+            {% if msg.status == 'resolved' %}approval-badge--approved
+            {% elif msg.status == 'in_progress' %}approval-badge--pending
+            {% else %}approval-badge--rejected{% endif %}">
+            {% if msg.status == 'resolved' %}
+              <i class="bi bi-check-circle-fill"></i>
+            {% elif msg.status == 'in_progress' %}
+              <i class="bi bi-hourglass-split"></i>
+            {% else %}
+              <i class="bi bi-envelope-fill"></i>
+            {% endif %}
+            {{ msg.get_status_display }}
+          </span>
+        </td>
+        <td>
+          <div class="portal-row-actions">
+            <a href="{% url 'portal:message_detail' msg.pk %}"
+               class="portal-icon-btn" title="{% trans 'Open message' %}">
+              <i class="bi bi-envelope-open"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+<nav aria-label="{% trans 'Pagination' %}" class="mt-3">
+  <ul class="pagination pagination-sm justify-content-center mb-0">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link"
+         href="?page={{ page_obj.previous_page_number }}{% if search %}&q={{ search }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if inquiry_filter %}&inquiry_type={{ inquiry_filter }}{% endif %}">
+        <i class="bi bi-chevron-left"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <li class="page-item active">
+      <span class="page-link">{{ num }}</span>
+    </li>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <li class="page-item">
+      <a class="page-link"
+         href="?page={{ num }}{% if search %}&q={{ search }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if inquiry_filter %}&inquiry_type={{ inquiry_filter }}{% endif %}">
+        {{ num }}
+      </a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link"
+         href="?page={{ page_obj.next_page_number }}{% if search %}&q={{ search }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if inquiry_filter %}&inquiry_type={{ inquiry_filter }}{% endif %}">
+        <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="portal-card portal-empty-state">
+  <i class="bi bi-envelope"></i>
+  <p>
+    {% if search or status_filter or inquiry_filter %}
+      {% trans "No messages match your filters." %}
+    {% else %}
+      {% trans "No contact messages yet." %}
+    {% endif %}
+  </p>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,375 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Gallery" %}{% endblock %}
+{% block nav_gallery %}active{% endblock %}
+
+{% block page_title %}{% trans "Gallery" %}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% trans "Manage photos and videos shown on the public website and homepage highlights." %}
+</p>
+{% endblock %}
+
+{% block page_actions %}
+<button type="button" class="btn-primary-jd"
+        data-bs-toggle="modal" data-bs-target="#addCategoryModal"
+        style="display:inline-flex;align-items:center;gap:0.4rem;">
+  <i class="bi bi-folder-plus"></i> {% trans "Add Category" %}
+</button>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Stat bar -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--primary">
+        <i class="bi bi-images"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ total_items }}</div>
+        <p class="portal-stat-label">{% trans "Total Items" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--accent">
+        <i class="bi bi-star-fill"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ featured_count }}</div>
+        <p class="portal-stat-label">{% trans "Featured" %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="gallery-layout">
+
+  <!-- ── LEFT: Category list ────────────────────────────────────────────── -->
+  <aside class="gallery-sidebar">
+    <div class="portal-card gallery-sidebar-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{% trans "Categories" %}</h2>
+      </div>
+
+      {% if categories %}
+      <ul class="gallery-cat-list">
+        {% for cat in categories %}
+        <li class="gallery-cat-item {% if selected_cat.pk == cat.pk %}is-active{% endif %}">
+          <a href="?category={{ cat.pk }}" class="gallery-cat-link">
+            <span class="gallery-cat-name">{{ cat.name_en }}</span>
+            <span class="gallery-cat-count">
+              {{ cat.galleryitem_set.count }}
+            </span>
+          </a>
+          <div class="gallery-cat-actions">
+            <button type="button"
+                    class="portal-icon-btn gallery-edit-cat-btn"
+                    data-cat-id="{{ cat.pk }}"
+                    data-cat-name-en="{{ cat.name_en }}"
+                    data-cat-name-fr="{{ cat.name_fr|default:'' }}"
+                    data-cat-name-ru="{{ cat.name_ru|default:'' }}"
+                    title="{% trans 'Edit category' %}">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <form method="post"
+                  action="{% url 'portal:gallery_category_delete' cat.pk %}"
+                  class="d-inline gallery-delete-cat-form">
+              {% csrf_token %}
+              <button type="submit"
+                      class="portal-icon-btn portal-icon-btn--danger"
+                      data-confirm="{% trans 'Delete this category? All items must be removed first.' %}"
+                      data-confirm-title="{% trans 'Delete Category' %}"
+                      title="{% trans 'Delete category' %}">
+                <i class="bi bi-trash"></i>
+              </button>
+            </form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <div class="portal-empty-state" style="padding:2rem 1rem;">
+        <i class="bi bi-folder-x"></i>
+        <p>{% trans "No categories yet. Add one to get started." %}</p>
+      </div>
+      {% endif %}
+    </div>
+  </aside>
+
+  <!-- ── RIGHT: Items grid ──────────────────────────────────────────────── -->
+  <div class="gallery-main">
+
+    {% if selected_cat %}
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">{{ selected_cat.name_en }}</h2>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <!-- Add photo -->
+          <label class="btn-primary-jd gallery-upload-label"
+                 style="display:inline-flex;align-items:center;gap:0.4rem;
+                        cursor:pointer;">
+            <i class="bi bi-image-fill"></i> {% trans "Add Photos" %}
+            <input type="file" id="galleryPhotoInput" accept="image/*"
+                   multiple style="display:none;">
+          </label>
+          <!-- Add video -->
+          <button type="button" class="btn-outline-jd"
+                  data-bs-toggle="modal" data-bs-target="#addVideoModal"
+                  style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <i class="bi bi-play-circle"></i> {% trans "Add Video" %}
+          </button>
+        </div>
+      </div>
+
+      <!-- Upload progress bar -->
+      <div id="galleryUploadProgress" class="gallery-upload-progress"
+           style="display:none;">
+        <div class="gallery-upload-bar">
+          <div class="gallery-upload-fill" id="galleryUploadFill"></div>
+        </div>
+        <span id="galleryUploadLabel" class="gallery-upload-label-text"></span>
+      </div>
+
+      {% if items %}
+      <!-- Sortable grid -->
+      <div class="gallery-grid" id="galleryGrid">
+        {% for item in items %}
+        <div class="gallery-item" data-item-id="{{ item.pk }}"
+             data-is-featured="{{ item.is_featured|yesno:'true,false' }}">
+
+          <!-- Thumbnail -->
+          <div class="gallery-thumb">
+            {% if item.media_type == 'photo' and item.image %}
+            <img src="{{ item.image.url }}" alt="{{ item.caption_en|default:'' }}"
+                 loading="lazy">
+            {% elif item.media_type == 'video' %}
+            <div class="gallery-video-thumb">
+              <i class="bi bi-play-circle-fill"></i>
+              <span class="gallery-video-label">VIDEO</span>
+            </div>
+            {% endif %}
+
+            <!-- Featured badge -->
+            {% if item.is_featured %}
+            <span class="gallery-featured-badge">
+              <i class="bi bi-star-fill"></i>
+            </span>
+            {% endif %}
+
+            <!-- Hover actions -->
+            <div class="gallery-item-actions">
+              <button type="button"
+                      class="photo-action-btn gallery-featured-btn
+                             {% if item.is_featured %}is-featured{% endif %}"
+                      data-item-id="{{ item.pk }}"
+                      data-featured-url="{% url 'portal:gallery_toggle_featured' item.pk %}"
+                      title="{% if item.is_featured %}{% trans 'Remove from homepage' %}{% else %}{% trans 'Feature on homepage' %}{% endif %}">
+                <i class="bi {% if item.is_featured %}bi-star-fill{% else %}bi-star{% endif %}"
+                   style="color:#fff;font-size:0.85rem;"></i>
+              </button>
+              <button type="button"
+                      class="photo-action-btn photo-action-btn--delete gallery-delete-btn"
+                      data-item-id="{{ item.pk }}"
+                      data-delete-url="{% url 'portal:gallery_delete' item.pk %}"
+                      title="{% trans 'Delete' %}">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Caption -->
+          {% if item.caption_en %}
+          <p class="gallery-item-caption">{{ item.caption_en }}</p>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      {% else %}
+      <div class="portal-empty-state">
+        <i class="bi bi-images"></i>
+        <p>{% trans "No items in this category yet. Upload photos or add a video URL." %}</p>
+      </div>
+      {% endif %}
+
+    </div>
+
+    {% else %}
+    <div class="portal-card portal-empty-state" style="padding:4rem 2rem;">
+      <i class="bi bi-folder-symlink"></i>
+      <p>{% trans "Select a category from the left to view and manage its items." %}</p>
+    </div>
+    {% endif %}
+
+  </div><!-- /gallery-main -->
+</div><!-- /gallery-layout -->
+
+
+<!-- ── Add Category Modal ─────────────────────────────────────────────────── -->
+<div class="modal fade portal-modal" id="addCategoryModal"
+     tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-content">
+      <form method="post" action="{% url 'portal:gallery_category_add' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-folder-plus me-2"></i>{% trans "Add Category" %}
+          </h5>
+          <button type="button" class="btn-close"
+                  data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding:1.5rem;">
+          <div class="jd-form-group">
+            <label class="jd-label">
+              {% trans "Name — English" %}
+              <span style="color:var(--color-danger);">*</span>
+            </label>
+            <input type="text" name="name_en" class="jd-input" required
+                   placeholder="{% trans 'e.g. Safaris' %}">
+          </div>
+          <div class="jd-form-group">
+            <label class="jd-label">{% trans "Name — French (optional)" %}</label>
+            <input type="text" name="name_fr" class="jd-input"
+                   placeholder="{% trans 'French name' %}">
+          </div>
+          <div class="jd-form-group mb-0">
+            <label class="jd-label">{% trans "Name — Russian (optional)" %}</label>
+            <input type="text" name="name_ru" class="jd-input"
+                   placeholder="{% trans 'Russian name' %}">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd"
+                  data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" class="btn-primary-jd"
+                  style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <i class="bi bi-check-lg"></i> {% trans "Create Category" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ── Edit Category Modal ────────────────────────────────────────────────── -->
+<div class="modal fade portal-modal" id="editCategoryModal"
+     tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-content">
+      <form method="post" action="" id="editCategoryForm">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-pencil me-2"></i>{% trans "Edit Category" %}
+          </h5>
+          <button type="button" class="btn-close"
+                  data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding:1.5rem;">
+          <div class="jd-form-group">
+            <label class="jd-label">
+              {% trans "Name — English" %}
+              <span style="color:var(--color-danger);">*</span>
+            </label>
+            <input type="text" name="name_en" id="editCatNameEn"
+                   class="jd-input" required>
+          </div>
+          <div class="jd-form-group">
+            <label class="jd-label">{% trans "Name — French (optional)" %}</label>
+            <input type="text" name="name_fr" id="editCatNameFr"
+                   class="jd-input">
+          </div>
+          <div class="jd-form-group mb-0">
+            <label class="jd-label">{% trans "Name — Russian (optional)" %}</label>
+            <input type="text" name="name_ru" id="editCatNameRu"
+                   class="jd-input">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd"
+                  data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" class="btn-primary-jd"
+                  style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <i class="bi bi-check-lg"></i> {% trans "Save Changes" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ── Add Video Modal ────────────────────────────────────────────────────── -->
+<div class="modal fade portal-modal" id="addVideoModal"
+     tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-content">
+      <form id="addVideoForm">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-play-circle me-2"></i>{% trans "Add Video" %}
+          </h5>
+          <button type="button" class="btn-close"
+                  data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding:1.5rem;">
+          <div class="jd-form-group">
+            <label class="jd-label">
+              {% trans "YouTube or Vimeo URL" %}
+              <span style="color:var(--color-danger);">*</span>
+            </label>
+            <input type="url" id="videoUrlInput" class="jd-input" required
+                   placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+          <div class="jd-form-group mb-0">
+            <label class="jd-label">{% trans "Caption (optional)" %}</label>
+            <input type="text" id="videoCaptionInput" class="jd-input"
+                   placeholder="{% trans 'Short description' %}">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd"
+                  data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" id="addVideoSubmit" class="btn-primary-jd"
+                  style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <i class="bi bi-check-lg"></i> {% trans "Add Video" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.GALLERY_URLS = {
+    upload:        '{% url "portal:gallery_upload" %}',
+    reorder:       '{% url "portal:gallery_reorder" %}',
+    deleteBase:    '/portal/gallery/__ID__/delete/',
+    featuredBase:  '/portal/gallery/__ID__/toggle-featured/',
+    catEditBase:   '/portal/gallery/categories/__ID__/edit/',
+  };
+  window.GALLERY_CATEGORY_ID = '{% if selected_cat %}{{ selected_cat.pk }}{% endif %}';
+  window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.uploadError    = "{% trans 'Upload failed. Please try again.' %}";
+  window.JD_STRINGS.deleteConfirm  = "{% trans 'Delete this item? This cannot be undone.' %}";
+  window.JD_STRINGS.deleteTitle    = "{% trans 'Delete Gallery Item' %}";
+  window.JD_STRINGS.videoSuccess   = "{% trans 'Video added successfully.' %}";
+  window.JD_STRINGS.videoError     = "{% trans 'Could not add video. Please try again.' %}";
+  window.JD_STRINGS.featuredOn     = "{% trans 'Added to homepage highlights.' %}";
+  window.JD_STRINGS.featuredOff    = "{% trans 'Removed from homepage highlights.' %}";
+</script>
+<script src="{% static 'js/portal/portal_gallery.js' %}"></script>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.urls import path
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from apps.portal.views.auth import PortalLoginView, PortalLogoutView
+from apps.portal.views.auth import PortalLoginView, PortalLogoutView, PortalPasswordSetView
 from apps.portal.views.dashboard import PortalDashboardView, PendingCountAPIView
 from apps.portal.mixins import PortalRequiredMixin
 from apps.portal.views.hotels import (PortalHotelListView, PortalPendingHotelsView,PortalHotelDetailView,
@@ -19,28 +19,29 @@ from apps.portal.views.tours import (PortalTourListView, PortalTourDetailView, P
         PortalTourPhotoDeleteView, PortalTourPhotoReorderView)
 from apps.portal.views.bookings import (PortalBookingListView, PortalBookingDetailView,
         PortalBookingStatusView, PortalBookingMarkPaidView)
+from apps.portal.views.reviews import (PortalReviewListView, PortalReviewApproveView, PortalReviewRejectView)
+from apps.portal.views.gallery import (PortalGalleryView, PortalGalleryUploadView, PortalGalleryDeleteView,
+        PortalGalleryToggleFeaturedView, PortalGalleryReorderView, PortalGalleryCategoryAddView,
+        PortalGalleryCategoryEditView, PortalGalleryCategoryDeleteView)
+from apps.portal.views.users import (PortalUserListView, PortalUserDetailView,
+        PortalUserDeactivateView, PortalUserResetPasswordView)
+from apps.portal.views.miniadmins import (PortalMiniAdminListView, PortalMiniAdminCreateView,
+        PortalMiniAdminDetailView, PortalMiniAdminEditView, PortalMiniAdminDeactivateView,
+        PortalMiniAdminResetPasswordView)
+from apps.portal.views.messages import (PortalMessageListView, PortalMessageDetailView,
+        PortalMessageReplyView, PortalMessageStatusView)
+from apps.portal.views.newsletter import (PortalNewsletterView, PortalNewsletterToggleView)
+from apps.portal.views.policies import (PortalPoliciesView, PortalPolicyAddView,
+        PortalPolicyEditView, PortalPolicyDeleteView)
+from apps.portal.views.settings import PortalSettingsView
 
-# ---------------------------------------------------------------------------
-# Temporary stub view — renders a bare "coming soon" response.
-# Replace each stub path as the real view is built in subsequent sessions.
-# ---------------------------------------------------------------------------
-class _StubView(PortalRequiredMixin, TemplateView):
-    template_name = 'portal/portal_stub.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['stub_name'] = self.kwargs.get('stub_name', 'This section')
-        return ctx
-
-
-def _stub(name):
-    """Returns a configured _StubView with a label for display."""
-    return _StubView.as_view(extra_context={'stub_name': name})
 
 
 app_name = 'portal'
 
 urlpatterns = [
+    path('set-password/<uidb64>/<token>/', PortalPasswordSetView.as_view(), name='set_password'),
+    
     # Auth
     path('login/',  PortalLoginView.as_view(),  name='login'),
     path('logout/', PortalLogoutView.as_view(), name='logout'),
@@ -102,67 +103,51 @@ urlpatterns = [
     path('bookings/<int:pk>/status/', PortalBookingStatusView.as_view(), name='booking_status'),
     path('bookings/<int:pk>/mark-paid/', PortalBookingMarkPaidView.as_view(), name='booking_mark_paid'),
 
-    # ------------------------------------------------------------------
-    # Reviews (stubs — Phase 5B)
-    # ------------------------------------------------------------------
-    path('reviews/',     _stub('Reviews'), name='review_list'),
-    path('reviews/<int:pk>/approve/',    _stub('Approve Review'),  name='review_approve'),
-    path('reviews/<int:pk>/reject/',     _stub('Reject Review'),   name='review_reject'),
+    # Reviews
+    path('reviews/', PortalReviewListView.as_view(), name='review_list'),
+    path('reviews/<int:pk>/approve/', PortalReviewApproveView.as_view(), name='review_approve'),
+    path('reviews/<int:pk>/reject/', PortalReviewRejectView.as_view(), name='review_reject'),
 
-    # ------------------------------------------------------------------
-    # Gallery (stubs — Phase 5B)
-    # ------------------------------------------------------------------
-    path('gallery/',     _stub('Gallery'), name='gallery'),
-    path('gallery/upload/',      _stub('Gallery Upload'),  name='gallery_upload'),
-    path('gallery/<int:pk>/delete/',     _stub('Gallery Delete'),  name='gallery_delete'),
-    path('gallery/<int:pk>/toggle-featured/',    _stub('Toggle Featured'), name='gallery_toggle_featured'),
-    path('gallery/reorder/',     _stub('Gallery Reorder'), name='gallery_reorder'),
-    path('gallery/categories/add/',      _stub('Add Category'),    name='gallery_category_add'),
-    path('gallery/categories/<int:pk>/edit/',    _stub('Edit Category'),   name='gallery_category_edit'),
-    path('gallery/categories/<int:pk>/delete/',  _stub('Delete Category'), name='gallery_category_delete'),
+    # Gallery
+    path('gallery/', PortalGalleryView.as_view(), name='gallery'),
+    path('gallery/upload/', PortalGalleryUploadView.as_view(), name='gallery_upload'),
+    path('gallery/reorder/', PortalGalleryReorderView.as_view(), name='gallery_reorder'),
+    path('gallery/<int:pk>/delete/', PortalGalleryDeleteView.as_view(), name='gallery_delete'),
+    path('gallery/<int:pk>/toggle-featured/', PortalGalleryToggleFeaturedView.as_view(), name='gallery_toggle_featured'),
+    path('gallery/categories/add/', PortalGalleryCategoryAddView.as_view(), name='gallery_category_add'),
+    path('gallery/categories/<int:pk>/edit/', PortalGalleryCategoryEditView.as_view(), name='gallery_category_edit'),
+    path('gallery/categories/<int:pk>/delete/', PortalGalleryCategoryDeleteView.as_view(), name='gallery_category_delete'),
 
-    # ------------------------------------------------------------------
-    # Users (stubs — Phase 5B)
-    # ------------------------------------------------------------------
-    path('users/',       _stub('Customers'),       name='user_list'),
-    path('users/<int:pk>/',      _stub('Customer Detail'), name='user_detail'),
-    path('users/<int:pk>/deactivate/',   _stub('Deactivate User'), name='user_deactivate'),
-    path('users/<int:pk>/reset-password/',       _stub('Reset Password'),  name='user_reset_password'),
+    # Users
+    path('users/', PortalUserListView.as_view(), name='user_list'),
+    path('users/<int:pk>/', PortalUserDetailView.as_view(), name='user_detail'),
+    path('users/<int:pk>/deactivate/', PortalUserDeactivateView.as_view(), name='user_deactivate'),
+    path('users/<int:pk>/reset-password/', PortalUserResetPasswordView.as_view(), name='user_reset_password'),
 
-    # ------------------------------------------------------------------
-    # Mini-Admins (stubs — Phase 5B)
-    # ------------------------------------------------------------------
-    path('mini-admins/', _stub('Partners'),name='miniadmin_list'),
-    path('mini-admins/add/',     _stub('Add Partner'),     name='miniadmin_add'),
-    path('mini-admins/<int:pk>/',_stub('Partner Detail'),  name='miniadmin_detail'),
-    path('mini-admins/<int:pk>/edit/',   _stub('Edit Partner'),    name='miniadmin_edit'),
-    path('mini-admins/<int:pk>/deactivate/',     _stub('Deactivate'),      name='miniadmin_deactivate'),
-    path('mini-admins/<int:pk>/reset-password/', _stub('Reset Password'),  name='miniadmin_reset_password'),
+    # Mini-Admins
+    path('mini-admins/', PortalMiniAdminListView.as_view(), name='miniadmin_list'),
+    path('mini-admins/add/', PortalMiniAdminCreateView.as_view(), name='miniadmin_add'),
+    path('mini-admins/<int:pk>/', PortalMiniAdminDetailView.as_view(), name='miniadmin_detail'),
+    path('mini-admins/<int:pk>/edit/', PortalMiniAdminEditView.as_view(), name='miniadmin_edit'),
+    path('mini-admins/<int:pk>/deactivate/', PortalMiniAdminDeactivateView.as_view(), name='miniadmin_deactivate'),
+    path('mini-admins/<int:pk>/reset-password/', PortalMiniAdminResetPasswordView.as_view(), name='miniadmin_reset_password'),
 
-    # ------------------------------------------------------------------
-    # Contact messages (stubs — Phase 5B)
-    # ------------------------------------------------------------------
-    path('messages/',    _stub('Messages'),name='message_list'),
-    path('messages/<int:pk>/',   _stub('Message Detail'),  name='message_detail'),
-    path('messages/<int:pk>/reply/',     _stub('Reply'),   name='message_reply'),
-    path('messages/<int:pk>/status/',    _stub('Update Status'),   name='message_status'),
+    # Contact messages
+    path('messages/', PortalMessageListView.as_view(), name='message_list'),
+    path('messages/<int:pk>/', PortalMessageDetailView.as_view(), name='message_detail'),
+    path('messages/<int:pk>/reply/', PortalMessageReplyView.as_view(), name='message_reply'),
+    path('messages/<int:pk>/status/', PortalMessageStatusView.as_view(), name='message_status'),
 
-    # ------------------------------------------------------------------
-    # Newsletter (stubs — Phase 5B)
-    # ------------------------------------------------------------------
-    path('newsletter/',  _stub('Newsletter'),      name='newsletter'),
-    path('newsletter/<int:pk>/toggle/',  _stub('Toggle Sub'),      name='newsletter_toggle'),
+    # Newsletter
+    path('newsletter/', PortalNewsletterView.as_view(), name='newsletter'),
+    path('newsletter/<int:pk>/toggle/', PortalNewsletterToggleView.as_view(), name='newsletter_toggle'),
 
-    # ------------------------------------------------------------------
-    # Cancellation policies (stubs — Phase 5B)
-    # ------------------------------------------------------------------
-    path('policies/',    _stub('Policies'),name='policies'),
-    path('policies/add/',_stub('Add Policy'),      name='policy_add'),
-    path('policies/<int:pk>/edit/',      _stub('Edit Policy'),     name='policy_edit'),
-    path('policies/<int:pk>/delete/',    _stub('Delete Policy'),   name='policy_delete'),
+    # Cancellation policies
+    path('policies/', PortalPoliciesView.as_view(), name='policies'),
+    path('policies/add/', PortalPolicyAddView.as_view(), name='policy_add'),
+    path('policies/<int:pk>/edit/', PortalPolicyEditView.as_view(), name='policy_edit'),
+    path('policies/<int:pk>/delete/', PortalPolicyDeleteView.as_view(), name='policy_delete'),
 
-    # ------------------------------------------------------------------
-    # Settings (stub — Phase 5B)
-    # ------------------------------------------------------------------
-    path('settings/',    _stub('Settings'),name='settings'),
+    # Settings
+    path('settings/', PortalSettingsView.as_view(), name='settings'),
 ]

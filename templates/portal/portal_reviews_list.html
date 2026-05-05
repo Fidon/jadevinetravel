@@ -1,0 +1,323 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Reviews" %}{% endblock %}
+{% block nav_reviews %}active{% endblock %}
+
+{% block page_title %}{% trans "Reviews" %}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% if mini_admin %}
+    {% trans "Moderate reviews for your listings." %}
+  {% else %}
+    {% trans "Moderate customer reviews across all listings." %}
+  {% endif %}
+</p>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_reviews.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Stat bar -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--warning">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ pending_count }}</div>
+        <p class="portal-stat-label">{% trans "Pending" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--success">
+        <i class="bi bi-star-fill"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ reviews|length }}</div>
+        <p class="portal-stat-label">{% trans "Showing" %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<form method="get" class="review-filters portal-card mb-4">
+  <div class="review-filters-inner">
+    <div class="jd-form-group mb-0">
+      <label class="jd-label">{% trans "Status" %}</label>
+      <select name="status" class="jd-input" onchange="this.form.submit()">
+        <option value="">{% trans "All Statuses" %}</option>
+        {% for val, label in status_choices %}
+        <option value="{{ val }}" {% if status_filter == val %}selected{% endif %}>
+          {{ label }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="jd-form-group mb-0">
+      <label class="jd-label">{% trans "Service" %}</label>
+      <select name="service_type" class="jd-input" onchange="this.form.submit()">
+        <option value="">{% trans "All Services" %}</option>
+        {% for val, label in service_choices %}
+        {% if not mini_admin or val != 'tour' %}
+        <option value="{{ val }}" {% if service_filter == val %}selected{% endif %}>
+          {{ label }}
+        </option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    {% if status_filter or service_filter %}
+    <a href="{% url 'portal:review_list' %}" class="btn-outline-jd review-filter-clear">
+      <i class="bi bi-x-circle"></i> {% trans "Clear" %}
+    </a>
+    {% endif %}
+  </div>
+</form>
+
+<!-- Reviews table -->
+{% if reviews %}
+<div class="portal-table-wrap table-responsive">
+  <table id="reviews-table" class="table table-hover align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "Customer" %}</th>
+        <th>{% trans "Service" %}</th>
+        <th>{% trans "Listing" %}</th>
+        <th>{% trans "Rating" %}</th>
+        <th>{% trans "Comment" %}</th>
+        <th>{% trans "Submitted" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+      <tr class="review-row" data-review-id="{{ review.pk }}"
+          data-status="{{ review.status }}">
+
+        <!-- Customer -->
+        <td>
+          <div class="review-customer-name">
+            {{ review.user.get_full_name|default:review.user.email }}
+          </div>
+          <div class="review-customer-email">{{ review.user.email }}</div>
+        </td>
+
+        <!-- Service type -->
+        <td>
+          <span class="review-service-badge review-service-badge--{{ review.service_type }}">
+            {% if review.service_type == 'hotel' %}
+              <i class="bi bi-building"></i>
+            {% elif review.service_type == 'tour' %}
+              <i class="bi bi-compass"></i>
+            {% else %}
+              <i class="bi bi-car-front"></i>
+            {% endif %}
+            {{ review.get_service_type_display }}
+          </span>
+        </td>
+
+        <!-- Listing name -->
+        <td class="text-truncate-container">
+          <span class="text-truncate-line" style="max-width:180px;">
+            {% if review.hotel %}{{ review.hotel.name }}
+            {% elif review.tour_package %}{{ review.tour_package.name_en }}
+            {% elif review.car %}{{ review.car.name }}
+            {% else %}—
+            {% endif %}
+          </span>
+        </td>
+
+        <!-- Rating -->
+        <td>
+          <div class="review-rating-display">
+            <span class="review-rating-number review-rating-number--{{ review.rating }}">
+              {{ review.rating }}
+            </span>
+            <span class="review-rating-suffix">/10</span>
+          </div>
+        </td>
+
+        <!-- Comment preview -->
+        <td class="text-truncate-container">
+          {% if review.comment %}
+          <span class="text-truncate-line review-comment-preview"
+                style="max-width:200px;"
+                title="{{ review.comment }}">
+            {{ review.comment }}
+          </span>
+          {% else %}
+          <span style="color:var(--color-muted);font-style:italic;font-size:var(--text-xs);">
+            {% trans "No comment" %}
+          </span>
+          {% endif %}
+        </td>
+
+        <!-- Submitted date -->
+        <td style="white-space:nowrap;font-size:var(--text-xs);color:var(--color-muted);">
+          {{ review.created_at|date:"d M Y" }}
+        </td>
+
+        <!-- Status badge -->
+        <td class="text-nowrap-custom">
+          <span class="approval-badge
+            {% if review.status == 'approved' %}approval-badge--approved
+            {% elif review.status == 'pending' %}approval-badge--pending
+            {% else %}approval-badge--rejected{% endif %}">
+            {% if review.status == 'approved' %}
+              <i class="bi bi-check-circle-fill"></i>
+            {% elif review.status == 'pending' %}
+              <i class="bi bi-hourglass-split"></i>
+            {% else %}
+              <i class="bi bi-x-circle-fill"></i>
+            {% endif %}
+            {{ review.get_status_display }}
+          </span>
+        </td>
+
+        <!-- Actions -->
+        <td>
+          <div class="portal-row-actions">
+            <!-- Expand comment / rejection reason -->
+            <button type="button"
+                    class="portal-icon-btn review-expand-btn"
+                    data-review-id="{{ review.pk }}"
+                    data-comment="{{ review.comment|default:'' }}"
+                    data-rejection="{{ review.rejection_reason|default:'' }}"
+                    data-status="{{ review.status }}"
+                    title="{% trans 'View detail' %}">
+              <i class="bi bi-eye"></i>
+            </button>
+
+            {% if review.status != 'approved' %}
+            <button type="button"
+                    class="portal-icon-btn portal-icon-btn--accent review-approve-btn"
+                    data-review-id="{{ review.pk }}"
+                    data-approve-url="{% url 'portal:review_approve' review.pk %}"
+                    title="{% trans 'Approve' %}">
+              <i class="bi bi-check-lg"></i>
+            </button>
+            {% endif %}
+
+            {% if review.status != 'rejected' %}
+            <button type="button"
+                    class="portal-icon-btn portal-icon-btn--danger review-reject-btn"
+                    data-review-id="{{ review.pk }}"
+                    title="{% trans 'Reject' %}">
+              <i class="bi bi-x-lg"></i>
+            </button>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+<div class="portal-card portal-empty-state">
+  <i class="bi bi-star"></i>
+  <p>
+    {% if status_filter or service_filter %}
+      {% trans "No reviews match your current filters." %}
+    {% else %}
+      {% trans "No reviews yet. They will appear here once customers submit them." %}
+    {% endif %}
+  </p>
+  {% if status_filter or service_filter %}
+  <a href="{% url 'portal:review_list' %}" class="btn-outline-jd mt-3"
+     style="display:inline-flex;align-items:center;gap:0.4rem;">
+    <i class="bi bi-arrow-left"></i> {% trans "Clear filters" %}
+  </a>
+  {% endif %}
+</div>
+{% endif %}
+
+<!-- ── Reject Modal ──────────────────────────────────────────────────── -->
+<div class="modal fade portal-modal portal-modal--danger"
+     id="rejectReviewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-content">
+      <form id="rejectReviewForm" method="post" action="">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-x-circle me-2"></i>{% trans "Reject Review" %}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding:1.5rem;">
+          <p style="font-size:var(--text-sm);color:var(--color-text-light);
+                    margin-bottom:1rem;">
+            {% trans "The customer will see this reason on their booking detail page. Be clear and professional." %}
+          </p>
+          <div class="jd-form-group mb-0">
+            <label class="jd-label" for="rejectionReasonInput">
+              {% trans "Rejection Reason" %} <span style="color:var(--color-danger);">*</span>
+            </label>
+            <textarea id="rejectionReasonInput"
+                      name="rejection_reason"
+                      class="jd-input"
+                      rows="4"
+                      minlength="10"
+                      placeholder="{% trans 'Explain why this review cannot be published (min. 10 characters).' %}"
+                      required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd"
+                  data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" id="rejectReviewSubmit" class="btn-danger-jd"
+                  disabled>
+            <i class="bi bi-x-lg"></i> {% trans "Reject Review" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ── Detail Modal ──────────────────────────────────────────────────── -->
+<div class="modal fade portal-modal" id="reviewDetailModal"
+     tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+       style="max-width:520px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="bi bi-chat-quote me-2"></i>{% trans "Review Detail" %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding:1.5rem;">
+        <div id="reviewDetailBody"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.approveSuccess  = "{% trans 'Review approved successfully.' %}";
+  window.JD_STRINGS.approveError    = "{% trans 'Could not approve review. Please try again.' %}";
+  window.JD_STRINGS.rejectSuccess   = "{% trans 'Review rejected.' %}";
+  window.JD_STRINGS.rejectError     = "{% trans 'Could not reject review. Please try again.' %}";
+  window.JD_STRINGS.noComment       = "{% trans 'No comment provided.' %}";
+  window.JD_STRINGS.rejectionReason = "{% trans 'Rejection Reason' %}";
+  window.JD_STRINGS.comment         = "{% trans 'Comment' %}";
+</script>
+{% load static %}
+<script src="{% static 'js/portal/portal_reviews.js' %}"></script>
+{% endblock %}

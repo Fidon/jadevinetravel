@@ -1,5 +1,210 @@
 {% extends 'base.html' %}
-{% block title %}Gallery — Jadevine{% endblock %}
+{% load static i18n %}
+
+{% block title %}{% trans "Gallery — Jadevine Travel & Tours" %}{% endblock %}
+{% block meta_description %}{% trans "Explore our photo and video gallery of Tanzania safaris, Zanzibar beaches, hotels, wildlife, and cultural experiences." %}{% endblock %}
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/gallery/gallery.css' %}">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+{% endblock %}
+
 {% block content %}
-<div style="padding:160px 0 80px;" class="container"><h1>Gallery</h1></div>
+
+<!-- ============================================================
+     PAGE HERO
+     ============================================================ -->
+<section class="gallery-hero">
+  <div class="gallery-hero-bg"></div>
+  <div class="gallery-hero-overlay"></div>
+  <div class="container gallery-hero-content">
+    <div class="jd-load-reveal" data-delay="1">
+      <span class="eyebrow eyebrow-white">{% trans "Visual Journey" %}</span>
+    </div>
+    <h1 class="gallery-hero-title jd-load-reveal" data-delay="2">
+      {% trans "Moments of" %} <em>{% trans "Wonder" %}</em>
+    </h1>
+    <p class="gallery-hero-subtitle jd-load-reveal" data-delay="3">
+      {% trans "Safari landscapes, pristine beaches, vibrant culture — captured for you." %}
+    </p>
+
+    <!-- Stats strip -->
+    {% if total_count %}
+    <div class="gallery-hero-stats jd-load-reveal" data-delay="4">
+      <div class="gallery-hero-stat">
+        <span class="gallery-hero-stat-num">{{ photo_count }}</span>
+        <span class="gallery-hero-stat-lbl">{% trans "Photos" %}</span>
+      </div>
+      {% if video_count %}
+      <span class="gallery-hero-stat-sep">·</span>
+      <div class="gallery-hero-stat">
+        <span class="gallery-hero-stat-num">{{ video_count }}</span>
+        <span class="gallery-hero-stat-lbl">{% trans "Videos" %}</span>
+      </div>
+      {% endif %}
+      {% if categories %}
+      <span class="gallery-hero-stat-sep">·</span>
+      <div class="gallery-hero-stat">
+        <span class="gallery-hero-stat-num">{{ categories|length }}</span>
+        <span class="gallery-hero-stat-lbl">{% trans "Categories" %}</span>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="gallery-hero-bottom-line"></div>
+</section>
+
+
+<!-- ============================================================
+     CATEGORY TABS + GRID
+     ============================================================ -->
+<section class="section-py gallery-main-section">
+  <div class="container">
+
+    {% if categories %}
+    <!-- Category filter tabs -->
+    <div class="gallery-tabs-wrap jd-load-reveal" data-delay="1">
+      <div class="gallery-tabs">
+        <a href="{% url 'gallery:gallery' %}"
+           class="gallery-tab {% if not selected_slug %}active{% endif %}">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+          {% trans "All" %}
+          <span class="gallery-tab-count">{{ total_count }}</span>
+        </a>
+        {% for cat in categories %}
+        <a href="?category={{ cat.slug }}"
+           class="gallery-tab {% if selected_slug == cat.slug %}active{% endif %}">
+          {{ cat.name }}
+          <span class="gallery-tab-count">{{ cat.count }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if items %}
+
+    <!-- Masonry-style grid -->
+    <div class="gallery-grid" id="galleryGrid">
+      {% for item in items %}
+
+      {% if item.media_type == 'photo' and item.image_url %}
+      <!-- Photo item -->
+      <div class="gallery-grid-item jd-reveal"
+           data-category="{{ item.category_name }}">
+        <a href="{{ item.image_url }}"
+           class="gallery-lightbox-link glightbox"
+           data-gallery="jadevine-gallery"
+           data-description="{{ item.caption }}">
+          <div class="gallery-grid-thumb">
+            <img src="{{ item.image_url }}"
+                 alt="{{ item.caption }}"
+                 loading="lazy">
+            <div class="gallery-grid-overlay">
+              <i class="bi bi-zoom-in gallery-grid-zoom-icon"></i>
+              {% if item.caption %}
+              <span class="gallery-grid-caption">{{ item.caption }}</span>
+              {% endif %}
+            </div>
+            {% if item.is_featured %}
+            <span class="gallery-grid-featured-badge">
+              <i class="bi bi-star-fill"></i>
+            </span>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+
+      {% elif item.media_type == 'video' and item.video_url %}
+      <!-- Video item -->
+      <div class="gallery-grid-item gallery-grid-item--video jd-reveal"
+           data-category="{{ item.category_name }}">
+        <a href="{{ item.video_url }}"
+           class="gallery-lightbox-link glightbox"
+           data-gallery="jadevine-gallery"
+           data-type="video"
+           data-description="{{ item.caption }}">
+          <div class="gallery-grid-thumb">
+            <div class="gallery-video-placeholder">
+              <i class="bi bi-play-circle-fill gallery-video-play-icon"></i>
+              {% if item.caption %}
+              <span class="gallery-video-caption-text">{{ item.caption }}</span>
+              {% endif %}
+            </div>
+            <div class="gallery-grid-overlay">
+              <i class="bi bi-play-circle gallery-grid-zoom-icon"></i>
+            </div>
+            <span class="gallery-video-badge">
+              <i class="bi bi-play-fill"></i> VIDEO
+            </span>
+          </div>
+        </a>
+      </div>
+      {% endif %}
+
+      {% endfor %}
+    </div><!-- /gallery-grid -->
+
+    {% else %}
+    <!-- Empty state -->
+    <div class="gallery-empty-state jd-reveal">
+      <div class="gallery-empty-icon">
+        <i class="bi bi-images"></i>
+      </div>
+      <h3 class="gallery-empty-title">{% trans "Gallery Coming Soon" %}</h3>
+      <p class="gallery-empty-text">
+        {% if selected_slug %}
+          {% trans "No items in this category yet." %}
+        {% else %}
+          {% trans "Our team is curating stunning photos and videos from across Tanzania and Zanzibar. Check back soon." %}
+        {% endif %}
+      </p>
+      {% if selected_slug %}
+      <a href="{% url 'gallery:gallery' %}" class="btn-outline-jd mt-3">
+        <i class="bi bi-arrow-left"></i> {% trans "View All" %}
+      </a>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CTA STRIP
+     ============================================================ -->
+<section class="gallery-cta-section">
+  <div class="gallery-cta-bg"></div>
+  <div class="gallery-cta-overlay"></div>
+  <div class="container gallery-cta-content jd-reveal">
+    <h2 class="gallery-cta-title">
+      {% trans "Ready to Experience" %} <em>{% trans "Tanzania?" %}</em>
+    </h2>
+    <p class="gallery-cta-subtitle">
+      {% trans "These are more than photographs — they are invitations. Let us plan your journey." %}
+    </p>
+    <div class="gallery-cta-actions">
+      <a href="{% url 'tours:list' %}" class="btn-accent-jd">
+        <i class="bi bi-compass"></i> {% trans "Explore Packages" %}
+      </a>
+      <a href="{% url 'contact:contact' %}" class="btn-outline-white-jd">
+        {% trans "Plan My Trip" %}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+window.JD_STRINGS = window.JD_STRINGS || {};
+window.JD_STRINGS.galleryTitle = "{% trans 'Jadevine Gallery' %}";
+</script>
+<script src="{% static 'js/gallery/gallery.js' %}"></script>
 {% endblock %}

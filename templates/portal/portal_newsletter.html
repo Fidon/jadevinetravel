@@ -1,0 +1,134 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Newsletter" %}{% endblock %}
+{% block nav_newsletter %}active{% endblock %}
+
+{% block page_title %}{% trans "Newsletter Subscribers" %}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% trans "Manage email subscribers collected from the public website." %}
+</p>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_newsletter.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Stat bar -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--primary">
+        <i class="bi bi-newspaper"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ total_count }}</div>
+        <p class="portal-stat-label">{% trans "Total" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--success">
+        <i class="bi bi-check-circle"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ active_count }}</div>
+        <p class="portal-stat-label">{% trans "Active" %}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="portal-stat-card">
+      <div class="portal-stat-icon portal-stat-icon--danger">
+        <i class="bi bi-x-circle"></i>
+      </div>
+      <div>
+        <div class="portal-stat-value">{{ inactive_count }}</div>
+        <p class="portal-stat-label">{% trans "Unsubscribed" %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if subscribers %}
+<div class="portal-table-wrap table-responsive">
+  <table id="newsletter-table" class="table table-hover align-middle mb-0">
+    <thead>
+      <tr>
+        <th>{% trans "Email" %}</th>
+        <th>{% trans "Subscribed" %}</th>
+        <th>{% trans "Status" %}</th>
+        <th>{% trans "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sub in subscribers %}
+      <tr>
+        <td style="font-size:var(--text-sm);font-weight:500;">
+          {{ sub.email }}
+        </td>
+        <td style="font-size:var(--text-xs);color:var(--color-muted);
+                   white-space:nowrap;">
+          {{ sub.subscribed_at|date:"d M Y" }}
+        </td>
+        <td>
+          {% if sub.is_active %}
+          <span class="approval-badge approval-badge--approved">
+            <i class="bi bi-check-circle-fill"></i> {% trans "Active" %}
+          </span>
+          {% else %}
+          <span class="approval-badge approval-badge--rejected">
+            <i class="bi bi-x-circle-fill"></i> {% trans "Unsubscribed" %}
+          </span>
+          {% endif %}
+        </td>
+        <td>
+          <form method="post"
+                action="{% url 'portal:newsletter_toggle' sub.pk %}"
+                class="d-inline">
+            {% csrf_token %}
+            <button type="submit"
+                    class="portal-icon-btn
+                           {% if sub.is_active %}portal-icon-btn--danger
+                           {% else %}portal-icon-btn--accent{% endif %}"
+                    data-confirm="{% if sub.is_active %}{% trans 'Unsubscribe this address?' %}{% else %}{% trans 'Reactivate this subscriber?' %}{% endif %}"
+                    data-confirm-title="{% if sub.is_active %}{% trans 'Unsubscribe' %}{% else %}{% trans 'Reactivate' %}{% endif %}"
+                    title="{% if sub.is_active %}{% trans 'Unsubscribe' %}{% else %}{% trans 'Reactivate' %}{% endif %}">
+              {% if sub.is_active %}
+              <i class="bi bi-x-lg"></i>
+              {% else %}
+              <i class="bi bi-arrow-counterclockwise"></i>
+              {% endif %}
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="portal-card portal-empty-state">
+  <i class="bi bi-newspaper"></i>
+  <p>{% trans "No subscribers yet." %}</p>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+{% if subscribers %}
+<script>
+  PORTAL.initDataTable('#newsletter-table', {
+    pageLength: 25,
+    order: [[1, 'desc']],
+    columnDefs: [{ orderable: false, targets: -1 }],
+    exportOptions: { columns: ':not(:last-child)' },
+  });
+</script>
+{% endif %}
+{% endblock %}

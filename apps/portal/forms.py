@@ -525,11 +525,11 @@ class TourItineraryDayForm(forms.ModelForm):
 # Admin cannot set arbitrary statuses — only logically valid next states.
 STATUS_TRANSITIONS = {
     'pending_confirmation': ['confirmed', 'cancelled'],
-    'confirmed':            ['completed', 'no_show', 'cancelled'],
+    'confirmed': ['completed', 'no_show', 'cancelled'],
     'cancellation_requested': ['cancelled', 'confirmed'],  # confirm or override
-    'cancelled':            [],   # terminal — no transitions
-    'completed':            [],   # terminal
-    'no_show':              [],   # terminal
+    'cancelled': [],   # terminal — no transitions
+    'completed': [],   # terminal
+    'no_show': [],   # terminal
 }
 
 

@@ -1,0 +1,223 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Cancellation Policies" %}{% endblock %}
+{% block nav_policies %}active{% endblock %}
+
+{% block page_title %}{% trans "Cancellation Policies" %}{% endblock %}
+{% block page_subtitle %}
+<p class="portal-page-subtitle">
+  {% trans "Configure refund tiers per service type. Changes apply to new bookings only." %}
+</p>
+{% endblock %}
+
+{% block page_actions %}
+<button type="button" class="btn-primary-jd"
+        data-bs-toggle="modal" data-bs-target="#addPolicyModal"
+        style="display:inline-flex;align-items:center;gap:0.4rem;">
+  <i class="bi bi-plus-lg"></i> {% trans "Add Policy Tier" %}
+</button>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portal/portal_policies.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Important notice -->
+<div class="portal-alert portal-alert--info mb-4">
+  <i class="bi bi-info-circle-fill"></i>
+  {% trans "Policy changes apply to new bookings only. Existing bookings retain the policy that was active at the time they were made." %}
+</div>
+
+<!-- Grouped policy sections -->
+{% for service_type, policies in grouped.items %}
+<div class="portal-card mb-4">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">
+      {% if service_type == 'hotel' %}
+        <i class="bi bi-building me-2"></i>{% trans "Hotels" %}
+      {% elif service_type == 'tour' %}
+        <i class="bi bi-compass me-2"></i>{% trans "Tours & Safaris" %}
+      {% else %}
+        <i class="bi bi-car-front me-2"></i>{% trans "Car Rentals" %}
+      {% endif %}
+    </h2>
+  </div>
+
+  <div class="portal-table-wrap table-responsive">
+    <table class="table table-hover align-middle mb-0 policy-table">
+      <thead>
+        <tr>
+          <th>{% trans "Label" %}</th>
+          <th>{% trans "Days Before Service" %}</th>
+          <th>{% trans "Refund %" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for policy in policies %}
+        <tr>
+          <td style="font-size:var(--text-sm);font-weight:500;">
+            {{ policy.label_en }}
+          </td>
+          <td>
+            <span class="policy-days-badge">
+              {{ policy.days_before_service }}+ {% trans "days" %}
+            </span>
+          </td>
+          <td>
+            <span class="policy-refund-badge
+              {% if policy.refund_percentage == 100 %}policy-refund-badge--full
+              {% elif policy.refund_percentage == 0 %}policy-refund-badge--none
+              {% else %}policy-refund-badge--partial{% endif %}">
+              {{ policy.refund_percentage }}%
+            </span>
+          </td>
+          <td>
+            {% if policy.is_active %}
+            <span class="approval-badge approval-badge--approved">
+              <i class="bi bi-check-circle-fill"></i> {% trans "Active" %}
+            </span>
+            {% else %}
+            <span class="approval-badge approval-badge--rejected">
+              <i class="bi bi-x-circle-fill"></i> {% trans "Inactive" %}
+            </span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="portal-row-actions">
+              <button type="button"
+                      class="portal-icon-btn policy-edit-btn"
+                      data-pk="{{ policy.pk }}"
+                      data-service-type="{{ policy.service_type }}"
+                      data-days="{{ policy.days_before_service }}"
+                      data-refund="{{ policy.refund_percentage }}"
+                      data-label="{{ policy.label_en }}"
+                      data-active="{{ policy.is_active|yesno:'true,false' }}"
+                      title="{% trans 'Edit' %}">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <form method="post"
+                    action="{% url 'portal:policy_delete' policy.pk %}"
+                    class="d-inline">
+                {% csrf_token %}
+                <button type="submit"
+                        class="portal-icon-btn portal-icon-btn--danger"
+                        data-confirm="{% trans 'Delete this policy tier?' %}"
+                        data-confirm-title="{% trans 'Delete Policy' %}"
+                        title="{% trans 'Delete' %}">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% empty %}
+<div class="portal-card portal-empty-state">
+  <i class="bi bi-shield-check"></i>
+  <p>{% trans "No cancellation policies yet. Add one to get started." %}</p>
+</div>
+{% endfor %}
+
+
+<!-- ── Add Policy Modal ───────────────────────────────────────────────────── -->
+<div class="modal fade portal-modal" id="addPolicyModal"
+     tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-content">
+      <form method="post" action="{% url 'portal:policy_add' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-plus-lg me-2"></i>{% trans "Add Policy Tier" %}
+          </h5>
+          <button type="button" class="btn-close"
+                  data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding:1.5rem;">
+          {% include "portal/includes/policy_form_fields.html" with form=add_form %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd"
+                  data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" class="btn-primary-jd"
+                  style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <i class="bi bi-check-lg"></i> {% trans "Create" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ── Edit Policy Modal ─────────────────────────────────────────────────── -->
+<div class="modal fade portal-modal" id="editPolicyModal"
+     tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-content">
+      <form method="post" action="" id="editPolicyForm">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-pencil me-2"></i>{% trans "Edit Policy Tier" %}
+          </h5>
+          <button type="button" class="btn-close"
+                  data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="padding:1.5rem;">
+          {% include "portal/includes/policy_form_fields.html" with form=add_form %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-jd"
+                  data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" class="btn-primary-jd"
+                  style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <i class="bi bi-check-lg"></i> {% trans "Save Changes" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function ($) {
+  'use strict';
+
+  // Populate edit modal from data attributes
+  $(document).on('click', '.policy-edit-btn', function () {
+    var $btn = $(this);
+    var pk   = $btn.data('pk');
+
+    $('#editPolicyForm').attr(
+      'action', '/portal/policies/' + pk + '/edit/'
+    );
+
+    // Populate each field by name — works for both Add and Edit modal
+    // since they share the same partial
+    var $form = $('#editPolicyForm');
+    $form.find('[name="service_type"]').val($btn.data('service-type'));
+    $form.find('[name="days_before_service"]').val($btn.data('days'));
+    $form.find('[name="refund_percentage"]').val($btn.data('refund'));
+    $form.find('[name="label_en"]').val($btn.data('label'));
+    $form.find('[name="is_active"]').prop(
+      'checked', $btn.data('active') === true
+    );
+
+    $('#editPolicyModal').modal('show');
+  });
+
+})(jQuery);
+</script>
+{% endblock %}
