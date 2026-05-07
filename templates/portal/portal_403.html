@@ -1,0 +1,39 @@
+{% extends "portal/portal_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Access Denied" %}{% endblock %}
+
+{% block page_title %}{% trans "Access denied" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column align-items-center justify-content-center text-center" style="min-height: 60vh;">
+    <div class="mb-4" style="font-size: 5rem; color: var(--color-danger);">
+        <i class="bi bi-shield-lock"></i>
+    </div>
+
+    <h2 class="mb-3" style="font-family: var(--font-heading); font-weight: 700; color: var(--color-text-dark);">
+        {% trans "Restricted Access" %}
+    </h2>
+    <p class="text-muted mb-4" style="max-width: 500px; font-size: 1.1rem;">
+        {% trans "Sorry, you don't have the required permissions to view this page. This area is reserved for administrators only." %}
+    </p>
+
+    <div class="d-flex gap-3 flex-wrap justify-content-center">
+        <a href="{% url 'portal:dashboard' %}" class="btn-primary-jd" 
+           style="display:inline-flex; align-items:center; gap:0.5rem; text-decoration:none;">
+            <i class="bi bi-house"></i> {% trans "Return Dashboard" %}
+        </a>
+        
+        <button onclick="history.back()" class="btn-outline-jd" 
+                style="display:inline-flex; align-items:center; gap:0.5rem;">
+            <i class="bi bi-arrow-left"></i> {% trans "Go Back" %}
+        </button>
+    </div>
+
+    <div class="mt-5 pt-4 border-top w-100" style="max-width: 400px;">
+        <p class="small text-muted">
+            {% trans "If you believe this is an error, please contact the system admin." %}
+        </p>
+    </div>
+</div>
+{% endblock %}

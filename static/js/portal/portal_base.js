@@ -246,4 +246,29 @@
       return $(selector).DataTable(options);
     };
   }
+
+  // Update footer clock
+  function updateClock() {
+    const now = new Date();
+
+    const day = now.getDate().toString().padStart(2, "0");
+    const month = now.toLocaleString("en-GB", { month: "short" });
+    const year = now.getFullYear();
+
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const seconds = now.getSeconds().toString().padStart(2, "0");
+
+    // Format: DD MMM YYYY - HH:mm:ss
+    const fullString = `${day} ${month} ${year} - ${hours}:${minutes}:${seconds}`;
+
+    const clockElement = document.getElementById("liveClock");
+    if (clockElement) {
+      clockElement.textContent = fullString;
+    }
+  }
+
+  // Update immediately, then every second
+  updateClock();
+  setInterval(updateClock, 1000);
 })(jQuery);

@@ -1,7 +1,7 @@
 from django.db import models
 from django.http import HttpResponseForbidden
 from django.contrib.auth.mixins import AccessMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 
 class PortalRequiredMixin(AccessMixin):
@@ -26,13 +26,10 @@ class SuperAdminRequiredMixin(PortalRequiredMixin):
 
     def dispatch(self, request, *args, **kwargs):
         result = super().dispatch(request, *args, **kwargs)
-        # Honour redirect from parent (not authenticated / not staff)
         if hasattr(result, 'status_code') and result.status_code == 302:
             return result
         if hasattr(request.user, 'miniadminprofile'):
-            return HttpResponseForbidden(
-                "You do not have permission to access this page."
-            )
+            return render(request, 'portal/portal_403.html', status=403)
         return result
 
 

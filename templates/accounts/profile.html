@@ -110,8 +110,15 @@
         </div>
 
         <div class="jd-form-group">
-          <label class="jd-label" for="{{ form.nationality.id_for_label }}">{{ form.nationality.label }}</label>
+          <label class="jd-label" for="{{ form.nationality.id_for_label }}">
+            {{ form.nationality.label }}
+          </label>
           {{ form.nationality }}
+          <datalist id="nationality-options">
+            {% for nat in nationality_choices %}
+            <option value="{{ nat }}">
+            {% endfor %}
+          </datalist>
           {% if form.nationality.errors %}
           <span class="jd-field-error">{{ form.nationality.errors|join:", " }}</span>
           {% endif %}

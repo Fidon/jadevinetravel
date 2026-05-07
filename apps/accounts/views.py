@@ -32,7 +32,7 @@ from apps.hotels.models import Hotel
 from apps.tours.models import TourPackage
 from apps.cars.models import CarRental
 from apps.core.models import SavedFavourite
-from apps.accounts.forms import ProfileUpdateForm, CancellationForm
+from apps.accounts.forms import ProfileUpdateForm, CancellationForm, NATIONALITY_CHOICES
 
 from apps.reviews.forms import ReviewForm
 
@@ -82,11 +82,6 @@ def _get_refund_info(booking):
         'refund_amount': refund_amount,
         'label': policy.label_en,
     }
-
-
-def _portal_required(user):
-    """Not used here — just a reminder that portal auth is separate."""
-    pass
 
 
 # ---------------------------------------------------------------------------
@@ -303,14 +298,16 @@ def _queue_cancellation_confirmed_emails(booking, refund_info):
 # ---------------------------------------------------------------------------
 # Profile
 # ---------------------------------------------------------------------------
-
 class ProfileView(LoginRequiredMixin, View):
     template_name = 'accounts/profile.html'
     login_url = '/accounts/login/'
 
     def get(self, request):
         form = ProfileUpdateForm(instance=request.user)
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {
+            'form': form,
+            'nationality_choices': NATIONALITY_CHOICES,
+        })
 
     def post(self, request):
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
@@ -318,7 +315,10 @@ class ProfileView(LoginRequiredMixin, View):
             form.save()
             messages.success(request, _('Your profile has been updated.'))
             return redirect('accounts:profile')
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {
+            'form': form,
+            'nationality_choices': NATIONALITY_CHOICES,
+        })
 
 
 # ---------------------------------------------------------------------------

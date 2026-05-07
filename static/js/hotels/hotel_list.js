@@ -94,6 +94,14 @@
 
   /* ── Fetch from backend ── */
   function fetchHotels() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("location") && urlParams.get("location") !== "")
+      $("#filter-location").val(urlParams.get("location"));
+    if (urlParams.has("max_price") && urlParams.get("max_price") !== "")
+      $("#filter-max-price").val(urlParams.get("max_price"));
+    if (urlParams.has("guests") && urlParams.get("guests") !== "")
+      $("#filter-guests").val(urlParams.get("guests"));
+
     const params = {
       location: $("#filter-location").val(),
       stars: $("#filter-stars").val(),
@@ -155,10 +163,14 @@
   );
 
   function clearFilters() {
-    $("#filter-location, #filter-stars, #filter-max-price, #filter-guests").val(
-      "",
-    );
-    fetchHotels();
+    if (window.location.search.length > 1) {
+      window.location.href = window.location.pathname;
+    } else {
+      $(
+        "#filter-location, #filter-stars, #filter-max-price, #filter-guests",
+      ).val("");
+      fetchHotels();
+    }
   }
 
   $("#btn-clear-filters, #btn-empty-clear").on("click", clearFilters);

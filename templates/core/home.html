@@ -90,17 +90,31 @@
                   </div>
                 </div>
                 <div class="jd-form-group mb-0">
-                  <label class="jd-label">{% trans "Check In" %}</label>
+                  <label class="jd-label">{% trans "Guests" %}</label>
                   <div class="jd-input-icon-wrap">
-                    <i class="bi bi-calendar3 jd-input-icon"></i>
-                    <input type="date" class="jd-input" name="check_in" />
+                    <i class="bi bi-people jd-input-icon"></i>
+                    <select class="jd-input" name="guests">
+                      <option value="">{% trans "Any" %}</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
                   </div>
                 </div>
                 <div class="jd-form-group mb-0">
-                  <label class="jd-label">{% trans "Check Out" %}</label>
+                  <label class="jd-label">{% trans "Max price/night" %}</label>
                   <div class="jd-input-icon-wrap">
-                    <i class="bi bi-calendar3 jd-input-icon"></i>
-                    <input type="date" class="jd-input" name="check_out" />
+                    <i class="bi bi-currency-dollar jd-input-icon"></i>
+                    <select class="jd-input" name="price">
+                      <option value="">{% trans "Any Price" %}</option>
+                      <option value="50">{% trans "Up to $50" %}</option>
+                      <option value="100">{% trans "Up to $100" %}</option>
+                      <option value="200">{% trans "Up to $200" %}</option>
+                      <option value="350">{% trans "Up to $350" %}</option>
+                      <option value="500">{% trans "Up to $500" %}</option>
+                    </select>
                   </div>
                 </div>
                 <button type="submit" class="btn-primary-jd w-100" style="height:48px;">
@@ -129,20 +143,28 @@
                   </div>
                 </div>
                 <div class="jd-form-group mb-0">
-                  <label class="jd-label">{% trans "Preferred Date" %}</label>
+                  <label class="jd-label">{% trans "Max Duration" %}</label>
                   <div class="jd-input-icon-wrap">
-                    <i class="bi bi-calendar3 jd-input-icon"></i>
-                    <input type="date" class="jd-input" name="preferred_date" />
+                    <i class="bi bi-calendar-day jd-input-icon"></i>
+                    <select class="jd-input" name="max_duration">
+                      <option value="">{% trans "Any Duration" %}</option>
+                      <option value="1">{% trans "1 Day" %}</option>
+                      <option value="3">{% trans "Up to 3 Days" %}</option>
+                      <option value="5">{% trans "Up to 5 Days" %}</option>
+                      <option value="7">{% trans "Up to 7 Days" %}</option>
+                    </select>
                   </div>
                 </div>
                 <div class="jd-form-group mb-0">
-                  <label class="jd-label">{% trans "Participants" %}</label>
+                  <label class="jd-label">{% trans "Max Price/person" %}</label>
                   <div class="jd-input-icon-wrap">
-                    <i class="bi bi-people jd-input-icon"></i>
-                    <select class="jd-input" name="participants">
-                      {% for i in "12345678" %}
-                        <option value="{{ forloop.counter }}">{{ forloop.counter }} {% trans "Person(s)" %}</option>
-                      {% endfor %}
+                    <i class="bi bi-currency-dollar jd-input-icon"></i>
+                    <select class="jd-input" name="max_price">
+                      <option value="">{% trans "Any Price" %}</option>
+                      <option value="100">{% trans "Under $100" %}</option>
+                      <option value="300">{% trans "Under $300" %}</option>
+                      <option value="500">{% trans "Under $500" %}</option>
+                      <option value="1000">{% trans "Under $1,000" %}</option>
                     </select>
                   </div>
                 </div>
@@ -158,29 +180,41 @@
             <form id="booking-form-cars">
               <div class="jd-booking-row cols-4">
                 <div class="jd-form-group mb-0">
-                  <label class="jd-label">{% trans "Pickup Location" %}</label>
+                  <label class="jd-label">{% trans "Vehicle Type" %}</label>
                   <div class="jd-input-icon-wrap">
-                    <i class="bi bi-geo-alt jd-input-icon"></i>
-                    <select class="jd-input" name="pickup_location">
-                      <option value="">{% trans "Any Location" %}</option>
-                      <option value="zanzibar_airport">{% trans "Zanzibar Airport" %}</option>
-                      <option value="stone_town">{% trans "Stone Town" %}</option>
-                      <option value="dar_airport">{% trans "Dar es Salaam Airport" %}</option>
+                    <i class="bi bi-car-front jd-input-icon"></i>
+                    <select class="jd-input" name="vehicle_type">
+                      <option value="">{% trans "All Types" %}</option>
+                      <option value="sedan">{% trans "Sedan" %}</option>
+                      <option value="suv">{% trans "SUV" %}</option>
+                      <option value="4x4">{% trans "4x4 Safari" %}</option>
+                      <option value="minibus">{% trans "Minibus" %}</option>
+                      <option value="van">{% trans "Van" %}</option>
                     </select>
                   </div>
                 </div>
                 <div class="jd-form-group mb-0">
-                  <label class="jd-label">{% trans "Pickup Date" %}</label>
+                  <label class="jd-label">{% trans "Rental Mode" %}</label>
                   <div class="jd-input-icon-wrap">
-                    <i class="bi bi-calendar3 jd-input-icon"></i>
-                    <input type="date" class="jd-input" name="pickup_date" />
+                    <i class="bi bi-gear-wide-connected jd-input-icon"></i>
+                    <select class="jd-input" name="rental_mode">
+                      <option value="">{% trans "Any Mode" %}</option>
+                      <option value="with_driver">{% trans "With Driver" %}</option>
+                      <option value="self_drive">{% trans "Self Drive" %}</option>
+                    </select>
                   </div>
                 </div>
                 <div class="jd-form-group mb-0">
-                  <label class="jd-label">{% trans "Return Date" %}</label>
+                  <label class="jd-label">{% trans "Max Price/Day" %}</label>
                   <div class="jd-input-icon-wrap">
-                    <i class="bi bi-calendar3 jd-input-icon"></i>
-                    <input type="date" class="jd-input" name="return_date" />
+                    <i class="bi bi-currency-dollar jd-input-icon"></i>
+                    <select class="jd-input" name="max_price">
+                      <option value="">{% trans "Any Price" %}</option>
+                      <option value="50">{% trans "Up to $50" %}</option>
+                      <option value="100">{% trans "Up to $100" %}</option>
+                      <option value="150">{% trans "Up to $150" %}</option>
+                      <option value="200">{% trans "Up to $200" %}</option>
+                    </select>
                   </div>
                 </div>
                 <button type="submit" class="btn-primary-jd w-100" style="height:48px;">
@@ -324,7 +358,7 @@
       <div class="row g-4">
         {% for package in featured_packages %}
           <div class="col-lg-4 col-md-6 jd-reveal jd-reveal-delay-{{ forloop.counter }}">
-            <a href="{% url 'tours:list' %}" class="text-decoration-none">
+            <a href="{% url 'tours:detail' package.slug %}" class="text-decoration-none">
               <div class="jd-package-card">
 
                 <div class="jd-package-card-img-wrap">
@@ -388,7 +422,6 @@
       </div>
 
     {% else %}
-      <!-- Empty state: shown until admin adds featured packages -->
       <div class="jd-packages-empty jd-reveal">
         <i class="bi bi-compass"></i>
         <h4 style="font-family:var(--font-heading);color:var(--color-text);">{% trans "Packages Coming Soon" %}</h4>
@@ -500,10 +533,10 @@
 
           <div class="col-md-6 jd-reveal jd-reveal-delay-1">
             <div class="jd-why-feature">
-              <div class="jd-why-feature-icon"><i class="bi bi-arrow-repeat"></i></div>
+              <div class="jd-why-feature-icon"><i class="bi bi-sliders"></i></div>
               <div>
-                <div class="jd-why-feature-title">{% trans "Flexible Cancellation" %}</div>
-                <p class="jd-why-feature-desc">{% trans "Up to 100% refund when you cancel 14+ days before your service date." %}</p>
+                <div class="jd-why-feature-title">{% trans "Custom Itineraries" %}</div>
+                <p class="jd-why-feature-desc">{% trans "We craft journeys tailored to your interests, budget, and pace for a unique Tanzanian adventure." %}</p>
               </div>
             </div>
           </div>

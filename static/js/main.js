@@ -46,14 +46,28 @@ $(function () {
   });
 
   /* ----------------------------------------------------------
-     2. ACTIVE NAV LINK — highlight current page
-     ---------------------------------------------------------- */
+   2. ACTIVE NAV LINK — highlight current page
+   ---------------------------------------------------------- */
   var currentPath = window.location.pathname;
-  $(".jd-nav-link, .jd-mobile-nav-link").each(function () {
+
+  // Desktop nav links
+  $(".jd-nav-link").each(function () {
     var href = $(this).attr("href");
-    if (href && href !== "/" && currentPath.startsWith(href)) {
+    if (!href) return;
+    if (href === "/" && (currentPath === "/" || currentPath === "")) {
       $(this).addClass("active");
-    } else if (href === "/" && currentPath === "/") {
+    } else if (href !== "/" && currentPath.indexOf(href) === 0) {
+      $(this).addClass("active");
+    }
+  });
+
+  // Mobile nav links — same logic
+  $(".jd-mobile-nav-link").each(function () {
+    var href = $(this).attr("href");
+    if (!href) return;
+    if (href === "/" && (currentPath === "/" || currentPath === "")) {
+      $(this).addClass("active");
+    } else if (href !== "/" && currentPath.indexOf(href) === 0) {
       $(this).addClass("active");
     }
   });
@@ -193,10 +207,15 @@ $(function () {
     var lang = $(this).data("lang");
     if (!lang) return;
 
+    var cleanPath = window.location.pathname.replace(
+      /^\/(en|fr|ru|sw)(\/|$)/,
+      "/",
+    );
+
     // Submit Django's built-in language form
     var $form = $("<form>", {
       method: "POST",
-      action: "/i18n/set_language/",
+      action: "/i18n/setlang/",
     });
 
     $form.append(
@@ -213,7 +232,7 @@ $(function () {
       $("<input>", {
         type: "hidden",
         name: "next",
-        value: window.location.pathname,
+        value: cleanPath,
       }),
     );
 

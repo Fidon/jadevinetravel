@@ -1,7 +1,4 @@
-/* ============================================================
-   AUTH PAGES — login, signup, password reset
-   Jadevine Travel & Tours
-   ============================================================ */
+/*  AUTH PAGES — login, signup, password reset  */
 
 .auth-section {
   min-height: 100vh;
@@ -15,6 +12,24 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   padding: 40px 36px;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --section-py: 85px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-py: 85px;
+  }
+}
+
+@media (max-width: 575px) {
+  :root {
+    --section-py: 85px;
+  }
 }
 
 @media (max-width: 480px) {

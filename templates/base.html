@@ -98,7 +98,17 @@
   </nav>
 
   <!-- Mobile full-screen menu -->
-  <div class="jd-mobile-menu">
+<div class="jd-mobile-menu">
+
+  <!-- Brand at top of mobile menu -->
+  <div class="jd-mobile-menu-brand">
+    <div class="jd-mobile-menu-brand-text">Jadevine</div>
+    <div class="jd-mobile-menu-brand-sub">{% trans "Travel & Tours" %}</div>
+  </div>
+
+  <!-- All nav links in a contained list — no scrolling needed -->
+  <div class="jd-mobile-menu-links">
+    <a href="{% url 'core:home' %}" class="jd-mobile-nav-link">{% trans "Home" %}</a>
     <a href="{% url 'hotels:list' %}" class="jd-mobile-nav-link">{% trans "Hotels" %}</a>
     <a href="{% url 'tours:list' %}" class="jd-mobile-nav-link">{% trans "Safaris & Tours" %}</a>
     <a href="{% url 'cars:list' %}" class="jd-mobile-nav-link">{% trans "Car Rentals" %}</a>
@@ -110,15 +120,18 @@
     {% else %}
       <a href="{% url 'account_login' %}" class="jd-mobile-nav-link">{% trans "Sign In" %}</a>
     {% endif %}
-    <!-- Mobile language switcher -->
-    <div class="jd-lang-switcher mt-3">
-      <button class="jd-lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}" data-lang="en" style="color:rgba(255,255,255,0.7);font-size:1rem;">EN</button>
-      <span class="jd-lang-separator" style="color:rgba(255,255,255,0.3);">|</span>
-      <button class="jd-lang-btn {% if LANGUAGE_CODE == 'fr' %}active{% endif %}" data-lang="fr" style="color:rgba(255,255,255,0.7);font-size:1rem;">FR</button>
-      <span class="jd-lang-separator" style="color:rgba(255,255,255,0.3);">|</span>
-      <button class="jd-lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}" data-lang="ru" style="color:rgba(255,255,255,0.7);font-size:1rem;">RU</button>
-    </div>
   </div>
+
+  <!-- Language switcher at bottom -->
+  <div class="jd-mobile-menu-lang">
+    <button class="jd-lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}" data-lang="en">EN</button>
+    <span class="jd-lang-separator">|</span>
+    <button class="jd-lang-btn {% if LANGUAGE_CODE == 'fr' %}active{% endif %}" data-lang="fr">FR</button>
+    <span class="jd-lang-separator">|</span>
+    <button class="jd-lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}" data-lang="ru">RU</button>
+  </div>
+
+</div>
 
   <!-- ============================================================
        PAGE CONTENT
@@ -205,7 +218,13 @@
       <!-- Bottom bar -->
       <div class="jd-footer-bottom">
         <span class="jd-footer-copy">
-          &copy; {% now "Y" %} Jadevine Travel &amp; Tours. {% trans "All rights reserved." %}
+          &copy; {% now "Y" %} Jadevine Travel &amp; Tours. {% trans "All rights reserved" %}
+        </span>
+        <span class="jd-footer-copy jd-developer-credit">
+          {% trans "Design by" %} 
+          <a href="https://wa.me/255713529019" class="jd-footer-credit-link" target="_blank" rel="noopener">
+              Fidon Developer
+          </a>
         </span>
         <span class="jd-footer-copy">
           {% trans "Zanzibar, Tanzania" %} &mdash; {% trans "Licensed by Tanzania Tourism Board" %}

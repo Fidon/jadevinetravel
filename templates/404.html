@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Page Not Found — Jadevine Travel & Tours" %}{% endblock %}
+{% block meta_description %}{% trans "The page you are looking for could not be found." %}{% endblock %}
+
+{% block navbar_class %}navbar-scrolled{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/core/404.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<section class="jd-404-section">
+
+  <!-- Background texture -->
+  <div class="jd-404-bg"></div>
+
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-9 text-center">
+
+        <!-- Large 404 display -->
+        <div class="jd-404-number-wrap">
+          <span class="jd-404-number">4</span>
+          <div class="jd-404-compass">
+            <i class="bi bi-compass"></i>
+          </div>
+          <span class="jd-404-number">4</span>
+        </div>
+
+        <!-- Gold line -->
+        <div class="jd-divider jd-divider-center jd-divider-lg mb-4"></div>
+
+        <!-- Eyebrow -->
+        <span class="eyebrow">{% trans "Lost in Paradise" %}</span>
+
+        <!-- Heading -->
+        <h1 class="jd-404-heading">
+          {% trans "This page seems to have" %} <em>{% trans "wandered off" %}</em>
+        </h1>
+
+        <!-- Subtext -->
+        <p class="jd-404-sub">
+          {% trans "The page you are looking for may have been moved, renamed, or may never have existed. Let us guide you back to your journey." %}
+        </p>
+
+        <!-- Quick links -->
+        <div class="jd-404-links">
+          <span class="jd-404-links-label">{% trans "Where would you like to go?" %}</span>
+          <div class="jd-404-quick-links">
+            <a href="{% url 'hotels:list' %}" class="jd-404-quick-link">
+              <i class="bi bi-building"></i>
+              <span>{% trans "Hotels" %}</span>
+            </a>
+            <a href="{% url 'tours:list' %}" class="jd-404-quick-link">
+              <i class="bi bi-binoculars"></i>
+              <span>{% trans "Safaris & Tours" %}</span>
+            </a>
+            <a href="{% url 'cars:list' %}" class="jd-404-quick-link">
+              <i class="bi bi-car-front"></i>
+              <span>{% trans "Car Rentals" %}</span>
+            </a>
+            <a href="{% url 'contact:contact' %}" class="jd-404-quick-link">
+              <i class="bi bi-chat-dots"></i>
+              <span>{% trans "Contact Us" %}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Primary CTA -->
+        <div class="jd-404-actions">
+          <a href="{% url 'core:home' %}" class="btn-primary-jd">
+            <i class="bi bi-house"></i>
+            {% trans "Back to Homepage" %}
+          </a>
+          <button class="btn-ghost-jd jd-404-back-btn" type="button">
+            <i class="bi bi-arrow-left"></i>
+            {% trans "Go Back" %}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/core/404.js' %}"></script>
+{% endblock %}

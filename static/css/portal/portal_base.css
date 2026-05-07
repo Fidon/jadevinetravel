@@ -255,24 +255,6 @@
   border-radius: 4px;
 }
 
-/* Mobile: sidebar starts off-screen */
-@media (max-width: 991.98px) {
-  .portal-sidebar {
-    transform: translateX(-100%);
-  }
-  .portal-sidebar.is-open {
-    transform: translateX(0);
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
-  }
-}
-
-/* Desktop: sidebar always visible */
-@media (min-width: 992px) {
-  .portal-sidebar {
-    transform: none !important;
-  }
-}
-
 /* Sidebar overlay — mobile only */
 .portal-sidebar-overlay {
   position: fixed;
@@ -379,13 +361,6 @@
   padding: 1.75rem 1.5rem 3rem;
   margin-left: 240px;
   transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (max-width: 991.98px) {
-  .portal-main {
-    margin-left: 0;
-    padding: 1.25rem 1rem 2.5rem;
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -765,13 +740,6 @@ div.dataTables_info {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-@media (max-width: 767.98px) {
-  .portal-field-row--2,
-  .portal-field-row--3 {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* --------------------------------------------------------------------------
    PHOTO MANAGEMENT (shared across hotels, cars, tours)
    -------------------------------------------------------------------------- */
@@ -1104,4 +1072,99 @@ table .text-truncate-line {
 
 table .text-nowrap-custom {
   white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   PORTAL FOOTER STYLES
+   -------------------------------------------------------------------------- */
+.portal-footer {
+  display: block;
+  float: left;
+  width: calc(100% - 240px);
+  margin-left: 240px;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  font-size: 0;
+  padding: 1.2rem 0.5rem;
+  transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-box {
+  display: inline-block;
+  width: calc(100% / 3);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.footer-link {
+  color: var(--color-text-light);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.footer-link:hover {
+  color: var(--color-primary);
+}
+.footer-link i {
+  position: relative;
+  top: 2px;
+}
+
+@media (min-width: 992px) {
+  .portal-sidebar {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .portal-sidebar {
+    transform: translateX(-100%);
+  }
+  .portal-sidebar.is-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  }
+  .portal-main {
+    margin-left: 0;
+    padding: 1.25rem 1rem 2.5rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .portal-footer {
+    width: 100%;
+    margin-left: 0;
+  }
+  .footer-box {
+    padding: 0 0.17rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .portal-page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .portal-page-actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .portal-field-row--2,
+  .portal-field-row--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .portal-page-actions a,
+  .portal-page-actions form,
+  .portal-page-actions button {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
 }

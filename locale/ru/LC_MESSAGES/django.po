@@ -1,0 +1,2544 @@
+# Russian translations for Jadevine Travel & Tours
+# Machine-quality translations for client preview.
+# Final translations to be provided by Jadevine Travel & Tours.
+msgid ""
+msgstr ""
+"Project-Id-Version: Jadevine Travel & Tours\n"
+"POT-Creation-Date: 2026-05-07 10:25+0300\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "English"
+msgstr "Английский"
+
+msgid "Français"
+msgstr "Французский"
+
+msgid "Русский"
+msgstr "Русский"
+
+msgid "First Name"
+msgstr "Имя"
+
+msgid "First name"
+msgstr "Имя"
+
+msgid "Last Name"
+msgstr "Фамилия"
+
+msgid "Last name"
+msgstr "Фамилия"
+
+msgid "Preferred Language"
+msgstr "Предпочитаемый язык"
+
+msgid "Email address"
+msgstr "Адрес эл. почты"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+msgid "+255 7XX XXX XXX"
+msgstr "+255 7XX XXX XXX"
+
+msgid "Select or type your nationality"
+msgstr "Выберите или введите вашу национальность"
+
+msgid "Please select a valid nationality from the list."
+msgstr "Пожалуйста, выберите корректную национальность из списка."
+
+msgid "This phone number is already used by another user."
+msgstr "Этот номер телефона уже используется другим пользователем."
+
+msgid "Reason for cancellation (optional)"
+msgstr "Причина отмены (необязательно)"
+
+msgid "Let us know why you are cancelling (optional)"
+msgstr "Сообщите нам причину отмены (необязательно)"
+
+msgid "I understand and confirm this cancellation"
+msgstr "Я понимаю и подтверждаю данную отмену"
+
+msgid "You must confirm to proceed with cancellation."
+msgstr "Вы должны подтвердить отмену, чтобы продолжить."
+
+msgid "Phone Number"
+msgstr "Номер телефона"
+
+msgid "Nationality"
+msgstr "Национальность"
+
+msgid "Profile Photo"
+msgstr "Фото профиля"
+
+msgid "User"
+msgstr "Пользователь"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Created By"
+msgstr "Кем создано"
+
+msgid "Mini-Admin Profile"
+msgstr "Профиль мини-администратора"
+
+msgid "Mini-Admin Profiles"
+msgstr "Профили мини-администраторов"
+
+msgid "No refund — service date has passed or no policy applies."
+msgstr "Возврат невозможен — дата оказания услуги прошла или правила не применимы."
+
+msgid "This booking cannot be cancelled."
+msgstr "Это бронирование не может быть отменено."
+
+msgid "This booking cannot be cancelled — the service date has passed."
+msgstr "Это бронирование не может быть отменено — дата оказания услуги уже прошла."
+
+msgid "Please confirm the cancellation."
+msgstr "Пожалуйста, подтвердите отмену."
+
+msgid ""
+"Your cancellation request has been submitted. We will process your refund "
+"and confirm within 2–3 business days."
+msgstr ""
+"Ваш запрос на отмену был отправлен. Мы обработаем возврат средств и подтвердим его в течение 2–3 рабочих дней."
+
+msgid "Your booking has been cancelled."
+msgstr "Ваше бронирование отменено."
+
+msgid "Your profile has been updated."
+msgstr "Ваш профиль обновлен."
+
+msgid "Please enter your email address."
+msgstr "Пожалуйста, введите ваш адрес электронной почты."
+
+msgid "This email is already verified. You can sign in."
+msgstr "Этот email уже подтвержден. Вы можете войти."
+
+msgid "Your email is already verified. You can sign in."
+msgstr "Ваш email уже подтвержден. Вы можете войти."
+
+msgid "Check-in Date"
+msgstr "Дата заезда"
+
+msgid "Check-out Date"
+msgstr "Дата выезда"
+
+msgid "Number of Guests"
+msgstr "Количество гостей"
+
+msgid "Special Requests"
+msgstr "Особые пожелания"
+
+msgid "Check-in date cannot be in the past."
+msgstr "Дата заезда не может быть в прошлом."
+
+msgid "Check-out must be after check-in."
+msgstr "Дата выезда должна быть после даты заезда."
+
+msgid "With Driver"
+msgstr "С водителем"
+
+msgid "Self Drive"
+msgstr "Без водителя"
+
+msgid "Rental Mode"
+msgstr "Режим аренды"
+
+msgid "Pickup Location"
+msgstr "Место подачи"
+
+msgid "Pickup Date"
+msgstr "Дата подачи"
+
+msgid "Return Date"
+msgstr "Дата возврата"
+
+msgid "Driver's Licence Number"
+msgstr "Номер водительского удостоверения"
+
+msgid "Driver's licence number is required for self-drive rentals."
+msgstr "Номер водительского удостоверения обязателен для аренды без водителя."
+
+msgid "Pickup date cannot be in the past."
+msgstr "Дата подачи не может быть в прошлом."
+
+msgid "Return date must be after pickup date."
+msgstr "Дата возврата должна быть позже даты подачи."
+
+msgid "Pay Now — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
+msgstr "Оплатить сейчас — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
+
+msgid "Pay on Arrival — Pay when you arrive in Tanzania"
+msgstr "Оплата по прибытии — Оплатите, когда приедете в Танзанию"
+
+msgid "How would you like to pay?"
+msgstr "Как бы вы хотели оплатить?"
+
+msgid "Preferred Start Date"
+msgstr "Желаемая дата начала"
+
+msgid "Number of Participants"
+msgstr "Количество участников"
+
+msgid "Preferred date cannot be in the past."
+msgstr "Желаемая дата не может быть в прошлом."
+
+msgid "Hotel"
+msgstr "Отель"
+
+msgid "Safari & Tour"
+msgstr "Сафари и туры"
+
+msgid "Car Rental"
+msgstr "Аренда авто"
+
+msgid "Minimum Days Before Service"
+msgstr "Мин. дней до услуги"
+
+msgid "Cancellation must be made at least this many days before service date"
+msgstr "Отмена должна быть произведена как минимум за столько дней до даты услуги"
+
+msgid "Refund Percentage"
+msgstr "Процент возврата"
+
+msgid "0 = no refund, 50 = half, 100 = full refund"
+msgstr "0 = без возврата, 50 = половина, 100 = полный возврат"
+
+msgid "Label (English)"
+msgstr "Метка (Английский)"
+
+msgid "Cancellation Policy"
+msgstr "Политика отмены"
+
+msgid "Cancellation Policies"
+msgstr "Правила отмены (мн.ч.)"
+
+msgid "Pay Now (Online)"
+msgstr "Оплатить сейчас (Онлайн)"
+
+msgid "Pay on Arrival"
+msgstr "Оплата по прибытии"
+
+msgid "Pending"
+msgstr "В ожидании"
+
+msgid "Paid"
+msgstr "Оплачено"
+
+msgid "Refunded"
+msgstr "Возвращено"
+
+msgid "Failed"
+msgstr "Ошибка"
+
+msgid "Pending Confirmation"
+msgstr "Ожидает подтверждения"
+
+msgid "Confirmed"
+msgstr "Подтверждено"
+
+msgid "Cancellation Requested"
+msgstr "Запрошена отмена"
+
+msgid "Cancelled"
+msgstr "Отменено"
+
+msgid "Completed"
+msgstr "Завершено"
+
+msgid "No Show"
+msgstr "Неявка"
+
+msgid "Booking Reference"
+msgstr "Номер бронирования"
+
+msgid "Is Refundable"
+msgstr "Возвратный"
+
+msgid ""
+"Snapshotted from the listing at booking time. False = non-refundable "
+"regardless of policy."
+msgstr ""
+"Снимок данных из объявления на момент бронирования. False = без возврата средств независимо от политики."
+
+msgid "Booking"
+msgstr "Бронирование"
+
+msgid "Bookings"
+msgstr "Бронирования"
+
+msgid "Selected room type is not available."
+msgstr "Выбранный тип номера недоступен."
+
+msgid "This room type accommodates a maximum of %(max)s guests."
+msgstr "Этот тип номера вмещает максимум %(max)s гостей."
+
+msgid "This vehicle does not offer self-drive rental."
+msgstr "Для этого автомобиля недоступна аренда без водителя."
+
+msgid "This vehicle does not offer a driver option."
+msgstr "Для этого автомобиля недоступна опция с водителем."
+
+msgid "This tour accommodates a maximum of %(max)s participants."
+msgstr "Этот тур вмещает максимум %(max)s участников."
+
+msgid "Your booking session has expired. Please start again."
+msgstr "Ваша сессия бронирования истекла. Пожалуйста, начните сначала."
+
+msgid "Sedan"
+msgstr "Седан"
+
+msgid "SUV"
+msgstr "Внедорожник"
+
+msgid "Minibus"
+msgstr "Микроавтобус"
+
+msgid "4x4 Safari"
+msgstr "Сафари 4х4"
+
+msgid "Van"
+msgstr "Фургон"
+
+msgid "Petrol"
+msgstr "Бензин"
+
+msgid "Diesel"
+msgstr "Дизель"
+
+msgid "Manual"
+msgstr "Механическая"
+
+msgid "Automatic"
+msgstr "Автоматическая"
+
+msgid "Pending Review"
+msgstr "Ожидает модерации"
+
+msgid "Approved"
+msgstr "Одобрено"
+
+msgid "Rejected"
+msgstr "Отклонено"
+
+msgid "Vehicle Name"
+msgstr "Название автомобиля"
+
+msgid "Vehicle Type"
+msgstr "Тип автомобиля"
+
+msgid "Make"
+msgstr "Марка"
+
+msgid "Model"
+msgstr "Модель"
+
+msgid "Year"
+msgstr "Год"
+
+msgid "Passenger Capacity"
+msgstr "Вместимость пассажиров"
+
+msgid "Price Per Day (USD)"
+msgstr "Цена за день (USD)"
+
+msgid "Offers Self-Drive"
+msgstr "Доступно без водителя"
+
+msgid "Offers Driver"
+msgstr "Доступно с водителем"
+
+msgid "Driver Speaks English"
+msgstr "Водитель говорит по-английски"
+
+msgid "Driver Speaks French"
+msgstr "Водитель говорит по-французски"
+
+msgid "Pickup Locations"
+msgstr "Места подачи"
+
+msgid "List of location names e.g. [\"Zanzibar Airport\", \"Stone Town\"]"
+msgstr "Список названий мест, например [\"Аэропорт Занзибара\", \"Стоун Таун\"]"
+
+msgid "Available for Booking"
+msgstr "Доступно для бронирования"
+
+msgid "Toggle off during maintenance"
+msgstr "Отключите на время обслуживания"
+
+msgid "Active / Visible"
+msgstr "Активно / Видимо"
+
+msgid "True only when approval_status = approved"
+msgstr "True только если статус одобрен"
+
+msgid "Discount (%)"
+msgstr "Скидка (%)"
+
+msgid "0 = no discount. Applied to price per day."
+msgstr "0 = без скидки. Применяется к цене за день."
+
+msgid "Discount Expires At"
+msgstr "Скидка истекает"
+
+msgid "Leave blank for a permanent discount."
+msgstr "Оставьте пустым для постоянной скидки."
+
+msgid "Refundable"
+msgstr "Возвратный"
+
+msgid ""
+"If unchecked, this vehicle is non-refundable regardless of cancellation "
+"policy."
+msgstr ""
+"Если флажок не установлен, возврат средств за этот автомобиль невозможен независимо от политики отмены."
+
+msgid "Allows Pay on Arrival"
+msgstr "Разрешена оплата по прибытии"
+
+msgid "If unchecked, only Pay Now is accepted for this vehicle."
+msgstr "Если не отмечено, принимается только предоплата."
+
+msgid "Car Rentals"
+msgstr "Аренда автомобилей"
+
+msgid "Car Rentals in Zanzibar & Tanzania"
+msgstr "Аренда авто на Занзибаре и в Танзании"
+
+msgid "General Inquiry"
+msgstr "Общий запрос"
+
+msgid "Custom Tour Request"
+msgstr "Запрос индивидуального тура"
+
+msgid "Partnership"
+msgstr "Партнерство"
+
+msgid "Press / Media"
+msgstr "Пресса / СМИ"
+
+msgid "New"
+msgstr "Новый"
+
+msgid "In Progress"
+msgstr "В процессе"
+
+msgid "Resolved"
+msgstr "Решено"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Subject"
+msgstr "Тема"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "Internal notes — never shown to customer"
+msgstr "Внутренние заметки"
+
+msgid "Contact Message"
+msgstr "Контактное сообщение"
+
+msgid "Contact Messages"
+msgstr "Контактные сообщения"
+
+msgid "Newsletter Subscriber"
+msgstr "Подписчик рассылки"
+
+msgid "Newsletter Subscribers"
+msgstr "Подписчики рассылки"
+
+msgid "Name is required."
+msgstr "Имя обязательно."
+
+msgid "A valid email address is required."
+msgstr "Требуется корректный адрес эл. почты."
+
+msgid "Subject is required."
+msgstr "Тема обязательна."
+
+msgid "Message must be at least 10 characters."
+msgstr "Сообщение должно содержать минимум 10 символов."
+
+msgid "Thank you for your message! We will respond within 24 hours."
+msgstr "Спасибо за ваше сообщение! Мы ответим в течение 24 часов."
+
+msgid "Please enter a valid email address."
+msgstr "Пожалуйста, введите корректный адрес эл. почты."
+
+msgid "This email is already subscribed."
+msgstr "Этот email уже подписан."
+
+msgid "Saved Favourite"
+msgstr "Избранное"
+
+msgid "Saved Favourites"
+msgstr "Избранное"
+
+msgid "Name (English)"
+msgstr "Название (Английский)"
+
+msgid "Gallery Category"
+msgstr "Категория галереи"
+
+msgid "Gallery Categories"
+msgstr "Категории галереи"
+
+msgid "Photo"
+msgstr "Фото"
+
+msgid "Video"
+msgstr "Видео"
+
+msgid "YouTube or Vimeo embed URL"
+msgstr "Ссылка на YouTube или Vimeo"
+
+msgid "Show in Gallery Highlights section on homepage"
+msgstr "Показывать в хитах на главной"
+
+msgid "Gallery Item"
+msgstr "Элемент галереи"
+
+msgid "Gallery Items"
+msgstr "Элементы галереи"
+
+msgid "Zanzibar"
+msgstr "Занзибар"
+
+msgid "Dar es Salaam"
+msgstr "Дар-эс-Салам"
+
+msgid "Hotel Name"
+msgstr "Название отеля"
+
+msgid "Location"
+msgstr "Расположение"
+
+msgid "Description (English)"
+msgstr "Описание (Английский)"
+
+msgid "Description (French)"
+msgstr "Описание (Французский)"
+
+msgid "Description (Russian)"
+msgstr "Описание (Русский)"
+
+msgid "Star Rating"
+msgstr "Звездный рейтинг"
+
+msgid "Price Per Night (USD)"
+msgstr "Цена за ночь (USD)"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "TripAdvisor URL"
+msgstr "Ссылка на TripAdvisor"
+
+msgid "Approval Status"
+msgstr "Статус одобрения"
+
+msgid "Rejection Reason"
+msgstr "Причина отказа"
+
+msgid "Hotels"
+msgstr "Отели"
+
+msgid "Cover Photo"
+msgstr "Обложка"
+
+msgid "Room Type Name"
+msgstr "Название типа номера"
+
+msgid "Price Per Night (USD) — overrides hotel base price if set"
+msgstr "Цена за ночь (USD) — заменяет базу отеля"
+
+msgid "Max Guests"
+msgstr "Макс. гостей"
+
+msgid "Amenities"
+msgstr "Удобства"
+
+msgid "List of amenity strings e.g. [\"WiFi\", \"AC\", \"Pool view\"]"
+msgstr "Список удобств, например [\"Wi-Fi\", \"Кондиционер\", \"Вид на бассейн\"]"
+
+msgid "0 = no discount. Applied to the effective price per night."
+msgstr "0 = без скидки. Применяется к цене за ночь."
+
+msgid ""
+"If unchecked, this room is non-refundable regardless of cancellation policy."
+msgstr ""
+"Если флажок не установлен, возврат средств за этот номер невозможен независимо от политики отмены."
+
+msgid "If unchecked, only Pay Now is accepted for this room type."
+msgstr "Если не отмечено, принимается только предоплата."
+
+msgid "Room Type"
+msgstr "Тип номера"
+
+msgid "Room Types"
+msgstr "Типы номеров"
+
+msgid "Hotels in Zanzibar & Dar es Salaam"
+msgstr "Отели на Занзибаре и в Дар-эс-Саламе"
+
+msgid "Rating must be at least 1."
+msgstr "Рейтинг должен быть не меньше 1."
+
+msgid "Rating cannot exceed 10."
+msgstr "Рейтинг не может превышать 10."
+
+msgid "Please select a rating."
+msgstr "Пожалуйста, выберите оценку."
+
+msgid "Tell us about your experience (optional)…"
+msgstr "Расскажите о вашем опыте (необязательно)…"
+
+msgid "Pending Approval"
+msgstr "Ожидает одобрения"
+
+msgid "One review per booking — enforced at DB level."
+msgstr "Один отзыв на бронирование."
+
+msgid "Rating (1–10)"
+msgstr "Рейтинг (1–10)"
+
+msgid "Comment"
+msgstr "Комментарий"
+
+msgid "Moderation Status"
+msgstr "Статус модерации"
+
+msgid "Review"
+msgstr "Отзыв"
+
+msgid "Reviews"
+msgstr "Отзывы"
+
+msgid "You can only review a booking after the service has been completed."
+msgstr "Отзыв возможен после завершения услуги."
+
+msgid "You have already submitted a review for this booking."
+msgstr "Вы уже оставили отзыв."
+
+msgid "Invalid submission. Please select a rating between 1 and 10."
+msgstr "Выберите рейтинг от 1 до 10."
+
+msgid "Safari"
+msgstr "Сафари"
+
+msgid "Beach"
+msgstr "Пляж"
+
+msgid "Cultural"
+msgstr "Культурный"
+
+msgid "Climbing"
+msgstr "Восхождение"
+
+msgid "Combined Safari & Beach"
+msgstr "Комбинированное сафари и пляж"
+
+msgid "Name (French)"
+msgstr "Название (Французский)"
+
+msgid "Name (Russian)"
+msgstr "Название (Русский)"
+
+msgid "Tour Type"
+msgstr "Тип тура"
+
+msgid "Duration (Days)"
+msgstr "Длительность (дней)"
+
+msgid "Maximum Group Size"
+msgstr "Макс. размер группы"
+
+msgid "Price Per Person (USD)"
+msgstr "Цена за человека (USD)"
+
+msgid "Highlights (English)"
+msgstr "Особенности (Английский)"
+
+msgid "Inclusions (English)"
+msgstr "Что включено (Английский)"
+
+msgid "Exclusions (English)"
+msgstr "Что не включено (Английский)"
+
+msgid "Featured"
+msgstr "Популярное"
+
+msgid "Show in Featured Packages section on homepage"
+msgstr "Показывать в избранных на главной"
+
+msgid "0 = no discount. Applied to price per person."
+msgstr "0 = без скидки. Применяется к цене за человека."
+
+msgid ""
+"If unchecked, this package is non-refundable regardless of cancellation "
+"policy."
+msgstr ""
+"Если флажок не установлен, возврат средств за этот пакет невозможен независимо от политики отмены."
+
+msgid "If unchecked, only Pay Now is accepted for this package."
+msgstr "Если не отмечено, принимается только предоплата."
+
+msgid "Tour Package"
+msgstr "Турпакет"
+
+msgid "Tour Packages"
+msgstr "Турпакеты"
+
+msgid "Day Number"
+msgstr "Номер дня"
+
+msgid "Title (English)"
+msgstr "Заголовок (Английский)"
+
+msgid "Page Not Found — Jadevine Travel & Tours"
+msgstr "Страница не найдена — Jadevine Travel & Tours"
+
+msgid "The page you are looking for could not be found."
+msgstr "Запрашиваемая страница не найдена."
+
+msgid "Lost in Paradise"
+msgstr "Затерялись в раю"
+
+msgid "This page seems to have"
+msgstr "Кажется, эта страница"
+
+msgid "wandered off"
+msgstr "куда-то ушла"
+
+msgid ""
+"The page you are looking for may have been moved, renamed, or may never have "
+"existed. Let us guide you back to your journey."
+msgstr ""
+"Страница, которую вы ищете, могла быть перемещена, переименована или никогда не существовала. Позвольте нам вернуть вас к вашему путешествию."
+
+msgid "Where would you like to go?"
+msgstr "Куда бы вы хотели отправиться?"
+
+msgid "Safaris & Tours"
+msgstr "Сафари и туры"
+
+msgid "Contact Us"
+msgstr "Связаться с нами"
+
+msgid "Back to Homepage"
+msgstr "Вернуться на главную"
+
+msgid "Go Back"
+msgstr "Назад"
+
+msgid "Confirm Email"
+msgstr "Подтверждение почты"
+
+msgid "Verifying your email"
+msgstr "Проверка вашей почты"
+
+msgid ""
+"\n"
+"                  Confirming <strong>%(email)s</strong>…\n"
+"                "
+msgstr ""
+"\n"
+"                  Подтверждение <strong>%(email)s</strong>…\n"
+"                "
+
+msgid "Your account is now active. You can sign in."
+msgstr "Ваш аккаунт активен. Вы можете войти."
+
+msgid "Sign In"
+msgstr "Войти"
+
+msgid "Link expired or invalid"
+msgstr "Ссылка истекла или недействительна"
+
+msgid "This verification link is no longer valid. Request a new one below."
+msgstr "Эта ссылка больше не действительна. Запросите новую."
+
+msgid "Resend Verification Email"
+msgstr "Отправить письмо для подтверждения еще раз"
+
+msgid "Back to Sign In"
+msgstr "Назад к входу"
+
+msgid "Auto-confirm failed. Please click below."
+msgstr "Автоподтверждение не удалось. Нажмите ниже."
+
+msgid "Confirm Email Address"
+msgstr "Подтвердить адрес эл. почты"
+
+msgid "Sign in to your Jadevine account to manage your bookings."
+msgstr "Войдите для управления бронированиями."
+
+msgid "Welcome back"
+msgstr "С возвращением"
+
+msgid "Sign in to manage your bookings"
+msgstr "Войдите, чтобы управлять бронированиями"
+
+msgid "Incorrect email address or password."
+msgstr "Неверный адрес почты или пароль."
+
+msgid "Resend verification email"
+msgstr "Отправить письмо для подтверждения"
+
+msgid "Email Address"
+msgstr "Адрес электронной почты"
+
+msgid "your@email.com"
+msgstr "your@email.com"
+
+msgid "Your password"
+msgstr "Ваш пароль"
+
+msgid "Show password"
+msgstr "Показать пароль"
+
+msgid "Remember me"
+msgstr "Запомнить меня"
+
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+msgid "New to Jadevine?"
+msgstr "Впервые у нас?"
+
+msgid "Create an account"
+msgstr "Создать аккаунт"
+
+msgid "Sign Out"
+msgstr "Выйти"
+
+msgid "Sign out?"
+msgstr "Выйти?"
+
+msgid "You will be signed out of your Jadevine account."
+msgstr "Вы выйдете из своего аккаунта Jadevine."
+
+msgid "Yes, Sign Out"
+msgstr "Да, выйти"
+
+msgid "or"
+msgstr "или"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+msgid "My Profile"
+msgstr "Мой профиль"
+
+msgid "Current Password"
+msgstr "Текущий пароль"
+
+msgid "Your current password"
+msgstr "Ваш текущий пароль"
+
+msgid "New Password"
+msgstr "Новый пароль"
+
+msgid "New password"
+msgstr "Новый пароль"
+
+msgid "Confirm New Password"
+msgstr "Подтвердите новый пароль"
+
+msgid "Repeat new password"
+msgstr "Повторите новый пароль"
+
+msgid "Update Password"
+msgstr "Обновить пароль"
+
+msgid "Reset Password"
+msgstr "Сбросить пароль"
+
+msgid "Reset your password"
+msgstr "Сброс пароля"
+
+msgid "Enter your email and we'll send you a reset link."
+msgstr "Введите email, и мы отправим ссылку для сброса."
+
+msgid "Send Reset Link"
+msgstr "Отправить ссылку для сброса"
+
+msgid "Remembered it?"
+msgstr "Вспомнили?"
+
+msgid "Check Your Email"
+msgstr "Проверьте почту"
+
+msgid "Check your inbox"
+msgstr "Проверьте входящие"
+
+msgid ""
+"The reset link expires in 3 days. After that you'll need to request a new "
+"one."
+msgstr ""
+"Ссылка для сброса пароля действительна в течение 3 дней. После этого вам потребуется запросить новую."
+
+msgid "Didn't receive it?"
+msgstr "Не получили?"
+
+msgid "Try again"
+msgstr "Попробовать снова"
+
+msgid "Set New Password"
+msgstr "Установить новый пароль"
+
+msgid "Set a new password"
+msgstr "Установите новый пароль"
+
+msgid ""
+"This password reset link is invalid or has expired. Please request a new one."
+msgstr ""
+"Эта ссылка для сброса пароля недействительна или срок её действия истёк. Пожалуйста, запросите новую."
+
+msgid "Request New Link"
+msgstr "Запросить новую ссылку"
+
+msgid "Password Updated"
+msgstr "Пароль обновлен"
+
+msgid "Password updated"
+msgstr "Пароль обновлен"
+
+msgid "Your password has been changed successfully. You can now sign in."
+msgstr "Пароль успешно изменен. Войдите."
+
+msgid "Verification link sent"
+msgstr "Ссылка отправлена"
+
+msgid ""
+"If an account with that email exists and is unverified, we've sent a fresh "
+"verification link. Check your inbox and spam folder."
+msgstr ""
+"Если аккаунт с этим адресом электронной почты существует и не подтверждён, мы отправили новую ссылку для подтверждения. Проверьте папку «Входящие» и «Спам»."
+
+msgid "Enter your email address and we'll send you a new verification link."
+msgstr "Введите email для ссылки подтверждения."
+
+msgid "Send Verification Link"
+msgstr "Отправить ссылку для подтверждения"
+
+msgid "Create Account"
+msgstr "Создать аккаунт"
+
+msgid ""
+"Create a Jadevine account to book hotels, safaris, and car rentals in "
+"Tanzania."
+msgstr ""
+"Создайте аккаунт Jadevine, чтобы бронировать отели, сафари и аренду автомобилей в Танзании."
+
+msgid "Create your account"
+msgstr "Создание аккаунта"
+
+msgid "Start planning your Tanzania adventure"
+msgstr "Начните планировать свое приключение"
+
+msgid "Create a password"
+msgstr "Создайте пароль"
+
+msgid "Confirm Password"
+msgstr "Подтвердите пароль"
+
+msgid "Repeat your password"
+msgstr "Повторите пароль"
+
+msgid ""
+"By creating an account, you agree to our\n"
+"              <a href=\"#\">Terms of Service</a> and <a href=\"#\">Privacy "
+"Policy</a>."
+msgstr ""
+"Создавая аккаунт, вы соглашаетесь с нашими\n"
+"              <a href=\"#\">Условиями обслуживания</a> и <a href=\"#\">Политикой конфиденциальности</a>."
+
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+msgid "Verify Your Email"
+msgstr "Подтвердите ваш Email"
+
+msgid "Check your inbox to verify your email address."
+msgstr "Проверьте почту для подтверждения адреса."
+
+msgid ""
+"We've sent a verification link to your email address. Click the link to "
+"activate your account."
+msgstr ""
+"Мы отправили ссылку для подтверждения на ваш адрес электронной почты. Нажмите на ссылку, чтобы активировать аккаунт."
+
+msgid ""
+"Didn't receive the email? Check your spam folder. The link expires in 3 days."
+msgstr ""
+"Не получили письмо? Проверьте папку «Спам». Ссылка действует 3 дня."
+
+msgid "Booking Detail"
+msgstr "Детали бронирования"
+
+msgid "My Bookings"
+msgstr "Мои бронирования"
+
+msgid "Download PDF"
+msgstr "Скачать PDF"
+
+msgid "Cancel Booking"
+msgstr "Отменить бронирование"
+
+msgid "Your booking is confirmed and ready. We look forward to seeing you."
+msgstr "Бронирование подтверждено. Мы ждем вас."
+
+msgid ""
+"We will confirm your preferred date within 24–48 hours and send you an email."
+msgstr ""
+"Мы подтвердим выбранную вами дату в течение 24–48 часов и отправим вам электронное письмо."
+
+msgid "Your booking is being reviewed. We will confirm it shortly."
+msgstr "Бронирование проверяется. Мы скоро его подтвердим."
+
+msgid ""
+"Your cancellation request is being processed. We will contact you within 2–3 "
+"business days."
+msgstr ""
+"Ваш запрос на отмену обрабатывается. Мы свяжемся с вами в течение 2–3 рабочих дней."
+
+msgid "This booking has been cancelled. Contact us if you have any questions."
+msgstr "Это бронирование было отменено. Свяжитесь с нами, если у вас есть вопросы."
+
+msgid ""
+"We hope you had a wonderful experience. Thank you for travelling with "
+"Jadevine."
+msgstr ""
+"Надеемся, у вас остались прекрасные впечатления. Спасибо, что путешествовали с Jadevine."
+
+msgid ""
+"This booking was marked as a no-show. Please contact us if you believe this "
+"is an error."
+msgstr ""
+"Это бронирование было отмечено как неявка. Пожалуйста, свяжитесь с нами, если вы считаете, что это ошибка."
+
+msgid "Check-in"
+msgstr "Заезд"
+
+msgid "Check-out"
+msgstr "Выезд"
+
+msgid "Duration"
+msgstr "Длительность"
+
+msgid "night(s)"
+msgstr "ноч(ей)"
+
+msgid "Guests"
+msgstr "Гости"
+
+msgid "Preferred Date"
+msgstr "Желаемая дата"
+
+msgid "Participants"
+msgstr "Участники"
+
+msgid "Days"
+msgstr "Дней"
+
+msgid "Your Review"
+msgstr "Ваш отзыв"
+
+msgid "Review Submitted"
+msgstr "Отзыв отправлен"
+
+msgid "Share Your Experience"
+msgstr "Поделитесь опытом"
+
+msgid "Your review is awaiting moderation."
+msgstr "Отзыв ожидает модерации."
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "out of 10"
+msgstr "из 10"
+
+msgid "No rating selected"
+msgstr "Рейтинг не выбран"
+
+msgid "Comment (optional)"
+msgstr "Комментарий (необязательно)"
+
+msgid "Tell us about your experience…"
+msgstr "Расскажите о вашем опыте…"
+
+msgid "Submit Review"
+msgstr "Отправить отзыв"
+
+msgid "Payment"
+msgstr "Оплата"
+
+msgid "Base Price"
+msgstr "Базовая цена"
+
+msgid "Total"
+msgstr "Итого"
+
+msgid "Payment Mode"
+msgstr "Способ оплаты"
+
+msgid "Payment Status"
+msgstr "Статус оплаты"
+
+msgid "refund"
+msgstr "возврат"
+
+msgid ""
+"\n"
+"          %(days)s day(s) until service date\n"
+"        "
+msgstr ""
+"\n"
+"          %(days)s дн. до даты оказания услуги\n"
+"        "
+
+msgid "Based on our cancellation policy:"
+msgstr "На основании правил отмены:"
+
+msgid ""
+"Your cancellation request will be reviewed. The refund will be processed "
+"within 2–3 business days."
+msgstr ""
+
+msgid "Reason (optional)"
+msgstr "Причина (необязательно)"
+
+msgid "Let us know why you are cancelling..."
+msgstr "Сообщите причину отмены..."
+
+msgid "Keep Booking"
+msgstr "Оставить бронирование"
+
+msgid "Confirm Cancellation"
+msgstr "Подтвердить отмену"
+
+msgid "Processing…"
+msgstr "Обработка…"
+
+msgid "Please select a rating before submitting."
+msgstr "Выберите оценку перед отправкой."
+
+msgid "Terrible"
+msgstr "Ужасно"
+
+msgid "Very Poor"
+msgstr "Очень плохо"
+
+msgid "Poor"
+msgstr "Плохо"
+
+msgid "Below Average"
+msgstr "Ниже среднего"
+
+msgid "Average"
+msgstr "Средне"
+
+msgid "Good"
+msgstr "Хорошо"
+
+msgid "Very Good"
+msgstr "Очень хорошо"
+
+msgid "Excellent"
+msgstr "Отлично"
+
+msgid "Outstanding"
+msgstr "Замечательно"
+
+msgid "Perfect"
+msgstr "Идеально"
+
+msgid "Account"
+msgstr "Аккаунт"
+
+msgid "All"
+msgstr "Все"
+
+msgid "View booking"
+msgstr "Посмотреть бронирование"
+
+msgid ""
+"\n"
+"          Page %(current)s of %(total)s\n"
+"        "
+msgstr ""
+"\n"
+"          Страница %(current)s из %(total)s\n"
+"        "
+
+msgid "No bookings found"
+msgstr "Бронирований не найдено"
+
+msgid "No bookings match the selected filter."
+msgstr "Нет бронирований по фильтру."
+
+msgid "My Dashboard"
+msgstr "Панель управления"
+
+msgid "Manage your bookings and account."
+msgstr "Управляйте бронированиями и аккаунтом."
+
+msgid "Dashboard"
+msgstr "Панель управления"
+
+msgid "New Booking"
+msgstr "Новое бронирование"
+
+msgid "Upcoming"
+msgstr "Предстоящие"
+
+msgid "Saved"
+msgstr "Сохраненное"
+
+msgid "Upcoming Bookings"
+msgstr "Предстоящие бронирования"
+
+msgid "View all"
+msgstr "Посмотреть все"
+
+msgid "No upcoming bookings"
+msgstr "Нет предстоящих бронирований"
+
+msgid "When you make a booking, it will appear here."
+msgstr "Бронирования появятся здесь."
+
+msgid "Explore Hotels"
+msgstr "Найти отели"
+
+msgid "Open menu"
+msgstr "Открыть меню"
+
+msgid "My Account"
+msgstr "Мой аккаунт"
+
+msgid "Processing..."
+msgstr "Обработка..."
+
+msgid "Could not remove. Please try again."
+msgstr "Не удалось удалить. Попробуйте еще раз."
+
+msgid "Photo must be under 5MB."
+msgstr "Фото должно быть меньше 5 МБ."
+
+msgid "View"
+msgstr "Смотреть"
+
+msgid "Remove from saved"
+msgstr "Удалить из сохраненного"
+
+msgid "days"
+msgstr "дней"
+
+msgid "Nothing saved yet"
+msgstr "Ничего не сохранено"
+
+msgid "Tap the heart icon on any hotel, tour, or car to save it here."
+msgstr "Нажмите на сердце, чтобы сохранить."
+
+msgid "Close menu"
+msgstr "Закрыть меню"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Personal Information"
+msgstr "Личная информация"
+
+msgid "Change Photo"
+msgstr "Изменить фото"
+
+msgid "JPG, PNG or GIF. Max 5MB."
+msgstr "JPG, PNG или GIF. Макс 5 МБ."
+
+msgid "Remove current photo"
+msgstr "Удалить текущее фото"
+
+msgid "Save Changes"
+msgstr "Сохранить изменения"
+
+msgid "Security"
+msgstr "Безопасность"
+
+msgid "Jadevine Travel & Tours — Zanzibar, Tanzania"
+msgstr "Jadevine Travel & Tours — Занзибар, Танзания"
+
+msgid "Travel & Tours"
+msgstr "Путешествия и туры"
+
+msgid "Gallery"
+msgstr "Галерея"
+
+msgid "About"
+msgstr "О нас"
+
+msgid "Contact"
+msgstr "Контакты"
+
+msgid "Register"
+msgstr "Регистрация"
+
+msgid "Home"
+msgstr "Главная"
+
+msgid ""
+"Your trusted partner for unforgettable travel experiences across Zanzibar "
+"and Tanzania."
+msgstr ""
+"Ваш надёжный партнёр для незабываемых путешествий по Занзибару и Танзании."
+
+msgid "Services"
+msgstr "Услуги"
+
+msgid "Flights"
+msgstr "Авиабилеты"
+
+msgid "coming soon"
+msgstr "скоро"
+
+msgid "Company"
+msgstr "Компания"
+
+msgid "About Us"
+msgstr "О нас"
+
+msgid "Stone Town, Zanzibar, Tanzania"
+msgstr "Стоун-Таун, Занзибар, Танзания"
+
+msgid "Newsletter"
+msgstr "Рассылка"
+
+msgid "Your email"
+msgstr "Ваш email"
+
+msgid "All rights reserved"
+msgstr "Все права защищены"
+
+msgid "Design by"
+msgstr "Дизайн от"
+
+msgid "Zanzibar, Tanzania"
+msgstr "Занзибар, Танзания"
+
+msgid "Licensed by Tanzania Tourism Board"
+msgstr "Лицензировано Советом по туризму"
+
+msgid "Chat with us"
+msgstr "Напишите нам"
+
+msgid "Booking Confirmed"
+msgstr "Бронирование подтверждено"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Reservation Confirmed"
+msgstr "Резервация подтверждена"
+
+msgid "You're All Set!"
+msgstr "Всё готово!"
+
+msgid ""
+"Your reservation is confirmed. Payment will be collected when you arrive in "
+"Tanzania."
+msgstr ""
+"Ваше бронирование подтверждено. Оплата будет произведена по прибытии в Танзанию."
+
+msgid "Booking Confirmed!"
+msgstr "Бронирование подтверждено!"
+
+msgid ""
+"Your booking is confirmed and a confirmation email is on its way to you."
+msgstr ""
+"Ваше бронирование подтверждено, и письмо с подтверждением уже отправлено вам."
+
+msgid "Your Booking Reference"
+msgstr "Ваш номер бронирования"
+
+msgid ""
+"Save this reference number. You'll need it for any changes or enquiries."
+msgstr ""
+"Сохраните этот номер бронирования. Он понадобится вам для любых изменений или запросов."
+
+msgid "Booking Summary"
+msgstr "Итоги бронирования"
+
+msgid "Service"
+msgstr "Услуга"
+
+msgid "Hotel Booking"
+msgstr "Бронирование отеля"
+
+msgid "Vehicle"
+msgstr "Транспорт"
+
+msgid "Payment Method"
+msgstr "Способ оплаты"
+
+msgid "Refund Policy"
+msgstr "Правила возврата"
+
+msgid "Non-refundable"
+msgstr "Без возврата"
+
+msgid ""
+"Payment due on arrival in Tanzania. Our team will be in touch to confirm "
+"your booking details."
+msgstr ""
+"Оплата производится по прибытии в Танзанию. Наша команда свяжется с вами для подтверждения деталей бронирования."
+
+msgid "What Happens Next?"
+msgstr "Что дальше?"
+
+msgid "Confirmation Email"
+msgstr "Письмо с подтверждением"
+
+msgid ""
+"A confirmation email with your booking details has been sent to your "
+"registered email address."
+msgstr ""
+"Письмо с подтверждением и деталями бронирования было отправлено на ваш зарегистрированный адрес электронной почты."
+
+msgid "Date Confirmation"
+msgstr "Подтверждение даты"
+
+msgid ""
+"Our team will confirm your preferred tour date within 24–48 hours via email "
+"or WhatsApp."
+msgstr ""
+"Наша команда подтвердит выбранную вами дату тура в течение 24–48 часов по электронной почте или через WhatsApp."
+
+msgid "Prepare for Arrival"
+msgstr "Подготовка к приезду"
+
+msgid ""
+"Your booking is confirmed. Review the details above and contact us if you "
+"have any questions."
+msgstr ""
+"Ваше бронирование подтверждено. Ознакомьтесь с деталями выше и свяжитесь с нами, если у вас возникнут вопросы."
+
+msgid "Manage Your Booking"
+msgstr "Управление бронированием"
+
+msgid ""
+"View, download, or cancel your booking anytime from your personal dashboard."
+msgstr ""
+"Просматривайте, скачивайте или отменяйте своё бронирование в любое время из личного кабинета."
+
+msgid "Go to My Dashboard"
+msgstr "В панель управления"
+
+msgid "Explore More Tours"
+msgstr "Посмотреть другие туры"
+
+msgid "Questions about your booking?"
+msgstr "Вопросы по бронированию?"
+
+msgid "Chat with Us on WhatsApp"
+msgstr "Напишите нам в WhatsApp"
+
+msgid "Review Your Booking"
+msgstr "Проверьте ваше бронирование"
+
+msgid "Review and confirm your booking with Jadevine Travel & Tours."
+msgstr "Проверьте и подтвердите своё бронирование с Jadevine Travel & Tours."
+
+msgid "Step 2 of 4"
+msgstr "Шаг 2 из 4"
+
+msgid "Review Your <em>Booking</em>"
+msgstr "Проверьте <em>бронирование</em>"
+
+msgid "Safari & Tour Booking"
+msgstr "Бронирование сафари и туров"
+
+msgid "day(s)"
+msgstr "дн."
+
+msgid ""
+"Jadevine will confirm your preferred date within 24–48 hours of booking."
+msgstr ""
+"Jadevine подтвердит выбранную вами дату в течение 24–48 часов после бронирования."
+
+msgid "Price Breakdown"
+msgstr "Детализация цены"
+
+msgid "participant(s)"
+msgstr "участник(ов)"
+
+msgid "Price locked at time of search. No additional fees."
+msgstr "Цена зафиксирована. Без доплат."
+
+msgid "Non-refundable Booking"
+msgstr "Невозвратное бронирование"
+
+msgid ""
+"This booking is non-refundable. Once confirmed, no refund will be issued "
+"regardless of cancellation date."
+msgstr ""
+"Это бронирование не подлежит возврату. После подтверждения возврат средств невозможен независимо от даты отмены."
+
+msgid "Choose Payment Method"
+msgstr "Выберите способ оплаты"
+
+msgid "Pay Now"
+msgstr "Оплатить сейчас"
+
+msgid "Recommended"
+msgstr "Рекомендуется"
+
+msgid ""
+"Pay securely online via Visa, Mastercard, or M-Pesa. Booking confirmed "
+"instantly."
+msgstr ""
+"Безопасно оплачивайте онлайн через Visa, Mastercard или M-Pesa. Бронирование подтверждается мгновенно."
+
+msgid ""
+"Reserve now, pay when you arrive in Tanzania. Your slot is held for you."
+msgstr ""
+"Забронируйте сейчас, оплатите по прибытии в Танзанию. Ваше место будет зарезервировано."
+
+msgid ""
+"Pay on Arrival is not available for this booking. Online payment is required."
+msgstr ""
+"Оплата по прибытии недоступна для этого бронирования. Требуется онлайн-оплата."
+
+msgid "Confirm Booking"
+msgstr "Подтвердить бронирование"
+
+msgid ""
+"By confirming, you agree to our cancellation policy. Your card will not be "
+"charged until you complete payment on the next screen."
+msgstr ""
+"Подтверждая, вы соглашаетесь с нашей политикой отмены. Средства с вашей карты не будут списаны, пока вы не завершите оплату на следующем экране."
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Go Back & Edit"
+msgstr "Вернуться и изменить"
+
+msgid "Secure Booking"
+msgstr "Безопасное бронирование"
+
+msgid "Your data is encrypted and protected. We never store card details."
+msgstr "Ваши данные защищены."
+
+msgid "This booking cannot be refunded once confirmed."
+msgstr "Бронирование невозвратно после подтверждения."
+
+msgid "Free Cancellation"
+msgstr "Бесплатная отмена"
+
+msgid "Cancel 14+ days before your service for a full refund."
+msgstr "Отмените за 14+ дней для возврата."
+
+msgid "24/7 Support"
+msgstr "Поддержка 24/7"
+
+msgid "Questions? WhatsApp us anytime — we respond within minutes."
+msgstr "Вопросы? Пишите в WhatsApp — отвечаем быстро."
+
+msgid "Prefer to pay in person? Select Pay on Arrival — your slot is held."
+msgstr "Предпочитаете платить лично? Выберите оплату по прибытии."
+
+msgid "Ask Us Anything"
+msgstr "Спросите о чём угодно"
+
+msgid "Complete Payment"
+msgstr "Завершить оплату"
+
+msgid "Step 3 of 4"
+msgstr "Шаг 3 из 4"
+
+msgid "Complete <em>Payment</em>"
+msgstr "Завершить <em>оплату</em>"
+
+msgid "Amount Due"
+msgstr "К оплате"
+
+msgid "Payment gateway coming in Phase 6"
+msgstr "Шлюз появится позже"
+
+msgid ""
+"PesaPal integration is not yet live. To test the full flow, use the button "
+"below to simulate a successful payment."
+msgstr ""
+"Интеграция PesaPal ещё не активна. Чтобы протестировать полный процесс, используйте кнопку ниже для имитации успешной оплаты."
+
+msgid "Simulate Payment Success (Dev Only)"
+msgstr "Симуляция успешной оплаты (Dev)"
+
+msgid ""
+"In production, you will be redirected to PesaPal's secure payment page to "
+"complete payment via Visa, Mastercard, or M-Pesa."
+msgstr ""
+"В рабочей версии вы будете перенаправлены на защищённую страницу оплаты PesaPal для завершения оплаты через Visa, Mastercard или M-Pesa."
+
+msgid "Back to Summary"
+msgstr "Назад к итогам"
+
+msgid "Rent a %(name)s in Zanzibar or Tanzania with Jadevine Travel & Tours."
+msgstr "Арендуйте %(name)s на Занзибаре или в Танзании с Jadevine Travel & Tours."
+
+msgid "photos"
+msgstr "фото"
+
+msgid "With Driver Available"
+msgstr "Доступно с водителем"
+
+msgid "Self Drive Available"
+msgstr "Доступно без водителя"
+
+msgid "reviews"
+msgstr "отзывов"
+
+msgid "Vehicle Specifications"
+msgstr "Характеристики автомобиля"
+
+msgid "Capacity"
+msgstr "Вместимость"
+
+msgid "passengers"
+msgstr "пассажиров"
+
+msgid "Transmission"
+msgstr "Трансмиссия"
+
+msgid "Fuel Type"
+msgstr "Тип топлива"
+
+msgid "Driver Languages"
+msgstr "Языки водителя"
+
+msgid "French"
+msgstr "Французский"
+
+msgid "About This Vehicle"
+msgstr "Об автомобиле"
+
+msgid "From"
+msgstr "От"
+
+msgid "/ day"
+msgstr "/ день"
+
+msgid "off"
+msgstr "скидка"
+
+msgid "English & French driver"
+msgstr "Англо- и франкоязычный водитель"
+
+msgid "French-speaking driver"
+msgstr "Франкоязычный водитель"
+
+msgid "English-speaking driver"
+msgstr "Англоязычный водитель"
+
+msgid "Licence required"
+msgstr "Требуются права"
+
+msgid "Select pickup location"
+msgstr "Выберите место подачи"
+
+msgid "Enter pickup location"
+msgstr "Введите место подачи"
+
+msgid "Select date"
+msgstr "Выберите дату"
+
+msgid "Enter your licence number"
+msgstr "Введите номер прав"
+
+msgid "optional"
+msgstr "необязательно"
+
+msgid "Airport pickup time, child seat, any other requests..."
+msgstr "Время встречи в аэропорту, детское кресло, любые другие пожелания..."
+
+msgid "Please check your booking details and try again."
+msgstr "Проверьте детали и попробуйте снова."
+
+msgid "Review Booking"
+msgstr "Проверить бронирование"
+
+msgid "No charge yet — review before payment"
+msgstr "Оплаты нет — проверьте перед платежом"
+
+msgid "Ground Transport"
+msgstr "Наземный транспорт"
+
+msgid "Car Rentals in <em>Zanzibar</em> & Tanzania"
+msgstr "Аренда авто на <em>Занзибаре</em>."
+
+msgid "All Types"
+msgstr "Все типы"
+
+msgid "Any Mode"
+msgstr "Любой режим"
+
+msgid "Max Price / Day"
+msgstr "Макс. цена / день"
+
+msgid "Any Price"
+msgstr "Любая цена"
+
+msgid "Up to $50"
+msgstr "До $50"
+
+msgid "Up to $100"
+msgstr "До $100"
+
+msgid "Up to $150"
+msgstr "До $150"
+
+msgid "Up to $200"
+msgstr "До $200"
+
+msgid "Clear"
+msgstr "Очистить"
+
+msgid "vehicles found"
+msgstr "авто найдено"
+
+msgid "No vehicles found"
+msgstr "Автомобили не найдены"
+
+msgid "Try adjusting your filters to see more results."
+msgstr "Попробуйте изменить фильтры."
+
+msgid "Clear Filters"
+msgstr "Сбросить фильтры"
+
+msgid "View & Book"
+msgstr "Смотреть и бронировать"
+
+msgid "Failed to load vehicles. Please try again."
+msgstr "Ошибка загрузки."
+
+msgid "Contact Us — Jadevine Travel & Tours"
+msgstr "Контакты — Jadevine Travel & Tours"
+
+msgid "Get In Touch"
+msgstr "Свяжитесь с нами"
+
+msgid "We'd Love to"
+msgstr "Мы будем рады"
+
+msgid "Hear From You"
+msgstr "услышать вас"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Office"
+msgstr "Офис"
+
+msgid "Stone Town, Zanzibar"
+msgstr "Стоун-Таун, Занзибар"
+
+msgid "Response Time"
+msgstr "Время ответа"
+
+msgid "Within 24 hours"
+msgstr "В течение 24 часов"
+
+msgid "Send a Message"
+msgstr "Отправить сообщение"
+
+msgid "How Can We"
+msgstr "Как мы можем"
+
+msgid "Help?"
+msgstr "помочь?"
+
+msgid "Message Sent!"
+msgstr "Сообщение отправлено!"
+
+msgid "Send Another Message"
+msgstr "Отправить еще сообщение"
+
+msgid "General"
+msgstr "Общее"
+
+msgid "Custom Tour"
+msgstr "Индивидуальный тур"
+
+msgid "Press"
+msgstr "Пресса"
+
+msgid "Full Name"
+msgstr "Полное имя"
+
+msgid "Your full name"
+msgstr "Ваше полное имя"
+
+msgid "Phone / WhatsApp"
+msgstr "Телефон / WhatsApp"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgid "What is your enquiry about?"
+msgstr "О чём ваш запрос?"
+
+msgid "Tell us more about what you are looking for…"
+msgstr "Расскажите подробнее..."
+
+msgid "characters"
+msgstr "символов"
+
+msgid "Send Message"
+msgstr "Отправить сообщение"
+
+msgid "Your information is kept private and never shared with third parties."
+msgstr "Информация конфиденциальна."
+
+msgid "Visit or Reach Us"
+msgstr "Свяжитесь с нами"
+
+msgid "We respond within 24 hours"
+msgstr "Мы отвечаем за 24 часа"
+
+msgid "Jadevine Travel & Tours office location"
+msgstr "Офис Jadevine Travel & Tours"
+
+msgid "Common Questions"
+msgstr "Частые вопросы"
+
+msgid "Frequently"
+msgstr "Часто"
+
+msgid "Asked"
+msgstr "задаваемые"
+
+msgid "How quickly do you respond to enquiries?"
+msgstr "Как быстро вы отвечаете?"
+
+msgid "Can I request a fully customised tour?"
+msgstr "Индивидуальный тур?"
+
+msgid "What payment methods do you accept?"
+msgstr "Способы оплаты"
+
+msgid "Sending…"
+msgstr "Отправка…"
+
+msgid "Network error. Please try again."
+msgstr "Ошибка сети. Попробуйте еще раз."
+
+msgid "This field is required."
+msgstr "Поле обязательно."
+
+msgid "About Us — Jadevine Travel & Tours"
+msgstr "О нас — Jadevine Travel & Tours"
+
+msgid "Our Story"
+msgstr "Наша история"
+
+msgid "Passion for"
+msgstr "Страсть к"
+
+msgid "Tanzania"
+msgstr "Танзании"
+
+msgid "Serengeti Safari"
+msgstr "Сафари в Серенгети"
+
+msgid "Zanzibar Beach"
+msgstr "Пляж Занзибара"
+
+msgid "Stone Town Zanzibar"
+msgstr "Стоун-Таун, Занзибар"
+
+msgid "Years of Excellence"
+msgstr "Лет совершенства"
+
+msgid "Who We Are"
+msgstr "Кто мы"
+
+msgid "More Than a"
+msgstr "Больше, чем"
+
+msgid "Travel Agency"
+msgstr "турагентство"
+
+msgid "Headquartered in Stone Town, Zanzibar"
+msgstr "Офис в Стоун-Тауне, Занзибар"
+
+msgid "Licensed by the Tanzania Tourism Board"
+msgstr "Лицензия Совета по туризму"
+
+msgid "Serving clients in English, French, and Russian"
+msgstr "Мы говорим на английском, французском и русском"
+
+msgid "Available via WhatsApp around the clock"
+msgstr "Круглосуточно в WhatsApp"
+
+msgid "What Drives Us"
+msgstr "Что нами движет"
+
+msgid "Mission &"
+msgstr "Миссия и"
+
+msgid "Vision"
+msgstr "видение"
+
+msgid "Our Mission"
+msgstr "Наша миссия"
+
+msgid "Our Vision"
+msgstr "Наше видение"
+
+msgid "Our Commitment"
+msgstr "Наши обязательства"
+
+msgid "What We Stand For"
+msgstr "За что мы стоим"
+
+msgid "Our Core"
+msgstr "Наши основные"
+
+msgid "Values"
+msgstr "ценности"
+
+msgid "Integrity"
+msgstr "Честность"
+
+msgid "Excellence"
+msgstr "Совершенство"
+
+msgid "Community"
+msgstr "Сообщество"
+
+msgid "Sustainability"
+msgstr "Устойчивость"
+
+msgid "Responsiveness"
+msgstr "Оперативность"
+
+msgid "Transparency"
+msgstr "Прозрачность"
+
+msgid "Happy Clients"
+msgstr "Счастливых клиентов"
+
+msgid "Years in Business"
+msgstr "Лет в бизнесе"
+
+msgid "Hotel Partners"
+msgstr "Партнеров-отелей"
+
+msgid "Languages Served"
+msgstr "Языков обслуживания"
+
+msgid "Meet the"
+msgstr "команда"
+
+msgid "Team"
+msgstr "команда"
+
+msgid "Team Member"
+msgstr "Член команды"
+
+msgid "Founder & Managing Director"
+msgstr "Основатель и директор"
+
+msgid "Safari & Tours Specialist"
+msgstr "Специалист по сафари и турам"
+
+msgid "Customer Relations Manager"
+msgstr "Менеджер по работе с клиентами"
+
+msgid "Trust & Credentials"
+msgstr "Доверие и документы"
+
+msgid "Licensed &"
+msgstr "Лицензии и"
+
+msgid "Accredited"
+msgstr "аккредитации"
+
+msgid "Tanzania Tourism Board"
+msgstr "Совет по туризму Танзании"
+
+msgid "Officially registered and licensed travel operator in Tanzania."
+msgstr "Официальный туроператор в Танзании."
+
+msgid "Secure Payments"
+msgstr "Безопасные платежи"
+
+msgid "TripAdvisor Listed"
+msgstr "В списке TripAdvisor"
+
+msgid "Verified business listing with genuine customer reviews."
+msgstr "Проверенный профиль с отзывами."
+
+msgid "Eco-Conscious Travel"
+msgstr "Эко-путешествия"
+
+msgid "Committed to responsible tourism and conservation in every tour we run."
+msgstr "Бережем природу."
+
+msgid "Find Us"
+msgstr "Найдите нас"
+
+msgid "Visit Our"
+msgstr "Посетите наш"
+
+msgid "WhatsApp Us"
+msgstr "Пишите в WhatsApp"
+
+msgid "Ready to Explore?"
+msgstr "Готовы исследовать?"
+
+msgid "Start Your Tanzania"
+msgstr "Начните приключение"
+
+msgid "Adventure"
+msgstr "в Танзании"
+
+msgid "View Safari Packages"
+msgstr "Посмотреть сафари-пакеты"
+
+msgid "Plan My Trip"
+msgstr "Спланировать поездку"
+
+msgid "Jadevine Travel & Tours — Zanzibar & Tanzania"
+msgstr "Jadevine Travel & Tours — Танзания"
+
+msgid "Zanzibar & Tanzania"
+msgstr "Занзибар и Танзания"
+
+msgid "Discover the"
+msgstr "Откройте"
+
+msgid "Heart"
+msgstr "сердце"
+
+msgid "of East Africa"
+msgstr "Восточной Африки"
+
+msgid "Explore Tours"
+msgstr "Найти туры"
+
+msgid "Soon"
+msgstr "Скоро"
+
+msgid "Destination"
+msgstr "Направление"
+
+msgid "All Destinations"
+msgstr "Все направления"
+
+msgid "Any"
+msgstr "Любой"
+
+msgid "Max price/night"
+msgstr "Макс. цена/ночь"
+
+msgid "Up to $350"
+msgstr "До $350"
+
+msgid "Up to $500"
+msgstr "До $500"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "All Tours"
+msgstr "Все туры"
+
+msgid "Safari & Beach"
+msgstr "Сафари и пляж"
+
+msgid "Max Duration"
+msgstr "Макс. длительность"
+
+msgid "Any Duration"
+msgstr "Любая длительность"
+
+msgid "1 Day"
+msgstr "1 день"
+
+msgid "Up to 3 Days"
+msgstr "До 3 дней"
+
+msgid "Up to 5 Days"
+msgstr "До 5 дней"
+
+msgid "Up to 7 Days"
+msgstr "До 7 дней"
+
+msgid "Max Price/person"
+msgstr "Макс. цена/чел."
+
+msgid "Under $100"
+msgstr "До $100"
+
+msgid "Under $300"
+msgstr "До $300"
+
+msgid "Under $500"
+msgstr "До $500"
+
+msgid "Under $1,000"
+msgstr "До $1,000"
+
+msgid "Max Price/Day"
+msgstr "Макс. цена/день"
+
+msgid "Years Experience"
+msgstr "Лет опыта"
+
+msgid "Scroll"
+msgstr "Листайте"
+
+msgid "What We Offer"
+msgstr "Что мы предлагаем"
+
+msgid "Our Premium"
+msgstr "Наши премиум"
+
+msgid "Browse Hotels"
+msgstr "Найти отели"
+
+msgid "View Packages"
+msgstr "Смотреть пакеты"
+
+msgid "Browse Vehicles"
+msgstr "Найти автомобили"
+
+msgid "Coming Soon"
+msgstr "Скоро"
+
+msgid "Domestic Flights"
+msgstr "Внутренние перелеты"
+
+msgid "Top Experiences"
+msgstr "Лучшие впечатления"
+
+msgid "Packages"
+msgstr "Пакеты"
+
+msgid "View All Packages"
+msgstr "Все пакеты"
+
+msgid "Photo coming soon"
+msgstr "Фото скоро будет"
+
+msgid "Max"
+msgstr "Макс."
+
+msgid "View Details"
+msgstr "Подробнее"
+
+msgid "Packages Coming Soon"
+msgstr "Пакеты скоро появятся"
+
+msgid "Enquire Now"
+msgstr "Узнать больше"
+
+msgid "Why Jadevine"
+msgstr "Почему Jadevine"
+
+msgid "Travel With"
+msgstr "Путешествуйте с"
+
+msgid "Confidence"
+msgstr "уверенностью"
+
+msgid "Licensed & Certified"
+msgstr "Лицензии и сертификаты"
+
+msgid "Personal Service"
+msgstr "Персональный сервис"
+
+msgid "Multilingual Support"
+msgstr "Поддержка на разных языках"
+
+msgid "Custom Itineraries"
+msgstr "Индивидуальные маршруты"
+
+msgid "24/7 Availability"
+msgstr "Доступность 24/7"
+
+msgid "Verified Reviews"
+msgstr "Проверенные отзывы"
+
+msgid "What Our Guests"
+msgstr "Что говорят"
+
+msgid "Say"
+msgstr "наши гости"
+
+msgid "Visual Journey"
+msgstr "Визуальное путешествие"
+
+msgid "Moments of"
+msgstr "Моменты"
+
+msgid "Wonder"
+msgstr "чуда"
+
+msgid "Full Gallery"
+msgstr "Вся галерея"
+
+msgid "Stay Connected"
+msgstr "Оставайтесь на связи"
+
+msgid "Get Exclusive"
+msgstr "Получайте эксклюзивные"
+
+msgid "Travel Offers"
+msgstr "предложения"
+
+msgid "Enter your email address"
+msgstr "Введите ваш email"
+
+msgid "Subscribe"
+msgstr "Подписаться"
+
+msgid "No spam, ever. Unsubscribe anytime."
+msgstr "Никакого спама."
+
+msgid "Gallery — Jadevine Travel & Tours"
+msgstr "Галерея — Jadevine Travel & Tours"
+
+msgid "Photos"
+msgstr "Фотографии"
+
+msgid "Videos"
+msgstr "Видео"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid "Gallery Coming Soon"
+msgstr "Галерея скоро появится"
+
+msgid "No items in this category yet."
+msgstr "Пока пусто."
+
+msgid "View All"
+msgstr "Смотреть всё"
+
+msgid "Ready to Experience"
+msgstr "Готовы увидеть"
+
+msgid "Tanzania?"
+msgstr "Танзанию?"
+
+msgid "Explore Packages"
+msgstr "Посмотреть пакеты"
+
+msgid "Jadevine Gallery"
+msgstr "Галерея Jadevine"
+
+msgid "About This Hotel"
+msgstr "Об этом отеле"
+
+msgid "Choose Your <em>Room</em>"
+msgstr "Выберите <em>номер</em>"
+
+msgid "Max %(max)s guests"
+msgstr "Макс. %(max)s гостей"
+
+msgid "Pay Now only"
+msgstr "Только предоплата"
+
+msgid "/ night"
+msgstr "/ ночь"
+
+msgid "Selected"
+msgstr "Выбрано"
+
+msgid "This room requires Pay Now — Pay on Arrival is not available."
+msgstr "Требуется предоплата."
+
+msgid "No rooms currently available. Contact us for availability."
+msgstr "Нет свободных номеров."
+
+msgid "This room requires Pay Now — Pay on Arrival not available."
+msgstr "Требуется предоплата."
+
+msgid "Free cancellation applies — cancel 14+ days before for a full refund."
+msgstr "Бесплатная отмена за 14+ дней."
+
+msgid "Accommodation"
+msgstr "Размещение"
+
+msgid "Hotels in <em>Zanzibar</em> & Dar es Salaam"
+msgstr "Отели в <em>Танзании</em>."
+
+msgid "Any Rating"
+msgstr "Любой рейтинг"
+
+msgid "Max Price / Night"
+msgstr "Макс. цена / ночь"
+
+msgid "hotels found"
+msgstr "отелей найдено"
+
+msgid "Finding hotels..."
+msgstr "Поиск отелей..."
+
+msgid "No hotels found"
+msgstr "Отели не найдены"
+
+msgid "View Hotel"
+msgstr "Смотреть отель"
+
+msgid "Failed to load hotels. Please try again."
+msgstr "Ошибка загрузки."
+
+msgid "per night"
+msgstr "за ночь"
+
+msgid "Breadcrumb"
+msgstr "Навигация"
+
+msgid "day"
+msgstr "день"
+
+msgid "Max %(max)s people"
+msgstr "Макс. %(max)s чел."
+
+msgid "per person"
+msgstr "за человека"
+
+msgid "About This Tour"
+msgstr "Об этом туре"
+
+msgid "Tour Highlights"
+msgstr "Особенности тура"
+
+msgid "Day-by-Day Itinerary"
+msgstr "Программа по дням"
+
+msgid "Day"
+msgstr "День"
+
+msgid "What's Included"
+msgstr "Что включено"
+
+msgid "Included"
+msgstr "Включено"
+
+msgid "Not Included"
+msgstr "Не включено"
+
+msgid "What to Bring"
+msgstr "Что взять с собой"
+
+msgid " total"
+msgstr " итого"
+
+msgid "Select a date"
+msgstr "Выберите дату"
+
+msgid "Decrease"
+msgstr "Уменьшить"
+
+msgid "Increase"
+msgstr "Увеличить"
+
+msgid "Maximum %(max)s participants"
+msgstr "Максимум %(max)s участников"
+
+msgid "person"
+msgstr "человек"
+
+msgid "We will confirm your preferred date within 24–48 hours of booking."
+msgstr "Мы подтвердим дату за 24–48 часов."
+
+msgid "Book This Tour"
+msgstr "Забронировать этот тур"
+
+msgid "people"
+msgstr "человек"
+
+msgid "Safari & Tour Packages in Zanzibar & Tanzania"
+msgstr "Сафари и туры в Танзании."
+
+msgid "Explore Tanzania"
+msgstr "Откройте Танзанию"
+
+msgid "Safaris & Tour Packages"
+msgstr "Сафари и турпакеты"
+
+msgid "Combined"
+msgstr "Комбинированный"
+
+msgid "Max Price / Person"
+msgstr "Макс. цена / чел."
+
+msgid "packages found"
+msgstr "пакетов найдено"
+
+msgid "No tours found"
+msgstr "Туры не найдены"
+
+msgid "Failed to load tours. Please try again."
+msgstr "Не удалось загрузить туры. Пожалуйста, попробуйте снова."
+
+msgid "/ person"
+msgstr "/ чел."
+
+msgid ""
+"This vehicle is non-refundable. Once booked, no refund will be issued "
+"regardless of cancellation date."
+msgstr ""
+"Этот автомобиль не подлежит возврату. После бронирования возврат средств невозможен независимо от даты отмены."
+
+msgid "This vehicle requires Pay Now — Pay on Arrival is not available."
+msgstr "Для этого автомобиля требуется оплата сейчас — оплата по прибытии недоступна."
+
+msgid "Thank you for subscribing! We'll be in touch soon."
+msgstr "Спасибо за подписку! Мы скоро свяжемся с вами."
+
+msgid "Thank you for your review! It will appear on the listing once approved."
+msgstr "Спасибо за ваш отзыв! Он появится в объявлении после одобрения."
+
+msgid "Email confirmed!"
+msgstr "Электронная почта подтверждена!"
+
+msgid ""
+"If an account exists with that email, we've sent a password reset link. "
+"Check your spam folder if you don't see it."
+msgstr ""
+"Если аккаунт с этим адресом электронной почты существует, мы отправили ссылку для сброса пароля. Проверьте папку «Спам», если не видите письмо."
+
+msgid "How would you rate your experience? Tap a star to select your rating."
+msgstr "Как бы вы оценили свой опыт? Нажмите на звезду, чтобы выбрать оценку."
+
+msgid "Email cannot be changed here. Contact support if needed."
+msgstr "Здесь нельзя изменить адрес электронной почты. При необходимости свяжитесь со службой поддержки."
+
+msgid "Keep your account secure by using a strong, unique password."
+msgstr "Обеспечьте безопасность своего аккаунта, используя надёжный уникальный пароль."
+
+msgid ""
+"Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Hotels, "
+"safaris, car rentals and more."
+msgstr ""
+"Откройте для себя Занзибар и Танзанию с Jadevine Travel & Tours. Отели, сафари, аренда автомобилей и многое другое."
+
+msgid "Pay on Arrival available — pay when you reach Tanzania"
+msgstr "Доступна оплата по прибытии — оплачивайте по приезде в Танзанию"
+
+msgid ""
+"Rent a car in Zanzibar or Dar es Salaam with Jadevine Travel & Tours. "
+"Sedans, SUVs, 4x4 safari vehicles and minibuses with optional drivers."
+msgstr ""
+"Арендуйте автомобиль на Занзибаре или в Дар-эс-Саламе с Jadevine Travel & Tours. Седаны, внедорожники, сафари-автомобили 4x4 и микроавтобусы с водителем или без."
+
+msgid ""
+"Sedans, 4x4 safari vehicles, minibuses and vans — with or without a "
+"bilingual driver."
+msgstr ""
+"Седаны, сафари-автомобили 4x4, микроавтобусы и фургоны — с двуязычным водителем или без."
+
+msgid ""
+"Get in touch with Jadevine Travel & Tours. Send an enquiry, request a custom "
+"tour, or reach us on WhatsApp for instant help."
+msgstr ""
+"Свяжитесь с Jadevine Travel & Tours. Отправьте запрос, закажите индивидуальный тур или напишите нам в WhatsApp для быстрой помощи."
+
+msgid ""
+"Ask a question, request a custom tour, or simply say hello. We respond "
+"within 24 hours."
+msgstr ""
+"Задайте вопрос, запросите индивидуальный тур или просто поздоровайтесь. Мы отвечаем в течение 24 часов."
+
+msgid "Fill in the form below and we will get back to you as soon as possible."
+msgstr "Заполните форму ниже, и мы свяжемся с вами как можно скорее."
+
+msgid ""
+"Thank you for reaching out. We will respond to your message within 24 hours."
+msgstr ""
+"Спасибо, что связались с нами. Мы ответим на ваше сообщение в течение 24 часов."
+
+msgid ""
+"We respond to all enquiries within 24 hours. For urgent matters, WhatsApp is "
+"the fastest way to reach us — we are typically available within a few hours."
+msgstr ""
+"Мы отвечаем на все запросы в течение 24 часов. Для срочных вопросов WhatsApp — самый быстрый способ связаться с нами, обычно мы доступны в течение нескольких часов."
+
+msgid ""
+"Absolutely. Select 'Custom Tour Request' in the form above and describe what "
+"you have in mind. We will design an itinerary tailored specifically to your "
+"preferences, group size, and budget."
+msgstr ""
+"Конечно. Выберите «Запрос индивидуального тура» в форме выше и опишите, что вы хотите. Мы разработаем маршрут специально под ваши предпочтения, размер группы и бюджет."
+
+msgid ""
+"We accept Visa, Mastercard, M-Pesa, and other mobile money options through "
+"our secure PesaPal payment gateway. Pay on Arrival is also available for "
+"selected services."
+msgstr ""
+"Мы принимаем Visa, Mastercard, M-Pesa и другие мобильные способы оплаты через нашу защищённую платёжную систему PesaPal. Для некоторых услуг также доступна оплата по прибытии."
+
+msgid ""
+"Yes — our team serves clients in English, French, and Russian. Simply select "
+"your preferred language in the contact form and we will respond accordingly."
+msgstr ""
+"Да — наша команда обслуживает клиентов на английском, французском и русском языках. Просто выберите предпочитаемый язык в контактной форме, и мы ответим соответствующим образом."
+
+msgid "Do you offer services in languages other than English?"
+msgstr "Предоставляете ли вы услуги на других языках, кроме английского?"
+
+msgid ""
+"Learn about Jadevine Travel & Tours — our story, mission, values, and the "
+"team behind your perfect Tanzania experience."
+msgstr ""
+"Узнайте о Jadevine Travel & Tours — нашей истории, миссии, ценностях и команде, стоящей за вашим идеальным путешествием по Танзании."
+
+msgid ""
+"Born in Zanzibar. Built for the world. We exist to share the beauty, "
+"culture, and wildlife of East Africa with every traveller who trusts us."
+msgstr ""
+"Рождены на Занзибаре. Созданы для мира. Мы существуем, чтобы делиться красотой, культурой и дикой природой Восточной Африки с каждым путешественником, который нам доверяет."
+
+msgid ""
+"Jadevine Travel & Tours was founded in Zanzibar by a team of passionate "
+"locals who believe that travel, done well, changes lives. Since 2016, we "
+"have been crafting journeys across Tanzania's most extraordinary "
+"destinations — from the spice-scented alleys of Stone Town to the vast, lion-"
+"prowled plains of the Serengeti."
+msgstr ""
+"Jadevine Travel & Tours была основана на Занзибаре командой увлечённых местных жителей, которые верят, что качественные путешествия меняют жизнь. С 2016 года мы создаём путешествия по самым удивительным местам Танзании — от ароматных улочек Стоун Тауна до бескрайних равнин Серенгети, где обитают львы."
+
+msgid ""
+"We started small — a handful of safari packages and a deep commitment to "
+"personal service. Today, we are a full-service platform handling hotels, "
+"tours, car rentals, and more, with a growing network of trusted local "
+"partners across Zanzibar and mainland Tanzania."
+msgstr ""
+"Мы начинали с малого — нескольких сафари-туров и глубокой приверженности персональному обслуживанию. Сегодня мы — полноценная платформа, предлагающая отели, туры, аренду автомобилей и многое другое, с растущей сетью надёжных местных партнёров на Занзибаре и материковой части Танзании."

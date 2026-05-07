@@ -1,0 +1,2909 @@
+# French translations for Jadevine Travel & Tours
+# Machine-quality translations for client preview.
+# Final translations to be provided by Jadevine Travel & Tours.
+msgid ""
+msgstr ""
+"Project-Id-Version: Jadevine Travel & Tours\n"
+"POT-Creation-Date: 2026-05-07 10:25+0300\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "English"
+msgstr "Anglais"
+
+msgid "Français"
+msgstr "Français"
+
+msgid "Русский"
+msgstr "Russe"
+
+msgid "First Name"
+msgstr "Prénom"
+
+msgid "First name"
+msgstr "Prénom"
+
+msgid "Last Name"
+msgstr "Nom de famille"
+
+msgid "Last name"
+msgstr "Nom de famille"
+
+msgid "Preferred Language"
+msgstr "Langue préférée"
+
+msgid "Email address"
+msgstr "Adresse e-mail"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Confirm password"
+msgstr "Confirmer le mot de passe"
+
+msgid "+255 7XX XXX XXX"
+msgstr "+255 7XX XXX XXX"
+
+msgid "Select or type your nationality"
+msgstr "Sélectionnez ou saisissez votre nationalité"
+
+msgid "Please select a valid nationality from the list."
+msgstr "Veuillez sélectionner une nationalité valide dans la liste."
+
+msgid "This phone number is already used by another user."
+msgstr "Ce numéro de téléphone est déjà utilisé par un autre utilisateur."
+
+msgid "Reason for cancellation (optional)"
+msgstr "Motif d'annulation (facultatif)"
+
+msgid "Let us know why you are cancelling (optional)"
+msgstr "Dites-nous pourquoi vous annulez (facultatif)"
+
+msgid "I understand and confirm this cancellation"
+msgstr "Je comprends et confirme cette annulation"
+
+msgid "You must confirm to proceed with cancellation."
+msgstr "Vous devez confirmer pour procéder à l'annulation."
+
+msgid "Phone Number"
+msgstr "Numéro de téléphone"
+
+msgid "Nationality"
+msgstr "Nationalité"
+
+msgid "Profile Photo"
+msgstr "Photo de profil"
+
+msgid "User"
+msgstr "Utilisateur"
+
+msgid "Users"
+msgstr "Utilisateurs"
+
+msgid "Created By"
+msgstr "Créé par"
+
+msgid "Mini-Admin Profile"
+msgstr "Profil mini-administrateur"
+
+msgid "Mini-Admin Profiles"
+msgstr "Profils mini-administrateurs"
+
+msgid "No refund — service date has passed or no policy applies."
+msgstr "Aucun remboursement — la date du service est passée ou aucune politique ne s'applique."
+
+msgid "This booking cannot be cancelled."
+msgstr "Cette réservation ne peut pas être annulée."
+
+msgid "This booking cannot be cancelled — the service date has passed."
+msgstr "Cette réservation ne peut pas être annulée — la date du service est passée."
+
+msgid "Please confirm the cancellation."
+msgstr "Veuillez confirmer l'annulation."
+
+msgid ""
+"Your cancellation request has been submitted. We will process your refund "
+"and confirm within 2–3 business days."
+msgstr ""
+"Votre demande d'annulation a été soumise. Nous traiterons votre remboursement "
+"et confirmerons dans 2 à 3 jours ouvrables."
+
+msgid "Your booking has been cancelled."
+msgstr "Votre réservation a été annulée."
+
+msgid "Your profile has been updated."
+msgstr "Votre profil a été mis à jour."
+
+msgid "Please enter your email address."
+msgstr "Veuillez saisir votre adresse e-mail."
+
+msgid "This email is already verified. You can sign in."
+msgstr "Cet e-mail est déjà vérifié. Vous pouvez vous connecter."
+
+msgid "Your email is already verified. You can sign in."
+msgstr "Votre e-mail est déjà vérifié. Vous pouvez vous connecter."
+
+msgid "Check-in Date"
+msgstr "Date d'arrivée"
+
+msgid "Check-out Date"
+msgstr "Date de départ"
+
+msgid "Number of Guests"
+msgstr "Nombre de voyageurs"
+
+msgid "Special Requests"
+msgstr "Demandes spéciales"
+
+msgid "Check-in date cannot be in the past."
+msgstr "La date d'arrivée ne peut pas être dans le passé."
+
+msgid "Check-out must be after check-in."
+msgstr "La date de départ doit être après la date d'arrivée."
+
+msgid "With Driver"
+msgstr "Avec chauffeur"
+
+msgid "Self Drive"
+msgstr "Conduite autonome"
+
+msgid "Rental Mode"
+msgstr "Mode de location"
+
+msgid "Pickup Location"
+msgstr "Lieu de prise en charge"
+
+msgid "Pickup Date"
+msgstr "Date de prise en charge"
+
+msgid "Return Date"
+msgstr "Date de retour"
+
+msgid "Driver's Licence Number"
+msgstr "Numéro de permis de conduire"
+
+msgid "Driver's licence number is required for self-drive rentals."
+msgstr "Le numéro de permis de conduire est obligatoire pour les locations en conduite autonome."
+
+msgid "Pickup date cannot be in the past."
+msgstr "La date de prise en charge ne peut pas être dans le passé."
+
+msgid "Return date must be after pickup date."
+msgstr "La date de retour doit être après la date de prise en charge."
+
+msgid "Pay Now — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
+msgstr "Payer maintenant — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
+
+msgid "Pay on Arrival — Pay when you arrive in Tanzania"
+msgstr "Payer à l'arrivée — Payez à votre arrivée en Tanzanie"
+
+msgid "How would you like to pay?"
+msgstr "Comment souhaitez-vous payer ?"
+
+msgid "Preferred Start Date"
+msgstr "Date de début souhaitée"
+
+msgid "Number of Participants"
+msgstr "Nombre de participants"
+
+msgid "Preferred date cannot be in the past."
+msgstr "La date souhaitée ne peut pas être dans le passé."
+
+msgid "Hotel"
+msgstr "Hôtel"
+
+msgid "Safari & Tour"
+msgstr "Safari et circuit"
+
+msgid "Car Rental"
+msgstr "Location de voiture"
+
+msgid "Minimum Days Before Service"
+msgstr "Nombre minimum de jours avant le service"
+
+msgid "Cancellation must be made at least this many days before service date"
+msgstr "L'annulation doit être effectuée au moins ce nombre de jours avant la date du service"
+
+msgid "Refund Percentage"
+msgstr "Pourcentage de remboursement"
+
+msgid "0 = no refund, 50 = half, 100 = full refund"
+msgstr "0 = aucun remboursement, 50 = moitié, 100 = remboursement total"
+
+msgid "Label (English)"
+msgstr "Libellé (anglais)"
+
+msgid "Cancellation Policy"
+msgstr "Politique d'annulation"
+
+msgid "Cancellation Policies"
+msgstr "Politiques d'annulation"
+
+msgid "Pay Now (Online)"
+msgstr "Payer maintenant (en ligne)"
+
+msgid "Pay on Arrival"
+msgstr "Payer à l'arrivée"
+
+msgid "Pending"
+msgstr "En attente"
+
+msgid "Paid"
+msgstr "Payé"
+
+msgid "Refunded"
+msgstr "Remboursé"
+
+msgid "Failed"
+msgstr "Échoué"
+
+msgid "Pending Confirmation"
+msgstr "En attente de confirmation"
+
+msgid "Confirmed"
+msgstr "Confirmé"
+
+msgid "Cancellation Requested"
+msgstr "Annulation demandée"
+
+msgid "Cancelled"
+msgstr "Annulé"
+
+msgid "Completed"
+msgstr "Terminé"
+
+msgid "No Show"
+msgstr "Non-présentation"
+
+msgid "Booking Reference"
+msgstr "Référence de réservation"
+
+msgid "Is Refundable"
+msgstr "Remboursable"
+
+msgid ""
+"Snapshotted from the listing at booking time. False = non-refundable "
+"regardless of policy."
+msgstr ""
+"Enregistré depuis l'annonce au moment de la réservation. Faux = non remboursable "
+"quelle que soit la politique."
+
+msgid "Booking"
+msgstr "Réservation"
+
+msgid "Bookings"
+msgstr "Réservations"
+
+msgid "Selected room type is not available."
+msgstr "Le type de chambre sélectionné n'est pas disponible."
+
+msgid "This room type accommodates a maximum of %(max)s guests."
+msgstr "Ce type de chambre accueille un maximum de %(max)s voyageurs."
+
+msgid "This vehicle does not offer self-drive rental."
+msgstr "Ce véhicule ne propose pas la location en conduite autonome."
+
+msgid "This vehicle does not offer a driver option."
+msgstr "Ce véhicule ne propose pas l'option avec chauffeur."
+
+msgid "This tour accommodates a maximum of %(max)s participants."
+msgstr "Ce circuit accueille un maximum de %(max)s participants."
+
+msgid "Your booking session has expired. Please start again."
+msgstr "Votre session de réservation a expiré. Veuillez recommencer."
+
+msgid "Sedan"
+msgstr "Berline"
+
+msgid "SUV"
+msgstr "SUV"
+
+msgid "Minibus"
+msgstr "Minibus"
+
+msgid "4x4 Safari"
+msgstr "4x4 Safari"
+
+msgid "Van"
+msgstr "Van"
+
+msgid "Petrol"
+msgstr "Essence"
+
+msgid "Diesel"
+msgstr "Diesel"
+
+msgid "Manual"
+msgstr "Manuelle"
+
+msgid "Automatic"
+msgstr "Automatique"
+
+msgid "Pending Review"
+msgstr "En attente de révision"
+
+msgid "Approved"
+msgstr "Approuvé"
+
+msgid "Rejected"
+msgstr "Rejeté"
+
+msgid "Vehicle Name"
+msgstr "Nom du véhicule"
+
+msgid "Vehicle Type"
+msgstr "Type de véhicule"
+
+msgid "Make"
+msgstr "Marque"
+
+msgid "Model"
+msgstr "Modèle"
+
+msgid "Year"
+msgstr "Année"
+
+msgid "Passenger Capacity"
+msgstr "Capacité passagers"
+
+msgid "Price Per Day (USD)"
+msgstr "Prix par jour (USD)"
+
+msgid "Offers Self-Drive"
+msgstr "Propose la conduite autonome"
+
+msgid "Offers Driver"
+msgstr "Propose un chauffeur"
+
+msgid "Driver Speaks English"
+msgstr "Le chauffeur parle anglais"
+
+msgid "Driver Speaks French"
+msgstr "Le chauffeur parle français"
+
+msgid "Pickup Locations"
+msgstr "Lieux de prise en charge"
+
+msgid "List of location names e.g. [\"Zanzibar Airport\", \"Stone Town\"]"
+msgstr "Liste de noms de lieux ex. [\"Aéroport de Zanzibar\", \"Stone Town\"]"
+
+msgid "Available for Booking"
+msgstr "Disponible à la réservation"
+
+msgid "Toggle off during maintenance"
+msgstr "Désactiver pendant la maintenance"
+
+msgid "Active / Visible"
+msgstr "Actif / Visible"
+
+msgid "True only when approval_status = approved"
+msgstr "Vrai uniquement lorsque approval_status = approuvé"
+
+msgid "Discount (%)"
+msgstr "Remise (%)"
+
+msgid "0 = no discount. Applied to price per day."
+msgstr "0 = aucune remise. Appliquée au prix par jour."
+
+msgid "Discount Expires At"
+msgstr "Expiration de la remise"
+
+msgid "Leave blank for a permanent discount."
+msgstr "Laisser vide pour une remise permanente."
+
+msgid "Refundable"
+msgstr "Remboursable"
+
+msgid ""
+"If unchecked, this vehicle is non-refundable regardless of cancellation "
+"policy."
+msgstr ""
+"Si décoché, ce véhicule est non remboursable quelle que soit la politique "
+"d'annulation."
+
+msgid "Allows Pay on Arrival"
+msgstr "Autorise le paiement à l'arrivée"
+
+msgid "If unchecked, only Pay Now is accepted for this vehicle."
+msgstr "Si décoché, seul le paiement immédiat est accepté pour ce véhicule."
+
+msgid "Car Rentals"
+msgstr "Location de voitures"
+
+msgid "Car Rentals in Zanzibar & Tanzania"
+msgstr "Location de voitures à Zanzibar et en Tanzanie"
+
+msgid "General Inquiry"
+msgstr "Demande générale"
+
+msgid "Custom Tour Request"
+msgstr "Demande de circuit personnalisé"
+
+msgid "Partnership"
+msgstr "Partenariat"
+
+msgid "Press / Media"
+msgstr "Presse / Médias"
+
+msgid "New"
+msgstr "Nouveau"
+
+msgid "In Progress"
+msgstr "En cours"
+
+msgid "Resolved"
+msgstr "Résolu"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Phone"
+msgstr "Téléphone"
+
+msgid "Subject"
+msgstr "Sujet"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Internal notes — never shown to customer"
+msgstr "Notes internes — jamais affichées au client"
+
+msgid "Contact Message"
+msgstr "Message de contact"
+
+msgid "Contact Messages"
+msgstr "Messages de contact"
+
+msgid "Newsletter Subscriber"
+msgstr "Abonné à la newsletter"
+
+msgid "Newsletter Subscribers"
+msgstr "Abonnés à la newsletter"
+
+msgid "Name is required."
+msgstr "Le nom est obligatoire."
+
+msgid "A valid email address is required."
+msgstr "Une adresse e-mail valide est requise."
+
+msgid "Subject is required."
+msgstr "Le sujet est obligatoire."
+
+msgid "Message must be at least 10 characters."
+msgstr "Le message doit comporter au moins 10 caractères."
+
+msgid "Thank you for your message! We will respond within 24 hours."
+msgstr "Merci pour votre message ! Nous vous répondrons dans les 24 heures."
+
+msgid "Please enter a valid email address."
+msgstr "Veuillez saisir une adresse e-mail valide."
+
+msgid "This email is already subscribed."
+msgstr "Cet e-mail est déjà abonné."
+
+msgid "Thank you for subscribing! We'll be in touch soon."
+msgstr "Merci pour votre abonnement ! Nous vous contacterons bientôt."
+
+msgid "Saved Favourite"
+msgstr "Favori enregistré"
+
+msgid "Saved Favourites"
+msgstr "Favoris enregistrés"
+
+msgid "Name (English)"
+msgstr "Nom (anglais)"
+
+msgid "Gallery Category"
+msgstr "Catégorie de galerie"
+
+msgid "Gallery Categories"
+msgstr "Catégories de galerie"
+
+msgid "Photo"
+msgstr "Photo"
+
+msgid "Video"
+msgstr "Vidéo"
+
+msgid "YouTube or Vimeo embed URL"
+msgstr "URL d'intégration YouTube ou Vimeo"
+
+msgid "Show in Gallery Highlights section on homepage"
+msgstr "Afficher dans la section galerie en vedette sur la page d'accueil"
+
+msgid "Gallery Item"
+msgstr "Élément de galerie"
+
+msgid "Gallery Items"
+msgstr "Éléments de galerie"
+
+msgid "Zanzibar"
+msgstr "Zanzibar"
+
+msgid "Dar es Salaam"
+msgstr "Dar es Salaam"
+
+msgid "Hotel Name"
+msgstr "Nom de l'hôtel"
+
+msgid "Location"
+msgstr "Emplacement"
+
+msgid "Description (English)"
+msgstr "Description (anglais)"
+
+msgid "Description (French)"
+msgstr "Description (français)"
+
+msgid "Description (Russian)"
+msgstr "Description (russe)"
+
+msgid "Star Rating"
+msgstr "Classement par étoiles"
+
+msgid "Price Per Night (USD)"
+msgstr "Prix par nuit (USD)"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "TripAdvisor URL"
+msgstr "URL TripAdvisor"
+
+msgid "Approval Status"
+msgstr "Statut d'approbation"
+
+msgid "Rejection Reason"
+msgstr "Motif de rejet"
+
+msgid "Hotels"
+msgstr "Hôtels"
+
+msgid "Cover Photo"
+msgstr "Photo de couverture"
+
+msgid "Room Type Name"
+msgstr "Nom du type de chambre"
+
+msgid "Price Per Night (USD) — overrides hotel base price if set"
+msgstr "Prix par nuit (USD) — remplace le prix de base de l'hôtel si défini"
+
+msgid "Max Guests"
+msgstr "Nombre max de voyageurs"
+
+msgid "Amenities"
+msgstr "Équipements"
+
+msgid "List of amenity strings e.g. [\"WiFi\", \"AC\", \"Pool view\"]"
+msgstr "Liste d'équipements ex. [\"WiFi\", \"Climatisation\", \"Vue piscine\"]"
+
+msgid "0 = no discount. Applied to the effective price per night."
+msgstr "0 = aucune remise. Appliquée au prix effectif par nuit."
+
+msgid ""
+"If unchecked, this room is non-refundable regardless of cancellation policy."
+msgstr ""
+"Si décoché, cette chambre est non remboursable quelle que soit la politique d'annulation."
+
+msgid "If unchecked, only Pay Now is accepted for this room type."
+msgstr "Si décoché, seul le paiement immédiat est accepté pour ce type de chambre."
+
+msgid "Room Type"
+msgstr "Type de chambre"
+
+msgid "Room Types"
+msgstr "Types de chambre"
+
+msgid "Hotels in Zanzibar & Dar es Salaam"
+msgstr "Hôtels à Zanzibar et Dar es Salaam"
+
+msgid "Rating must be at least 1."
+msgstr "La note doit être d'au moins 1."
+
+msgid "Rating cannot exceed 10."
+msgstr "La note ne peut pas dépasser 10."
+
+msgid "Please select a rating."
+msgstr "Veuillez sélectionner une note."
+
+msgid "Tell us about your experience (optional)…"
+msgstr "Parlez-nous de votre expérience (facultatif)…"
+
+msgid "Pending Approval"
+msgstr "En attente d'approbation"
+
+msgid "One review per booking — enforced at DB level."
+msgstr "Un avis par réservation — appliqué au niveau de la base de données."
+
+msgid "Rating (1–10)"
+msgstr "Note (1–10)"
+
+msgid "Comment"
+msgstr "Commentaire"
+
+msgid "Moderation Status"
+msgstr "Statut de modération"
+
+msgid "Review"
+msgstr "Avis"
+
+msgid "Reviews"
+msgstr "Avis"
+
+msgid "You can only review a booking after the service has been completed."
+msgstr "Vous ne pouvez laisser un avis qu'après la prestation du service."
+
+msgid "You have already submitted a review for this booking."
+msgstr "Vous avez déjà soumis un avis pour cette réservation."
+
+msgid "Invalid submission. Please select a rating between 1 and 10."
+msgstr "Soumission invalide. Veuillez sélectionner une note entre 1 et 10."
+
+msgid "Thank you for your review! It will appear on the listing once approved."
+msgstr "Merci pour votre avis ! Il apparaîtra sur l'annonce une fois approuvé."
+
+msgid "Safari"
+msgstr "Safari"
+
+msgid "Beach"
+msgstr "Plage"
+
+msgid "Cultural"
+msgstr "Culturel"
+
+msgid "Climbing"
+msgstr "Escalade"
+
+msgid "Combined Safari & Beach"
+msgstr "Safari et plage combinés"
+
+msgid "Name (French)"
+msgstr "Nom (français)"
+
+msgid "Name (Russian)"
+msgstr "Nom (russe)"
+
+msgid "Tour Type"
+msgstr "Type de circuit"
+
+msgid "Duration (Days)"
+msgstr "Durée (jours)"
+
+msgid "Maximum Group Size"
+msgstr "Taille maximale du groupe"
+
+msgid "Price Per Person (USD)"
+msgstr "Prix par personne (USD)"
+
+msgid "Highlights (English)"
+msgstr "Points forts (anglais)"
+
+msgid "Inclusions (English)"
+msgstr "Inclusions (anglais)"
+
+msgid "Exclusions (English)"
+msgstr "Exclusions (anglais)"
+
+msgid "Featured"
+msgstr "À la une"
+
+msgid "Show in Featured Packages section on homepage"
+msgstr "Afficher dans la section forfaits vedettes sur la page d'accueil"
+
+msgid "0 = no discount. Applied to price per person."
+msgstr "0 = aucune remise. Appliquée au prix par personne."
+
+msgid ""
+"If unchecked, this package is non-refundable regardless of cancellation "
+"policy."
+msgstr ""
+"Si décoché, ce forfait est non remboursable quelle que soit la politique d'annulation."
+
+msgid "If unchecked, only Pay Now is accepted for this package."
+msgstr "Si décoché, seul le paiement immédiat est accepté pour ce forfait."
+
+msgid "Tour Package"
+msgstr "Forfait circuit"
+
+msgid "Tour Packages"
+msgstr "Forfaits circuits"
+
+msgid "Day Number"
+msgstr "Numéro du jour"
+
+msgid "Title (English)"
+msgstr "Titre (anglais)"
+
+msgid "Page Not Found — Jadevine Travel & Tours"
+msgstr "Page introuvable — Jadevine Travel & Tours"
+
+msgid "The page you are looking for could not be found."
+msgstr "La page que vous recherchez est introuvable."
+
+msgid "Lost in Paradise"
+msgstr "Perdu au paradis"
+
+msgid "This page seems to have"
+msgstr "Cette page semble avoir"
+
+msgid "wandered off"
+msgstr "disparu"
+
+msgid ""
+"The page you are looking for may have been moved, renamed, or may never have "
+"existed. Let us guide you back to your journey."
+msgstr ""
+"La page que vous recherchez a peut-être été déplacée, renommée ou n'a jamais "
+"existé. Laissez-nous vous guider vers votre voyage."
+
+msgid "Where would you like to go?"
+msgstr "Où souhaitez-vous aller ?"
+
+msgid "Safaris & Tours"
+msgstr "Safaris et circuits"
+
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+msgid "Back to Homepage"
+msgstr "Retour à l'accueil"
+
+msgid "Go Back"
+msgstr "Retour"
+
+msgid "Confirm Email"
+msgstr "Confirmer l'e-mail"
+
+msgid "Verifying your email"
+msgstr "Vérification de votre e-mail"
+
+msgid ""
+"\n"
+"                  Confirming <strong>%(email)s</strong>…\n"
+"                "
+msgstr ""
+"\n"
+"                  Confirmation de <strong>%(email)s</strong>…\n"
+"                "
+
+msgid "Email confirmed!"
+msgstr "E-mail confirmé !"
+
+msgid "Your account is now active. You can sign in."
+msgstr "Votre compte est maintenant actif. Vous pouvez vous connecter."
+
+msgid "Sign In"
+msgstr "Se connecter"
+
+msgid "Link expired or invalid"
+msgstr "Lien expiré ou invalide"
+
+msgid "This verification link is no longer valid. Request a new one below."
+msgstr "Ce lien de vérification n'est plus valide. Demandez-en un nouveau ci-dessous."
+
+msgid "Resend Verification Email"
+msgstr "Renvoyer l'e-mail de vérification"
+
+msgid "Back to Sign In"
+msgstr "Retour à la connexion"
+
+msgid "Auto-confirm failed. Please click below."
+msgstr "La confirmation automatique a échoué. Veuillez cliquer ci-dessous."
+
+msgid "Confirm Email Address"
+msgstr "Confirmer l'adresse e-mail"
+
+msgid "Sign in to your Jadevine account to manage your bookings."
+msgstr "Connectez-vous à votre compte Jadevine pour gérer vos réservations."
+
+msgid "Welcome back"
+msgstr "Bon retour"
+
+msgid "Sign in to manage your bookings"
+msgstr "Connectez-vous pour gérer vos réservations"
+
+msgid "Incorrect email address or password."
+msgstr "Adresse e-mail ou mot de passe incorrect."
+
+msgid "Resend verification email"
+msgstr "Renvoyer l'e-mail de vérification"
+
+msgid "Email Address"
+msgstr "Adresse e-mail"
+
+msgid "your@email.com"
+msgstr "votre@email.com"
+
+msgid "Your password"
+msgstr "Votre mot de passe"
+
+msgid "Show password"
+msgstr "Afficher le mot de passe"
+
+msgid "Remember me"
+msgstr "Se souvenir de moi"
+
+msgid "Forgot password?"
+msgstr "Mot de passe oublié ?"
+
+msgid "New to Jadevine?"
+msgstr "Nouveau sur Jadevine ?"
+
+msgid "Create an account"
+msgstr "Créer un compte"
+
+msgid "Sign Out"
+msgstr "Se déconnecter"
+
+msgid "Sign out?"
+msgstr "Se déconnecter ?"
+
+msgid "You will be signed out of your Jadevine account."
+msgstr "Vous serez déconnecté de votre compte Jadevine."
+
+msgid "Yes, Sign Out"
+msgstr "Oui, se déconnecter"
+
+msgid "or"
+msgstr "ou"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Change Password"
+msgstr "Changer le mot de passe"
+
+msgid "My Profile"
+msgstr "Mon profil"
+
+msgid "Current Password"
+msgstr "Mot de passe actuel"
+
+msgid "Your current password"
+msgstr "Votre mot de passe actuel"
+
+msgid "New Password"
+msgstr "Nouveau mot de passe"
+
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+msgid "Confirm New Password"
+msgstr "Confirmer le nouveau mot de passe"
+
+msgid "Repeat new password"
+msgstr "Répéter le nouveau mot de passe"
+
+msgid "Update Password"
+msgstr "Mettre à jour le mot de passe"
+
+msgid "Reset Password"
+msgstr "Réinitialiser le mot de passe"
+
+msgid "Reset your password"
+msgstr "Réinitialisez votre mot de passe"
+
+msgid "Enter your email and we'll send you a reset link."
+msgstr "Saisissez votre e-mail et nous vous enverrons un lien de réinitialisation."
+
+msgid "Send Reset Link"
+msgstr "Envoyer le lien de réinitialisation"
+
+msgid "Remembered it?"
+msgstr "Vous vous en souvenez ?"
+
+msgid "Check Your Email"
+msgstr "Vérifiez votre e-mail"
+
+msgid "Check your inbox"
+msgstr "Vérifiez votre boîte de réception"
+
+msgid ""
+"If an account exists with that email, we've sent a password reset link. "
+"Check your spam folder if you don't see it."
+msgstr ""
+"Si un compte existe avec cet e-mail, nous avons envoyé un lien de réinitialisation. "
+"Vérifiez vos spams si vous ne le voyez pas."
+
+msgid ""
+"The reset link expires in 3 days. After that you'll need to request a new "
+"one."
+msgstr ""
+"Le lien de réinitialisation expire dans 3 jours. Après cela, vous devrez en "
+"demander un nouveau."
+
+msgid "Didn't receive it?"
+msgstr "Vous ne l'avez pas reçu ?"
+
+msgid "Try again"
+msgstr "Réessayer"
+
+msgid "Set New Password"
+msgstr "Définir un nouveau mot de passe"
+
+msgid "Set a new password"
+msgstr "Définissez un nouveau mot de passe"
+
+msgid ""
+"This password reset link is invalid or has expired. Please request a new one."
+msgstr ""
+"Ce lien de réinitialisation est invalide ou a expiré. Veuillez en demander un nouveau."
+
+msgid "Request New Link"
+msgstr "Demander un nouveau lien"
+
+msgid "Password Updated"
+msgstr "Mot de passe mis à jour"
+
+msgid "Password updated"
+msgstr "Mot de passe mis à jour"
+
+msgid "Your password has been changed successfully. You can now sign in."
+msgstr "Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter."
+
+msgid "Verification link sent"
+msgstr "Lien de vérification envoyé"
+
+msgid ""
+"If an account with that email exists and is unverified, we've sent a fresh "
+"verification link. Check your inbox and spam folder."
+msgstr ""
+"Si un compte avec cet e-mail existe et n'est pas vérifié, nous avons envoyé un "
+"nouveau lien de vérification. Vérifiez votre boîte de réception et vos spams."
+
+msgid "Enter your email address and we'll send you a new verification link."
+msgstr "Saisissez votre adresse e-mail et nous vous enverrons un nouveau lien de vérification."
+
+msgid "Send Verification Link"
+msgstr "Envoyer le lien de vérification"
+
+msgid "Create Account"
+msgstr "Créer un compte"
+
+msgid ""
+"Create a Jadevine account to book hotels, safaris, and car rentals in "
+"Tanzania."
+msgstr ""
+"Créez un compte Jadevine pour réserver des hôtels, des safaris et des locations "
+"de voitures en Tanzanie."
+
+msgid "Create your account"
+msgstr "Créez votre compte"
+
+msgid "Start planning your Tanzania adventure"
+msgstr "Commencez à planifier votre aventure en Tanzanie"
+
+msgid "Create a password"
+msgstr "Créez un mot de passe"
+
+msgid "Confirm Password"
+msgstr "Confirmer le mot de passe"
+
+msgid "Repeat your password"
+msgstr "Répétez votre mot de passe"
+
+msgid ""
+"By creating an account, you agree to our\n"
+"              <a href=\"#\">Terms of Service</a> and <a href=\"#\">Privacy "
+"Policy</a>."
+msgstr ""
+"En créant un compte, vous acceptez nos\n"
+"              <a href=\"#\">Conditions d'utilisation</a> et notre <a href=\"#\">Politique "
+"de confidentialité</a>."
+
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte ?"
+
+msgid "Verify Your Email"
+msgstr "Vérifiez votre e-mail"
+
+msgid "Check your inbox to verify your email address."
+msgstr "Vérifiez votre boîte de réception pour confirmer votre adresse e-mail."
+
+msgid ""
+"We've sent a verification link to your email address. Click the link to "
+"activate your account."
+msgstr ""
+"Nous avons envoyé un lien de vérification à votre adresse e-mail. Cliquez sur "
+"le lien pour activer votre compte."
+
+msgid ""
+"Didn't receive the email? Check your spam folder. The link expires in 3 days."
+msgstr ""
+"Vous n'avez pas reçu l'e-mail ? Vérifiez vos spams. Le lien expire dans 3 jours."
+
+msgid "Booking Detail"
+msgstr "Détail de la réservation"
+
+msgid "My Bookings"
+msgstr "Mes réservations"
+
+msgid "Download PDF"
+msgstr "Télécharger le PDF"
+
+msgid "Cancel Booking"
+msgstr "Annuler la réservation"
+
+msgid "Your booking is confirmed and ready. We look forward to seeing you."
+msgstr "Votre réservation est confirmée et prête. Nous avons hâte de vous accueillir."
+
+msgid ""
+"We will confirm your preferred date within 24–48 hours and send you an email."
+msgstr ""
+"Nous confirmerons votre date préférée dans les 24 à 48 heures et vous enverrons un e-mail."
+
+msgid "Your booking is being reviewed. We will confirm it shortly."
+msgstr "Votre réservation est en cours d'examen. Nous la confirmerons bientôt."
+
+msgid ""
+"Your cancellation request is being processed. We will contact you within 2–3 "
+"business days."
+msgstr ""
+"Votre demande d'annulation est en cours de traitement. Nous vous contacterons dans 2 à 3 "
+"jours ouvrables."
+
+msgid "This booking has been cancelled. Contact us if you have any questions."
+msgstr "Cette réservation a été annulée. Contactez-nous si vous avez des questions."
+
+msgid ""
+"We hope you had a wonderful experience. Thank you for travelling with "
+"Jadevine."
+msgstr ""
+"Nous espérons que vous avez passé un merveilleux séjour. Merci de voyager avec "
+"Jadevine."
+
+msgid ""
+"This booking was marked as a no-show. Please contact us if you believe this "
+"is an error."
+msgstr ""
+"Cette réservation a été marquée comme non-présentation. Contactez-nous si vous pensez "
+"qu'il s'agit d'une erreur."
+
+msgid "Check-in"
+msgstr "Arrivée"
+
+msgid "Check-out"
+msgstr "Départ"
+
+msgid "Duration"
+msgstr "Durée"
+
+msgid "night(s)"
+msgstr "nuit(s)"
+
+msgid "Guests"
+msgstr "Voyageurs"
+
+msgid "Preferred Date"
+msgstr "Date préférée"
+
+msgid "Participants"
+msgstr "Participants"
+
+msgid "Days"
+msgstr "Jours"
+
+msgid "Your Review"
+msgstr "Votre avis"
+
+msgid "Review Submitted"
+msgstr "Avis soumis"
+
+msgid "Share Your Experience"
+msgstr "Partagez votre expérience"
+
+msgid "Your review is awaiting moderation."
+msgstr "Votre avis est en attente de modération."
+
+msgid "How would you rate your experience? Tap a star to select your rating."
+msgstr "Comment évaluez-vous votre expérience ? Appuyez sur une étoile pour noter."
+
+msgid "Rating"
+msgstr "Note"
+
+msgid "out of 10"
+msgstr "sur 10"
+
+msgid "No rating selected"
+msgstr "Aucune note sélectionnée"
+
+msgid "Comment (optional)"
+msgstr "Commentaire (facultatif)"
+
+msgid "Tell us about your experience…"
+msgstr "Parlez-nous de votre expérience…"
+
+msgid "Submit Review"
+msgstr "Soumettre l'avis"
+
+msgid "Payment"
+msgstr "Paiement"
+
+msgid "Base Price"
+msgstr "Prix de base"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Payment Mode"
+msgstr "Mode de paiement"
+
+msgid "Payment Status"
+msgstr "Statut du paiement"
+
+msgid "refund"
+msgstr "remboursement"
+
+msgid ""
+"\n"
+"          %(days)s day(s) until service date\n"
+"        "
+msgstr ""
+"\n"
+"          %(days)s jour(s) jusqu'à la date du service\n"
+"        "
+
+msgid "Based on our cancellation policy:"
+msgstr "Selon notre politique d'annulation :"
+
+msgid ""
+"Your cancellation request will be reviewed. The refund will be processed "
+"within 2–3 business days."
+msgstr ""
+"Votre demande d'annulation sera examinée. Le remboursement sera traité "
+"dans 2 à 3 jours ouvrables."
+
+msgid "Reason (optional)"
+msgstr "Motif (facultatif)"
+
+msgid "Let us know why you are cancelling..."
+msgstr "Dites-nous pourquoi vous annulez..."
+
+msgid "Keep Booking"
+msgstr "Conserver la réservation"
+
+msgid "Confirm Cancellation"
+msgstr "Confirmer l'annulation"
+
+msgid "Processing…"
+msgstr "Traitement en cours…"
+
+msgid "Please select a rating before submitting."
+msgstr "Veuillez sélectionner une note avant de soumettre."
+
+msgid "Terrible"
+msgstr "Terrible"
+
+msgid "Very Poor"
+msgstr "Très mauvais"
+
+msgid "Poor"
+msgstr "Mauvais"
+
+msgid "Below Average"
+msgstr "Médiocre"
+
+msgid "Average"
+msgstr "Moyen"
+
+msgid "Good"
+msgstr "Bien"
+
+msgid "Very Good"
+msgstr "Très bien"
+
+msgid "Excellent"
+msgstr "Excellent"
+
+msgid "Outstanding"
+msgstr "Remarquable"
+
+msgid "Perfect"
+msgstr "Parfait"
+
+msgid "Account"
+msgstr "Compte"
+
+msgid "All"
+msgstr "Tout"
+
+msgid "View booking"
+msgstr "Voir la réservation"
+
+msgid ""
+"\n"
+"          Page %(current)s of %(total)s\n"
+"        "
+msgstr ""
+"\n"
+"          Page %(current)s sur %(total)s\n"
+"        "
+
+msgid "No bookings found"
+msgstr "Aucune réservation trouvée"
+
+msgid "No bookings match the selected filter."
+msgstr "Aucune réservation ne correspond au filtre sélectionné."
+
+msgid "My Dashboard"
+msgstr "Mon tableau de bord"
+
+msgid "Manage your bookings and account."
+msgstr "Gérez vos réservations et votre compte."
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "New Booking"
+msgstr "Nouvelle réservation"
+
+msgid "Upcoming"
+msgstr "À venir"
+
+msgid "Saved"
+msgstr "Enregistré"
+
+msgid "Upcoming Bookings"
+msgstr "Réservations à venir"
+
+msgid "View all"
+msgstr "Voir tout"
+
+msgid "No upcoming bookings"
+msgstr "Aucune réservation à venir"
+
+msgid "When you make a booking, it will appear here."
+msgstr "Lorsque vous effectuez une réservation, elle apparaîtra ici."
+
+msgid "Explore Hotels"
+msgstr "Explorer les hôtels"
+
+msgid "Open menu"
+msgstr "Ouvrir le menu"
+
+msgid "My Account"
+msgstr "Mon compte"
+
+msgid "Processing..."
+msgstr "Traitement..."
+
+msgid "Could not remove. Please try again."
+msgstr "Impossible de supprimer. Veuillez réessayer."
+
+msgid "Photo must be under 5MB."
+msgstr "La photo doit faire moins de 5 Mo."
+
+msgid "View"
+msgstr "Voir"
+
+msgid "Remove from saved"
+msgstr "Supprimer des enregistrés"
+
+msgid "days"
+msgstr "jours"
+
+msgid "Nothing saved yet"
+msgstr "Rien d'enregistré pour l'instant"
+
+msgid "Tap the heart icon on any hotel, tour, or car to save it here."
+msgstr "Appuyez sur l'icône cœur sur un hôtel, circuit ou voiture pour l'enregistrer ici."
+
+msgid "Close menu"
+msgstr "Fermer le menu"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Personal Information"
+msgstr "Informations personnelles"
+
+msgid "Change Photo"
+msgstr "Changer la photo"
+
+msgid "JPG, PNG or GIF. Max 5MB."
+msgstr "JPG, PNG ou GIF. Max 5 Mo."
+
+msgid "Remove current photo"
+msgstr "Supprimer la photo actuelle"
+
+msgid "Email cannot be changed here. Contact support if needed."
+msgstr "L'e-mail ne peut pas être modifié ici. Contactez le support si nécessaire."
+
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+msgid "Security"
+msgstr "Sécurité"
+
+msgid "Keep your account secure by using a strong, unique password."
+msgstr "Sécurisez votre compte en utilisant un mot de passe fort et unique."
+
+msgid "Jadevine Travel & Tours — Zanzibar, Tanzania"
+msgstr "Jadevine Travel & Tours — Zanzibar, Tanzanie"
+
+msgid ""
+"Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Hotels, "
+"safaris, car rentals and more."
+msgstr ""
+"Découvrez Zanzibar et la Tanzanie avec Jadevine Travel & Tours. Hôtels, "
+"safaris, location de voitures et plus encore."
+
+msgid "Travel & Tours"
+msgstr "Voyages et circuits"
+
+msgid "Gallery"
+msgstr "Galerie"
+
+msgid "About"
+msgstr "À propos"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Register"
+msgstr "S'inscrire"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid ""
+"Your trusted partner for unforgettable travel experiences across Zanzibar "
+"and Tanzania."
+msgstr ""
+"Votre partenaire de confiance pour des expériences de voyage inoubliables à "
+"Zanzibar et en Tanzanie."
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Flights"
+msgstr "Vols"
+
+msgid "coming soon"
+msgstr "bientôt disponible"
+
+msgid "Company"
+msgstr "Entreprise"
+
+msgid "About Us"
+msgstr "À propos de nous"
+
+msgid "Stone Town, Zanzibar, Tanzania"
+msgstr "Stone Town, Zanzibar, Tanzanie"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Your email"
+msgstr "Votre e-mail"
+
+msgid "All rights reserved"
+msgstr "Tous droits réservés"
+
+msgid "Design by"
+msgstr "Design par"
+
+msgid "Zanzibar, Tanzania"
+msgstr "Zanzibar, Tanzanie"
+
+msgid "Licensed by Tanzania Tourism Board"
+msgstr "Agréé par le Tanzania Tourism Board"
+
+msgid "Chat with us"
+msgstr "Discutez avec nous"
+
+msgid "Booking Confirmed"
+msgstr "Réservation confirmée"
+
+msgid "Select"
+msgstr "Sélectionner"
+
+msgid "Reservation Confirmed"
+msgstr "Réservation confirmée"
+
+msgid "You're All Set!"
+msgstr "Tout est prêt !"
+
+msgid ""
+"Your reservation is confirmed. Payment will be collected when you arrive in "
+"Tanzania."
+msgstr ""
+"Votre réservation est confirmée. Le paiement sera collecté à votre arrivée en "
+"Tanzanie."
+
+msgid "Booking Confirmed!"
+msgstr "Réservation confirmée !"
+
+msgid ""
+"Your booking is confirmed and a confirmation email is on its way to you."
+msgstr ""
+"Votre réservation est confirmée et un e-mail de confirmation vous est envoyé."
+
+msgid "Your Booking Reference"
+msgstr "Votre référence de réservation"
+
+msgid ""
+"Save this reference number. You'll need it for any changes or enquiries."
+msgstr ""
+"Enregistrez ce numéro de référence. Vous en aurez besoin pour toute modification ou demande."
+
+msgid "Booking Summary"
+msgstr "Récapitulatif de réservation"
+
+msgid "Service"
+msgstr "Service"
+
+msgid "Hotel Booking"
+msgstr "Réservation d'hôtel"
+
+msgid "Vehicle"
+msgstr "Véhicule"
+
+msgid "Payment Method"
+msgstr "Méthode de paiement"
+
+msgid "Refund Policy"
+msgstr "Politique de remboursement"
+
+msgid "Non-refundable"
+msgstr "Non remboursable"
+
+msgid ""
+"Payment due on arrival in Tanzania. Our team will be in touch to confirm "
+"your booking details."
+msgstr ""
+"Paiement dû à l'arrivée en Tanzanie. Notre équipe vous contactera pour confirmer "
+"les détails de votre réservation."
+
+msgid "What Happens Next?"
+msgstr "Que se passe-t-il ensuite ?"
+
+msgid "Confirmation Email"
+msgstr "E-mail de confirmation"
+
+msgid ""
+"A confirmation email with your booking details has been sent to your "
+"registered email address."
+msgstr ""
+"Un e-mail de confirmation avec les détails de votre réservation a été envoyé à "
+"votre adresse e-mail enregistrée."
+
+msgid "Date Confirmation"
+msgstr "Confirmation de date"
+
+msgid ""
+"Our team will confirm your preferred tour date within 24–48 hours via email "
+"or WhatsApp."
+msgstr ""
+"Notre équipe confirmera votre date de circuit préférée dans les 24 à 48 heures par e-mail "
+"ou WhatsApp."
+
+msgid "Prepare for Arrival"
+msgstr "Préparez votre arrivée"
+
+msgid ""
+"Your booking is confirmed. Review the details above and contact us if you "
+"have any questions."
+msgstr ""
+"Votre réservation est confirmée. Vérifiez les détails ci-dessus et contactez-nous si vous "
+"avez des questions."
+
+msgid "Manage Your Booking"
+msgstr "Gérez votre réservation"
+
+msgid ""
+"View, download, or cancel your booking anytime from your personal dashboard."
+msgstr ""
+"Consultez, téléchargez ou annulez votre réservation à tout moment depuis votre tableau de bord."
+
+msgid "Go to My Dashboard"
+msgstr "Aller à mon tableau de bord"
+
+msgid "Explore More Tours"
+msgstr "Explorer plus de circuits"
+
+msgid "Questions about your booking?"
+msgstr "Des questions sur votre réservation ?"
+
+msgid "Chat with Us on WhatsApp"
+msgstr "Discutez avec nous sur WhatsApp"
+
+msgid "Review Your Booking"
+msgstr "Vérifiez votre réservation"
+
+msgid "Review and confirm your booking with Jadevine Travel & Tours."
+msgstr "Vérifiez et confirmez votre réservation avec Jadevine Travel & Tours."
+
+msgid "Step 2 of 4"
+msgstr "Étape 2 sur 4"
+
+msgid "Review Your <em>Booking</em>"
+msgstr "Vérifiez votre <em>réservation</em>"
+
+msgid "Safari & Tour Booking"
+msgstr "Réservation safari et circuit"
+
+msgid "day(s)"
+msgstr "jour(s)"
+
+msgid ""
+"Jadevine will confirm your preferred date within 24–48 hours of booking."
+msgstr ""
+"Jadevine confirmera votre date préférée dans les 24 à 48 heures suivant la réservation."
+
+msgid "Price Breakdown"
+msgstr "Détail du prix"
+
+msgid "participant(s)"
+msgstr "participant(s)"
+
+msgid "Price locked at time of search. No additional fees."
+msgstr "Prix fixé au moment de la recherche. Aucun frais supplémentaire."
+
+msgid "Non-refundable Booking"
+msgstr "Réservation non remboursable"
+
+msgid ""
+"This booking is non-refundable. Once confirmed, no refund will be issued "
+"regardless of cancellation date."
+msgstr ""
+"Cette réservation est non remboursable. Une fois confirmée, aucun remboursement ne sera "
+"émis quelle que soit la date d'annulation."
+
+msgid "Choose Payment Method"
+msgstr "Choisissez le mode de paiement"
+
+msgid "Pay Now"
+msgstr "Payer maintenant"
+
+msgid "Recommended"
+msgstr "Recommandé"
+
+msgid ""
+"Pay securely online via Visa, Mastercard, or M-Pesa. Booking confirmed "
+"instantly."
+msgstr ""
+"Payez en toute sécurité en ligne via Visa, Mastercard ou M-Pesa. Réservation confirmée "
+"instantanément."
+
+msgid ""
+"Reserve now, pay when you arrive in Tanzania. Your slot is held for you."
+msgstr ""
+"Réservez maintenant, payez à votre arrivée en Tanzanie. Votre place est réservée."
+
+msgid ""
+"Pay on Arrival is not available for this booking. Online payment is required."
+msgstr ""
+"Le paiement à l'arrivée n'est pas disponible pour cette réservation. Le paiement en ligne est requis."
+
+msgid "Confirm Booking"
+msgstr "Confirmer la réservation"
+
+msgid ""
+"By confirming, you agree to our cancellation policy. Your card will not be "
+"charged until you complete payment on the next screen."
+msgstr ""
+"En confirmant, vous acceptez notre politique d'annulation. Votre carte ne sera "
+"débitée que lorsque vous compléterez le paiement sur l'écran suivant."
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Go Back & Edit"
+msgstr "Retour et modifier"
+
+msgid "Secure Booking"
+msgstr "Réservation sécurisée"
+
+msgid "Your data is encrypted and protected. We never store card details."
+msgstr "Vos données sont cryptées et protégées. Nous ne conservons jamais les coordonnées de carte."
+
+msgid "This booking cannot be refunded once confirmed."
+msgstr "Cette réservation ne peut pas être remboursée une fois confirmée."
+
+msgid "Free Cancellation"
+msgstr "Annulation gratuite"
+
+msgid "Cancel 14+ days before your service for a full refund."
+msgstr "Annulez 14 jours ou plus avant votre service pour un remboursement intégral."
+
+msgid "24/7 Support"
+msgstr "Assistance 24h/24 7j/7"
+
+msgid "Questions? WhatsApp us anytime — we respond within minutes."
+msgstr "Des questions ? Contactez-nous sur WhatsApp à tout moment — nous répondons en quelques minutes."
+
+msgid "Prefer to pay in person? Select Pay on Arrival — your slot is held."
+msgstr "Vous préférez payer en personne ? Sélectionnez Payer à l'arrivée — votre place est réservée."
+
+msgid "Ask Us Anything"
+msgstr "Posez-nous toutes vos questions"
+
+msgid "Complete Payment"
+msgstr "Finaliser le paiement"
+
+msgid "Step 3 of 4"
+msgstr "Étape 3 sur 4"
+
+msgid "Complete <em>Payment</em>"
+msgstr "Finaliser le <em>paiement</em>"
+
+msgid "Amount Due"
+msgstr "Montant dû"
+
+msgid "Payment gateway coming in Phase 6"
+msgstr "Passerelle de paiement disponible en phase 6"
+
+msgid ""
+"PesaPal integration is not yet live. To test the full flow, use the button "
+"below to simulate a successful payment."
+msgstr ""
+"L'intégration PesaPal n'est pas encore active. Pour tester le flux complet, utilisez le bouton "
+"ci-dessous pour simuler un paiement réussi."
+
+msgid "Simulate Payment Success (Dev Only)"
+msgstr "Simuler un paiement réussi (développement uniquement)"
+
+msgid ""
+"In production, you will be redirected to PesaPal's secure payment page to "
+"complete payment via Visa, Mastercard, or M-Pesa."
+msgstr ""
+"En production, vous serez redirigé vers la page de paiement sécurisée de PesaPal pour "
+"finaliser le paiement via Visa, Mastercard ou M-Pesa."
+
+msgid "Back to Summary"
+msgstr "Retour au récapitulatif"
+
+msgid "Rent a %(name)s in Zanzibar or Tanzania with Jadevine Travel & Tours."
+msgstr "Louez un %(name)s à Zanzibar ou en Tanzanie avec Jadevine Travel & Tours."
+
+msgid "photos"
+msgstr "photos"
+
+msgid "With Driver Available"
+msgstr "Avec chauffeur disponible"
+
+msgid "Self Drive Available"
+msgstr "Conduite autonome disponible"
+
+msgid "reviews"
+msgstr "avis"
+
+msgid "Vehicle Specifications"
+msgstr "Caractéristiques du véhicule"
+
+msgid "Capacity"
+msgstr "Capacité"
+
+msgid "passengers"
+msgstr "passagers"
+
+msgid "Transmission"
+msgstr "Transmission"
+
+msgid "Fuel Type"
+msgstr "Type de carburant"
+
+msgid "Driver Languages"
+msgstr "Langues du chauffeur"
+
+msgid "French"
+msgstr "Français"
+
+msgid "About This Vehicle"
+msgstr "À propos de ce véhicule"
+
+msgid "From"
+msgstr "À partir de"
+
+msgid "/ day"
+msgstr "/ jour"
+
+msgid "off"
+msgstr "de remise"
+
+msgid "English & French driver"
+msgstr "Chauffeur anglais et français"
+
+msgid "French-speaking driver"
+msgstr "Chauffeur francophone"
+
+msgid "English-speaking driver"
+msgstr "Chauffeur anglophone"
+
+msgid "Licence required"
+msgstr "Permis requis"
+
+msgid "Select pickup location"
+msgstr "Sélectionnez le lieu de prise en charge"
+
+msgid "Enter pickup location"
+msgstr "Saisissez le lieu de prise en charge"
+
+msgid "Select date"
+msgstr "Sélectionnez une date"
+
+msgid "Enter your licence number"
+msgstr "Saisissez votre numéro de permis"
+
+msgid "optional"
+msgstr "facultatif"
+
+msgid "Airport pickup time, child seat, any other requests..."
+msgstr "Heure de prise en charge à l'aéroport, siège enfant, toute autre demande..."
+
+msgid ""
+"This vehicle is non-refundable. Once booked, no refund will be issued "
+"regardless of cancellation date."
+msgstr ""
+"Ce véhicule est non remboursable. Une fois réservé, aucun remboursement ne sera émis "
+"quelle que soit la date d'annulation."
+
+msgid "This vehicle requires Pay Now — Pay on Arrival is not available."
+msgstr "Ce véhicule exige le paiement immédiat — le paiement à l'arrivée n'est pas disponible."
+
+msgid "Please check your booking details and try again."
+msgstr "Veuillez vérifier les détails de votre réservation et réessayer."
+
+msgid "Review Booking"
+msgstr "Vérifier la réservation"
+
+msgid "No charge yet — review before payment"
+msgstr "Aucun frais pour l'instant — vérifiez avant le paiement"
+
+msgid "Pay on Arrival available — pay when you reach Tanzania"
+msgstr "Paiement à l'arrivée disponible — payez à votre arrivée en Tanzanie"
+
+msgid ""
+"Rent a car in Zanzibar or Dar es Salaam with Jadevine Travel & Tours. "
+"Sedans, SUVs, 4x4 safari vehicles and minibuses with optional drivers."
+msgstr ""
+"Louez une voiture à Zanzibar ou Dar es Salaam avec Jadevine Travel & Tours. "
+"Berlines, SUV, véhicules 4x4 safari et minibus avec chauffeurs en option."
+
+msgid "Ground Transport"
+msgstr "Transport terrestre"
+
+msgid "Car Rentals in <em>Zanzibar</em> & Tanzania"
+msgstr "Location de voitures à <em>Zanzibar</em> et en Tanzanie"
+
+msgid ""
+"Sedans, 4x4 safari vehicles, minibuses and vans — with or without a "
+"bilingual driver."
+msgstr ""
+"Berlines, 4x4 safari, minibus et vans — avec ou sans chauffeur bilingue."
+
+msgid "All Types"
+msgstr "Tous les types"
+
+msgid "Any Mode"
+msgstr "Tous les modes"
+
+msgid "Max Price / Day"
+msgstr "Prix max / jour"
+
+msgid "Any Price"
+msgstr "Tout prix"
+
+msgid "Up to $50"
+msgstr "Jusqu'à 50 $"
+
+msgid "Up to $100"
+msgstr "Jusqu'à 100 $"
+
+msgid "Up to $150"
+msgstr "Jusqu'à 150 $"
+
+msgid "Up to $200"
+msgstr "Jusqu'à 200 $"
+
+msgid "Clear"
+msgstr "Effacer"
+
+msgid "vehicles found"
+msgstr "véhicules trouvés"
+
+msgid "No vehicles found"
+msgstr "Aucun véhicule trouvé"
+
+msgid "Try adjusting your filters to see more results."
+msgstr "Essayez d'ajuster vos filtres pour voir plus de résultats."
+
+msgid "Clear Filters"
+msgstr "Effacer les filtres"
+
+msgid "View & Book"
+msgstr "Voir et réserver"
+
+msgid "Failed to load vehicles. Please try again."
+msgstr "Impossible de charger les véhicules. Veuillez réessayer."
+
+msgid "Contact Us — Jadevine Travel & Tours"
+msgstr "Contactez-nous — Jadevine Travel & Tours"
+
+msgid ""
+"Get in touch with Jadevine Travel & Tours. Send an enquiry, request a custom "
+"tour, or reach us on WhatsApp for instant help."
+msgstr ""
+"Contactez Jadevine Travel & Tours. Envoyez une demande, demandez un circuit "
+"personnalisé ou contactez-nous sur WhatsApp pour une aide immédiate."
+
+msgid "Get In Touch"
+msgstr "Prenez contact"
+
+msgid "We'd Love to"
+msgstr "Nous serions ravis de"
+
+msgid "Hear From You"
+msgstr "vous entendre"
+
+msgid ""
+"Ask a question, request a custom tour, or simply say hello. We respond "
+"within 24 hours."
+msgstr ""
+"Posez une question, demandez un circuit personnalisé ou dites simplement bonjour. Nous répondons "
+"dans les 24 heures."
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Office"
+msgstr "Bureau"
+
+msgid "Stone Town, Zanzibar"
+msgstr "Stone Town, Zanzibar"
+
+msgid "Response Time"
+msgstr "Délai de réponse"
+
+msgid "Within 24 hours"
+msgstr "Dans les 24 heures"
+
+msgid "Send a Message"
+msgstr "Envoyer un message"
+
+msgid "How Can We"
+msgstr "Comment pouvons-nous"
+
+msgid "Help?"
+msgstr "vous aider ?"
+
+msgid "Fill in the form below and we will get back to you as soon as possible."
+msgstr "Remplissez le formulaire ci-dessous et nous vous répondrons dès que possible."
+
+msgid "Message Sent!"
+msgstr "Message envoyé !"
+
+msgid ""
+"Thank you for reaching out. We will respond to your message within 24 hours."
+msgstr ""
+"Merci de nous avoir contactés. Nous répondrons à votre message dans les 24 heures."
+
+msgid "Send Another Message"
+msgstr "Envoyer un autre message"
+
+msgid "General"
+msgstr "Général"
+
+msgid "Custom Tour"
+msgstr "Circuit personnalisé"
+
+msgid "Press"
+msgstr "Presse"
+
+msgid "Full Name"
+msgstr "Nom complet"
+
+msgid "Your full name"
+msgstr "Votre nom complet"
+
+msgid "Phone / WhatsApp"
+msgstr "Téléphone / WhatsApp"
+
+msgid "Russian"
+msgstr "Russe"
+
+msgid "What is your enquiry about?"
+msgstr "Quel est l'objet de votre demande ?"
+
+msgid "Tell us more about what you are looking for…"
+msgstr "Dites-nous en plus sur ce que vous recherchez…"
+
+msgid "characters"
+msgstr "caractères"
+
+msgid "Send Message"
+msgstr "Envoyer le message"
+
+msgid "Your information is kept private and never shared with third parties."
+msgstr "Vos informations sont confidentielles et ne sont jamais partagées avec des tiers."
+
+msgid "Visit or Reach Us"
+msgstr "Visitez-nous ou contactez-nous"
+
+msgid "We respond within 24 hours"
+msgstr "Nous répondons dans les 24 heures"
+
+msgid "Jadevine Travel & Tours office location"
+msgstr "Emplacement du bureau Jadevine Travel & Tours"
+
+msgid "Common Questions"
+msgstr "Questions courantes"
+
+msgid "Frequently"
+msgstr "Questions"
+
+msgid "Asked"
+msgstr "fréquentes"
+
+msgid "How quickly do you respond to enquiries?"
+msgstr "Dans quel délai répondez-vous aux demandes ?"
+
+msgid ""
+"We respond to all enquiries within 24 hours. For urgent matters, WhatsApp is "
+"the fastest way to reach us — we are typically available within a few hours."
+msgstr ""
+"Nous répondons à toutes les demandes dans les 24 heures. Pour les urgences, WhatsApp est "
+"le moyen le plus rapide de nous joindre — nous sommes généralement disponibles en quelques heures."
+
+msgid "Can I request a fully customised tour?"
+msgstr "Puis-je demander un circuit entièrement personnalisé ?"
+
+msgid ""
+"Absolutely. Select 'Custom Tour Request' in the form above and describe what "
+"you have in mind. We will design an itinerary tailored specifically to your "
+"preferences, group size, and budget."
+msgstr ""
+"Absolument. Sélectionnez 'Demande de circuit personnalisé' dans le formulaire ci-dessus et décrivez "
+"ce que vous avez en tête. Nous concevrons un itinéraire adapté à vos "
+"préférences, à la taille de votre groupe et à votre budget."
+
+msgid "What payment methods do you accept?"
+msgstr "Quels modes de paiement acceptez-vous ?"
+
+msgid ""
+"We accept Visa, Mastercard, M-Pesa, and other mobile money options through "
+"our secure PesaPal payment gateway. Pay on Arrival is also available for "
+"selected services."
+msgstr ""
+"Nous acceptons Visa, Mastercard, M-Pesa et d'autres options de paiement mobile via "
+"notre passerelle de paiement sécurisée PesaPal. Le paiement à l'arrivée est également disponible pour "
+"certains services."
+
+msgid "Do you offer services in languages other than English?"
+msgstr "Proposez-vous des services dans des langues autres que l'anglais ?"
+
+msgid ""
+"Yes — our team serves clients in English, French, and Russian. Simply select "
+"your preferred language in the contact form and we will respond accordingly."
+msgstr ""
+"Oui — notre équipe sert les clients en anglais, français et russe. Sélectionnez simplement "
+"votre langue préférée dans le formulaire de contact et nous répondrons en conséquence."
+
+msgid "Sending…"
+msgstr "Envoi en cours…"
+
+msgid "Network error. Please try again."
+msgstr "Erreur réseau. Veuillez réessayer."
+
+msgid "This field is required."
+msgstr "Ce champ est obligatoire."
+
+msgid "About Us — Jadevine Travel & Tours"
+msgstr "À propos de nous — Jadevine Travel & Tours"
+
+msgid ""
+"Learn about Jadevine Travel & Tours — our story, mission, values, and the "
+"team behind your perfect Tanzania experience."
+msgstr ""
+"Découvrez Jadevine Travel & Tours — notre histoire, notre mission, nos valeurs et l'équipe "
+"derrière votre expérience parfaite en Tanzanie."
+
+msgid "Our Story"
+msgstr "Notre histoire"
+
+msgid "Passion for"
+msgstr "Passion pour la"
+
+msgid "Tanzania"
+msgstr "Tanzanie"
+
+msgid ""
+"Born in Zanzibar. Built for the world. We exist to share the beauty, "
+"culture, and wildlife of East Africa with every traveller who trusts us."
+msgstr ""
+"Né à Zanzibar. Construit pour le monde. Nous existons pour partager la beauté, "
+"la culture et la faune d'Afrique de l'Est avec chaque voyageur qui nous fait confiance."
+
+msgid "Serengeti Safari"
+msgstr "Safari au Serengeti"
+
+msgid "Zanzibar Beach"
+msgstr "Plage de Zanzibar"
+
+msgid "Stone Town Zanzibar"
+msgstr "Stone Town Zanzibar"
+
+msgid "Years of Excellence"
+msgstr "Années d'excellence"
+
+msgid "Who We Are"
+msgstr "Qui nous sommes"
+
+msgid "More Than a"
+msgstr "Plus qu'une"
+
+msgid "Travel Agency"
+msgstr "agence de voyage"
+
+msgid ""
+"Jadevine Travel & Tours was founded in Zanzibar by a team of passionate "
+"locals who believe that travel, done well, changes lives. Since 2016, we "
+"have been crafting journeys across Tanzania's most extraordinary "
+"destinations — from the spice-scented alleys of Stone Town to the vast, lion-"
+"prowled plains of the Serengeti."
+msgstr ""
+"Jadevine Travel & Tours a été fondée à Zanzibar par une équipe de locaux passionnés "
+"qui croient que le voyage, bien fait, change des vies. Depuis 2016, nous "
+"créons des voyages vers les destinations les plus extraordinaires de Tanzanie — "
+"des ruelles parfumées aux épices de Stone Town aux vastes plaines parcourues par les lions du Serengeti."
+
+msgid ""
+"We started small — a handful of safari packages and a deep commitment to "
+"personal service. Today, we are a full-service platform handling hotels, "
+"tours, car rentals, and more, with a growing network of trusted local "
+"partners across Zanzibar and mainland Tanzania."
+msgstr ""
+"Nous avons commencé petit — quelques forfaits safari et un engagement profond envers "
+"le service personnel. Aujourd'hui, nous sommes une plateforme complète gérant les hôtels, "
+"circuits, locations de voitures et plus encore, avec un réseau croissant de partenaires locaux "
+"de confiance à Zanzibar et en Tanzanie continentale."
+
+msgid ""
+"What has never changed is our promise: every client is treated as a guest, "
+"not a booking reference. We respond within 24 hours, we are available on "
+"WhatsApp, and we do not rest until your experience is exactly as you "
+"imagined it."
+msgstr ""
+"Ce qui n'a jamais changé, c'est notre promesse : chaque client est traité comme un invité, "
+"pas comme une référence de réservation. Nous répondons dans les 24 heures, nous sommes disponibles sur "
+"WhatsApp, et nous ne nous reposons pas tant que votre expérience n'est pas exactement telle que vous "
+"l'aviez imaginée."
+
+msgid "Headquartered in Stone Town, Zanzibar"
+msgstr "Siège social à Stone Town, Zanzibar"
+
+msgid "Licensed by the Tanzania Tourism Board"
+msgstr "Agréé par le Tanzania Tourism Board"
+
+msgid "Serving clients in English, French, and Russian"
+msgstr "Au service des clients en anglais, français et russe"
+
+msgid "Available via WhatsApp around the clock"
+msgstr "Disponible via WhatsApp 24h/24"
+
+msgid "What Drives Us"
+msgstr "Ce qui nous anime"
+
+msgid "Mission &"
+msgstr "Mission et"
+
+msgid "Vision"
+msgstr "Vision"
+
+msgid "Our Mission"
+msgstr "Notre mission"
+
+msgid ""
+"To make Tanzania's extraordinary natural and cultural heritage accessible to "
+"travellers from every corner of the world — through honest pricing, expert "
+"local knowledge, and a service that never lets you feel alone."
+msgstr ""
+"Rendre le patrimoine naturel et culturel extraordinaire de la Tanzanie accessible aux "
+"voyageurs du monde entier — grâce à des prix honnêtes, une connaissance locale experte "
+"et un service qui ne vous laisse jamais seul."
+
+msgid "Our Vision"
+msgstr "Notre vision"
+
+msgid ""
+"To become East Africa's most trusted travel partner — known not for size, "
+"but for the depth of care we put into every single journey we plan, from the "
+"first enquiry to the final farewell."
+msgstr ""
+"Devenir le partenaire de voyage le plus fiable d'Afrique de l'Est — connu non pour sa taille, "
+"mais pour la profondeur du soin que nous mettons dans chaque voyage que nous planifions, de la "
+"première demande aux derniers adieux."
+
+msgid "Our Commitment"
+msgstr "Notre engagement"
+
+msgid ""
+"Responsible tourism that respects local communities, protects wildlife "
+"habitats, and ensures the Tanzania we love today remains a wonder for "
+"generations to come."
+msgstr ""
+"Un tourisme responsable qui respecte les communautés locales, protège les habitats naturels "
+"et garantit que la Tanzanie que nous aimons aujourd'hui reste une merveille pour "
+"les générations futures."
+
+msgid "What We Stand For"
+msgstr "Ce en quoi nous croyons"
+
+msgid "Our Core"
+msgstr "Nos valeurs"
+
+msgid "Values"
+msgstr "fondamentales"
+
+msgid "Integrity"
+msgstr "Intégrité"
+
+msgid ""
+"We quote honest prices, give honest advice, and never recommend something we "
+"would not choose ourselves. No hidden fees. No false promises."
+msgstr ""
+"Nous proposons des prix honnêtes, donnons des conseils sincères et ne recommandons jamais "
+"quelque chose que nous ne choisirions pas nous-mêmes. Pas de frais cachés. Pas de fausses promesses."
+
+msgid "Excellence"
+msgstr "Excellence"
+
+msgid ""
+"Every detail matters — from the vehicle we send to pick you up, to the hotel "
+"we recommend for your honeymoon. We take pride in getting it exactly right."
+msgstr ""
+"Chaque détail compte — du véhicule que nous envoyons pour vous chercher à l'hôtel "
+"que nous recommandons pour votre lune de miel. Nous sommes fiers de tout faire parfaitement."
+
+msgid "Community"
+msgstr "Communauté"
+
+msgid ""
+"We partner with locally-owned hotels, guides, and operators. Tourism should "
+"benefit the communities it passes through, not bypass them."
+msgstr ""
+"Nous travaillons avec des hôtels, guides et opérateurs locaux. Le tourisme doit "
+"bénéficier aux communautés qu'il traverse, et non les contourner."
+
+msgid "Sustainability"
+msgstr "Durabilité"
+
+msgid ""
+"We actively support conservation initiatives in the Serengeti and Zanzibar's "
+"marine parks. Your trip with us contributes, not depletes."
+msgstr ""
+"Nous soutenons activement les initiatives de conservation dans le Serengeti et les "
+"parcs marins de Zanzibar. Votre voyage avec nous contribue, il ne détruit pas."
+
+msgid "Responsiveness"
+msgstr "Réactivité"
+
+msgid ""
+"Travel questions rarely follow office hours. We are reachable via WhatsApp "
+"and email at any hour, and we respond with speed and substance."
+msgstr ""
+"Les questions de voyage ne suivent pas les heures de bureau. Nous sommes joignables via WhatsApp "
+"et par e-mail à toute heure, et nous répondons avec rapidité et substance."
+
+msgid "Transparency"
+msgstr "Transparence"
+
+msgid ""
+"Our prices are clear, our cancellation policies are fair, and every "
+"inclusion and exclusion is spelled out before you confirm. No surprises."
+msgstr ""
+"Nos prix sont clairs, nos politiques d'annulation sont équitables, et chaque "
+"inclusion et exclusion est énoncée avant que vous confirmiez. Aucune surprise."
+
+msgid "Happy Clients"
+msgstr "Clients satisfaits"
+
+msgid "Years in Business"
+msgstr "Années d'activité"
+
+msgid "Hotel Partners"
+msgstr "Partenaires hôteliers"
+
+msgid "Languages Served"
+msgstr "Langues parlées"
+
+msgid "The People Behind It"
+msgstr "Les personnes derrière tout ça"
+
+msgid "Meet the"
+msgstr "Rencontrez"
+
+msgid "Team"
+msgstr "l'équipe"
+
+msgid ""
+"Our small, dedicated team brings together decades of combined experience in "
+"Tanzanian travel, hospitality, and customer care."
+msgstr ""
+"Notre petite équipe dévouée réunit des décennies d'expérience combinée dans le tourisme "
+"tanzanien, l'hôtellerie et le service client."
+
+msgid "Team Member"
+msgstr "Membre de l'équipe"
+
+msgid "Founder & Managing Director"
+msgstr "Fondateur et directeur général"
+
+msgid ""
+"Born and raised in Zanzibar with over a decade of experience crafting "
+"unforgettable East Africa journeys."
+msgstr ""
+"Né et élevé à Zanzibar avec plus d'une décennie d'expérience dans la création "
+"de voyages inoubliables en Afrique de l'Est."
+
+msgid "Safari & Tours Specialist"
+msgstr "Spécialiste safaris et circuits"
+
+msgid ""
+"Expert guide with deep knowledge of the Serengeti, Ngorongoro, and "
+"Zanzibar's hidden gems."
+msgstr ""
+"Guide expert avec une connaissance approfondie du Serengeti, du Ngorongoro et "
+"des joyaux cachés de Zanzibar."
+
+msgid "Customer Relations Manager"
+msgstr "Responsable des relations clients"
+
+msgid ""
+"Your first point of contact. Fluent in English and French, dedicated to "
+"making every client feel at home."
+msgstr ""
+"Votre premier point de contact. Couramment anglais et français, dévoué à faire "
+"en sorte que chaque client se sente chez lui."
+
+msgid "Trust & Credentials"
+msgstr "Confiance et accréditations"
+
+msgid "Licensed &"
+msgstr "Agréé et"
+
+msgid "Accredited"
+msgstr "accrédité"
+
+msgid "Tanzania Tourism Board"
+msgstr "Tanzania Tourism Board"
+
+msgid "Officially registered and licensed travel operator in Tanzania."
+msgstr "Opérateur de voyage officiellement enregistré et agréé en Tanzanie."
+
+msgid "Secure Payments"
+msgstr "Paiements sécurisés"
+
+msgid ""
+"All transactions processed via PesaPal — Visa, Mastercard, and mobile money."
+msgstr ""
+"Toutes les transactions traitées via PesaPal — Visa, Mastercard et mobile money."
+
+msgid "TripAdvisor Listed"
+msgstr "Référencé sur TripAdvisor"
+
+msgid "Verified business listing with genuine customer reviews."
+msgstr "Annonce d'entreprise vérifiée avec de vrais avis clients."
+
+msgid "Eco-Conscious Travel"
+msgstr "Voyage éco-responsable"
+
+msgid "Committed to responsible tourism and conservation in every tour we run."
+msgstr "Engagé dans le tourisme responsable et la conservation dans chaque circuit que nous organisons."
+
+msgid "Find Us"
+msgstr "Nous trouver"
+
+msgid "Visit Our"
+msgstr "Visitez notre"
+
+msgid ""
+"We are located in the heart of Stone Town — Zanzibar's historic centre, a "
+"UNESCO World Heritage Site. Come say hello, or reach us remotely — we are "
+"always available."
+msgstr ""
+"Nous sommes situés au cœur de Stone Town — le centre historique de Zanzibar, "
+"site du patrimoine mondial de l'UNESCO. Venez nous dire bonjour, ou contactez-nous à distance — "
+"nous sommes toujours disponibles."
+
+msgid "WhatsApp Us"
+msgstr "Contactez-nous sur WhatsApp"
+
+msgid "Ready to Explore?"
+msgstr "Prêt à explorer ?"
+
+msgid "Start Your Tanzania"
+msgstr "Commencez votre"
+
+msgid "Adventure"
+msgstr "aventure tanzanienne"
+
+msgid ""
+"Browse our safari packages, find the perfect hotel, or simply reach out — we "
+"will plan the rest."
+msgstr ""
+"Parcourez nos forfaits safari, trouvez l'hôtel parfait ou contactez-nous simplement — "
+"nous planifierons le reste."
+
+msgid "View Safari Packages"
+msgstr "Voir les forfaits safari"
+
+msgid "Plan My Trip"
+msgstr "Planifier mon voyage"
+
+msgid "Jadevine Travel & Tours — Zanzibar & Tanzania"
+msgstr "Jadevine Travel & Tours — Zanzibar et Tanzanie"
+
+msgid ""
+"Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Book hotels, "
+"safari packages, car rentals and more."
+msgstr ""
+"Découvrez Zanzibar et la Tanzanie avec Jadevine Travel & Tours. Réservez des hôtels, "
+"des forfaits safari, des locations de voitures et plus encore."
+
+msgid "Zanzibar & Tanzania"
+msgstr "Zanzibar et Tanzanie"
+
+msgid "Discover the"
+msgstr "Découvrez le"
+
+msgid "Heart"
+msgstr "cœur"
+
+msgid "of East Africa"
+msgstr "de l'Afrique de l'Est"
+
+msgid ""
+"Luxury safaris, pristine beaches, and unforgettable cultural experiences — "
+"crafted exclusively for discerning travellers."
+msgstr ""
+"Safaris de luxe, plages immaculées et expériences culturelles inoubliables — "
+"conçus exclusivement pour les voyageurs exigeants."
+
+msgid "Explore Tours"
+msgstr "Explorer les circuits"
+
+msgid "Soon"
+msgstr "Bientôt"
+
+msgid "Destination"
+msgstr "Destination"
+
+msgid "All Destinations"
+msgstr "Toutes les destinations"
+
+msgid "Any"
+msgstr "Tous"
+
+msgid "Max price/night"
+msgstr "Prix max/nuit"
+
+msgid "Up to $350"
+msgstr "Jusqu'à 350 $"
+
+msgid "Up to $500"
+msgstr "Jusqu'à 500 $"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "All Tours"
+msgstr "Tous les circuits"
+
+msgid "Safari & Beach"
+msgstr "Safari et plage"
+
+msgid "Max Duration"
+msgstr "Durée maximale"
+
+msgid "Any Duration"
+msgstr "Toute durée"
+
+msgid "1 Day"
+msgstr "1 jour"
+
+msgid "Up to 3 Days"
+msgstr "Jusqu'à 3 jours"
+
+msgid "Up to 5 Days"
+msgstr "Jusqu'à 5 jours"
+
+msgid "Up to 7 Days"
+msgstr "Jusqu'à 7 jours"
+
+msgid "Max Price/person"
+msgstr "Prix max/personne"
+
+msgid "Under $100"
+msgstr "Moins de 100 $"
+
+msgid "Under $300"
+msgstr "Moins de 300 $"
+
+msgid "Under $500"
+msgstr "Moins de 500 $"
+
+msgid "Under $1,000"
+msgstr "Moins de 1 000 $"
+
+msgid "Max Price/Day"
+msgstr "Prix max/jour"
+
+msgid "Years Experience"
+msgstr "Années d'expérience"
+
+msgid "Scroll"
+msgstr "Défiler"
+
+msgid "What We Offer"
+msgstr "Ce que nous offrons"
+
+msgid "Our Premium"
+msgstr "Nos services"
+
+msgid ""
+"From Zanzibar's spice-scented shores to the Serengeti's golden plains — we "
+"handle every detail."
+msgstr ""
+"Des rivages parfumés aux épices de Zanzibar aux plaines dorées du Serengeti — "
+"nous gérons chaque détail."
+
+msgid ""
+"Curated stays in Zanzibar and Dar es Salaam — from boutique beach resorts to "
+"city hotels."
+msgstr ""
+"Séjours sélectionnés à Zanzibar et Dar es Salaam — des boutiques hôtels de plage "
+"aux hôtels de ville."
+
+msgid "Browse Hotels"
+msgstr "Parcourir les hôtels"
+
+msgid ""
+"Serengeti, Ngorongoro, Zanzibar beach — expertly guided experiences for "
+"every traveller."
+msgstr ""
+"Serengeti, Ngorongoro, plage de Zanzibar — expériences guidées par des experts pour "
+"chaque voyageur."
+
+msgid "View Packages"
+msgstr "Voir les forfaits"
+
+msgid ""
+"Sedans, 4x4 safari vehicles and minibuses with optional bilingual drivers."
+msgstr ""
+"Berlines, véhicules 4x4 safari et minibus avec chauffeurs bilingues en option."
+
+msgid "Browse Vehicles"
+msgstr "Parcourir les véhicules"
+
+msgid "Coming Soon"
+msgstr "Bientôt disponible"
+
+msgid "Domestic Flights"
+msgstr "Vols intérieurs"
+
+msgid ""
+"Tanzania domestic routes: Zanzibar, Dar es Salaam, Kilimanjaro, Arusha and "
+"more."
+msgstr ""
+"Routes intérieures tanzaniennes : Zanzibar, Dar es Salaam, Kilimandjaro, Arusha et "
+"plus encore."
+
+msgid "Top Experiences"
+msgstr "Meilleures expériences"
+
+msgid "Packages"
+msgstr "Forfaits"
+
+msgid "View All Packages"
+msgstr "Voir tous les forfaits"
+
+msgid "Photo coming soon"
+msgstr "Photo bientôt disponible"
+
+msgid "Max"
+msgstr "Max"
+
+msgid "View Details"
+msgstr "Voir les détails"
+
+msgid "Packages Coming Soon"
+msgstr "Forfaits bientôt disponibles"
+
+msgid ""
+"Our team is curating the finest Zanzibar and Tanzania experiences. Check "
+"back shortly."
+msgstr ""
+"Notre équipe sélectionne les meilleures expériences à Zanzibar et en Tanzanie. "
+"Revenez bientôt."
+
+msgid "Enquire Now"
+msgstr "Demander maintenant"
+
+msgid "Why Jadevine"
+msgstr "Pourquoi Jadevine"
+
+msgid "Travel With"
+msgstr "Voyagez en"
+
+msgid "Confidence"
+msgstr "toute confiance"
+
+msgid ""
+"We've been crafting exceptional Tanzania travel experiences since 2016. "
+"Every booking is backed by local expertise and personal care."
+msgstr ""
+"Nous créons des expériences de voyage exceptionnelles en Tanzanie depuis 2016. "
+"Chaque réservation est soutenue par une expertise locale et un soin personnel."
+
+msgid "Licensed & Certified"
+msgstr "Agréé et certifié"
+
+msgid ""
+"Fully registered with the Tanzania Tourism Board and all required "
+"authorities."
+msgstr ""
+"Entièrement enregistré auprès du Tanzania Tourism Board et de toutes les autorités requises."
+
+msgid "Personal Service"
+msgstr "Service personnalisé"
+
+msgid ""
+"A dedicated team that responds within 24 hours and knows Zanzibar intimately."
+msgstr ""
+"Une équipe dévouée qui répond dans les 24 heures et connaît Zanzibar intimement."
+
+msgid ""
+"Pay online via Visa, Mastercard, M-Pesa — or pay on arrival. Your choice."
+msgstr ""
+"Payez en ligne via Visa, Mastercard, M-Pesa — ou payez à l'arrivée. Votre choix."
+
+msgid "Multilingual Support"
+msgstr "Assistance multilingue"
+
+msgid ""
+"We serve clients in English, French, and Russian — with more languages "
+"coming."
+msgstr ""
+"Nous servons les clients en anglais, français et russe — avec plus de langues "
+"à venir."
+
+msgid "Custom Itineraries"
+msgstr "Itinéraires personnalisés"
+
+msgid ""
+"We craft journeys tailored to your interests, budget, and pace for a unique "
+"Tanzanian adventure."
+msgstr ""
+"Nous créons des voyages adaptés à vos intérêts, votre budget et votre rythme pour une "
+"aventure tanzanienne unique."
+
+msgid "24/7 Availability"
+msgstr "Disponibilité 24h/24 7j/7"
+
+msgid ""
+"Book online anytime. Our team is available via WhatsApp around the clock."
+msgstr ""
+"Réservez en ligne à tout moment. Notre équipe est disponible via WhatsApp en permanence."
+
+msgid "Verified Reviews"
+msgstr "Avis vérifiés"
+
+msgid "What Our Guests"
+msgstr "Ce que disent"
+
+msgid "Say"
+msgstr "nos clients"
+
+msgid ""
+"TripAdvisor reviews will appear here once your business listing is verified."
+msgstr ""
+"Les avis TripAdvisor apparaîtront ici une fois votre annonce d'entreprise vérifiée."
+
+msgid "Visual Journey"
+msgstr "Voyage visuel"
+
+msgid "Moments of"
+msgstr "Moments de"
+
+msgid "Wonder"
+msgstr "merveille"
+
+msgid "Full Gallery"
+msgstr "Galerie complète"
+
+msgid "Stay Connected"
+msgstr "Restez connecté"
+
+msgid "Get Exclusive"
+msgstr "Recevez des"
+
+msgid "Travel Offers"
+msgstr "offres de voyage exclusives"
+
+msgid ""
+"Subscribe for curated Zanzibar travel tips, early access to deals, and "
+"seasonal promotions."
+msgstr ""
+"Abonnez-vous pour des conseils de voyage sélectionnés à Zanzibar, un accès anticipé aux offres "
+"et des promotions saisonnières."
+
+msgid "Enter your email address"
+msgstr "Saisissez votre adresse e-mail"
+
+msgid "Subscribe"
+msgstr "S'abonner"
+
+msgid "No spam, ever. Unsubscribe anytime."
+msgstr "Aucun spam, jamais. Désabonnez-vous à tout moment."
+
+msgid "Gallery — Jadevine Travel & Tours"
+msgstr "Galerie — Jadevine Travel & Tours"
+
+msgid ""
+"Explore our photo and video gallery of Tanzania safaris, Zanzibar beaches, "
+"hotels, wildlife, and cultural experiences."
+msgstr ""
+"Explorez notre galerie de photos et vidéos de safaris en Tanzanie, plages de Zanzibar, "
+"hôtels, faune sauvage et expériences culturelles."
+
+msgid ""
+"Safari landscapes, pristine beaches, vibrant culture — captured for you."
+msgstr ""
+"Paysages de safari, plages immaculées, culture vibrante — captés pour vous."
+
+msgid "Photos"
+msgstr "Photos"
+
+msgid "Videos"
+msgstr "Vidéos"
+
+msgid "Categories"
+msgstr "Catégories"
+
+msgid "Gallery Coming Soon"
+msgstr "Galerie bientôt disponible"
+
+msgid "No items in this category yet."
+msgstr "Aucun élément dans cette catégorie pour l'instant."
+
+msgid ""
+"Our team is curating stunning photos and videos from across Tanzania and "
+"Zanzibar. Check back soon."
+msgstr ""
+"Notre équipe sélectionne des photos et vidéos époustouflantes de toute la Tanzanie et "
+"Zanzibar. Revenez bientôt."
+
+msgid "View All"
+msgstr "Voir tout"
+
+msgid "Ready to Experience"
+msgstr "Prêt à vivre"
+
+msgid "Tanzania?"
+msgstr "la Tanzanie ?"
+
+msgid ""
+"These are more than photographs — they are invitations. Let us plan your "
+"journey."
+msgstr ""
+"Ce sont plus que des photographies — ce sont des invitations. Laissez-nous planifier "
+"votre voyage."
+
+msgid "Explore Packages"
+msgstr "Explorer les forfaits"
+
+msgid "Jadevine Gallery"
+msgstr "Galerie Jadevine"
+
+msgid "Book %(name)s in %(location)s with Jadevine Travel & Tours."
+msgstr "Réservez %(name)s à %(location)s avec Jadevine Travel & Tours."
+
+msgid "About This Hotel"
+msgstr "À propos de cet hôtel"
+
+msgid "Choose Your <em>Room</em>"
+msgstr "Choisissez votre <em>chambre</em>"
+
+msgid "Max %(max)s guests"
+msgstr "Max %(max)s voyageurs"
+
+msgid "Pay Now only"
+msgstr "Paiement immédiat uniquement"
+
+msgid "/ night"
+msgstr "/ nuit"
+
+msgid "Selected"
+msgstr "Sélectionné"
+
+msgid "Dietary requirements, room preferences, late arrival..."
+msgstr "Régimes alimentaires, préférences de chambre, arrivée tardive..."
+
+msgid ""
+"This room type is non-refundable. Once booked, no refund will be issued "
+"regardless of cancellation date."
+msgstr ""
+"Ce type de chambre est non remboursable. Une fois réservé, aucun remboursement ne sera "
+"émis quelle que soit la date d'annulation."
+
+msgid "This room requires Pay Now — Pay on Arrival is not available."
+msgstr "Cette chambre exige le paiement immédiat — le paiement à l'arrivée n'est pas disponible."
+
+msgid "No rooms currently available. Contact us for availability."
+msgstr "Aucune chambre disponible actuellement. Contactez-nous pour la disponibilité."
+
+msgid "This room requires Pay Now — Pay on Arrival not available."
+msgstr "Cette chambre exige le paiement immédiat — paiement à l'arrivée non disponible."
+
+msgid "Free cancellation applies — cancel 14+ days before for a full refund."
+msgstr "Annulation gratuite applicable — annulez 14 jours ou plus avant pour un remboursement intégral."
+
+msgid ""
+"Book hotels in Zanzibar and Dar es Salaam with Jadevine Travel & Tours. "
+"Handpicked accommodation for every budget."
+msgstr ""
+"Réservez des hôtels à Zanzibar et Dar es Salaam avec Jadevine Travel & Tours. "
+"Hébergements sélectionnés pour tous les budgets."
+
+msgid "Accommodation"
+msgstr "Hébergement"
+
+msgid "Hotels in <em>Zanzibar</em> & Dar es Salaam"
+msgstr "Hôtels à <em>Zanzibar</em> et Dar es Salaam"
+
+msgid ""
+"Handpicked hotels and guesthouses — from beachfront luxury to Stone Town "
+"boutique stays."
+msgstr ""
+"Hôtels et maisons d'hôtes sélectionnés — du luxe en bord de mer aux boutiques hôtels "
+"de Stone Town."
+
+msgid "Any Rating"
+msgstr "Toute note"
+
+msgid "Max Price / Night"
+msgstr "Prix max / nuit"
+
+msgid "hotels found"
+msgstr "hôtels trouvés"
+
+msgid "Finding hotels..."
+msgstr "Recherche d'hôtels..."
+
+msgid "No hotels found"
+msgstr "Aucun hôtel trouvé"
+
+msgid "View Hotel"
+msgstr "Voir l'hôtel"
+
+msgid "Failed to load hotels. Please try again."
+msgstr "Impossible de charger les hôtels. Veuillez réessayer."
+
+msgid "per night"
+msgstr "par nuit"
+
+msgid "Breadcrumb"
+msgstr "Fil d'Ariane"
+
+msgid "day"
+msgstr "jour"
+
+msgid "Max %(max)s people"
+msgstr "Max %(max)s personnes"
+
+msgid "per person"
+msgstr "par personne"
+
+msgid "About This Tour"
+msgstr "À propos de ce circuit"
+
+msgid "Tour Highlights"
+msgstr "Points forts du circuit"
+
+msgid "Day-by-Day Itinerary"
+msgstr "Itinéraire jour par jour"
+
+msgid "Day"
+msgstr "Jour"
+
+msgid "What's Included"
+msgstr "Ce qui est inclus"
+
+msgid "Included"
+msgstr "Inclus"
+
+msgid "Not Included"
+msgstr "Non inclus"
+
+msgid "What to Bring"
+msgstr "Quoi apporter"
+
+msgid " total"
+msgstr " total"
+
+msgid "Select a date"
+msgstr "Sélectionnez une date"
+
+msgid "Decrease"
+msgstr "Diminuer"
+
+msgid "Increase"
+msgstr "Augmenter"
+
+msgid "Maximum %(max)s participants"
+msgstr "Maximum %(max)s participants"
+
+msgid "person"
+msgstr "personne"
+
+msgid "Dietary requirements, accessibility needs, anniversary celebration..."
+msgstr "Régimes alimentaires, besoins d'accessibilité, célébration d'anniversaire..."
+
+msgid "We will confirm your preferred date within 24–48 hours of booking."
+msgstr "Nous confirmerons votre date préférée dans les 24 à 48 heures suivant la réservation."
+
+msgid ""
+"This tour package is non-refundable. Once booked, no refund will be issued "
+"regardless of cancellation date."
+msgstr ""
+"Ce forfait circuit est non remboursable. Une fois réservé, aucun remboursement ne sera "
+"émis quelle que soit la date d'annulation."
+
+msgid "This tour requires Pay Now — Pay on Arrival is not available."
+msgstr "Ce circuit exige le paiement immédiat — le paiement à l'arrivée n'est pas disponible."
+
+msgid "Book This Tour"
+msgstr "Réserver ce circuit"
+
+msgid "people"
+msgstr "personnes"
+
+msgid "Safari & Tour Packages in Zanzibar & Tanzania"
+msgstr "Forfaits safari et circuits à Zanzibar et en Tanzanie"
+
+msgid ""
+"Explore Serengeti safaris, Zanzibar beach tours, Ngorongoro crater trips, "
+"spice tours and more. Book directly with Jadevine Travel & Tours."
+msgstr ""
+"Explorez les safaris du Serengeti, les circuits sur les plages de Zanzibar, les visites du cratère "
+"du Ngorongoro, les circuits des épices et plus encore. Réservez directement avec Jadevine Travel & Tours."
+
+msgid "Explore Tanzania"
+msgstr "Explorer la Tanzanie"
+
+msgid "Safaris & Tour Packages"
+msgstr "Forfaits safaris et circuits"
+
+msgid ""
+"Hand-crafted experiences from the Serengeti to Zanzibar's shores. Every "
+"journey is personal."
+msgstr ""
+"Expériences artisanales du Serengeti aux rivages de Zanzibar. Chaque "
+"voyage est personnel."
+
+msgid "Combined"
+msgstr "Combiné"
+
+msgid "Max Price / Person"
+msgstr "Prix max / personne"
+
+msgid "packages found"
+msgstr "forfaits trouvés"
+
+msgid "No tours found"
+msgstr "Aucun circuit trouvé"
+
+msgid "Failed to load tours. Please try again."
+msgstr "Impossible de charger les circuits. Veuillez réessayer."
+
+msgid "/ person"
+msgstr "/ personne"

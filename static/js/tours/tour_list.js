@@ -142,6 +142,14 @@
   }
 
   function fetchTours() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("tour_type") && urlParams.get("tour_type") !== "")
+      $("#filter-tour-type").val(urlParams.get("tour_type"));
+    if (urlParams.has("max_price") && urlParams.get("max_price") !== "")
+      $("#filter-max-price").val(urlParams.get("max_price"));
+    if (urlParams.has("max_duration") && urlParams.get("max_duration") !== "")
+      $("#filter-max-duration").val(urlParams.get("max_duration"));
+
     var params = {
       tour_type: $("#filter-tour-type").val(),
       max_duration: $("#filter-max-duration").val(),
@@ -199,8 +207,12 @@
   );
 
   function clearFilters() {
-    $("#filter-tour-type, #filter-max-duration, #filter-max-price").val("");
-    fetchTours();
+    if (window.location.search.length > 1) {
+      window.location.href = window.location.pathname;
+    } else {
+      $("#filter-tour-type, #filter-max-duration, #filter-max-price").val("");
+      fetchTours();
+    }
   }
 
   $("#btn-clear-filters, #btn-empty-clear").on("click", clearFilters);

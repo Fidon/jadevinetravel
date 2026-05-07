@@ -1,6 +1,5 @@
 /* ============================================================
    DASHBOARD — shared across all dashboard pages
-   Jadevine Travel & Tours
    ============================================================ */
 
 /* Root layout */
@@ -29,19 +28,6 @@
   overflow-y: auto;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 200;
-}
-
-@media (max-width: 991px) {
-  .dashboard-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    transform: translateX(-100%);
-    box-shadow: var(--shadow-xl);
-  }
-  .dashboard-sidebar.open {
-    transform: translateX(0);
-  }
 }
 
 /* Sidebar header */
@@ -111,15 +97,9 @@
   display: none;
 }
 
-@media (max-width: 991px) {
-  .sidebar-close-btn {
-    display: block;
-  }
-}
-
 /* Sidebar nav */
 .sidebar-nav {
-  flex: 1;
+  flex: none;
   padding: 12px 0;
 }
 
@@ -199,10 +179,11 @@
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
-  z-index: 150;
+  z-index: 250;
 }
 
 .sidebar-toggle-btn {
+  display: none;
   background: none;
   border: none;
   font-size: 22px;
@@ -223,12 +204,6 @@
   flex: 1;
   min-width: 0;
   padding: 40px 32px;
-}
-
-@media (max-width: 991px) {
-  .dashboard-main {
-    padding: 24px 16px;
-  }
 }
 
 .dashboard-main-inner {
@@ -623,12 +598,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px 24px;
-}
-
-@media (max-width: 576px) {
-  .dash-detail-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .dash-detail-item {
@@ -1151,7 +1120,6 @@
   gap: 0.5rem;
 }
 
-/* Star picker */
 .dash-review-form-wrap {
   padding: 0.25rem 0;
 }
@@ -1226,7 +1194,47 @@
   transition: color 0.15s;
 }
 
-/* Responsive: tighten stars on small screens */
+/* ============================================== */
+.dashboard-topbar-logo img {
+  height: 28px;
+  width: auto;
+  display: inline-block;
+}
+
+.dashboard-page .jd-navbar {
+  display: none !important;
+}
+
+.dashboard-page .dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 0;
+}
+
+@media (max-width: 991px) {
+  .dashboard-sidebar {
+    position: fixed;
+    left: 0;
+    top: 55px;
+    transform: translateX(-100%);
+  }
+  .dashboard-sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-toggle-btn {
+    display: block;
+  }
+  .dashboard-main {
+    padding: 24px 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dash-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 400px) {
   .dash-star-btn {
     font-size: 1.5rem;

@@ -132,6 +132,14 @@
   }
 
   function fetchCars() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("vehicle_type") && urlParams.get("vehicle_type") !== "")
+      $("#filter-vehicle-type").val(urlParams.get("vehicle_type"));
+    if (urlParams.has("max_price") && urlParams.get("max_price") !== "")
+      $("#filter-max-price").val(urlParams.get("max_price"));
+    if (urlParams.has("rental_mode") && urlParams.get("rental_mode") !== "")
+      $("#filter-rental-mode").val(urlParams.get("rental_mode"));
+
     const params = {
       vehicle_type: $("#filter-vehicle-type").val(),
       rental_mode: $("#filter-rental-mode").val(),
@@ -188,8 +196,12 @@
   );
 
   function clearFilters() {
-    $("#filter-vehicle-type, #filter-rental-mode, #filter-max-price").val("");
-    fetchCars();
+    if (window.location.search.length > 1) {
+      window.location.href = window.location.pathname;
+    } else {
+      $("#filter-vehicle-type, #filter-rental-mode, #filter-max-price").val("");
+      fetchCars();
+    }
   }
 
   $("#btn-clear-filters, #btn-empty-clear").on("click", clearFilters);

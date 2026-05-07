@@ -74,13 +74,13 @@ class HotelListView(View):
         for hotel in qs:
             cover = hotel.cover_photo
 
-            # Rating — only shown when 3+ approved reviews
+            # Rating — only shown when 1+ approved reviews
             review_data = Review.objects.filter(
                 hotel=hotel,
                 status='approved'
             ).aggregate(avg=Avg('rating'), total=Count('id'))
-            avg_rating   = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 3 else None
-            review_count = review_data['total'] if review_data['total'] >= 3 else 0
+            avg_rating   = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
+            review_count = review_data['total'] if review_data['total'] >= 1 else 0
 
             # Lowest active discount across room types (for card display)
             best_discount = 0
@@ -149,8 +149,8 @@ class HotelDetailView(DetailView):
             hotel=hotel,
             status='approved'
         ).aggregate(avg=Avg('rating'), total=Count('id'))
-        avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 3 else None
-        review_count = review_data['total'] if review_data['total'] >= 3 else 0
+        avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
+        review_count = review_data['total'] if review_data['total'] >= 1 else 0
         context['avg_rating'] = avg_rating
         context['review_count'] = review_count
 

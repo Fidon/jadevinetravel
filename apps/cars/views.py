@@ -59,8 +59,8 @@ class CarListView(View):
                 car=car,
                 status='approved'
             ).aggregate(avg=Avg('rating'), total=Count('id'))
-            avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 3 else None
-            review_count = review_data['total'] if review_data['total'] >= 3 else 0
+            avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
+            review_count = review_data['total'] if review_data['total'] >= 1 else 0
 
             discounted = car.get_discounted_price()
             has_discount = discounted is not None
@@ -119,8 +119,8 @@ class CarDetailView(DetailView):
             car=car,
             status='approved'
         ).aggregate(avg=Avg('rating'), total=Count('id'))
-        context['avg_rating'] = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 3 else None
-        context['review_count'] = review_data['total'] if review_data['total'] >= 3 else 0
+        context['avg_rating'] = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
+        context['review_count'] = review_data['total'] if review_data['total'] >= 1 else 0
 
         discounted = car.get_discounted_price()
         context['has_discount'] = discounted is not None

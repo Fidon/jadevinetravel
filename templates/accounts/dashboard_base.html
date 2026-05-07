@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
+{% block body_class %}dashboard-page{% endblock %}
 {% block navbar_class %}navbar-scrolled{% endblock %}
 
 {% block content %}
 <div class="dashboard-root">
 
   <!-- Mobile topbar -->
-  <div class="dashboard-topbar d-lg-none">
+  <div class="dashboard-topbar">
     <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="{% trans 'Open menu' %}">
       <i class="bi bi-list"></i>
     </button>

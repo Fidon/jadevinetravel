@@ -2,6 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from allauth.account.forms import SignupForm as AllauthSignupForm
 from apps.accounts.models import CustomUser
+from django.core.exceptions import ValidationError
 
 
 class CustomSignupForm(AllauthSignupForm):
@@ -65,12 +66,35 @@ class CustomSignupForm(AllauthSignupForm):
         return user
 
 
-class ProfileUpdateForm(forms.ModelForm):
-    """
-    Allows a customer to update their own profile fields.
-    Excludes all auth-related fields — password is handled separately.
-    """
+NATIONALITY_CHOICES = [
+    'Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan',
+    'Argentinian', 'Armenian', 'Australian', 'Austrian', 'Azerbaijani',
+    'Bahraini', 'Bangladeshi', 'Belarusian', 'Belgian', 'Bolivian',
+    'Bosnian', 'Brazilian', 'British', 'Bulgarian', 'Cambodian',
+    'Cameroonian', 'Canadian', 'Chilean', 'Chinese', 'Colombian',
+    'Congolese', 'Croatian', 'Cuban', 'Czech', 'Danish', 'Dominican',
+    'Dutch', 'Ecuadorian', 'Egyptian', 'Emirati', 'Estonian', 'Ethiopian',
+    'Finnish', 'French', 'Gambian', 'Georgian', 'German', 'Ghanaian',
+    'Greek', 'Guatemalan', 'Guinean', 'Haitian', 'Honduran', 'Hungarian',
+    'Indian', 'Indonesian', 'Iranian', 'Iraqi', 'Irish', 'Israeli',
+    'Italian', 'Ivorian', 'Jamaican', 'Japanese', 'Jordanian', 'Kazakh',
+    'Kenyan', 'Korean', 'Kuwaiti', 'Kyrgyz', 'Latvian', 'Lebanese',
+    'Libyan', 'Lithuanian', 'Luxembourgish', 'Macedonian', 'Malagasy',
+    'Malawian', 'Malaysian', 'Maldivian', 'Malian', 'Maltese', 'Mexican',
+    'Moldovan', 'Mongolian', 'Montenegrin', 'Moroccan', 'Mozambican',
+    'Namibian', 'Nepali', 'New Zealander', 'Nicaraguan', 'Nigerian',
+    'Norwegian', 'Omani', 'Pakistani', 'Palestinian', 'Panamanian',
+    'Paraguayan', 'Peruvian', 'Filipino', 'Polish', 'Portuguese', 'Qatari',
+    'Romanian', 'Russian', 'Rwandan', 'Saudi', 'Senegalese', 'Serbian',
+    'Singaporean', 'Slovak', 'Slovenian', 'Somali', 'South African',
+    'Spanish', 'Sri Lankan', 'Sudanese', 'Swedish', 'Swiss', 'Syrian',
+    'Taiwanese', 'Tajik', 'Tanzanian', 'Thai', 'Togolese', 'Tunisian',
+    'Turkish', 'Turkmen', 'Ugandan', 'Ukrainian', 'Uruguayan', 'Uzbek',
+    'Venezuelan', 'Vietnamese', 'Yemeni', 'Zambian', 'Zimbabwean',
+]
 
+
+class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'phone', 'nationality', 'preferred_language', 'profile_photo']
@@ -89,7 +113,9 @@ class ProfileUpdateForm(forms.ModelForm):
             }),
             'nationality': forms.TextInput(attrs={
                 'class': 'jd-input',
-                'placeholder': _('e.g. British, French, Tanzanian'),
+                'placeholder': _('Select or type your nationality'),
+                'list': 'nationality-options',
+                'autocomplete': 'off',
             }),
             'preferred_language': forms.Select(attrs={'class': 'jd-input'}),
             'profile_photo': forms.ClearableFileInput(attrs={'class': 'jd-file-input'}),
@@ -100,6 +126,20 @@ class ProfileUpdateForm(forms.ModelForm):
         self.fields['phone'].required = False
         self.fields['nationality'].required = False
         self.fields['profile_photo'].required = False
+        
+    def clean_nationality(self):
+        nationality = self.cleaned_data.get('nationality')
+        if nationality and nationality not in NATIONALITY_CHOICES:
+            raise ValidationError(_("Please select a valid nationality from the list."))
+        return nationality
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone:
+            user_id = self.instance.pk
+            if CustomUser.objects.filter(phone=phone).exclude(pk=user_id).exists():
+                raise ValidationError(_("This phone number is already used by another user."))
+        return phone
 
 
 class CancellationForm(forms.Form):

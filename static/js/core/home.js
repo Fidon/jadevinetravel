@@ -23,7 +23,6 @@ $(function () {
 
   /* ----------------------------------------------------------
      3. COUNTER ANIMATION for Why Choose Us stats
-        Triggers when section scrolls into view
      ---------------------------------------------------------- */
   var countersAnimated = false;
 
@@ -76,15 +75,14 @@ $(function () {
   $("#booking-form-hotels").on("submit", function (e) {
     e.preventDefault();
     var location = $(this).find('[name="hotel_location"]').val();
-    var checkin = $(this).find('[name="check_in"]').val();
-    var checkout = $(this).find('[name="check_out"]').val();
     var guests = $(this).find('[name="guests"]').val();
+    var price = $(this).find('[name="price"]').val();
 
     var params = new URLSearchParams();
-    if (location) params.set("location", location);
-    if (checkin) params.set("check_in", checkin);
-    if (checkout) params.set("check_out", checkout);
-    if (guests) params.set("guests", guests);
+    params.set("location", location);
+    params.set("stars", "");
+    params.set("max_price", price);
+    params.set("guests", guests);
 
     window.location.href = "/hotels/?" + params.toString();
   });
@@ -93,13 +91,13 @@ $(function () {
   $("#booking-form-tours").on("submit", function (e) {
     e.preventDefault();
     var type = $(this).find('[name="tour_type"]').val();
-    var date = $(this).find('[name="preferred_date"]').val();
-    var people = $(this).find('[name="participants"]').val();
+    var duration = $(this).find('[name="max_duration"]').val();
+    var price = $(this).find('[name="max_price"]').val();
 
     var params = new URLSearchParams();
-    if (type) params.set("type", type);
-    if (date) params.set("date", date);
-    if (people) params.set("participants", people);
+    params.set("tour_type", type);
+    params.set("max_duration", duration);
+    params.set("max_price", price);
 
     window.location.href = "/tours/?" + params.toString();
   });
@@ -107,16 +105,14 @@ $(function () {
   // Cars booking form
   $("#booking-form-cars").on("submit", function (e) {
     e.preventDefault();
-    var location = $(this).find('[name="pickup_location"]').val();
-    var pickup = $(this).find('[name="pickup_date"]').val();
-    var ret = $(this).find('[name="return_date"]').val();
-    var type = $(this).find('[name="vehicle_type"]').val();
+    var vehicle = $(this).find('[name="vehicle_type"]').val();
+    var rental_mode = $(this).find('[name="rental_mode"]').val();
+    var max_price = $(this).find('[name="max_price"]').val();
 
     var params = new URLSearchParams();
-    if (location) params.set("location", location);
-    if (pickup) params.set("pickup", pickup);
-    if (ret) params.set("return", ret);
-    if (type) params.set("type", type);
+    params.set("vehicle_type", vehicle);
+    params.set("rental_mode", rental_mode);
+    params.set("max_price", max_price);
 
     window.location.href = "/cars/?" + params.toString();
   });

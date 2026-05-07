@@ -54,8 +54,8 @@ class TourListView(View):
             tour_package=tour,
             status='approved'
         ).aggregate(avg=Avg('rating'), total=Count('id'))
-        avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 3 else None
-        review_count = review_data['total'] if review_data['total'] >= 3 else 0
+        avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
+        review_count = review_data['total'] if review_data['total'] >= 1 else 0
 
         return {
             'id': tour.id,
@@ -111,8 +111,8 @@ class TourDetailView(View):
             tour_package=tour,
             status='approved'
         ).aggregate(avg=Avg('rating'), total=Count('id'))
-        avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 3 else None
-        review_count = review_data['total'] if review_data['total'] >= 3 else 0
+        avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
+        review_count = review_data['total'] if review_data['total'] >= 1 else 0
 
         return render(request, self.template_name, {
             'tour': tour,
