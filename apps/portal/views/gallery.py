@@ -252,7 +252,7 @@ class PortalGalleryCategoryDeleteView(SuperAdminRequiredMixin, View):
 
     def post(self, request, pk):
         category = get_object_or_404(GalleryCategory, pk=pk)
-        item_count = category.galleryitem_set.count()
+        item_count = category.items.count()
 
         if item_count > 0:
             messages.error(

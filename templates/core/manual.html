@@ -1,0 +1,1484 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadevine Portal — User Manual</title>
+<link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/core/manual.css' %}">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <button class="hamburger" id="hamburger"><i class="bi bi-list"></i></button>
+  <div class="topbar-brand">
+    <div class="brand-icon"><i class="bi bi-globe2"></i></div>
+    <h1>Jadevine<span>User Manual</span></h1>
+  </div>
+  <span class="topbar-badge">v1.0 — May 2026</span>
+  <div class="topbar-search">
+    <i class="bi bi-search si"></i>
+    <input type="text" id="searchInput" placeholder="Search the manual…">
+  </div>
+</header>
+<div class="overlay" id="overlay"></div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="role-tabs">
+    <div class="role-tab active" data-role="super">Super Admin</div>
+    <div class="role-tab" data-role="mini">Mini-Admin</div>
+    <div class="role-tab" data-role="customer">Customer</div>
+  </div>
+
+  <!-- SUPER ADMIN NAV -->
+  <div class="role-section visible" id="nav-super">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Getting Started</div>
+      <a class="sidebar-link active" data-section="overview"><i class="bi bi-house"></i>Overview</a>
+      <a class="sidebar-link" data-section="sa-login"><i class="bi bi-box-arrow-in-right"></i>Logging In</a>
+      <a class="sidebar-link" data-section="sa-dashboard"><i class="bi bi-speedometer2"></i>Dashboard</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Listings</div>
+      <a class="sidebar-link" data-section="sa-hotels"><i class="bi bi-building"></i>Hotels</a>
+      <a class="sidebar-link" data-section="sa-cars"><i class="bi bi-car-front"></i>Car Rentals</a>
+      <a class="sidebar-link" data-section="sa-tours"><i class="bi bi-compass"></i>Tours & Safaris</a>
+      <a class="sidebar-link" data-section="sa-approvals"><i class="bi bi-check2-circle"></i>Approvals Queue</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Bookings</div>
+      <a class="sidebar-link" data-section="sa-bookings"><i class="bi bi-calendar-check"></i>Manage Bookings</a>
+      <a class="sidebar-link" data-section="sa-reviews"><i class="bi bi-star"></i>Review Moderation</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Content</div>
+      <a class="sidebar-link" data-section="sa-gallery"><i class="bi bi-images"></i>Gallery</a>
+      <a class="sidebar-link" data-section="sa-messages"><i class="bi bi-envelope"></i>Contact Messages</a>
+      <a class="sidebar-link" data-section="sa-newsletter"><i class="bi bi-megaphone"></i>Newsletter</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Admin</div>
+      <a class="sidebar-link" data-section="sa-users"><i class="bi bi-people"></i>User Accounts</a>
+      <a class="sidebar-link" data-section="sa-miniadmins"><i class="bi bi-person-badge"></i>Mini-Admins</a>
+      <a class="sidebar-link" data-section="sa-policies"><i class="bi bi-shield-check"></i>Cancellation Policies</a>
+      <a class="sidebar-link" data-section="sa-settings"><i class="bi bi-gear"></i>Portal Settings</a>
+    </div>
+  </div>
+
+  <!-- MINI-ADMIN NAV -->
+  <div class="role-section" id="nav-mini">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Getting Started</div>
+      <a class="sidebar-link" data-section="ma-overview"><i class="bi bi-house"></i>Overview</a>
+      <a class="sidebar-link" data-section="ma-login"><i class="bi bi-box-arrow-in-right"></i>Logging In</a>
+      <a class="sidebar-link" data-section="ma-dashboard"><i class="bi bi-speedometer2"></i>Dashboard</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">My Listings</div>
+      <a class="sidebar-link" data-section="ma-create"><i class="bi bi-plus-circle"></i>Creating a Listing</a>
+      <a class="sidebar-link" data-section="ma-edit"><i class="bi bi-pencil"></i>Editing a Listing</a>
+      <a class="sidebar-link" data-section="ma-photos"><i class="bi bi-camera"></i>Managing Photos</a>
+      <a class="sidebar-link" data-section="ma-status"><i class="bi bi-clock-history"></i>Approval Status</a>
+      <a class="sidebar-link" data-section="ma-resubmit"><i class="bi bi-arrow-clockwise"></i>Resubmitting</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Bookings</div>
+      <a class="sidebar-link" data-section="ma-bookings"><i class="bi bi-calendar-check"></i>My Bookings</a>
+      <a class="sidebar-link" data-section="ma-reviews"><i class="bi bi-star"></i>My Reviews</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Account</div>
+      <a class="sidebar-link" data-section="ma-password"><i class="bi bi-lock"></i>Change Password</a>
+    </div>
+  </div>
+
+  <!-- CUSTOMER NAV -->
+  <div class="role-section" id="nav-customer">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Getting Started</div>
+      <a class="sidebar-link" data-section="cu-overview"><i class="bi bi-house"></i>Overview</a>
+      <a class="sidebar-link" data-section="cu-register"><i class="bi bi-person-plus"></i>Creating an Account</a>
+      <a class="sidebar-link" data-section="cu-login"><i class="bi bi-box-arrow-in-right"></i>Signing In</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Booking</div>
+      <a class="sidebar-link" data-section="cu-browse"><i class="bi bi-search"></i>Browsing & Filtering</a>
+      <a class="sidebar-link" data-section="cu-book"><i class="bi bi-calendar-plus"></i>Making a Booking</a>
+      <a class="sidebar-link" data-section="cu-payment"><i class="bi bi-credit-card"></i>Payment Options</a>
+      <a class="sidebar-link" data-section="cu-confirmation"><i class="bi bi-check-circle"></i>Confirmation</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">My Account</div>
+      <a class="sidebar-link" data-section="cu-dashboard"><i class="bi bi-speedometer2"></i>My Dashboard</a>
+      <a class="sidebar-link" data-section="cu-history"><i class="bi bi-clock-history"></i>Booking History</a>
+      <a class="sidebar-link" data-section="cu-cancel"><i class="bi bi-x-circle"></i>Cancelling a Booking</a>
+      <a class="sidebar-link" data-section="cu-review"><i class="bi bi-star"></i>Leaving a Review</a>
+      <a class="sidebar-link" data-section="cu-profile"><i class="bi bi-person"></i>Profile & Password</a>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="main">
+
+<!-- ═══════════════════════════════════════════════
+     OVERVIEW (shared landing)
+══════════════════════════════════════════════════ -->
+<section class="content-section active" id="section-overview">
+  <div class="doc-hero">
+    <h2>Jadevine Travel & Tours<br><span>Portal User Manual</span></h2>
+    <p>A complete guide for Super Admins, Mini-Admins, and Customers. Use the sidebar to navigate to your role, or browse by topic.</p>
+    <div class="hero-meta">
+      <span class="hero-chip"><i class="bi bi-calendar3"></i>May 2026</span>
+      <span class="hero-chip"><i class="bi bi-globe2"></i>fidontz.pythonanywhere.com</span>
+      <span class="hero-chip"><i class="bi bi-shield-check"></i>v1.0</span>
+    </div>
+  </div>
+
+  <div class="role-cards">
+    <div class="role-card super" onclick="switchRole('super','sa-login')">
+      <div class="rc-icon"><i class="bi bi-shield-fill-check"></i></div>
+      <div class="rc-title">Super Admin</div>
+      <div class="rc-desc">Full portal access. Manage all listings, bookings, users, content, and settings.</div>
+    </div>
+    <div class="role-card mini" onclick="switchRole('mini','ma-overview')">
+      <div class="rc-icon"><i class="bi bi-person-badge-fill"></i></div>
+      <div class="rc-title">Mini-Admin</div>
+      <div class="rc-desc">Partner access. Create and manage your own hotel or car listings and view your bookings.</div>
+    </div>
+    <div class="role-card customer" onclick="switchRole('customer','cu-overview')">
+      <div class="rc-icon"><i class="bi bi-person-fill"></i></div>
+      <div class="rc-title">Customer</div>
+      <div class="rc-desc">Browse listings, make bookings, manage reservations, and leave reviews.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3><i class="bi bi-info-circle"></i>About This Manual</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:14px">This manual covers the Jadevine Travel & Tours platform — a booking system for hotels, safari packages, and car rentals in Zanzibar and Tanzania. The system has three user types, each with distinct access levels.</p>
+    <table class="perm-table">
+      <thead><tr><th>Feature</th><th>Super Admin</th><th>Mini-Admin</th><th>Customer</th></tr></thead>
+      <tbody>
+        <tr><td>Create/edit all listings</td><td><span class="yes">✓</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+        <tr><td>Create own listings</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">—</span></td></tr>
+        <tr><td>Approve/reject listings</td><td><span class="yes">✓</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+        <tr><td>View all bookings</td><td><span class="yes">✓</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+        <tr><td>View own listing bookings</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">—</span></td></tr>
+        <tr><td>Make bookings</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Cancel own bookings</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Manage gallery</td><td><span class="yes">✓</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+        <tr><td>Moderate reviews</td><td><span class="yes">✓</span></td><td>Own listings</td><td><span class="no">—</span></td></tr>
+        <tr><td>Manage users & mini-admins</td><td><span class="yes">✓</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note note-info">
+    <i class="bi bi-info-circle-fill"></i>
+    <p><strong>Portal vs Public Site:</strong> The staff portal is accessed at <code>/portal/</code>. Customers access the main website and their dashboard at <code>/accounts/dashboard/</code>. These are completely separate login systems — a customer account cannot access the portal.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — LOGIN
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-login">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Logging In to the Portal</h2>
+    <p>The staff portal uses a separate login from the public website. You log in with a username and password, not an email address.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-box-arrow-in-right"></i>How to Log In</h3>
+    <div class="note note-info" style="margin-bottom:16px">
+      <i class="bi bi-link-45deg"></i>
+      <p>Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/login/</span> in your browser.</p>
+    </div>
+    <ol class="step-list">
+      <li><p>Enter your <strong>username</strong> in the Username field. Usernames are case-insensitive — "Admin", "admin", and "ADMIN" all work the same.</p></li>
+      <li><p>Enter your <strong>password</strong> and click <strong>Sign In</strong>.</p></li>
+      <li><p>You will be taken to the <strong>Portal Dashboard</strong>.</p></li>
+    </ol>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p><strong>Portal access only:</strong> Only accounts with staff status can log in here. If you see an "Access denied" message, contact the developer to verify your account has been set up correctly.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-lock"></i>Session & Security</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Your session stays active for <strong>8 hours</strong> of inactivity.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Always click <strong>Sign Out</strong> when finished, especially on shared computers.</li>
+      <li><i class="bi bi-check-circle-fill"></i>If changing your password, your session stays active — you will not be logged out.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — DASHBOARD
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-dashboard">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>The Dashboard</h2>
+    <p>The dashboard gives you a real-time overview of the platform — bookings, revenue, pending items, and recent activity.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-speedometer2"></i>What You See</h3>
+    <h4>Pending Approvals (Top Priority)</h4>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">The most important section. Shown at the very top so you never miss a listing waiting for review.</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i><strong>Hotels pending</strong> — count of hotel listings submitted by mini-admins awaiting your review.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Cars pending</strong> — count of car rental listings awaiting review.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Quick links to the pending queues for Hotels and Cars.</li>
+      <li><i class="bi bi-check-circle-fill"></i>If all clear, a green "All listings reviewed" badge appears.</li>
+    </ul>
+    <h4>Booking Statistics</h4>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Today's confirmed bookings and revenue.</li>
+      <li><i class="bi bi-check-circle-fill"></i>This week's and this month's totals.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Breakdown by status: Confirmed, Pending, Cancelled, Completed.</li>
+    </ul>
+    <h4>Recent Bookings Table</h4>
+    <p style="color:var(--text-light);font-size:14px">The last 10 bookings across all services. Click any row to view full booking details.</p>
+    <h4>Unread Contact Messages</h4>
+    <p style="color:var(--text-light);font-size:14px">A count of new contact form submissions with a quick link to the messages section.</p>
+    <h4>Pending Reviews</h4>
+    <p style="color:var(--text-light);font-size:14px">Customer reviews awaiting moderation approval.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-arrow-clockwise"></i>Live Count Updates</h3>
+    <p style="color:var(--text-light);font-size:14px">The pending counts badge in the sidebar and dashboard updates automatically every <strong>60 seconds</strong> — no need to refresh the page.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — HOTELS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-hotels">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Hotels Management</h2>
+    <p>Create, edit, and manage all hotel listings. You have full access to all hotels — including those created by mini-admins.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-list-ul"></i>The Hotel List</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/hotels/</span></p>
+    <p style="color:var(--text-light);font-size:14px">The table shows all hotels with their name, location, star rating, owner (created by), approval status, and visibility. Filter by approval status, location, or owner using the dropdowns above the table.</p>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p>Use the <strong>Pending</strong> filter to quickly see all listings awaiting your review, or click the pending count badge in the sidebar to jump straight to the pending queue.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-plus-circle"></i>Creating a Hotel</h3>
+    <ol class="step-list">
+      <li><p>Click <strong>Add Hotel</strong> on the Hotels page.</p></li>
+      <li><p>Fill in the hotel details: <strong>Name, Location, Description</strong> (English, French, Russian), <strong>Star Rating, Price per Night</strong>, address, and TripAdvisor URL if available.</p></li>
+      <li><p>Add <strong>room types</strong> using the room type section — each room type has its own name, price, max guests, amenities, and refund/POA policy.</p></li>
+      <li><p>Upload <strong>photos</strong> using the photo upload area. You can drag to reorder and set a cover photo.</p></li>
+      <li><p>Click <strong>Save Hotel</strong>. Because you are Super Admin, the listing goes <strong>live immediately</strong> — no approval step required.</p></li>
+    </ol>
+    <div class="note note-success">
+      <i class="bi bi-check-circle-fill"></i>
+      <p><strong>Super Admin listings skip the approval queue.</strong> They are set to Approved and Live on creation automatically. Only mini-admin listings require your review.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-pencil"></i>Editing a Hotel</h3>
+    <ol class="step-list">
+      <li><p>Find the hotel in the list and click <strong>Edit</strong> (pencil icon).</p></li>
+      <li><p>Update any details across the tabs: General Info, Room Types, Photos.</p></li>
+      <li><p>Click <strong>Save Changes</strong>. Your edits go live immediately — no approval reset occurs when a Super Admin edits a listing.</p></li>
+    </ol>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p><strong>Editing a mini-admin's approved listing:</strong> When you edit an approved mini-admin listing, the approval status is <em>not</em> reset — your changes are trusted and take effect immediately.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-camera"></i>Photo Management</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Click <strong>Upload Photos</strong> on the hotel detail page.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Photos upload one at a time in a queue — wait for each to complete before the next starts.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Drag photos in the grid to reorder them.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Click the <strong>star icon</strong> on a photo to set it as the cover (shown on listing cards).</li>
+      <li><i class="bi bi-check-circle-fill"></i>Click the <strong>trash icon</strong> to delete a photo — a confirmation dialog appears first.</li>
+    </ul>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-toggles"></i>Toggling Visibility</h3>
+    <p style="color:var(--text-light);font-size:14px">On any approved hotel, use the <strong>Active/Hidden toggle</strong> to temporarily hide it from the public site without changing its approval status. Useful for hotels that are temporarily closed or under renovation.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — CARS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-cars">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Car Rentals Management</h2>
+    <p>The car rentals section mirrors the hotels structure. All the same rules apply — Super Admin listings go live immediately, mini-admin listings require approval.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-car-front"></i>Car-Specific Fields</h3>
+    <table class="field-table">
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Vehicle Type</td><td>Sedan, SUV, Minibus, 4x4 Safari, or Van</td></tr>
+        <tr><td>Make / Model / Year</td><td>Vehicle make, model, and year of manufacture</td></tr>
+        <tr><td>Capacity</td><td>Number of passengers the vehicle carries</td></tr>
+        <tr><td>Fuel Type</td><td>Petrol or Diesel</td></tr>
+        <tr><td>Transmission</td><td>Manual or Automatic</td></tr>
+        <tr><td>Offers Self-Drive</td><td>Whether customers can rent without a driver</td></tr>
+        <tr><td>Offers Driver</td><td>Whether a driver option is available</td></tr>
+        <tr><td>Driver Languages</td><td>Tick English and/or French to indicate driver language</td></tr>
+        <tr><td>Pickup Locations</td><td>Comma-separated list of available pickup points</td></tr>
+        <tr><td>Is Available</td><td>Toggle off during maintenance periods</td></tr>
+      </tbody>
+    </table>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p><strong>Is Available vs Active:</strong> "Is Available" is a mini-admin-controlled toggle for maintenance. "Active" is the visibility state controlled by approval status. Both must be true for a car to appear publicly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — TOURS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-tours">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Tours & Safaris Management</h2>
+    <p>Tour packages are managed exclusively by Super Admin. There is no mini-admin access to tours and no approval workflow — all tour changes go live immediately.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-compass"></i>Creating a Tour Package</h3>
+    <ol class="step-list">
+      <li><p>Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/tours/</span> and click <strong>Add Tour</strong>.</p></li>
+      <li><p>Fill in the package name (English, French, Russian), tour type (Safari, Beach, Cultural, Climbing, or Combined), and cover image.</p></li>
+      <li><p>Enter duration, max group size, and price per person in USD.</p></li>
+      <li><p>Add highlights, inclusions, and exclusions — one item per line in the text area. They are saved as a list automatically.</p></li>
+      <li><p>Add the <strong>day-by-day itinerary</strong> using the Itinerary Days section. Click <strong>Add Day</strong>, enter the day number, title, and description. Repeat for each day.</p></li>
+      <li><p>Upload tour photos. Note: unlike hotels, tour photos have no cover — the tour cover is the <strong>Cover Image</strong> field set at the top of the form.</p></li>
+      <li><p>Toggle <strong>Featured</strong> if this tour should appear in the homepage Featured Packages section.</p></li>
+      <li><p>Click <strong>Save Tour</strong>.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-list-ol"></i>Managing Itinerary Days</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Days are ordered automatically by day number.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Click the edit icon on a day row to open the edit modal and update its title or description.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Click the trash icon to delete a day — a confirmation appears first.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Each day number must be unique for a package — you cannot have two Day 3s.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — APPROVALS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-approvals">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>The Approvals Queue</h2>
+    <p>When mini-admins create or resubmit listings, they land here for your review before going live on the public site.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-clock-history"></i>How the Workflow Works</h3>
+    <div class="workflow">
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-dot">1</div><div class="wf-connector"></div></div>
+        <div class="wf-body"><h5>Mini-admin creates or edits a listing</h5><p>The listing is saved with status <span class="wf-tag tag-pending">Pending</span>. It is not visible on the public site.</p></div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-dot">2</div><div class="wf-connector"></div></div>
+        <div class="wf-body"><h5>You are notified</h5><p>The pending count badge in the sidebar updates. An email notification is sent to you automatically.</p></div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-dot">3A</div><div class="wf-connector"></div></div>
+        <div class="wf-body"><h5>You Approve</h5><p>Status becomes <span class="wf-tag tag-approved">Approved</span> and the listing goes <span class="wf-tag tag-live">Live</span> on the public site. The mini-admin receives an email notification.</p></div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-dot">3B</div></div>
+        <div class="wf-body"><h5>You Reject</h5><p>Status becomes <span class="wf-tag tag-rejected">Rejected</span>. You must provide a rejection reason. The mini-admin receives an email with your reason and can edit and resubmit.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-check2-circle"></i>Approving a Listing</h3>
+    <ol class="step-list">
+      <li><p>Go to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/hotels/pending/</span> or click the pending count badge in the dashboard.</p></li>
+      <li><p>Click the listing name to open its full detail page — review all the content and photos before deciding.</p></li>
+      <li><p>Click the <strong>Approve</strong> button. The listing goes live immediately. The mini-admin is notified by email.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-x-circle"></i>Rejecting a Listing</h3>
+    <ol class="step-list">
+      <li><p>From the pending queue or the listing detail page, click <strong>Reject</strong>.</p></li>
+      <li><p>A modal appears requiring a <strong>rejection reason</strong> — this is mandatory and will be shown to the mini-admin.</p></li>
+      <li><p>Write a clear, specific reason (e.g. "Photos are too low quality — please upload higher resolution images") and click <strong>Confirm Rejection</strong>.</p></li>
+    </ol>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>The rejection reason is shown directly to the mini-admin in their portal. Write it professionally — it is the guidance they need to fix the listing and resubmit.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-pencil-square"></i>Editing Before Approving</h3>
+    <p style="color:var(--text-light);font-size:14px">If a listing needs only minor corrections (e.g. a typo in the name), you can edit it directly from the detail page before approving. This saves the mini-admin a full resubmit cycle. Your edits as Super Admin do not reset approval state.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — BOOKINGS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-bookings">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Bookings Management</h2>
+    <p>View, filter, and manage all bookings across hotels, tours, and car rentals.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-table"></i>The Bookings Table</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/bookings/</span></p>
+    <p style="color:var(--text-light);font-size:14px">Filter bookings by service type (Hotel / Tour / Car), status, payment status, and date range. The table uses DataTables — you can also export to <strong>Excel</strong>, <strong>PDF</strong>, or <strong>Print</strong> using the buttons above the table.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-calendar-check"></i>Booking Statuses Explained</h3>
+    <table class="field-table">
+      <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status status-pending">Pending Confirmation</span></td><td>Booking created but not yet confirmed. For tours, Jadevine must confirm the date. For Pay Now bookings, payment may be pending.</td></tr>
+        <tr><td><span class="status status-confirmed">Confirmed</span></td><td>Booking is confirmed. Payment received (Pay Now) or slot held (Pay on Arrival).</td></tr>
+        <tr><td><span class="status status-pending">Cancellation Requested</span></td><td>Customer has requested cancellation and a refund is due. Requires manual processing.</td></tr>
+        <tr><td><span class="status status-cancelled">Cancelled</span></td><td>Booking is cancelled. No action needed.</td></tr>
+        <tr><td><span class="status status-confirmed">Completed</span></td><td>Service delivered. Mark this manually after the customer's trip.</td></tr>
+        <tr><td><span class="status status-cancelled">No Show</span></td><td>Pay on Arrival customer did not arrive.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-pencil"></i>Actions You Can Take</h3>
+    <h4>Confirming a Tour Date</h4>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">Tour bookings always start as <span class="status status-pending">Pending Confirmation</span> because the customer selects a preferred date that Jadevine must confirm. Open the booking and click <strong>Confirm Date</strong> to move it to Confirmed.</p>
+    <h4>Marking Pay on Arrival as Paid</h4>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">When a Pay on Arrival customer pays in person, open the booking and click <strong>Mark as Paid</strong> to update the payment status to Paid.</p>
+    <h4>Marking as Completed or No Show</h4>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">After a service is delivered, open the booking and change the status to <strong>Completed</strong>. For no-shows, change to <strong>No Show</strong>.</p>
+    <h4>Processing Cancellation Exceptions</h4>
+    <p style="color:var(--text-light);font-size:14px">If a customer requests a cancellation exception (e.g. emergency), open the booking and use the cancellation override option. You can apply any refund amount and add a written reason.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — REVIEWS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-reviews">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Review Moderation</h2>
+    <p>All customer reviews require moderation before appearing on the public site. You can approve or reject any review across all listings.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-star"></i>How Reviews Work</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Customers can only submit a review for a booking with status <strong>Completed</strong>.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Each booking allows exactly <strong>one review</strong> — duplicates are blocked at database level.</li>
+      <li><i class="bi bi-check-circle-fill"></i>All reviews start as <span class="status status-pending">Pending</span> until you act on them.</li>
+      <li><i class="bi bi-check-circle-fill"></i>A listing's rating badge only appears when it has <strong>1 or more approved reviews</strong>.</li>
+    </ul>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-check2-circle"></i>Approving a Review</h3>
+    <ol class="step-list">
+      <li><p>Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/reviews/</span></p></li>
+      <li><p>Find the review in the Pending tab and click <strong>Approve</strong>. The review appears on the public listing immediately.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-x-circle"></i>Rejecting a Review</h3>
+    <ol class="step-list">
+      <li><p>Click <strong>Reject</strong> on the review row.</p></li>
+      <li><p>Enter a <strong>rejection reason</strong> — this is required and will be shown to the customer on their booking detail page.</p></li>
+      <li><p>Click <strong>Confirm Rejection</strong>.</p></li>
+    </ol>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>Rejection reasons are visible to the customer. Use professional, clear language explaining why the review was not approved (e.g. "Review contains inappropriate language").</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — GALLERY
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-gallery">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Gallery Management</h2>
+    <p>Manage the public gallery page — photos, videos, categories, and which items appear in the homepage Gallery Highlights section.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-folder"></i>Categories</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Gallery items are organised into categories (e.g. Safaris, Beaches, Wildlife, Hotels). You can add, edit, and delete categories using the category panel on the left of the gallery page.</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Each category has a name in English, French, and Russian.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Categories with existing items cannot be deleted — remove items first.</li>
+      <li><i class="bi bi-check-circle-fill"></i>The order of categories controls how they appear in the filter tabs on the public gallery.</li>
+    </ul>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-upload"></i>Uploading Photos</h3>
+    <ol class="step-list">
+      <li><p>Select a category from the left panel to make it active.</p></li>
+      <li><p>Click the <strong>upload area</strong> or drag and drop image files onto it.</p></li>
+      <li><p>Each photo uploads one at a time. Wait for the progress indicator before uploading another.</p></li>
+      <li><p>Add a caption (optional) for each photo after uploading.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-youtube"></i>Adding Videos</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">Paste a YouTube or Vimeo embed URL into the video URL field and click <strong>Add Video</strong>. The video appears in the gallery grid with a play icon.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-star"></i>Featured Items (Homepage Highlights)</h3>
+    <p style="color:var(--text-light);font-size:14px">Toggle the <strong>star icon</strong> on any gallery item to feature it. Featured items appear in the Gallery Highlights section on the homepage. Aim for 6–9 featured items — a mix of photos and videos works best.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-arrows-move"></i>Reordering Items</h3>
+    <p style="color:var(--text-light);font-size:14px">Drag items within the gallery grid to reorder them. The order is saved automatically.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — MESSAGES
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-messages">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Contact Messages</h2>
+    <p>All messages submitted through the Contact Us page appear here for you to review and respond to.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-envelope-open"></i>Viewing Messages</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/messages/</span></p>
+    <p style="color:var(--text-light);font-size:14px">Filter by inquiry type (General, Custom Tour, Partnership, Press/Media) and by status (New, In Progress, Resolved).</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-reply"></i>Replying to a Message</h3>
+    <ol class="step-list">
+      <li><p>Click the message row to open its full detail page.</p></li>
+      <li><p>Read the full message and the sender's contact details.</p></li>
+      <li><p>Type your reply in the <strong>Reply</strong> field and click <strong>Send Reply</strong>.</p></li>
+      <li><p>An email is sent to the customer automatically. Your reply is saved in the admin notes for reference.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-flag"></i>Updating Status</h3>
+    <p style="color:var(--text-light);font-size:14px">Use the status dropdown on the message detail page to mark a message as <strong>In Progress</strong> (you're working on it) or <strong>Resolved</strong> (done). This keeps your inbox organised.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — NEWSLETTER
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-newsletter">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Newsletter Subscribers</h2>
+    <p>Manage email addresses collected through the newsletter signup form on the public website.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-people"></i>Subscriber List</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/newsletter/</span></p>
+    <p style="color:var(--text-light);font-size:14px">The table shows each subscriber's email, date subscribed, and active status. Use the DataTables export buttons to download the full list as Excel, PDF, or CSV for use in your email marketing tools (e.g. Mailchimp).</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-toggle-on"></i>Toggling Active Status</h3>
+    <p style="color:var(--text-light);font-size:14px">Click the toggle button next to any subscriber to activate or deactivate them. Inactive subscribers remain in the list but are not counted as active subscribers.</p>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p>When a customer unsubscribes, they are automatically marked as inactive — you do not need to do this manually.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — USERS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-users">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Customer Accounts</h2>
+    <p>View, search, and manage registered customer accounts. You cannot create customer accounts — customers self-register on the public website.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-people"></i>Searching for a User</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/users/</span></p>
+    <p style="color:var(--text-light);font-size:14px">Use the search box to find a customer by name or email address. Click a user row to view their full profile and complete booking history.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-toggle-off"></i>Deactivating / Reactivating</h3>
+    <p style="color:var(--text-light);font-size:14px">To prevent a customer from logging in (e.g. for abuse or fraud), click <strong>Deactivate</strong> on their profile page. Their account data and booking history are preserved. Click <strong>Reactivate</strong> to restore access.</p>
+    <div class="note note-danger">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>Deactivating a user immediately invalidates their active session — they are logged out straight away.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-key"></i>Password Reset</h3>
+    <p style="color:var(--text-light);font-size:14px">If a customer cannot reset their own password, click <strong>Send Password Reset Email</strong> on their profile page. This sends a reset link to their registered email address.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — MINI-ADMINS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-miniadmins">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Mini-Admin Management</h2>
+    <p>Create and manage partner accounts for hotel or car rental representatives.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-person-plus"></i>Creating a Mini-Admin Account</h3>
+    <ol class="step-list">
+      <li><p>Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/mini-admins/add/</span></p></li>
+      <li><p>Fill in: <strong>Username</strong> (lowercase letters and numbers only, at least 2 characters), <strong>Email</strong>, <strong>First Name</strong>, and <strong>Last Name</strong>.</p></li>
+      <li><p>Click <strong>Create Account</strong>. A welcome email is sent to the mini-admin automatically with their username, a link to set their password, and the portal URL.</p></li>
+    </ol>
+    <div class="note note-success">
+      <i class="bi bi-check-circle-fill"></i>
+      <p><strong>No password is set by you.</strong> The mini-admin receives an email with a secure link to set their own password. This link expires after a limited time — if they miss it, use the Reset Password action to send a new one.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-shield-x"></i>Deactivating a Mini-Admin</h3>
+    <p style="color:var(--text-light);font-size:14px">When a partnership ends, click <strong>Deactivate</strong> on the mini-admin's profile page. They can no longer log in. Their listings remain in the system — you can manage them directly as Super Admin.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-key"></i>Resetting a Mini-Admin's Password</h3>
+    <p style="color:var(--text-light);font-size:14px">Click <strong>Send Password Reset Email</strong> on the mini-admin's profile. A new secure link is sent to their email address.</p>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p><strong>Important:</strong> The password reset link for portal staff goes to <code>/portal/set-password/</code> — not the allauth reset URL. This is intentional. Never share the allauth reset URL with portal staff.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — POLICIES
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-policies">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Cancellation Policies</h2>
+    <p>Configure the refund tiers that apply when customers cancel bookings. Changes apply to new bookings only — existing bookings are unaffected.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-table"></i>Default Policy Tiers</h3>
+    <table class="field-table">
+      <thead><tr><th>Days Before Service</th><th>Refund</th><th>Applies To</th></tr></thead>
+      <tbody>
+        <tr><td>14+ days</td><td>100% (full refund)</td><td>Hotels, Tours, Cars</td></tr>
+        <tr><td>7–13 days</td><td>50% refund</td><td>Hotels, Tours, Cars</td></tr>
+        <tr><td>0–6 days</td><td>0% (no refund)</td><td>Hotels, Tours, Cars</td></tr>
+      </tbody>
+    </table>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>These are configurable — not hardcoded. Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/policies/</span> to edit, add, or deactivate tiers. Changes apply to bookings made after the change only.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-info-circle"></i>Per-Listing Overrides</h3>
+    <p style="color:var(--text-light);font-size:14px">Individual listings (hotels at room-type level, cars and tours at listing level) can be set as <strong>Non-refundable</strong>. When a booking is made for a non-refundable listing, the global policy tiers are bypassed — no refund is issued regardless of cancellation timing. This is set per listing, not here.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SA — SETTINGS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-sa-settings">
+  <div class="section-header">
+    <div class="eyebrow">Super Admin</div>
+    <h2>Portal Settings</h2>
+    <p>Manage your own portal account — username and password.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-person-gear"></i>Changing Your Username</h3>
+    <ol class="step-list">
+      <li><p>Navigate to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/settings/</span></p></li>
+      <li><p>Enter a new username in the Username field and click <strong>Save Username</strong>.</p></li>
+    </ol>
+    <div class="note note-danger">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p><strong>Your next login must use the new username.</strong> The old username will no longer work. Make a note of the new username before saving.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-lock"></i>Changing Your Password</h3>
+    <ol class="step-list">
+      <li><p>On the Settings page, find the <strong>Change Password</strong> card.</p></li>
+      <li><p>Enter your current password, then your new password twice.</p></li>
+      <li><p>Click <strong>Save Password</strong>. Your session remains active — you are not logged out.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MINI-ADMIN — OVERVIEW
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-overview">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Mini-Admin Overview</h2>
+    <p>As a Mini-Admin, you are a partner representative (hotel manager or car rental operator) with access to manage your own listings and view bookings for those listings.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-info-circle"></i>What You Can Do</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Create hotel or car rental listings from scratch.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Upload and manage photos for your listings.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Edit your listings (subject to re-approval if the listing is already live).</li>
+      <li><i class="bi bi-check-circle-fill"></i>View bookings made for your listings (read-only).</li>
+      <li><i class="bi bi-check-circle-fill"></i>Moderate customer reviews for your own hotel and car listings.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Change your own password.</li>
+    </ul>
+    <h3 style="margin-top:20px"><i class="bi bi-x-circle"></i>What You Cannot Do</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill" style="color:var(--danger)"></i>View or edit other partners' listings.</li>
+      <li><i class="bi bi-check-circle-fill" style="color:var(--danger)"></i>Approve or reject listings (including your own).</li>
+      <li><i class="bi bi-check-circle-fill" style="color:var(--danger)"></i>Modify bookings — contact Super Admin for any booking changes.</li>
+      <li><i class="bi bi-check-circle-fill" style="color:var(--danger)"></i>Access gallery, newsletter, contact messages, or user management.</li>
+      <li><i class="bi bi-check-circle-fill" style="color:var(--danger)"></i>Create or manage tour packages — these are Jadevine's own content.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — LOGIN
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-login">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Logging In</h2>
+    <p>You use the same portal login page as the Super Admin. Your access is limited to your own listings and data once inside.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-box-arrow-in-right"></i>First-Time Login</h3>
+    <ol class="step-list">
+      <li><p>Check your email for a <strong>welcome message from Jadevine</strong>. It contains your username and a link to set your password.</p></li>
+      <li><p>Click the link in the email — it takes you to a Set Password page at <code>/portal/set-password/</code>.</p></li>
+      <li><p>Enter and confirm your new password, then click <strong>Save Password</strong>.</p></li>
+      <li><p>You are redirected to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/login/</span> — log in with your username and new password.</p></li>
+    </ol>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>The password setup link <strong>expires</strong>. If you did not receive the email or the link has expired, contact Super Admin to send a new reset link.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-arrow-repeat"></i>Subsequent Logins</h3>
+    <p style="color:var(--text-light);font-size:14px">After your first login, simply go to <span class="url-badge"><i class="bi bi-globe2"></i>/portal/login/</span> and enter your username and password.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — DASHBOARD
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-dashboard">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Your Dashboard</h2>
+    <p>Your dashboard gives you a quick view of your listings and recent booking activity.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-speedometer2"></i>What You See</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i><strong>Listing counts</strong> — how many of your listings are Live, Pending approval, and Rejected.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Recent bookings</strong> — the latest bookings for your listings.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Rejection notices</strong> — if any of your listings were rejected, a notice appears with the rejection reason so you can act quickly.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — CREATE LISTING
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-create">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Creating a Listing</h2>
+    <p>You can create hotel listings and car rental listings. Tours are managed by Jadevine directly.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-building"></i>Creating a Hotel Listing</h3>
+    <ol class="step-list">
+      <li><p>In the sidebar, click <strong>Hotels</strong> → <strong>Add Hotel</strong>.</p></li>
+      <li><p>Fill in the hotel details: Name, Location (Zanzibar or Dar es Salaam), star rating, price per night, and address.</p></li>
+      <li><p>Write a description in <strong>English</strong>. French and Russian descriptions are optional but recommended if you have translations available.</p></li>
+      <li><p>Add <strong>room types</strong> — at least one room type is recommended. Each room type needs a name, max guests, and price per night.</p></li>
+      <li><p>Click <strong>Save Hotel</strong>.</p></li>
+    </ol>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p><strong>Your listing is not live yet.</strong> It is saved with status <span class="status status-pending">Pending</span> and sent to the Super Admin for review. You will receive an email when it is approved or rejected.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-car-front"></i>Creating a Car Rental Listing</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">In the sidebar, click <strong>Cars</strong> → <strong>Add Car</strong>. Fill in the vehicle details (type, make, model, year, capacity, fuel type, transmission, price per day, pickup locations) and save. Same approval process applies.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — EDIT LISTING
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-edit">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Editing a Listing</h2>
+    <p>You can edit any of your own listings. The effect depends on the listing's current approval status.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-diagram-3"></i>What Happens When You Edit</h3>
+    <table class="field-table">
+      <thead><tr><th>Current Status</th><th>What Happens When You Save</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status status-pending">Pending</span></td><td>Your edits are saved. Status stays Pending. The Super Admin will review your updated version.</td></tr>
+        <tr><td><span class="status status-approved">Approved (Live)</span></td><td><strong>The listing is removed from the public site</strong> and reset to Pending. Super Admin must re-approve. You are warned before saving.</td></tr>
+        <tr><td><span class="status status-cancelled">Rejected</span></td><td>Your edits are saved. You can then use the Resubmit button to send it back for review.</td></tr>
+      </tbody>
+    </table>
+    <div class="note note-danger">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p><strong>Editing an approved listing removes it from the public site immediately.</strong> A warning banner will appear before you save. Only proceed if you intend to take the listing offline for editing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — PHOTOS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-photos">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Managing Photos</h2>
+    <p>Good photos are the most important factor in booking conversion. Add as many high-quality images as possible.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-upload"></i>Uploading Photos</h3>
+    <ol class="step-list">
+      <li><p>Open your listing detail page.</p></li>
+      <li><p>Click the <strong>upload area</strong> or click the area to open a file picker.</p></li>
+      <li><p>Select a photo file (JPG or PNG recommended). The upload begins immediately.</p></li>
+      <li><p>Wait for the progress indicator to complete before uploading the next photo.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-star"></i>Setting the Cover Photo (Hotels only)</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">The cover photo is shown on the listing card in search results. Click the <strong>star icon</strong> on any uploaded photo to set it as the cover.</p>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p><strong>Tour packages do not have a cover photo in the photo grid.</strong> The cover is set as a single image field at the top of the tour form — this is managed by Super Admin only.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-arrows-move"></i>Reordering & Deleting</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Drag photos within the grid to change their display order.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Click the <strong>trash icon</strong> to delete a photo. A confirmation dialog appears — confirm to proceed.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — STATUS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-status">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Understanding Approval Status</h2>
+    <p>Your listings go through an approval process before appearing on the public site.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-info-circle"></i>Status Meanings</h3>
+    <table class="field-table">
+      <thead><tr><th>Status</th><th>Meaning</th><th>Publicly Visible?</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status status-pending">Pending</span></td><td>Submitted and awaiting Super Admin review.</td><td>No</td></tr>
+        <tr><td><span class="status status-approved">Approved</span></td><td>Reviewed and approved. The listing is live on the public site.</td><td>Yes</td></tr>
+        <tr><td><span class="status status-cancelled">Rejected</span></td><td>Reviewed and rejected. See the rejection reason for what needs to change.</td><td>No</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-envelope"></i>Email Notifications</h3>
+    <p style="color:var(--text-light);font-size:14px">You receive an email when your listing is approved (with confirmation it is now live) or rejected (with the reason). Check your spam folder if you don't see them.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — RESUBMIT
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-resubmit">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Resubmitting a Rejected Listing</h2>
+    <p>If your listing is rejected, you can fix the issues and resubmit for another review.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-arrow-clockwise"></i>How to Resubmit</h3>
+    <ol class="step-list">
+      <li><p>Open the rejected listing. The <strong>rejection reason</strong> is shown prominently at the top of the page — read it carefully.</p></li>
+      <li><p>Click <strong>Edit</strong> and make the necessary changes as described in the rejection reason.</p></li>
+      <li><p>Save your changes.</p></li>
+      <li><p>Click the <strong>Resubmit for Approval</strong> button that appears after saving. The status changes back to <span class="status status-pending">Pending</span> and the Super Admin is notified.</p></li>
+    </ol>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p>You can resubmit as many times as needed. There is no limit on resubmissions. Address all points in the rejection reason before resubmitting to minimise back-and-forth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — BOOKINGS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-bookings">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>My Bookings</h2>
+    <p>View bookings made for your hotel and car listings. This is a read-only view — you cannot modify bookings.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-calendar-check"></i>Viewing Your Bookings</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">In the sidebar, click <strong>My Bookings</strong>. The table shows bookings for all your listings — customer name, service, dates, booking status, and payment status.</p>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p><strong>You cannot modify bookings.</strong> If a booking needs to be changed, cancelled, or marked as paid, contact the Super Admin and provide the booking reference number.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — REVIEWS
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-reviews">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Review Moderation</h2>
+    <p>You can approve or reject customer reviews for your own hotel and car listings. You cannot moderate tour reviews.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-star"></i>Moderating Reviews</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">In the sidebar, click <strong>My Reviews</strong>. You will only see reviews for your own listings.</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Click <strong>Approve</strong> to make a review visible on the public listing.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Click <strong>Reject</strong> and provide a reason to decline a review. The customer will see your reason.</li>
+    </ul>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>Rejection reasons are shown to customers. Be professional and factual. Do not reject reviews simply because they are negative — only reject if they contain inappropriate content.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MA — PASSWORD
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-ma-password">
+  <div class="section-header">
+    <div class="eyebrow">Mini-Admin</div>
+    <h2>Changing Your Password</h2>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-lock"></i>How to Change Your Password</h3>
+    <ol class="step-list">
+      <li><p>In the sidebar, click <strong>Change Password</strong>.</p></li>
+      <li><p>Enter your current password.</p></li>
+      <li><p>Enter your new password and confirm it.</p></li>
+      <li><p>Click <strong>Save Password</strong>. Your session remains active.</p></li>
+    </ol>
+    <p style="color:var(--text-light);font-size:14px;margin-top:12px">If you have forgotten your current password, contact the Super Admin to send a password reset link to your email.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — OVERVIEW
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-overview">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Customer Guide Overview</h2>
+    <p>This section covers everything you need to book hotels, safari tours, and car rentals with Jadevine Travel & Tours — from creating an account to managing your bookings.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-info-circle"></i>About the Platform</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:14px">Jadevine Travel & Tours is your online booking platform for Zanzibar and Tanzania. You can browse and book:</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i><strong>Hotels</strong> — accommodations in Zanzibar and Dar es Salaam.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Safari & Tour Packages</strong> — guided experiences including Serengeti safaris, beach tours, and cultural packages.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Car Rentals</strong> — vehicles with or without a bilingual driver across Tanzania.</li>
+    </ul>
+    <p style="color:var(--text-light);font-size:14px;margin-top:12px">You must create a free account and verify your email address to complete a booking.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — REGISTER
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-register">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Creating an Account</h2>
+    <p>Registration is free and takes less than two minutes.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-person-plus"></i>How to Register</h3>
+    <ol class="step-list">
+      <li><p>Click <strong>Create Account</strong> in the top navigation bar, or go to <span class="url-badge"><i class="bi bi-globe2"></i>/accounts/signup/</span></p></li>
+      <li><p>Fill in your <strong>First Name, Last Name, Email Address</strong>, and a <strong>Password</strong>.</p></li>
+      <li><p>Choose your <strong>Preferred Language</strong> (English, French, or Russian) — this controls what language the site uses for you.</p></li>
+      <li><p>Click <strong>Create Account</strong>.</p></li>
+      <li><p>Check your email inbox for a <strong>verification link</strong> from Jadevine Travel & Tours.</p></li>
+      <li><p>Click the link in the email — your account is activated and you can now sign in.</p></li>
+    </ol>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p><strong>You must verify your email before you can log in and book.</strong> Check your spam or junk folder if the email doesn't appear within a few minutes. The verification link is valid for 3 days.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-envelope-slash"></i>Didn't Receive the Email?</h3>
+    <ol class="step-list">
+      <li><p>Check your spam/junk folder — automated emails sometimes land there.</p></li>
+      <li><p>Go to <span class="url-badge"><i class="bi bi-globe2"></i>/accounts/login/</span> and attempt to log in. If your email isn't verified, a link to <strong>Resend Verification Email</strong> will appear.</p></li>
+      <li><p>Click it and check your inbox again.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — LOGIN
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-login">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Signing In</h2>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-box-arrow-in-right"></i>How to Sign In</h3>
+    <ol class="step-list">
+      <li><p>Click <strong>Sign In</strong> in the navigation bar or go to <span class="url-badge"><i class="bi bi-globe2"></i>/accounts/login/</span></p></li>
+      <li><p>Enter your <strong>email address</strong> and <strong>password</strong>.</p></li>
+      <li><p>Click <strong>Sign In</strong>. You are taken to your personal dashboard.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-key"></i>Forgot Your Password?</h3>
+    <ol class="step-list">
+      <li><p>On the sign in page, click <strong>Forgot password?</strong></p></li>
+      <li><p>Enter your email address and click <strong>Send Reset Link</strong>.</p></li>
+      <li><p>Check your inbox for a reset email. Click the link inside.</p></li>
+      <li><p>Enter and confirm your new password, then click <strong>Save</strong>.</p></li>
+    </ol>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p>The password reset link expires after 3 days. If it has expired, go through the Forgot Password process again.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — BROWSE
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-browse">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Browsing & Filtering Listings</h2>
+    <p>Find the perfect hotel, tour, or car using the search and filter tools on each listing page.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-building"></i>Hotels</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">Filter by: <strong>Destination</strong> (Zanzibar or Dar es Salaam), <strong>Check-in / Check-out dates</strong>, <strong>Number of guests</strong>, <strong>Star rating</strong>, and <strong>Max price per night</strong>. Results update automatically as you change filters — no need to press a search button.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-compass"></i>Tours & Safaris</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">Filter by: <strong>Tour type</strong> (Safari, Beach, Cultural, Climbing, Combined), <strong>Max duration</strong> in days, and <strong>Max price per person</strong>.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-car-front"></i>Car Rentals</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">Filter by: <strong>Vehicle type</strong> (Sedan, SUV, Minibus, 4x4, Van), <strong>rental mode</strong> (With Driver or Self Drive), and <strong>max price per day</strong>.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-star"></i>Ratings & Reviews</h3>
+    <p style="color:var(--text-light);font-size:14px">Listings with <strong>1 or more approved customer reviews</strong> display a rating badge (out of 10) on the listing card. Click a listing to read full reviews on the detail page.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — BOOK
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-book">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Making a Booking</h2>
+    <p>The booking process is the same across hotels, tours, and cars — a short multi-step flow.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-1-circle"></i>Step 1 — Choose Your Service & Dates</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">On the listing detail page, fill in the booking panel on the right side:</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i><strong>Hotels:</strong> Select a room type, check-in date, check-out date, and number of guests.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Tours:</strong> Enter your preferred start date and number of participants.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Cars:</strong> Select rental mode (self-drive or with driver), pickup location, pickup date, and return date. If self-drive, enter your driver's licence number.</li>
+    </ul>
+    <p style="color:var(--text-light);font-size:14px;margin-top:10px">Add any <strong>special requests</strong> in the text box (optional). Click <strong>Review Booking</strong>.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-2-circle"></i>Step 2 — Review Your Booking</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">A summary page shows your booking details and price breakdown. Check everything carefully:</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Service name and type.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Dates and duration.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Price per unit × number of units = total.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Refund policy (Free cancellation or Non-refundable).</li>
+    </ul>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p><strong>You must be signed in to proceed.</strong> If you are not signed in, you will be prompted to sign in or create an account. Your booking details are saved in your session — you will not lose them.</p>
+    </div>
+    <p style="color:var(--text-light);font-size:14px;margin-top:12px">Select your payment method (see Payment Options section) and click <strong>Confirm Booking</strong>. <strong>Your booking is created at this point</strong> — not before.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-3-circle"></i>Step 3 — Payment</h3>
+    <p style="color:var(--text-light);font-size:14px">If you selected Pay Now, you are directed to the secure payment page to complete the transaction. If you selected Pay on Arrival, you go directly to the confirmation page.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — PAYMENT
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-payment">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Payment Options</h2>
+    <p>Jadevine offers two ways to pay — immediately online, or in person when you arrive in Tanzania.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-credit-card"></i>Pay Now (Online Payment)</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">Pay immediately and securely online. Your booking is confirmed instantly.</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Visa and Mastercard.</li>
+      <li><i class="bi bi-check-circle-fill"></i>M-Pesa, Airtel Money, and other mobile money options.</li>
+      <li><i class="bi bi-check-circle-fill"></i>All payments processed securely through PesaPal — no card details are stored by Jadevine.</li>
+    </ul>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-cash-coin"></i>Pay on Arrival</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">Reserve your slot now and pay in cash or card when you arrive in Tanzania. Your booking is held for you.</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>Available for directly-managed hotels, tours, and car rentals.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Not available for all listings — some require payment in advance.</li>
+      <li><i class="bi bi-check-circle-fill"></i>A confirmation email is sent with your booking reference and the amount due on arrival.</li>
+    </ul>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>If you selected Pay on Arrival and cannot make it, please cancel your booking as early as possible. Cancellation policies apply. No-shows may affect your ability to book in future.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — CONFIRMATION
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-confirmation">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Your Booking Confirmation</h2>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-check-circle"></i>What Happens After Booking</h3>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>You receive a <strong>booking reference number</strong> (format: JDV-YYYY-NNNNN). Save this — you will need it for any enquiries.</li>
+      <li><i class="bi bi-check-circle-fill"></i>A <strong>confirmation email</strong> is sent to your registered email address with all booking details.</li>
+      <li><i class="bi bi-check-circle-fill"></i>For <strong>tour bookings</strong>, your booking shows as <span class="status status-pending">Pending Confirmation</span> — Jadevine will confirm your preferred date within <strong>24–48 hours</strong> by email or WhatsApp.</li>
+      <li><i class="bi bi-check-circle-fill"></i>For <strong>hotel and car Pay Now bookings</strong>, the booking is <span class="status status-confirmed">Confirmed</span> immediately after payment.</li>
+      <li><i class="bi bi-check-circle-fill"></i>You can view and manage all your bookings from <strong>My Dashboard</strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — DASHBOARD
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-dashboard">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>My Dashboard</h2>
+    <p>Your personal hub for managing bookings, profile, and saved listings.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-house"></i>Dashboard Overview</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">After signing in, you land on your dashboard at <span class="url-badge"><i class="bi bi-globe2"></i>/accounts/dashboard/</span></p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i><strong>Upcoming Bookings</strong> — your next 3 upcoming bookings shown as summary cards.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Quick stats</strong> — total upcoming and total past bookings.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Sidebar navigation</strong> — links to all dashboard sections.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — HISTORY
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-history">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Booking History</h2>
+    <p>View all your past and present bookings in one place.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-clock-history"></i>Viewing Your Bookings</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Click <strong>My Bookings</strong> in the dashboard sidebar. The list shows all bookings with their reference, service, dates, and status. Use the status filter to show only Confirmed, Pending, or Cancelled bookings.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-file-earmark-text"></i>Booking Detail Page</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:12px">Click any booking to open its detail page. From here you can:</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i><strong>Download a PDF confirmation</strong> — contains your booking reference, service details, dates, and total paid.</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Cancel the booking</strong> — if the booking is cancellable (see Cancellation section).</li>
+      <li><i class="bi bi-check-circle-fill"></i><strong>Submit a review</strong> — if the booking is completed.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — CANCEL
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-cancel">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Cancelling a Booking</h2>
+    <p>You can cancel a booking from your dashboard. The refund amount depends on how far in advance you cancel.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-calculator"></i>Refund Policy</h3>
+    <table class="field-table">
+      <thead><tr><th>Days Before Service</th><th>Refund</th></tr></thead>
+      <tbody>
+        <tr><td>14 or more days before</td><td>100% — full refund</td></tr>
+        <tr><td>7–13 days before</td><td>50% refund</td></tr>
+        <tr><td>Less than 7 days before</td><td>No refund</td></tr>
+        <tr><td>Non-refundable booking</td><td>No refund regardless of timing</td></tr>
+      </tbody>
+    </table>
+    <div class="note note-warning">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>The booking detail page shows you exactly how many days until your service date and the applicable refund amount <strong>before</strong> you confirm the cancellation. You can review this before proceeding.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-x-circle"></i>How to Cancel</h3>
+    <ol class="step-list">
+      <li><p>Open the booking detail page from <strong>My Bookings</strong>.</p></li>
+      <li><p>Click the <strong>Cancel Booking</strong> button. It only appears if the booking is still cancellable.</p></li>
+      <li><p>A confirmation dialog shows the refund amount you are entitled to.</p></li>
+      <li><p>Optionally enter a reason for cancellation.</p></li>
+      <li><p>Tick <strong>"I understand and confirm this cancellation"</strong> and click <strong>Confirm Cancellation</strong>.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-cash-stack"></i>Receiving Your Refund</h3>
+    <p style="color:var(--text-light);font-size:14px">If a refund applies, Jadevine will process it within <strong>2–3 business days</strong>. The refund is returned to your original payment method. You will receive an email confirming the refund amount.</p>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p><strong>Pay on Arrival bookings</strong> can be cancelled without a refund consideration (since you haven't paid yet). Simply cancel from your dashboard and your slot is released.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — REVIEW
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-review">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Leaving a Review</h2>
+    <p>Share your experience to help other travellers make informed decisions.</p>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-star"></i>When Can You Review?</h3>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:10px">You can submit a review for a booking once its status is <span class="status status-confirmed">Completed</span>. The review form appears automatically on the booking detail page when this condition is met.</p>
+    <ul class="check-list">
+      <li><i class="bi bi-check-circle-fill"></i>You can submit <strong>one review per booking</strong>.</li>
+      <li><i class="bi bi-check-circle-fill"></i>Reviews are moderated before appearing publicly — this typically takes 1–2 business days.</li>
+    </ul>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-pencil"></i>How to Submit a Review</h3>
+    <ol class="step-list">
+      <li><p>Open the completed booking detail page from <strong>My Bookings</strong>.</p></li>
+      <li><p>Scroll down to the <strong>Your Review</strong> section.</p></li>
+      <li><p>Click a star to set your rating (1–10 scale).</p></li>
+      <li><p>Optionally write a comment about your experience.</p></li>
+      <li><p>Click <strong>Submit Review</strong>.</p></li>
+    </ol>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-clock"></i>After Submitting</h3>
+    <p style="color:var(--text-light);font-size:14px">Your review shows as <span class="status status-pending">Pending</span> on your booking detail page while it awaits moderation. Once approved, it appears on the public listing. If rejected, the reason will be shown on your booking detail page.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CUSTOMER — PROFILE
+══════════════════════════════════════════════════ -->
+<section class="content-section" id="section-cu-profile">
+  <div class="section-header">
+    <div class="eyebrow">Customer</div>
+    <h2>Profile & Password</h2>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-person"></i>Updating Your Profile</h3>
+    <ol class="step-list">
+      <li><p>Click <strong>My Profile</strong> in the dashboard sidebar or go to <span class="url-badge"><i class="bi bi-globe2"></i>/accounts/profile/</span></p></li>
+      <li><p>Update your <strong>First Name, Last Name, Phone Number, Nationality</strong>, or <strong>Preferred Language</strong>.</p></li>
+      <li><p>To change your profile photo, click the photo area and select an image file (JPG, PNG, or GIF, max 5MB).</p></li>
+      <li><p>Click <strong>Save Changes</strong>.</p></li>
+    </ol>
+    <div class="note note-info">
+      <i class="bi bi-info-circle-fill"></i>
+      <p><strong>Your email address cannot be changed from the profile page.</strong> If you need to change your email, contact Jadevine support.</p>
+    </div>
+  </div>
+  <div class="subsection">
+    <h3><i class="bi bi-lock"></i>Changing Your Password</h3>
+    <ol class="step-list">
+      <li><p>On your profile page, click <strong>Change Password</strong>.</p></li>
+      <li><p>Enter your current password, then your new password twice.</p></li>
+      <li><p>Click <strong>Update Password</strong>.</p></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- Back to top -->
+<button id="backTop" title="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+<script>
+// ── SECTION NAVIGATION ──
+function showSection(id){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  var el=document.getElementById('section-'+id);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));
+  document.querySelectorAll('[data-section="'+id+'"]').forEach(l=>l.classList.add('active'));
+  window.scrollTo({top:0,behavior:'smooth'});
+  // close sidebar on mobile
+  if(window.innerWidth<=700){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+}
+
+// sidebar links
+document.querySelectorAll('.sidebar-link[data-section]').forEach(function(link){
+  link.addEventListener('click',function(){
+    showSection(this.dataset.section);
+  });
+});
+
+// ── ROLE TABS ──
+function switchRole(role, firstSection){
+  document.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('[data-role="'+role+'"]').classList.add('active');
+  document.querySelectorAll('.role-section').forEach(s=>s.classList.remove('visible'));
+  document.getElementById('nav-'+role).classList.add('visible');
+  if(firstSection) showSection(firstSection);
+}
+document.querySelectorAll('.role-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    var role=this.dataset.role;
+    var firstLink=document.querySelector('#nav-'+role+' .sidebar-link[data-section]');
+    switchRole(role, firstLink?firstLink.dataset.section:null);
+  });
+});
+
+// ── HAMBURGER ──
+var hamburger=document.getElementById('hamburger');
+var sidebar=document.getElementById('sidebar');
+var overlay=document.getElementById('overlay');
+hamburger.addEventListener('click',function(){
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click',function(){
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+
+// ── BACK TO TOP ──
+var backTop=document.getElementById('backTop');
+window.addEventListener('scroll',function(){
+  backTop.classList.toggle('visible',window.scrollY>300);
+});
+backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+// ── SEARCH ──
+var searchInput=document.getElementById('searchInput');
+var originalContent={};
+var allSections=document.querySelectorAll('.content-section');
+allSections.forEach(function(s){originalContent[s.id]=s.innerHTML;});
+
+function clearHighlights(){
+  allSections.forEach(function(s){s.innerHTML=originalContent[s.id];});
+}
+
+searchInput.addEventListener('input',function(){
+  var q=this.value.trim().toLowerCase();
+  clearHighlights();
+  if(q.length<2) return;
+  var re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+  var firstMatch=null;
+  allSections.forEach(function(s){
+    var text=s.textContent;
+    if(text.toLowerCase().includes(q)){
+      if(!firstMatch) firstMatch=s.id.replace('section-','');
+      s.innerHTML=s.innerHTML.replace(re,'<mark class="highlight">$1</mark>');
+    }
+  });
+  if(firstMatch) showSection(firstMatch);
+});
+
+// init
+showSection('overview');
+</script>
+</body>
+</html>

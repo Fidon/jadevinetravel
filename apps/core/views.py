@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 from apps.tours.models import TourPackage
 from apps.gallery.models import GalleryItem
+from django.shortcuts import render
 
 
 class HomeView(TemplateView):
@@ -36,3 +37,10 @@ class AboutView(TemplateView):
         # {'name': '...', 'role': '...', 'bio': '...', 'photo': '...'}
         ctx['team_members'] = []
         return ctx
+
+
+class ManualView(TemplateView):
+    template_name = 'core/manual.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
