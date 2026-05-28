@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
 from django.core.serializers.json import DjangoJSONEncoder
 
-from apps.hotels.models import Hotel, HotelPhoto, HotelRoomType
+from apps.hotels.models import Hotel, HotelPhoto, HotelRoomType, HotelRoomTypePhoto
 from apps.portal.mixins import (
     PortalRequiredMixin,
     SuperAdminRequiredMixin,
@@ -22,21 +22,11 @@ from apps.portal.forms import HotelForm, HotelRoomTypeForm, HotelRejectionForm
 # ---------------------------------------------------------------------------
 
 def _get_portal_hotel(user, pk):
-    """
-    Returns the Hotel with pk, scoped by role.
-    Mini-admin: only their own hotels. Super Admin: any hotel.
-    Raises 404 if not found or not accessible.
-    """
     qs = get_accessible_hotels(user)
     return get_object_or_404(qs, pk=pk)
 
 
 def _set_approval_on_create(hotel, user):
-    """
-    Apply approval state at creation time based on who is creating.
-    Super Admin → approved + active immediately (skips queue).
-    Mini-Admin  → pending + inactive (enters review queue).
-    """
     if is_mini_admin(user):
         hotel.created_by = user
         hotel.approval_status = 'pending'
@@ -47,15 +37,10 @@ def _set_approval_on_create(hotel, user):
 
 
 def _reset_approval_on_edit(hotel, user):
-    """
-    Called when a mini-admin edits an APPROVED listing.
-    Resets to pending and removes from public site.
-    Super Admin edits are trusted — no state change.
-    """
     if is_mini_admin(user) and hotel.approval_status == 'approved':
         hotel.approval_status = 'pending'
         hotel.is_active = False
-        return True  # caller uses this to show warning or notify SA
+        return True
     return False
 
 
@@ -69,7 +54,6 @@ class PortalHotelListView(PortalRequiredMixin, View):
     def get(self, request):
         qs = get_accessible_hotels(request.user).prefetch_related('photos')
 
-        # Filters
         status_filter = request.GET.get('status', '').strip()
         location_filter = request.GET.get('location', '').strip()
         search_query = request.GET.get('q', '').strip()
@@ -81,7 +65,6 @@ class PortalHotelListView(PortalRequiredMixin, View):
         if search_query:
             qs = qs.filter(name__icontains=search_query)
 
-        # Pending count for this user's accessible hotels
         pending_count = get_accessible_hotels(request.user).filter(
             approval_status='pending'
         ).count()
@@ -120,7 +103,7 @@ class PortalPendingHotelsView(SuperAdminRequiredMixin, View):
 
 
 # ===========================================================================
-# HOTEL DETAIL (portal view — read + management actions)
+# HOTEL DETAIL
 # ===========================================================================
 
 class PortalHotelDetailView(PortalRequiredMixin, View):
@@ -128,12 +111,21 @@ class PortalHotelDetailView(PortalRequiredMixin, View):
 
     def get(self, request, pk):
         hotel = _get_portal_hotel(request.user, pk)
-        room_types = hotel.room_types.all().order_by('price_per_night')
+        room_types = hotel.room_types.prefetch_related('room_photos').order_by('price_per_night')
         photos = hotel.photos.all().order_by('order')
         rejection_form = HotelRejectionForm()
         room_types_data = []
-        
+
         for rt in room_types:
+            # Serialize room type photos for JS
+            rt_photos = [
+                {
+                    'id': p.pk,
+                    'url': p.image.url,
+                    'caption': p.caption or '',
+                }
+                for p in rt.room_photos.all()
+            ]
             room_types_data.append({
                 'id': rt.pk,
                 'name': rt.name,
@@ -144,11 +136,16 @@ class PortalHotelDetailView(PortalRequiredMixin, View):
                 'max_guests': rt.max_guests,
                 'amenities': rt.amenities,
                 'discount_percent': rt.discount_percent,
-                'discount_expires_at': rt.discount_expires_at.strftime('%Y-%m-%dT%H:%M') if rt.discount_expires_at else '',
+                'discount_expires_at': (
+                    rt.discount_expires_at.strftime('%Y-%m-%dT%H:%M')
+                    if rt.discount_expires_at else ''
+                ),
                 'is_refundable': rt.is_refundable,
                 'allows_pay_on_arrival': rt.allows_pay_on_arrival,
+                'allows_pets': rt.allows_pets,
                 'is_available': rt.is_available,
                 'edit_url': f'/portal/hotels/{pk}/rooms/{rt.pk}/edit/',
+                'photos': rt_photos,
             })
 
         context = {
@@ -171,12 +168,11 @@ class PortalHotelCreateView(PortalRequiredMixin, View):
     template_name = 'portal/portal_hotel_form.html'
 
     def get(self, request):
-        context = {
+        return render(request, self.template_name, {
             'form': HotelForm(),
             'is_edit': False,
             'mini_admin': is_mini_admin(request.user),
-        }
-        return render(request, self.template_name, context)
+        })
 
     def post(self, request):
         form = HotelForm(request.POST)
@@ -186,29 +182,21 @@ class PortalHotelCreateView(PortalRequiredMixin, View):
             hotel.save()
 
             if is_mini_admin(request.user):
-                # Notify Super Admin that a new listing is pending review
-                async_task(
-                    'apps.portal.tasks.notify_superadmin_new_listing',
-                    'hotel', hotel.pk
-                )
+                async_task('apps.portal.tasks.notify_superadmin_new_listing', 'hotel', hotel.pk)
                 messages.success(
                     request,
                     _('Hotel submitted for review. You will be notified once approved.')
                 )
             else:
-                messages.success(
-                    request,
-                    _('Hotel created and published successfully.')
-                )
+                messages.success(request, _('Hotel created and published successfully.'))
 
             return redirect('portal:hotel_detail', pk=hotel.pk)
 
-        context = {
+        return render(request, self.template_name, {
             'form': form,
             'is_edit': False,
             'mini_admin': is_mini_admin(request.user),
-        }
-        return render(request, self.template_name, context)
+        })
 
 
 # ===========================================================================
@@ -220,18 +208,15 @@ class PortalHotelEditView(PortalRequiredMixin, View):
 
     def get(self, request, pk):
         hotel = _get_portal_hotel(request.user, pk)
-        context = {
+        return render(request, self.template_name, {
             'form': HotelForm(instance=hotel),
             'hotel': hotel,
             'is_edit': True,
             'mini_admin': is_mini_admin(request.user),
-            # Warn mini-admin before they save an approved listing
             'show_approval_warning': (
-                is_mini_admin(request.user) and
-                hotel.approval_status == 'approved'
+                is_mini_admin(request.user) and hotel.approval_status == 'approved'
             ),
-        }
-        return render(request, self.template_name, context)
+        })
 
     def post(self, request, pk):
         hotel = _get_portal_hotel(request.user, pk)
@@ -243,11 +228,7 @@ class PortalHotelEditView(PortalRequiredMixin, View):
             hotel.save()
 
             if was_reset:
-                # Mini-admin edited an approved listing — notify Super Admin
-                async_task(
-                    'apps.portal.tasks.notify_superadmin_new_listing',
-                    'hotel', hotel.pk
-                )
+                async_task('apps.portal.tasks.notify_superadmin_new_listing', 'hotel', hotel.pk)
                 messages.warning(
                     request,
                     _('Your changes have been saved. This listing has been '
@@ -255,20 +236,27 @@ class PortalHotelEditView(PortalRequiredMixin, View):
                 )
             else:
                 messages.success(request, _('Hotel updated successfully.'))
+                if (
+                    not is_mini_admin(request.user)
+                    and hotel.created_by
+                    and hasattr(hotel.created_by, 'miniadminprofile')
+                ):
+                    async_task(
+                        'apps.portal.tasks.send_listing_edited_by_admin_email',
+                        'hotel', hotel.pk, request.user.pk,
+                    )
 
             return redirect('portal:hotel_detail', pk=hotel.pk)
 
-        context = {
+        return render(request, self.template_name, {
             'form': form,
             'hotel': hotel,
             'is_edit': True,
             'mini_admin': is_mini_admin(request.user),
             'show_approval_warning': (
-                is_mini_admin(request.user) and
-                hotel.approval_status == 'approved'
+                is_mini_admin(request.user) and hotel.approval_status == 'approved'
             ),
-        }
-        return render(request, self.template_name, context)
+        })
 
 
 # ===========================================================================
@@ -276,7 +264,6 @@ class PortalHotelEditView(PortalRequiredMixin, View):
 # ===========================================================================
 
 class PortalHotelDeleteView(SuperAdminRequiredMixin, View):
-    """POST only. GET redirects to detail."""
 
     def get(self, request, pk):
         return redirect('portal:hotel_detail', pk=pk)
@@ -294,7 +281,6 @@ class PortalHotelDeleteView(SuperAdminRequiredMixin, View):
 # ===========================================================================
 
 class PortalHotelApproveView(SuperAdminRequiredMixin, View):
-    """POST only."""
 
     def post(self, request, pk):
         hotel = get_object_or_404(Hotel, pk=pk)
@@ -308,18 +294,13 @@ class PortalHotelApproveView(SuperAdminRequiredMixin, View):
         hotel.rejection_reason = ''
         hotel.save(update_fields=['approval_status', 'is_active', 'rejection_reason'])
 
-        # Notify mini-admin if listing was created by one
         if hotel.created_by and hasattr(hotel.created_by, 'miniadminprofile'):
-            async_task(
-                'apps.portal.tasks.send_listing_approved_email',
-                'hotel', hotel.pk
-            )
+            async_task('apps.portal.tasks.send_listing_approved_email', 'hotel', hotel.pk)
 
         messages.success(
             request,
             _(f'"{hotel.name}" has been approved and is now live on the public site.')
         )
-        # Return to pending queue if that's where we came from
         next_url = request.POST.get('next', '')
         if next_url == 'pending':
             return redirect('portal:pending_hotels')
@@ -331,14 +312,12 @@ class PortalHotelApproveView(SuperAdminRequiredMixin, View):
 # ===========================================================================
 
 class PortalHotelRejectView(SuperAdminRequiredMixin, View):
-    """POST only. Requires rejection_reason in POST body."""
 
     def post(self, request, pk):
         hotel = get_object_or_404(Hotel, pk=pk)
         form = HotelRejectionForm(request.POST)
 
         if not form.is_valid():
-            # Form invalid — return to detail page with form errors in message
             error_msg = ' '.join(
                 str(e) for errors in form.errors.values() for e in errors
             )
@@ -350,12 +329,8 @@ class PortalHotelRejectView(SuperAdminRequiredMixin, View):
         hotel.rejection_reason = form.cleaned_data['rejection_reason']
         hotel.save(update_fields=['approval_status', 'is_active', 'rejection_reason'])
 
-        # Notify mini-admin
         if hotel.created_by and hasattr(hotel.created_by, 'miniadminprofile'):
-            async_task(
-                'apps.portal.tasks.send_listing_rejected_email',
-                'hotel', hotel.pk
-            )
+            async_task('apps.portal.tasks.send_listing_rejected_email', 'hotel', hotel.pk)
 
         messages.success(
             request,
@@ -368,11 +343,10 @@ class PortalHotelRejectView(SuperAdminRequiredMixin, View):
 
 
 # ===========================================================================
-# RESUBMIT — Mini-Admin only (rejected → pending)
+# RESUBMIT — Mini-Admin only
 # ===========================================================================
 
 class PortalHotelResubmitView(PortalRequiredMixin, View):
-    """POST only. Mini-admin resubmits a rejected listing."""
 
     def post(self, request, pk):
         hotel = _get_portal_hotel(request.user, pk)
@@ -386,24 +360,16 @@ class PortalHotelResubmitView(PortalRequiredMixin, View):
         hotel.is_active = False
         hotel.save(update_fields=['approval_status', 'rejection_reason', 'is_active'])
 
-        async_task(
-            'apps.portal.tasks.notify_superadmin_new_listing',
-            'hotel', hotel.pk
-        )
-
-        messages.success(
-            request,
-            _('Your listing has been resubmitted for review.')
-        )
+        async_task('apps.portal.tasks.notify_superadmin_new_listing', 'hotel', hotel.pk)
+        messages.success(request, _('Your listing has been resubmitted for review.'))
         return redirect('portal:hotel_detail', pk=pk)
 
 
 # ===========================================================================
-# PHOTO MANAGEMENT — AJAX endpoints
+# HOTEL PHOTO MANAGEMENT — AJAX
 # ===========================================================================
 
 class PortalHotelPhotoUploadView(PortalRequiredMixin, View):
-    """Accepts a single image file. Returns JSON."""
 
     def post(self, request, hpk):
         hotel = _get_portal_hotel(request.user, hpk)
@@ -412,7 +378,6 @@ class PortalHotelPhotoUploadView(PortalRequiredMixin, View):
         if not image:
             return JsonResponse({'success': False, 'error': _('No image provided.')}, status=400)
 
-        # Basic type check — Pillow validates properly on save
         allowed = ('image/jpeg', 'image/png', 'image/webp')
         if image.content_type not in allowed:
             return JsonResponse(
@@ -420,16 +385,16 @@ class PortalHotelPhotoUploadView(PortalRequiredMixin, View):
                 status=400
             )
 
-        # Max 8 MB
         if image.size > 8 * 1024 * 1024:
             return JsonResponse(
                 {'success': False, 'error': _('Image must be under 8 MB.')},
                 status=400
             )
 
-        # First photo for this hotel → set as cover automatically
         is_first = not hotel.photos.exists()
-        next_order = (hotel.photos.order_by('-order').values_list('order', flat=True).first() or 0) + 1
+        next_order = (
+            hotel.photos.order_by('-order').values_list('order', flat=True).first() or 0
+        ) + 1
 
         photo = HotelPhoto.objects.create(
             hotel=hotel,
@@ -454,10 +419,9 @@ class PortalHotelPhotoDeleteView(PortalRequiredMixin, View):
         hotel = _get_portal_hotel(request.user, hpk)
         photo = get_object_or_404(HotelPhoto, pk=pk, hotel=hotel)
         was_cover = photo.is_cover
-        photo.image.delete(save=False)  # delete file from storage
+        photo.image.delete(save=False)
         photo.delete()
 
-        # If deleted photo was the cover, assign cover to the next available
         if was_cover:
             next_photo = hotel.photos.order_by('order').first()
             if next_photo:
@@ -472,12 +436,9 @@ class PortalHotelPhotoSetCoverView(PortalRequiredMixin, View):
     def post(self, request, hpk, pk):
         hotel = _get_portal_hotel(request.user, hpk)
         photo = get_object_or_404(HotelPhoto, pk=pk, hotel=hotel)
-
-        # Clear all covers for this hotel, then set the new one
         hotel.photos.update(is_cover=False)
         photo.is_cover = True
         photo.save(update_fields=['is_cover'])
-
         return JsonResponse({'success': True, 'photo_id': photo.pk})
 
 
@@ -488,22 +449,101 @@ class PortalHotelPhotoReorderView(PortalRequiredMixin, View):
 
         try:
             data = json.loads(request.body)
-            order_list = data.get('order', [])  # list of photo IDs in new order
+            order_list = data.get('order', [])
         except (json.JSONDecodeError, AttributeError):
             return JsonResponse({'success': False, 'error': 'Invalid JSON.'}, status=400)
 
         if not isinstance(order_list, list):
             return JsonResponse({'success': False, 'error': 'Expected a list.'}, status=400)
 
-        # Validate all IDs belong to this hotel before writing anything
         valid_ids = set(hotel.photos.values_list('id', flat=True))
         for idx, photo_id in enumerate(order_list):
             if photo_id not in valid_ids:
-                return JsonResponse(
-                    {'success': False, 'error': 'Invalid photo ID.'},
-                    status=400
-                )
+                return JsonResponse({'success': False, 'error': 'Invalid photo ID.'}, status=400)
             HotelPhoto.objects.filter(pk=photo_id).update(order=idx)
+
+        return JsonResponse({'success': True})
+
+
+# ===========================================================================
+# ROOM TYPE PHOTO MANAGEMENT — AJAX
+# Same pattern as hotel photos but scoped to HotelRoomType.
+# No is_cover concept — cover is first photo by order.
+# ===========================================================================
+
+class PortalRoomTypePhotoUploadView(PortalRequiredMixin, View):
+
+    def post(self, request, hpk, rpk):
+        hotel = _get_portal_hotel(request.user, hpk)
+        room_type = get_object_or_404(HotelRoomType, pk=rpk, hotel=hotel)
+        image = request.FILES.get('image')
+
+        if not image:
+            return JsonResponse({'success': False, 'error': _('No image provided.')}, status=400)
+
+        allowed = ('image/jpeg', 'image/png', 'image/webp')
+        if image.content_type not in allowed:
+            return JsonResponse(
+                {'success': False, 'error': _('Only JPEG, PNG, and WebP images are accepted.')},
+                status=400
+            )
+
+        if image.size > 8 * 1024 * 1024:
+            return JsonResponse(
+                {'success': False, 'error': _('Image must be under 8 MB.')},
+                status=400
+            )
+
+        next_order = (
+            room_type.room_photos.order_by('-order').values_list('order', flat=True).first() or 0
+        ) + 1
+
+        photo = HotelRoomTypePhoto.objects.create(
+            room_type=room_type,
+            image=image,
+            caption=request.POST.get('caption', '').strip() or None,
+            order=next_order,
+        )
+
+        return JsonResponse({
+            'success': True,
+            'photo_id': photo.pk,
+            'url': photo.image.url,
+            'caption': photo.caption or '',
+        })
+
+
+class PortalRoomTypePhotoDeleteView(PortalRequiredMixin, View):
+
+    def post(self, request, hpk, rpk, pk):
+        hotel = _get_portal_hotel(request.user, hpk)
+        room_type = get_object_or_404(HotelRoomType, pk=rpk, hotel=hotel)
+        photo = get_object_or_404(HotelRoomTypePhoto, pk=pk, room_type=room_type)
+        photo.image.delete(save=False)
+        photo.delete()
+        return JsonResponse({'success': True})
+
+
+class PortalRoomTypePhotoReorderView(PortalRequiredMixin, View):
+
+    def post(self, request, hpk, rpk):
+        hotel = _get_portal_hotel(request.user, hpk)
+        room_type = get_object_or_404(HotelRoomType, pk=rpk, hotel=hotel)
+
+        try:
+            data = json.loads(request.body)
+            order_list = data.get('order', [])
+        except (json.JSONDecodeError, AttributeError):
+            return JsonResponse({'success': False, 'error': 'Invalid JSON.'}, status=400)
+
+        if not isinstance(order_list, list):
+            return JsonResponse({'success': False, 'error': 'Expected a list.'}, status=400)
+
+        valid_ids = set(room_type.room_photos.values_list('id', flat=True))
+        for idx, photo_id in enumerate(order_list):
+            if photo_id not in valid_ids:
+                return JsonResponse({'success': False, 'error': 'Invalid photo ID.'}, status=400)
+            HotelRoomTypePhoto.objects.filter(pk=photo_id).update(order=idx)
 
         return JsonResponse({'success': True})
 
@@ -524,7 +564,6 @@ class PortalHotelRoomAddView(PortalRequiredMixin, View):
             room.save()
             messages.success(request, _(f'Room type "{room.name}" added.'))
         else:
-            # Flatten errors into a single message for the flash banner
             errors = '; '.join(
                 f'{field}: {", ".join(errs)}'
                 for field, errs in form.errors.items()

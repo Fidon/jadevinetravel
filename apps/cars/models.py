@@ -60,19 +60,17 @@ class CarRental(models.Model):
     description_fr = models.TextField(blank=True, null=True)
     description_ru = models.TextField(blank=True, null=True)
 
-    # Ownership & approval — same pattern as Hotel
+    # Ownership & approval
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
+        null=True, blank=True,
         related_name='cars_created',
     )
     approval_status = models.CharField(
         max_length=10, choices=APPROVAL_CHOICES, default='pending'
     )
     rejection_reason = models.TextField(blank=True, null=True)
-
     is_available = models.BooleanField(
         default=True,
         verbose_name=_('Available for Booking'),
@@ -81,30 +79,28 @@ class CarRental(models.Model):
     is_active = models.BooleanField(
         default=False,
         verbose_name=_('Active / Visible'),
-        help_text=_('True only when approval_status = approved')
     )
+
     # Discount
     discount_percent = models.PositiveSmallIntegerField(
         default=0,
         verbose_name=_('Discount (%)'),
-        help_text=_('0 = no discount. Applied to price per day.')
     )
-    discount_expires_at = models.DateTimeField(
-        blank=True, null=True,
-        verbose_name=_('Discount Expires At'),
-        help_text=_('Leave blank for a permanent discount.')
-    )
+    discount_expires_at = models.DateTimeField(blank=True, null=True)
 
-    # Per-vehicle booking policy
+    # Booking policy
     is_refundable = models.BooleanField(
         default=True,
         verbose_name=_('Refundable'),
-        help_text=_('If unchecked, this vehicle is non-refundable regardless of cancellation policy.')
     )
     allows_pay_on_arrival = models.BooleanField(
         default=True,
         verbose_name=_('Allows Pay on Arrival'),
-        help_text=_('If unchecked, only Pay Now is accepted for this vehicle.')
+    )
+    allows_pets = models.BooleanField(
+        default=False,
+        verbose_name=_('Pets Allowed'),
+        help_text=_('If unchecked, pets are not permitted in this vehicle.')
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -131,9 +127,8 @@ class CarRental(models.Model):
 
     def get_description(self, lang='en'):
         return getattr(self, f'description_{lang}', None) or self.description_en
-    
+
     def get_discounted_price(self):
-        """Returns discounted price if active, else None."""
         from django.utils import timezone
         from decimal import Decimal
 
@@ -145,7 +140,6 @@ class CarRental(models.Model):
         return (self.price_per_day * factor).quantize(Decimal('0.01'))
 
     def get_display_price(self):
-        """Price the customer actually pays per day."""
         return self.get_discounted_price() or self.price_per_day
 
     @property
@@ -162,9 +156,7 @@ class CarRental(models.Model):
 
 
 class CarPhoto(models.Model):
-    car = models.ForeignKey(
-        CarRental, on_delete=models.CASCADE, related_name='photos'
-    )
+    car = models.ForeignKey(CarRental, on_delete=models.CASCADE, related_name='photos')
     image = models.ImageField(upload_to='cars/photos/')
     is_cover = models.BooleanField(default=False)
     order = models.PositiveIntegerField(default=0)

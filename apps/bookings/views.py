@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse
 
 from .models import Booking
 from .forms import HotelBookingForm, CarBookingForm, PaymentModeForm, TourBookingForm
@@ -12,10 +12,6 @@ from apps.hotels.models import Hotel, HotelRoomType
 from apps.cars.models import CarRental
 from apps.tours.models import TourPackage
 
-
-# ---------------------------------------------------------------------------
-# Session key constant
-# ---------------------------------------------------------------------------
 SESSION_BOOKING_KEY = 'pending_booking'
 
 
@@ -24,8 +20,11 @@ SESSION_BOOKING_KEY = 'pending_booking'
 # ---------------------------------------------------------------------------
 class HotelBookingView(View):
     """
-    POST only. Receives booking form from hotel detail page.
-    Stores validated data + snapshotted price in session. No DB write.
+    POST only. Validates form, enforces guest/pet/rooms rules, snapshots
+    price via get_display_price(), stores to session. No DB write.
+
+    Price formula: price_per_night × nights × num_rooms
+    Guest cap: (num_adults + num_children + num_infants) <= max_guests × num_rooms
     """
 
     def post(self, request, slug, *args, **kwargs):
@@ -46,12 +45,29 @@ class HotelBookingView(View):
             messages.error(request, _('Selected room type is not available.'))
             return redirect('hotels:detail', slug=slug)
 
-        num_guests = form.cleaned_data['num_guests']
-        if num_guests > room_type.max_guests:
+        num_adults = form.cleaned_data['num_adults']
+        num_children = form.cleaned_data['num_children']
+        num_infants = form.cleaned_data['num_infants']
+        num_pets = form.cleaned_data['num_pets']
+        num_rooms = form.cleaned_data['num_rooms']
+        total_occupants = num_adults + num_children + num_infants
+
+        # Enforce max guests: total people across ALL booked rooms
+        max_total = room_type.max_guests * num_rooms
+        if total_occupants > max_total:
             messages.error(
                 request,
-                _('This room type accommodates a maximum of %(max)s guests.')
-                % {'max': room_type.max_guests}
+                _('%(rooms)s room(s) of this type accommodate a maximum of %(max)s guests total.')
+                % {'rooms': num_rooms, 'max': max_total}
+            )
+            request.session['booking_prefill'] = request.POST.dict()
+            return redirect('hotels:detail', slug=slug)
+
+        # Enforce pets policy server-side — UI toggle alone is not sufficient
+        if num_pets > 0 and not room_type.allows_pets:
+            messages.error(
+                request,
+                _('This room type does not allow pets.')
             )
             request.session['booking_prefill'] = request.POST.dict()
             return redirect('hotels:detail', slug=slug)
@@ -60,7 +76,7 @@ class HotelBookingView(View):
         check_out = form.cleaned_data['check_out_date']
         nights = (check_out - check_in).days
         price_per_night = room_type.get_display_price()
-        total_price = price_per_night * nights
+        total_price = price_per_night * nights * num_rooms
 
         request.session[SESSION_BOOKING_KEY] = {
             'service_type': 'hotel',
@@ -72,7 +88,13 @@ class HotelBookingView(View):
             'check_in_date': str(check_in),
             'check_out_date': str(check_out),
             'nights': nights,
-            'num_guests': num_guests,
+            'num_rooms': num_rooms,
+            'num_adults': num_adults,
+            'num_children': num_children,
+            'num_infants': num_infants,
+            'num_pets': num_pets,
+            # Legacy aggregate — kept for summary/confirmation display
+            'num_guests': total_occupants,
             'special_requests': form.cleaned_data.get('special_requests', ''),
             'price_per_night': str(price_per_night),
             'total_price': str(total_price),
@@ -80,6 +102,7 @@ class HotelBookingView(View):
             'created_at': str(timezone.now()),
             'allows_pay_on_arrival': room_type.allows_pay_on_arrival,
             'is_refundable': room_type.is_refundable,
+            'allows_pets': room_type.allows_pets,
         }
 
         if not request.user.is_authenticated:
@@ -114,6 +137,28 @@ class CarBookingView(View):
             messages.error(request, _('This vehicle does not offer a driver option.'))
             return redirect('cars:detail', slug=slug)
 
+        num_adults = form.cleaned_data['num_adults']
+        num_children = form.cleaned_data['num_children']
+        num_infants = form.cleaned_data['num_infants']
+        num_pets = form.cleaned_data['num_pets']
+        total_occupants = num_adults + num_children + num_infants
+
+        # Enforce passenger capacity
+        if total_occupants > car.capacity:
+            messages.error(
+                request,
+                _('This vehicle has a maximum capacity of %(cap)s passengers.')
+                % {'cap': car.capacity}
+            )
+            request.session['booking_prefill'] = request.POST.dict()
+            return redirect('cars:detail', slug=slug)
+
+        # Enforce pets policy server-side
+        if num_pets > 0 and not car.allows_pets:
+            messages.error(request, _('This vehicle does not allow pets.'))
+            request.session['booking_prefill'] = request.POST.dict()
+            return redirect('cars:detail', slug=slug)
+
         pickup = form.cleaned_data['pickup_date']
         returns = form.cleaned_data['return_date']
         num_days = (returns - pickup).days
@@ -130,6 +175,10 @@ class CarBookingView(View):
             'pickup_date': str(pickup),
             'return_date': str(returns),
             'num_days': num_days,
+            'num_adults': num_adults,
+            'num_children': num_children,
+            'num_infants': num_infants,
+            'num_pets': num_pets,
             'driver_licence_number': form.cleaned_data.get('driver_licence_number', ''),
             'special_requests': form.cleaned_data.get('special_requests', ''),
             'price_per_day': str(car.get_display_price()),
@@ -138,6 +187,7 @@ class CarBookingView(View):
             'created_at': str(timezone.now()),
             'allows_pay_on_arrival': car.allows_pay_on_arrival,
             'is_refundable': car.is_refundable,
+            'allows_pets': car.allows_pets,
         }
 
         if not request.user.is_authenticated:
@@ -151,9 +201,8 @@ class CarBookingView(View):
 # ---------------------------------------------------------------------------
 class TourBookingView(View):
     """
-    POST only. Receives booking form from tour detail page.
-    Tours are ALWAYS status='pending_confirmation' — Jadevine confirms date manually.
-    Same session-first pattern as Hotel and Car.
+    num_participants = num_adults + num_children (infants travel free).
+    Price = price_per_person × num_participants.
     """
 
     def post(self, request, slug, *args, **kwargs):
@@ -165,15 +214,25 @@ class TourBookingView(View):
             request.session['booking_prefill'] = request.POST.dict()
             return redirect('tours:detail', slug=slug)
 
-        num_participants = form.cleaned_data['num_participants']
+        num_adults = form.cleaned_data['num_adults']
+        num_children = form.cleaned_data['num_children']
+        num_infants = form.cleaned_data['num_infants']
+        num_pets = form.cleaned_data['num_pets']
+        # Infants are not counted as billable participants
+        num_participants = num_adults + num_children
 
-        # Cross-object validation: participant count vs. tour capacity
         if num_participants > tour.group_size_max:
             messages.error(
                 request,
                 _('This tour accommodates a maximum of %(max)s participants.')
                 % {'max': tour.group_size_max}
             )
+            request.session['booking_prefill'] = request.POST.dict()
+            return redirect('tours:detail', slug=slug)
+
+        # Enforce pets policy server-side
+        if num_pets > 0 and not tour.allows_pets:
+            messages.error(request, _('This tour does not allow pets.'))
             request.session['booking_prefill'] = request.POST.dict()
             return redirect('tours:detail', slug=slug)
 
@@ -189,6 +248,10 @@ class TourBookingView(View):
             'tour_type_display': tour.get_tour_type_display(),
             'duration_days': tour.duration_days,
             'preferred_date': str(preferred_date),
+            'num_adults': num_adults,
+            'num_children': num_children,
+            'num_infants': num_infants,
+            'num_pets': num_pets,
             'num_participants': num_participants,
             'special_requests': form.cleaned_data.get('special_requests', ''),
             'price_per_person': str(tour.get_display_price()),
@@ -197,6 +260,7 @@ class TourBookingView(View):
             'created_at': str(timezone.now()),
             'allows_pay_on_arrival': tour.allows_pay_on_arrival,
             'is_refundable': tour.is_refundable,
+            'allows_pets': tour.allows_pets,
         }
 
         if not request.user.is_authenticated:
@@ -258,18 +322,10 @@ class BookingSummaryView(LoginRequiredMixin, View):
         if payment_mode == 'pay_on_arrival':
             booking.status = 'confirmed'
             booking.save(update_fields=['status'])
-            # Queue both emails — async so they never block the redirect
-            async_task(
-                'apps.bookings.tasks.send_poa_booking_confirmation_customer',
-                booking.id,
-            )
-            async_task(
-                'apps.bookings.tasks.send_poa_booking_notification_admin',
-                booking.id,
-            )
+            async_task('apps.bookings.tasks.send_poa_booking_confirmation_customer', booking.id)
+            async_task('apps.bookings.tasks.send_poa_booking_notification_admin', booking.id)
             return redirect('bookings:confirmation', reference=booking.reference)
 
-        # Pay Now — PesaPal and confirmation email handled in Phase 6
         return redirect('bookings:payment', reference=booking.reference)
 
     def _create_booking(self, request, data, payment_mode):
@@ -292,7 +348,6 @@ class BookingSummaryView(LoginRequiredMixin, View):
             hotel = get_object_or_404(Hotel, id=data['hotel_id'])
             room_type = get_object_or_404(HotelRoomType, id=data['room_type_id'])
 
-            # Enforce Pay on Arrival restriction server-side
             if payment_mode == 'pay_on_arrival' and not room_type.allows_pay_on_arrival:
                 payment_mode = 'pay_now'
 
@@ -301,9 +356,15 @@ class BookingSummaryView(LoginRequiredMixin, View):
                 'room_type': room_type,
                 'check_in_date': date.fromisoformat(data['check_in_date']),
                 'check_out_date': date.fromisoformat(data['check_out_date']),
-                'num_guests': data['num_guests'],
+                'num_rooms': data['num_rooms'],
+                'num_adults': data['num_adults'],
+                'num_children': data['num_children'],
+                'num_infants': data['num_infants'],
+                'num_pets': data['num_pets'],
+                'num_guests': data['num_guests'],  # aggregate for legacy compat
                 'base_price': Decimal(data['price_per_night']),
                 'is_refundable': room_type.is_refundable,
+                'allows_pets': room_type.allows_pets,
             })
 
         elif service_type == 'car':
@@ -319,9 +380,14 @@ class BookingSummaryView(LoginRequiredMixin, View):
                 'pickup_date': date.fromisoformat(data['pickup_date']),
                 'return_date': date.fromisoformat(data['return_date']),
                 'num_days': data['num_days'],
+                'num_adults': data['num_adults'],
+                'num_children': data['num_children'],
+                'num_infants': data['num_infants'],
+                'num_pets': data['num_pets'],
                 'driver_licence_number': data.get('driver_licence_number', ''),
                 'base_price': Decimal(data['price_per_day']),
                 'is_refundable': car.is_refundable,
+                'allows_pets': car.allows_pets,
             })
 
         elif service_type == 'tour':
@@ -334,8 +400,13 @@ class BookingSummaryView(LoginRequiredMixin, View):
                 'tour_package': tour,
                 'preferred_date': date.fromisoformat(data['preferred_date']),
                 'num_participants': data['num_participants'],
+                'num_adults': data['num_adults'],
+                'num_children': data['num_children'],
+                'num_infants': data['num_infants'],
+                'num_pets': data['num_pets'],
                 'base_price': Decimal(data['price_per_person']),
                 'is_refundable': tour.is_refundable,
+                'allows_pets': tour.allows_pets,
             })
 
         kwargs['payment_mode'] = payment_mode
@@ -373,5 +444,4 @@ class BookingConfirmationView(LoginRequiredMixin, View):
 # PesaPal IPN callback — stub for Phase 6
 # ---------------------------------------------------------------------------
 def pesapal_callback(request):
-    from django.http import HttpResponse
     return HttpResponse("OK", status=200)

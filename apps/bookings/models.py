@@ -4,10 +4,6 @@ from django.conf import settings
 
 
 def generate_booking_reference():
-    """
-    Generate a unique booking reference e.g. JDV-2026-00142.
-    Uses DB max ID + 1 for sequential uniqueness.
-    """
     from django.apps import apps
     from django.utils import timezone
     year = timezone.now().year
@@ -121,9 +117,42 @@ class Booking(models.Model):
     pickup_date = models.DateField(null=True, blank=True)
     return_date = models.DateField(null=True, blank=True)
 
-    # Participants
+    # -----------------------------------------------------------------------
+    # Guests / participants — granular breakdown
+    # All nullable: only the fields relevant to the service_type are populated.
+    # -----------------------------------------------------------------------
+    num_adults = models.PositiveIntegerField(
+        null=True, blank=True,
+        verbose_name=_('Adults'),
+    )
+    num_children = models.PositiveIntegerField(
+        null=True, blank=True,
+        verbose_name=_('Children (2–12)'),
+    )
+    num_infants = models.PositiveIntegerField(
+        null=True, blank=True,
+        verbose_name=_('Infants (under 2)'),
+    )
+    num_pets = models.PositiveIntegerField(
+        null=True, blank=True,
+        verbose_name=_('Pets'),
+    )
+
+    # Hotels only — how many rooms of the selected type
+    num_rooms = models.PositiveIntegerField(
+        null=True, blank=True,
+        verbose_name=_('Number of Rooms'),
+    )
+
+    # Legacy aggregate field — kept for backward compat; now a DB column
+    # populated from num_adults + num_children + num_infants at create time.
+    # Do NOT use this for price calculation — use num_rooms × nights for hotels.
     num_guests = models.PositiveIntegerField(null=True, blank=True)
+
+    # Tours — total headcount (adults + children; infants typically free)
     num_participants = models.PositiveIntegerField(null=True, blank=True)
+
+    # Cars — computed from pickup/return dates
     num_days = models.PositiveIntegerField(null=True, blank=True)
 
     # Car-specific
@@ -151,11 +180,16 @@ class Booking(models.Model):
         max_length=25, choices=STATUS_CHOICES, default='pending_confirmation'
     )
     special_requests = models.TextField(blank=True, null=True)
-    # Snapshotted at booking creation time — never recalculate from listing
     is_refundable = models.BooleanField(
         default=True,
         verbose_name=_('Is Refundable'),
-        help_text=_('Snapshotted from the listing at booking time. False = non-refundable regardless of policy.')
+        help_text=_('Snapshotted from listing at booking time. False = non-refundable regardless of policy.')
+    )
+    # Snapshotted from listing at booking time
+    allows_pets = models.BooleanField(
+        default=False,
+        verbose_name=_('Pets Allowed'),
+        help_text=_('Snapshotted from listing at booking time.')
     )
     cancellation_reason = models.TextField(blank=True, null=True)
     cancelled_at = models.DateTimeField(null=True, blank=True)
@@ -179,7 +213,7 @@ class Booking(models.Model):
 
     @property
     def service_date(self):
-        """The primary date used for cancellation window calculation."""
+        """Primary date used for cancellation window calculation."""
         return self.check_in_date or self.preferred_date or self.pickup_date
 
     @property
@@ -188,3 +222,8 @@ class Booking(models.Model):
         if self.check_in_date and self.check_out_date:
             return (self.check_out_date - self.check_in_date).days
         return None
+
+    @property
+    def total_occupants(self):
+        """Total people across adults + children + infants."""
+        return (self.num_adults or 0) + (self.num_children or 0) + (self.num_infants or 0)

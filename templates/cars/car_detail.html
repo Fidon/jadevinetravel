@@ -73,16 +73,13 @@
       <!-- LEFT: Car info -->
       <div class="col-lg-7 jd-load-reveal" data-delay="3">
 
-        <!-- Header -->
         <div class="car-detail-header">
           <span class="jd-badge jd-badge-primary mb-3">{{ car.get_vehicle_type_display }}</span>
           <h1 class="car-detail-name">{{ car.name }}</h1>
-          <p class="car-detail-subtitle">
-            {{ car.year }} · {{ car.make }} {{ car.model }}
-          </p>
+          <p class="car-detail-subtitle">{{ car.year }} · {{ car.make }} {{ car.model }}</p>
 
-          <!-- Rental mode badges -->
-          <div class="d-flex gap-2 mt-3 flex-wrap">
+          <!-- Info badges row — same pattern as tour detail -->
+          <div class="d-flex gap-2 mt-3 flex-wrap align-items-center">
             {% if car.offers_driver %}
             <span class="car-mode-badge driver">
               <i class="bi bi-person-fill me-1"></i>{% trans "With Driver Available" %}
@@ -93,20 +90,49 @@
               <i class="bi bi-key-fill me-1"></i>{% trans "Self Drive Available" %}
             </span>
             {% endif %}
+            {% if allows_pets %}
+            <span class="car-mode-badge" style="background:var(--color-success);color:#fff;">
+              <i class="bi bi-heart-fill me-1"></i>{% trans "Pets Welcome" %}
+            </span>
+            {% endif %}
+            {% if has_discount %}
+            <span class="jd-discount-badge">
+              {{ discount_percent }}% {% trans "off" %}
+            </span>
+            {% endif %}
           </div>
+
           {% if avg_rating %}
-            <div class="mt-3">
-              <span class="jd-rating-badge" style="font-size:var(--text-sm);padding:6px 14px;">
-                <i class="bi bi-star-fill"></i>
-                {{ avg_rating }} / 10
-                <span class="jd-rating-count">({{ review_count }} {% trans "reviews" %})</span>
-              </span>
-            </div>
+          <div class="mt-3">
+            <span class="jd-rating-badge" style="font-size:var(--text-sm);padding:6px 14px;">
+              <i class="bi bi-star-fill"></i>
+              {{ avg_rating }} / 10
+              <span class="jd-rating-count">({{ review_count }} {% trans "reviews" %})</span>
+            </span>
+          </div>
           {% endif %}
+
           <div class="jd-divider mt-4 mb-4"></div>
         </div>
 
-        <!-- Specs grid -->
+        <!-- Favourite button — pill, same as hotel/tour detail -->
+        <div class="jd-fav-detail-wrap mb-4">
+          {% if is_saved is not None %}
+          <button type="button"
+                  class="jd-fav-btn jd-fav-btn--detail {% if is_saved %}jd-fav-btn--saved{% endif %}"
+                  data-item-type="car"
+                  data-item-id="{{ car.id }}"
+                  data-saved="{{ is_saved|yesno:'true,false' }}"
+                  data-toggle-url="{{ favourite_toggle_url }}">
+            <i class="bi {% if is_saved %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+            <span class="jd-fav-label">
+              {% if is_saved %}{% trans "Saved" %}{% else %}{% trans "Save" %}{% endif %}
+            </span>
+          </button>
+          {% endif %}
+        </div>
+
+        <!-- Specs -->
         <div class="car-specs-grid jd-reveal">
           <span class="eyebrow">{% trans "Vehicle Specifications" %}</span>
           <div class="specs-grid mt-3">
@@ -149,7 +175,6 @@
           </div>
         </div>
 
-        <!-- Description -->
         {% if description %}
         <div class="car-description mt-5 jd-reveal">
           <span class="eyebrow">{% trans "About This Vehicle" %}</span>
@@ -163,32 +188,23 @@
       <div class="col-lg-5 jd-load-reveal" data-delay="4">
         <div class="car-booking-panel" id="booking-panel">
 
-          <!-- Price header -->
+          <!-- Price header — price + car type badge only, no discount badge here -->
           <div class="booking-price-header">
             <div>
               <span class="booking-price-from">{% trans "From" %}</span>
-              <span class="booking-price-amount" id="display-price">
-                {% if has_discount %}
-                <span class="jd-price-original" style="font-size:1rem;margin-right:4px;">${{ car.price_per_day }}</span>
-                ${{ display_price }}
-                {% else %}
+              {% if has_discount %}
+              <span class="jd-price-original" style="font-size:1rem;margin-right:4px;color:rgba(255,255,255,0.55);">
                 ${{ car.price_per_day }}
-                {% endif %}
               </span>
+              {% endif %}
+              <span class="booking-price-amount" id="display-price">${{ display_price }}</span>
               <span class="booking-price-per">{% trans "/ day" %}</span>
             </div>
-            <div class="text-end">
-              {% if has_discount %}
-              <span class="jd-discount-badge mb-1">{{ discount_percent }}% {% trans "off" %}</span><br>
-              {% endif %}
-              <span class="jd-badge jd-badge-accent">{{ car.get_vehicle_type_display }}</span>
-            </div>
+            <span class="jd-badge jd-badge-accent">{{ car.get_vehicle_type_display }}</span>
           </div>
 
           <!-- Booking form -->
-          <form id="car-booking-form"
-                method="post"
-                action="{% url 'cars:book' car.slug %}">
+          <form id="car-booking-form" method="post" action="{% url 'cars:book' car.slug %}">
             {% csrf_token %}
 
             <div class="booking-form-body">
@@ -198,8 +214,7 @@
                 <label class="jd-label">{% trans "Rental Mode" %}</label>
                 <div class="rental-mode-selector">
                   {% if car.offers_driver %}
-                  <label class="rental-mode-option {% if not car.offers_self_drive %}only-option{% endif %}"
-                         id="mode-driver">
+                  <label class="rental-mode-option {% if not car.offers_self_drive %}only-option{% endif %}" id="mode-driver">
                     <input type="radio" name="rental_mode" value="with_driver"
                            {% if car.offers_driver %}checked{% endif %}>
                     <div class="rental-mode-content">
@@ -207,13 +222,9 @@
                       <div>
                         <div class="rental-mode-title">{% trans "With Driver" %}</div>
                         <div class="rental-mode-desc">
-                          {% if car.driver_speaks_en and car.driver_speaks_fr %}
-                            {% trans "English & French driver" %}
-                          {% elif car.driver_speaks_fr %}
-                            {% trans "French-speaking driver" %}
-                          {% else %}
-                            {% trans "English-speaking driver" %}
-                          {% endif %}
+                          {% if car.driver_speaks_en and car.driver_speaks_fr %}{% trans "English & French driver" %}
+                          {% elif car.driver_speaks_fr %}{% trans "French-speaking driver" %}
+                          {% else %}{% trans "English-speaking driver" %}{% endif %}
                         </div>
                       </div>
                     </div>
@@ -221,8 +232,7 @@
                   {% endif %}
 
                   {% if car.offers_self_drive %}
-                  <label class="rental-mode-option {% if not car.offers_driver %}only-option{% endif %}"
-                         id="mode-self-drive">
+                  <label class="rental-mode-option {% if not car.offers_driver %}only-option{% endif %}" id="mode-self-drive">
                     <input type="radio" name="rental_mode" value="self_drive"
                            {% if not car.offers_driver %}checked{% endif %}>
                     <div class="rental-mode-content">
@@ -288,11 +298,84 @@
                 </div>
               </div>
 
-              <!-- Licence number (shown only for self drive) -->
+              <!-- Passengers breakdown -->
+              <div class="jd-form-group mt-3">
+                <label class="jd-label">{% trans "Passengers" %}</label>
+                <p class="booking-hint mb-2">
+                  {% blocktrans with cap=car.capacity %}Max {{ cap }} passengers total{% endblocktrans %}
+                </p>
+                <div class="guests-breakdown">
+
+                  <div class="guest-row">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Adults" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-adults-minus"><i class="bi bi-dash"></i></button>
+                      <input type="number" name="num_adults" id="id_num_adults"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_adults|default:'1' }}"
+                             min="1" max="{{ car.capacity }}" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-adults-plus"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="guest-row">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Children" %}</span>
+                      <span class="guest-type-sub">{% trans "Ages 2–12" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-children-minus"><i class="bi bi-dash"></i></button>
+                      <input type="number" name="num_children" id="id_num_children"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_children|default:'0' }}"
+                             min="0" max="{{ car.capacity }}" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-children-plus"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="guest-row">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Infants" %}</span>
+                      <span class="guest-type-sub">{% trans "Under 2" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-infants-minus"><i class="bi bi-dash"></i></button>
+                      <input type="number" name="num_infants" id="id_num_infants"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_infants|default:'0' }}"
+                             min="0" max="10" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-infants-plus"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+
+                  {% if allows_pets %}
+                  <div class="guest-row">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Pets" %}</span>
+                      <span class="guest-type-sub">{% trans "Dogs, cats" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-pets-minus"><i class="bi bi-dash"></i></button>
+                      <input type="number" name="num_pets" id="id_num_pets"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_pets|default:'0' }}"
+                             min="0" max="5" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-pets-plus"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+                  {% else %}
+                  <input type="hidden" name="num_pets" value="0">
+                  {% endif %}
+
+                </div>
+              </div>
+
+              <!-- Licence number -->
               <div class="jd-form-group mt-3" id="licence-field" style="display:none;">
                 <label class="jd-label" for="id_driver_licence_number">
-                  {% trans "Driver's Licence Number" %}
-                  <span class="text-danger">*</span>
+                  {% trans "Driver's Licence Number" %} <span class="text-danger">*</span>
                 </label>
                 <div class="jd-input-icon-wrap">
                   <i class="bi bi-card-text jd-input-icon"></i>
@@ -327,25 +410,24 @@
               </div>
 
               {% if not is_refundable %}
-                <div class="jd-nonrefundable-notice">
-                  <i class="bi bi-x-circle-fill"></i>
-                  <div>
-                    <strong>{% trans "Non-refundable" %}</strong>
-                    <p class="mb-0 mt-1" style="font-size:var(--text-xs);">
-                      {% trans "This vehicle is non-refundable. Once booked, no refund will be issued regardless of cancellation date." %}
-                    </p>
-                  </div>
+              <div class="jd-nonrefundable-notice">
+                <i class="bi bi-x-circle-fill"></i>
+                <div>
+                  <strong>{% trans "Non-refundable" %}</strong>
+                  <p class="mb-0 mt-1" style="font-size:var(--text-xs);">
+                    {% trans "This vehicle is non-refundable. Once booked, no refund will be issued regardless of cancellation date." %}
+                  </p>
                 </div>
+              </div>
               {% endif %}
 
               {% if not allows_pay_on_arrival %}
-                <div class="jd-pay-now-only-notice">
-                  <i class="bi bi-credit-card-fill me-2"></i>
-                  {% trans "This vehicle requires Pay Now — Pay on Arrival is not available." %}
-                </div>
+              <div class="jd-pay-now-only-notice">
+                <i class="bi bi-credit-card-fill me-2"></i>
+                {% trans "This vehicle requires Pay Now — Pay on Arrival is not available." %}
+              </div>
               {% endif %}
 
-              <!-- Server errors -->
               {% if booking_prefill %}
               <div class="booking-server-errors">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -353,7 +435,6 @@
               </div>
               {% endif %}
 
-              <!-- Submit -->
               <button type="submit" class="btn-accent-jd w-100 justify-content-center booking-submit-btn mt-3">
                 <i class="bi bi-calendar-check me-2"></i>
                 {% trans "Review Booking" %}
@@ -368,10 +449,10 @@
           </form>
 
           {% if allows_pay_on_arrival %}
-            <div class="poa-note">
-              <i class="bi bi-cash-coin me-2"></i>
-              {% trans "Pay on Arrival available — pay when you reach Tanzania" %}
-            </div>
+          <div class="poa-note">
+            <i class="bi bi-cash-coin me-2"></i>
+            {% trans "Pay on Arrival available — pay when you reach Tanzania" %}
+          </div>
           {% endif %}
 
         </div>
@@ -388,9 +469,18 @@
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
+<script src="{% static 'js/core/favourites.js' %}"></script>
 <script>
   window.JD_CAR_PRICE_PER_DAY = "{{ display_price }}";
+  window.JD_CAR_CAPACITY      = {{ car.capacity }};
+  window.JD_CAR_ALLOWS_PETS   = {{ allows_pets|yesno:"true,false" }};
+  window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.maxCapacity           = "{% trans 'Maximum capacity is {cap} passengers.' %}";
+  window.JD_STRINGS.saveToFavourites      = "{% trans 'Save' %}";
+  window.JD_STRINGS.savedToFavourites     = "{% trans 'Saved' %}";
+  window.JD_STRINGS.addedToFavourites     = "{% trans 'Added to favourites' %}";
+  window.JD_STRINGS.removedFromFavourites = "{% trans 'Removed from favourites' %}";
+  window.JD_STRINGS.favouriteError        = "{% trans 'Could not update favourites. Try again.' %}";
 </script>
 <script src="{% static 'js/cars/car_detail.js' %}"></script>
 {% endblock %}

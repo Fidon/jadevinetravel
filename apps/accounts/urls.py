@@ -10,6 +10,7 @@ urlpatterns = [
     path('bookings/<str:reference>/cancel/', views.CancelBookingView.as_view(), name='cancel_booking'),
     path('bookings/<str:reference>/pdf/', views.BookingPDFView.as_view(), name='booking_pdf'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('profile/newsletter-toggle/', views.NewsletterToggleView.as_view(), name='newsletter_toggle'),
     path('favourites/', views.FavouritesView.as_view(), name='favourites'),
     path('favourites/toggle/', views.ToggleFavouriteView.as_view(), name='toggle_favourite'),
     path('resend-verification/', views.ResendVerificationView.as_view(), name='resend_verification'),

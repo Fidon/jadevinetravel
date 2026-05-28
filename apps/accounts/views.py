@@ -32,6 +32,7 @@ from apps.hotels.models import Hotel
 from apps.tours.models import TourPackage
 from apps.cars.models import CarRental
 from apps.core.models import SavedFavourite
+from apps.contact.models import NewsletterSubscriber
 from apps.accounts.forms import ProfileUpdateForm, CancellationForm, NATIONALITY_CHOICES
 
 from apps.reviews.forms import ReviewForm
@@ -301,30 +302,67 @@ def _queue_cancellation_confirmed_emails(booking, refund_info):
 class ProfileView(LoginRequiredMixin, View):
     template_name = 'accounts/profile.html'
     login_url = '/accounts/login/'
-
+    
     def get(self, request):
         form = ProfileUpdateForm(instance=request.user)
+        subscriber = NewsletterSubscriber.objects.filter(
+            email__iexact=request.user.email
+        ).first()
         return render(request, self.template_name, {
             'form': form,
             'nationality_choices': NATIONALITY_CHOICES,
+            'newsletter_subscribed': subscriber.is_active if subscriber else False,
         })
-
+        
     def post(self, request):
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, _('Your profile has been updated.'))
             return redirect('accounts:profile')
+        subscriber = NewsletterSubscriber.objects.filter(
+            email__iexact=request.user.email
+        ).first()
         return render(request, self.template_name, {
             'form': form,
             'nationality_choices': NATIONALITY_CHOICES,
+            'newsletter_subscribed': subscriber.is_active if subscriber else False,
         })
+
+
+# ---------------------------------------------------------------------------
+# Newsletter Subscription Toggle
+# ---------------------------------------------------------------------------
+class NewsletterToggleView(LoginRequiredMixin, View):
+    """
+    AJAX-only POST. Toggles the newsletter subscription state for the
+    currently logged-in customer based on their email address.
+    Response: { "subscribed": true|false }
+    """
+    login_url = '/accounts/login/'
+
+    def post(self, request):
+        if request.headers.get('X-Requested-With') != 'XMLHttpRequest':
+            return JsonResponse({'error': 'AJAX only'}, status=400)
+
+        subscriber, created = NewsletterSubscriber.objects.get_or_create(
+            email__iexact=request.user.email,
+            defaults={'email': request.user.email, 'is_active': False},
+        )
+
+        if created:
+            subscriber.is_active = True
+            subscriber.save(update_fields=['is_active'])
+        else:
+            subscriber.is_active = not subscriber.is_active
+            subscriber.save(update_fields=['is_active'])
+
+        return JsonResponse({'subscribed': subscriber.is_active})
 
 
 # ---------------------------------------------------------------------------
 # Favourites
 # ---------------------------------------------------------------------------
-
 class FavouritesView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/favourites.html'
     login_url = '/accounts/login/'

@@ -8,7 +8,8 @@ from apps.portal.views.hotels import (PortalHotelListView, PortalPendingHotelsVi
         PortalHotelCreateView, PortalHotelEditView, PortalHotelDeleteView, PortalHotelApproveView,
         PortalHotelRejectView, PortalHotelResubmitView, PortalHotelPhotoUploadView, PortalHotelPhotoDeleteView,
         PortalHotelPhotoSetCoverView, PortalHotelPhotoReorderView, PortalHotelRoomAddView,
-        PortalHotelRoomEditView, PortalHotelRoomDeleteView)
+        PortalHotelRoomEditView, PortalHotelRoomDeleteView, PortalRoomTypePhotoUploadView,
+        PortalRoomTypePhotoDeleteView, PortalRoomTypePhotoReorderView,)
 from apps.portal.views.cars import (PortalCarListView, PortalPendingCarsView, PortalCarDetailView,
         PortalCarCreateView, PortalCarEditView, PortalCarDeleteView, PortalCarApproveView,
         PortalCarRejectView, PortalCarResubmitView, PortalCarPhotoUploadView, PortalCarPhotoDeleteView,
@@ -67,6 +68,9 @@ urlpatterns = [
     path('hotels/<int:hpk>/rooms/add/', PortalHotelRoomAddView.as_view(), name='hotel_room_add'),
     path('hotels/<int:hpk>/rooms/<int:pk>/edit/', PortalHotelRoomEditView.as_view(), name='hotel_room_edit'),
     path('hotels/<int:hpk>/rooms/<int:pk>/delete/', PortalHotelRoomDeleteView.as_view(), name='hotel_room_delete'),
+    path('hotels/<int:hpk>/rooms/<int:rpk>/photos/upload/',   PortalRoomTypePhotoUploadView.as_view(),  name='room_photo_upload'),
+    path('hotels/<int:hpk>/rooms/<int:rpk>/photos/<int:pk>/delete/', PortalRoomTypePhotoDeleteView.as_view(), name='room_photo_delete'),
+    path('hotels/<int:hpk>/rooms/<int:rpk>/photos/reorder/',  PortalRoomTypePhotoReorderView.as_view(), name='room_photo_reorder'),
 
     # Cars
     path('cars/', PortalCarListView.as_view(), name='car_list'),

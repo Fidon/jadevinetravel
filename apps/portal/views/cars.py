@@ -212,6 +212,15 @@ class PortalCarEditView(PortalRequiredMixin, View):
                 )
             else:
                 messages.success(request, _('Car rental updated successfully.'))
+                if (
+                    not is_mini_admin(request.user)
+                    and car.created_by
+                    and hasattr(car.created_by, 'miniadminprofile')
+                ):
+                    async_task(
+                        'apps.portal.tasks.send_listing_edited_by_admin_email',
+                        'car', car.pk, request.user.pk,
+                    )
 
             return redirect('portal:car_detail', pk=car.pk)
 

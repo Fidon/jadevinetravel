@@ -63,3 +63,68 @@
   max-height: 65vh;
   overflow-y: auto;
 }
+
+/* ── Room type photo panel ───────────────────────────────── */
+.room-photo-panel {
+  border-top: 1px solid var(--color-border);
+  padding: 12px 0 4px;
+  margin-top: 12px;
+}
+
+.room-photo-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.room-photo-upload-area {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--btn-radius);
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.room-photo-upload-area:hover,
+.room-photo-upload-area.drag-over {
+  border-color: var(--color-primary);
+  background: var(--color-light);
+}
+
+.room-photo-upload-area input[type="file"] {
+  display: none;
+}
+
+.room-photo-upload-area i {
+  font-size: 1.2rem;
+  color: var(--color-primary);
+}
+
+/* ── Photo count badge on toggle button ─────────────────── */
+.photo-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 0 4px;
+  margin-left: 4px;
+  vertical-align: middle;
+}

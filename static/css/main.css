@@ -831,51 +831,6 @@ select.jd-input {
   color: var(--color-primary);
 }
 
-/* Language switcher */
-.jd-lang-switcher {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.jd-lang-btn {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
-  background: none;
-  border: none;
-  padding: 4px 6px;
-  cursor: pointer;
-  transition: color var(--transition-base);
-  border-radius: var(--radius-sm);
-}
-
-.jd-lang-btn:hover,
-.jd-lang-btn.active {
-  color: var(--color-accent-light);
-}
-
-.jd-navbar.navbar-scrolled .jd-lang-btn {
-  color: var(--color-muted);
-}
-
-.jd-navbar.navbar-scrolled .jd-lang-btn:hover,
-.jd-navbar.navbar-scrolled .jd-lang-btn.active {
-  color: var(--color-accent);
-}
-
-.jd-lang-separator {
-  color: rgba(255, 255, 255, 0.3);
-  font-size: var(--text-xs);
-}
-
-.jd-navbar.navbar-scrolled .jd-lang-separator {
-  color: var(--color-border);
-}
-
 /* Hamburger */
 .jd-hamburger {
   display: flex;
@@ -1017,29 +972,6 @@ select.jd-input {
 /* Hide the brand inside mobile menu — navbar brand is always visible on top */
 .jd-mobile-menu-brand {
   display: none;
-}
-
-/* Language switcher */
-.jd-mobile-menu-lang {
-  margin-top: 28px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.jd-mobile-menu-lang .jd-lang-btn {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.45);
-  padding: 6px 10px;
-}
-
-.jd-mobile-menu-lang .jd-lang-btn.active,
-.jd-mobile-menu-lang .jd-lang-btn:hover {
-  color: var(--color-accent-light);
-}
-
-.jd-mobile-menu-lang .jd-lang-separator {
-  color: rgba(255, 255, 255, 0.2);
 }
 
 /* ============================================================
@@ -1363,6 +1295,358 @@ select.jd-input {
   color: var(--color-info);
   font-weight: 500;
   margin-bottom: 12px;
+}
+
+/* ============================================================
+   FAVOURITE BUTTON — shared across all listing + detail pages
+   ============================================================ */
+
+/* ── Card variant — floats top-right of image ── */
+.jd-fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.15s,
+    box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  color: var(--color-muted);
+  font-size: 1rem;
+  padding: 0;
+}
+
+.jd-fav-btn:hover {
+  background: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  color: var(--color-danger, #e53e3e);
+}
+
+.jd-fav-btn:active {
+  transform: scale(0.95);
+}
+
+.jd-fav-btn.jd-fav-btn--saved {
+  color: var(--color-danger, #e53e3e);
+  background: #fff;
+}
+
+.jd-fav-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+
+/* ── Detail page variant — pill button below header ── */
+.jd-fav-detail-wrap {
+  display: flex;
+}
+
+.jd-fav-btn--detail {
+  /* Override card positioning */
+  position: static;
+  width: auto;
+  height: auto;
+  border-radius: 50px;
+  padding: 8px 20px;
+  gap: 8px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  background: var(--color-light);
+  color: var(--color-text);
+  box-shadow: none;
+  border: 1.5px solid var(--color-border);
+}
+
+.jd-fav-btn--detail:hover {
+  background: #fff;
+  border-color: var(--color-danger, #e53e3e);
+  color: var(--color-danger, #e53e3e);
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.jd-fav-btn--detail.jd-fav-btn--saved {
+  background: #fff0f0;
+  border-color: var(--color-danger, #e53e3e);
+  color: var(--color-danger, #e53e3e);
+}
+
+.jd-fav-btn--detail .jd-fav-label {
+  font-size: var(--text-sm);
+}
+
+/* ── Hotel/Tour/Car card — heart always bottom-right ── */
+.hotel-card .jd-fav-btn,
+.tour-card .jd-fav-btn,
+.car-card .jd-fav-btn {
+  top: auto;
+  bottom: 12px;
+  right: 12px;
+}
+.jd-fav-btn .bi-heart-fill {
+  animation: jd-heart-pop 0.25s ease;
+}
+
+@keyframes jd-heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ============================================================
+   LISTING PAGE — Prominent search bar
+   Shared across hotels, tours, cars list pages
+   ============================================================ */
+
+.listing-search-wrap {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.listing-search-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.listing-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-muted);
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.listing-search-input {
+  width: 100%;
+  padding: 14px 48px 14px 44px !important;
+  font-size: var(--text-md) !important;
+  border-radius: var(--btn-radius) !important;
+  border: 1.5px solid var(--color-border) !important;
+  background: var(--color-white) !important;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.listing-search-input:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(26, 77, 46, 0.08) !important;
+  outline: none;
+}
+
+.listing-search-input::placeholder {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.listing-search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  transition: color 0.15s;
+  z-index: 1;
+}
+
+.listing-search-clear:hover {
+  color: var(--color-danger);
+}
+
+/* ============================================================
+   FLOATING LANGUAGE SWITCHER
+   ============================================================ */
+
+.jd-float-lang {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: var(--z-floating, 1040);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* ── Pill trigger ── */
+.jd-float-lang-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid var(--color-border);
+  border-radius: 50px;
+  padding: 8px 16px 8px 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transition:
+    box-shadow 0.2s,
+    transform 0.15s;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.jd-float-lang-pill:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+  transform: translateY(-1px);
+}
+
+.jd-float-lang-flag {
+  font-size: 1.3rem;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Use flag-icons CDN for crisp rectangular flags matching Shambaland */
+.jd-float-lang-flag[data-flag] {
+  font-size: 0; /* hide emoji text */
+  width: 24px;
+  height: 16px;
+  border-radius: 2px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.jd-float-lang-flag[data-flag="en"] {
+  background-image: url("https://flagcdn.com/w40/gb.png");
+}
+.jd-float-lang-flag[data-flag="fr"] {
+  background-image: url("https://flagcdn.com/w40/fr.png");
+}
+.jd-float-lang-flag[data-flag="ru"] {
+  background-image: url("https://flagcdn.com/w40/ru.png");
+}
+
+.jd-float-lang-code {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+}
+
+.jd-float-lang-chevron {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  transition: transform 0.2s;
+}
+
+.jd-float-lang.open .jd-float-lang-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown (opens above the pill) ── */
+.jd-float-lang-dropdown {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+  min-width: 170px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.jd-float-lang.open .jd-float-lang-dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.jd-float-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  text-align: left;
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.jd-float-lang-item:last-child {
+  border-bottom: none;
+}
+
+.jd-float-lang-item:hover {
+  background: var(--color-off-white);
+}
+
+.jd-float-lang-item.active {
+  background: var(--color-primary-xlight);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.jd-float-lang-item.active::after {
+  content: "✓";
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+}
+
+.jd-float-lang-name {
+  font-size: var(--text-sm);
+}
+
+/* ── Responsive — move pill slightly on very small screens ── */
+@media (max-width: 480px) {
+  .jd-float-lang {
+    bottom: 20px;
+    left: 16px;
+  }
 }
 
 /* ============================================================

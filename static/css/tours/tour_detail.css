@@ -516,6 +516,62 @@
   color: var(--color-success);
 }
 
+/* ── Guest / Passenger Breakdown ─────────────────────────── */
+.guests-breakdown {
+  border: 1px solid var(--color-border);
+  border-radius: var(--btn-radius);
+  overflow: hidden;
+}
+
+.guest-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.guest-row:last-child {
+  border-bottom: none;
+}
+
+.guest-row-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guest-type-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.guest-type-sub {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+.guest-counter-sm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.guest-counter-sm .guest-counter-input {
+  width: 44px;
+  text-align: center;
+  padding: 4px 6px;
+  font-size: var(--text-sm);
+}
+
+.guest-counter-sm .guest-counter-btn {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  font-size: 0.85rem;
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 991px) {
   .tour-gallery-grid {

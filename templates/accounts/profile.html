@@ -139,8 +139,9 @@
     </div>
   </div>
 
-  <!-- Password change shortcut -->
   <div class="col-lg-4">
+
+    <!-- Security card (unchanged) -->
     <div class="jd-card dash-detail-card">
       <h3 class="dash-detail-card-section-title">{% trans "Security" %}</h3>
       <p class="text-muted small mb-3">{% trans "Keep your account secure by using a strong, unique password." %}</p>
@@ -148,6 +149,38 @@
         <i class="bi bi-shield-lock me-1"></i>{% trans "Change Password" %}
       </a>
     </div>
+
+    <!-- Newsletter card (new) -->
+    <div class="jd-card dash-detail-card mt-4">
+      <h3 class="dash-detail-card-section-title">{% trans "Newsletter" %}</h3>
+      <p class="text-muted small mb-3">
+        {% trans "Receive travel inspiration, exclusive offers, and Zanzibar highlights directly to your inbox." %}
+      </p>
+
+      <div class="d-flex align-items-center justify-content-between gap-3">
+        <span class="small fw-semibold" id="newsletterStatusLabel">
+          {% if newsletter_subscribed %}
+            <i class="bi bi-check-circle-fill text-success me-1"></i>{% trans "Subscribed" %}
+          {% else %}
+            <i class="bi bi-x-circle-fill text-muted me-1"></i>{% trans "Not subscribed" %}
+          {% endif %}
+        </span>
+
+        <button type="button"
+                id="newsletterToggleBtn"
+                class="{% if newsletter_subscribed %}btn-outline-jd{% else %}btn-primary-jd{% endif %} btn-sm"
+                data-subscribed="{{ newsletter_subscribed|yesno:'true,false' }}">
+          {% if newsletter_subscribed %}
+            <i class="bi bi-bell-slash me-1"></i>{% trans "Unsubscribe" %}
+          {% else %}
+            <i class="bi bi-bell me-1"></i>{% trans "Subscribe" %}
+          {% endif %}
+        </button>
+      </div>
+
+      <div id="newsletterFeedback" class="small mt-2" style="min-height:18px;"></div>
+    </div>
+
   </div>
 </div>
 {% endblock %}

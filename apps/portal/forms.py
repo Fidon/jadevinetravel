@@ -109,6 +109,7 @@ class HotelForm(forms.ModelForm):
             raise forms.ValidationError(_('Price must be greater than zero.'))
         return price
 
+
 class HotelRoomTypeForm(forms.ModelForm):
     """
     Modal form for adding/editing a room type on a hotel.
@@ -133,7 +134,7 @@ class HotelRoomTypeForm(forms.ModelForm):
             'description_en', 'description_fr', 'description_ru',
             'price_per_night', 'max_guests', 'is_available',
             'discount_percent', 'discount_expires_at',
-            'is_refundable', 'allows_pay_on_arrival',
+            'is_refundable', 'allows_pay_on_arrival', 'allows_pets',
         ]
         widgets = {
             'name': forms.TextInput(attrs={
@@ -167,19 +168,21 @@ class HotelRoomTypeForm(forms.ModelForm):
                 attrs={'class': 'jd-input', 'type': 'datetime-local'},
                 format='%Y-%m-%dT%H:%M',
             ),
-            'is_available':         forms.CheckboxInput(),
-            'is_refundable':        forms.CheckboxInput(),
+            'is_available':          forms.CheckboxInput(),
+            'is_refundable':         forms.CheckboxInput(),
             'allows_pay_on_arrival': forms.CheckboxInput(),
+            'allows_pets':           forms.CheckboxInput(),
         }
         labels = {
-            'name':                 _('Room Type Name'),
-            'price_per_night':      _('Price Per Night (USD) — overrides hotel base if set'),
-            'max_guests':           _('Max Guests'),
-            'is_available':         _('Available for booking'),
-            'discount_percent':     _('Discount (%)'),
-            'discount_expires_at':  _('Discount Expires At'),
-            'is_refundable':        _('Refundable'),
+            'name':                  _('Room Type Name'),
+            'price_per_night':       _('Price Per Night (USD) — overrides hotel base if set'),
+            'max_guests':            _('Max Guests'),
+            'is_available':          _('Available for booking'),
+            'discount_percent':      _('Discount (%)'),
+            'discount_expires_at':   _('Discount Expires At'),
+            'is_refundable':         _('Refundable'),
             'allows_pay_on_arrival': _('Allows Pay on Arrival'),
+            'allows_pets':           _('Pets Allowed'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -202,6 +205,7 @@ class HotelRoomTypeForm(forms.ModelForm):
             instance.save()
         return instance
 
+
 class HotelRejectionForm(forms.Form):
     """
     Rejection reason form — rendered inside a Bootstrap modal.
@@ -218,14 +222,16 @@ class HotelRejectionForm(forms.Form):
         label=_('Rejection Reason'),
         min_length=10,
         error_messages={
-            'required':  _('A rejection reason is required.'),
+            'required':   _('A rejection reason is required.'),
             'min_length': _('Please provide a more detailed reason (at least 10 characters).'),
         }
     )
-    
+
+
 # ===========================================================================
 # CAR FORMS
 # ===========================================================================
+
 class CarRentalForm(forms.ModelForm):
     """
     Used for both create and edit.
@@ -252,7 +258,8 @@ class CarRentalForm(forms.ModelForm):
             'driver_speaks_en', 'driver_speaks_fr',
             'description_en', 'description_fr', 'description_ru',
             'discount_percent', 'discount_expires_at',
-            'is_refundable', 'allows_pay_on_arrival', 'is_available',
+            'is_refundable', 'allows_pay_on_arrival', 'allows_pets',
+            'is_available',
         ]
         widgets = {
             'name': forms.TextInput(attrs={
@@ -297,37 +304,38 @@ class CarRentalForm(forms.ModelForm):
                 attrs={'class': 'jd-input', 'type': 'datetime-local'},
                 format='%Y-%m-%dT%H:%M',
             ),
-            'offers_self_drive':  forms.CheckboxInput(),
-            'offers_driver':      forms.CheckboxInput(),
-            'driver_speaks_en':   forms.CheckboxInput(),
-            'driver_speaks_fr':   forms.CheckboxInput(),
-            'is_refundable':      forms.CheckboxInput(),
+            'offers_self_drive':     forms.CheckboxInput(),
+            'offers_driver':         forms.CheckboxInput(),
+            'driver_speaks_en':      forms.CheckboxInput(),
+            'driver_speaks_fr':      forms.CheckboxInput(),
+            'is_refundable':         forms.CheckboxInput(),
             'allows_pay_on_arrival': forms.CheckboxInput(),
-            'is_available':       forms.CheckboxInput(),
+            'allows_pets':           forms.CheckboxInput(),
+            'is_available':          forms.CheckboxInput(),
         }
         labels = {
-            'name':               _('Vehicle Name'),
-            'vehicle_type':       _('Vehicle Type'),
-            'price_per_day':      _('Price Per Day (USD)'),
-            'capacity':           _('Passenger Capacity'),
-            'offers_self_drive':  _('Offers Self-Drive'),
-            'offers_driver':      _('Offers Driver'),
-            'driver_speaks_en':   _('Driver speaks English'),
-            'driver_speaks_fr':   _('Driver speaks French'),
-            'discount_percent':   _('Discount (%)'),
-            'discount_expires_at': _('Discount Expires At'),
-            'is_refundable':      _('Refundable'),
+            'name':                  _('Vehicle Name'),
+            'vehicle_type':          _('Vehicle Type'),
+            'price_per_day':         _('Price Per Day (USD)'),
+            'capacity':              _('Passenger Capacity'),
+            'offers_self_drive':     _('Offers Self-Drive'),
+            'offers_driver':         _('Offers Driver'),
+            'driver_speaks_en':      _('Driver speaks English'),
+            'driver_speaks_fr':      _('Driver speaks French'),
+            'discount_percent':      _('Discount (%)'),
+            'discount_expires_at':   _('Discount Expires At'),
+            'is_refundable':         _('Refundable'),
             'allows_pay_on_arrival': _('Allows Pay on Arrival'),
-            'is_available':       _('Available for booking'),
-            'description_en':     _('Description — English'),
-            'description_fr':     _('Description — French (optional)'),
-            'description_ru':     _('Description — Russian (optional)'),
+            'allows_pets':           _('Pets Allowed'),
+            'is_available':          _('Available for booking'),
+            'description_en':        _('Description — English'),
+            'description_fr':        _('Description — French (optional)'),
+            'description_ru':        _('Description — Russian (optional)'),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['discount_expires_at'].input_formats = ['%Y-%m-%dT%H:%M']
-        # Pre-populate pickup_locations_text from existing JSONField list
         if self.instance and self.instance.pk and self.instance.pickup_locations:
             self.fields['pickup_locations_text'].initial = '\n'.join(
                 self.instance.pickup_locations
@@ -371,23 +379,24 @@ class CarRejectionForm(forms.Form):
 # ===========================================================================
 # TOUR FORMS
 # ===========================================================================
+
 class TourPackageForm(forms.ModelForm):
     """
     Super Admin only. No approval fields — tours skip the workflow entirely.
     highlights/inclusions/exclusions stored as JSONField lists but edited as
     newline-separated textareas, same pattern as amenities and pickup_locations.
     """
-    highlights_en_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 4, 'placeholder': _('Witness the Great Migration\nGame drives at dawn\n(one per line)')}), label=_('Highlights — English'))
-    highlights_fr_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3, 'placeholder': _('French (optional)')}),          label=_('Highlights — French'))
-    highlights_ru_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3, 'placeholder': _('Russian (optional)')}),          label=_('Highlights — Russian'))
+    highlights_en_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 4, 'placeholder': _('Witness the Great Migration\nGame drives at dawn\n(one per line)')}), label=_('Highlights — English'))
+    highlights_fr_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3, 'placeholder': _('French (optional)')}),  label=_('Highlights — French'))
+    highlights_ru_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3, 'placeholder': _('Russian (optional)')}),  label=_('Highlights — Russian'))
 
-    inclusions_en_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 4, 'placeholder': _('Airport transfers\nAll meals\n(one per line)')}), label=_('Inclusions — English'))
-    inclusions_fr_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Inclusions — French'))
-    inclusions_ru_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Inclusions — Russian'))
+    inclusions_en_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 4, 'placeholder': _('Airport transfers\nAll meals\n(one per line)')}), label=_('Inclusions — English'))
+    inclusions_fr_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Inclusions — French'))
+    inclusions_ru_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Inclusions — Russian'))
 
-    exclusions_en_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 4, 'placeholder': _('International flights\nTravel insurance\n(one per line)')}), label=_('Exclusions — English'))
-    exclusions_fr_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Exclusions — French'))
-    exclusions_ru_text   = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Exclusions — Russian'))
+    exclusions_en_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 4, 'placeholder': _('International flights\nTravel insurance\n(one per line)')}), label=_('Exclusions — English'))
+    exclusions_fr_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Exclusions — French'))
+    exclusions_ru_text = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}), label=_('Exclusions — Russian'))
 
     class Meta:
         model = TourPackage
@@ -399,7 +408,7 @@ class TourPackageForm(forms.ModelForm):
             'what_to_bring_en', 'what_to_bring_fr', 'what_to_bring_ru',
             'cover_image', 'is_active', 'is_featured',
             'discount_percent', 'discount_expires_at',
-            'is_refundable', 'allows_pay_on_arrival',
+            'is_refundable', 'allows_pay_on_arrival', 'allows_pets',
         ]
         widgets = {
             'name_en': forms.TextInput(attrs={'class': 'jd-input', 'placeholder': _('e.g. Serengeti Safari — 5 Days')}),
@@ -417,54 +426,58 @@ class TourPackageForm(forms.ModelForm):
             'what_to_bring_ru': forms.Textarea(attrs={'class': 'jd-input', 'rows': 3}),
             'cover_image':      forms.ClearableFileInput(attrs={'class': 'jd-input'}),
             'discount_percent': forms.NumberInput(attrs={'class': 'jd-input', 'min': '0', 'max': '99'}),
-            'discount_expires_at': forms.DateTimeInput(attrs={'class': 'jd-input', 'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+            'discount_expires_at': forms.DateTimeInput(
+                attrs={'class': 'jd-input', 'type': 'datetime-local'},
+                format='%Y-%m-%dT%H:%M',
+            ),
             'is_active':             forms.CheckboxInput(),
             'is_featured':           forms.CheckboxInput(),
             'is_refundable':         forms.CheckboxInput(),
             'allows_pay_on_arrival': forms.CheckboxInput(),
+            'allows_pets':           forms.CheckboxInput(),
         }
         labels = {
-            'name_en':           _('Package Name — English'),
-            'name_fr':           _('Package Name — French (optional)'),
-            'name_ru':           _('Package Name — Russian (optional)'),
-            'tour_type':         _('Tour Type'),
-            'duration_days':     _('Duration (days)'),
-            'group_size_max':    _('Max Group Size'),
-            'price_per_person':  _('Price Per Person (USD)'),
-            'description_en':    _('Description — English'),
-            'description_fr':    _('Description — French (optional)'),
-            'description_ru':    _('Description — Russian (optional)'),
-            'what_to_bring_en':  _('What to Bring — English'),
-            'what_to_bring_fr':  _('What to Bring — French (optional)'),
-            'what_to_bring_ru':  _('What to Bring — Russian (optional)'),
-            'cover_image':       _('Cover Image'),
-            'discount_percent':  _('Discount (%)'),
-            'discount_expires_at': _('Discount Expires At'),
-            'is_active':         _('Published (visible on site)'),
-            'is_featured':       _('Featured on homepage'),
-            'is_refundable':     _('Refundable'),
+            'name_en':               _('Package Name — English'),
+            'name_fr':               _('Package Name — French (optional)'),
+            'name_ru':               _('Package Name — Russian (optional)'),
+            'tour_type':             _('Tour Type'),
+            'duration_days':         _('Duration (days)'),
+            'group_size_max':        _('Max Group Size'),
+            'price_per_person':      _('Price Per Person (USD)'),
+            'description_en':        _('Description — English'),
+            'description_fr':        _('Description — French (optional)'),
+            'description_ru':        _('Description — Russian (optional)'),
+            'what_to_bring_en':      _('What to Bring — English'),
+            'what_to_bring_fr':      _('What to Bring — French (optional)'),
+            'what_to_bring_ru':      _('What to Bring — Russian (optional)'),
+            'cover_image':           _('Cover Image'),
+            'discount_percent':      _('Discount (%)'),
+            'discount_expires_at':   _('Discount Expires At'),
+            'is_active':             _('Published (visible on site)'),
+            'is_featured':           _('Featured on homepage'),
+            'is_refundable':         _('Refundable'),
             'allows_pay_on_arrival': _('Allows Pay on Arrival'),
+            'allows_pets':           _('Pets Allowed'),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['discount_expires_at'].input_formats = ['%Y-%m-%dT%H:%M']
 
-        # Pre-populate JSON list fields as newline-separated text
         if self.instance and self.instance.pk:
             def to_text(val):
                 if isinstance(val, list):
                     return '\n'.join(str(v) for v in val)
                 return ''
-            self.fields['highlights_en_text'].initial   = to_text(self.instance.highlights_en)
-            self.fields['highlights_fr_text'].initial   = to_text(self.instance.highlights_fr)
-            self.fields['highlights_ru_text'].initial   = to_text(self.instance.highlights_ru)
-            self.fields['inclusions_en_text'].initial   = to_text(self.instance.inclusions_en)
-            self.fields['inclusions_fr_text'].initial   = to_text(self.instance.inclusions_fr)
-            self.fields['inclusions_ru_text'].initial   = to_text(self.instance.inclusions_ru)
-            self.fields['exclusions_en_text'].initial   = to_text(self.instance.exclusions_en)
-            self.fields['exclusions_fr_text'].initial   = to_text(self.instance.exclusions_fr)
-            self.fields['exclusions_ru_text'].initial   = to_text(self.instance.exclusions_ru)
+            self.fields['highlights_en_text'].initial = to_text(self.instance.highlights_en)
+            self.fields['highlights_fr_text'].initial = to_text(self.instance.highlights_fr)
+            self.fields['highlights_ru_text'].initial = to_text(self.instance.highlights_ru)
+            self.fields['inclusions_en_text'].initial = to_text(self.instance.inclusions_en)
+            self.fields['inclusions_fr_text'].initial = to_text(self.instance.inclusions_fr)
+            self.fields['inclusions_ru_text'].initial = to_text(self.instance.inclusions_ru)
+            self.fields['exclusions_en_text'].initial = to_text(self.instance.exclusions_en)
+            self.fields['exclusions_fr_text'].initial = to_text(self.instance.exclusions_fr)
+            self.fields['exclusions_ru_text'].initial = to_text(self.instance.exclusions_ru)
 
     def _text_to_list(self, field_name):
         raw = self.cleaned_data.get(field_name, '')
@@ -518,18 +531,21 @@ class TourItineraryDayForm(forms.ModelForm):
             'description_fr': _('Description — French (optional)'),
             'description_ru': _('Description — Russian (optional)'),
         }
-        
 
+
+# ===========================================================================
 # BOOKING FORMS
+# ===========================================================================
+
 # Valid status transitions per current status.
 # Admin cannot set arbitrary statuses — only logically valid next states.
 STATUS_TRANSITIONS = {
-    'pending_confirmation': ['confirmed', 'cancelled'],
-    'confirmed': ['completed', 'no_show', 'cancelled'],
-    'cancellation_requested': ['cancelled', 'confirmed'],  # confirm or override
-    'cancelled': [],   # terminal — no transitions
-    'completed': [],   # terminal
-    'no_show': [],   # terminal
+    'pending_confirmation':   ['confirmed', 'cancelled'],
+    'confirmed':              ['completed', 'no_show', 'cancelled'],
+    'cancellation_requested': ['cancelled', 'confirmed'],
+    'cancelled':              [],
+    'completed':              [],
+    'no_show':                [],
 }
 
 
@@ -556,7 +572,6 @@ class BookingStatusForm(forms.Form):
         super().__init__(*args, **kwargs)
         valid_next = STATUS_TRANSITIONS.get(current_status, [])
         all_choices = dict(Booking.STATUS_CHOICES)
-        # Include current status as first (disabled) option for context
         choices = [('', f'— {all_choices.get(current_status, current_status)} (current) —')]
         choices += [(s, all_choices[s]) for s in valid_next if s in all_choices]
         self.fields['status'].choices = choices

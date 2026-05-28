@@ -36,10 +36,18 @@
   window.JD_URLS = window.JD_URLS || {};
   window.JD_URLS.toggleFavourite = "{% url 'accounts:toggle_favourite' %}";
   window.JD_URLS.favourites = "{% url 'accounts:favourites' %}";
+  window.JD_URLS.newsletterToggle = "{% url 'accounts:newsletter_toggle' %}";
   window.JD_STRINGS = window.JD_STRINGS || {};
   window.JD_STRINGS.processing = "{% trans 'Processing...' %}";
   window.JD_STRINGS.removeError = "{% trans 'Could not remove. Please try again.' %}";
   window.JD_STRINGS.photoTooLarge = "{% trans 'Photo must be under 5MB.' %}";
+  window.JD_STRINGS.subscribe = "{% trans 'Subscribe' %}";
+  window.JD_STRINGS.unsubscribe = "{% trans 'Unsubscribe' %}";
+  window.JD_STRINGS.subscribed = "{% trans 'Subscribed' %}";
+  window.JD_STRINGS.notSubscribed = "{% trans 'Not subscribed' %}";
+  window.JD_STRINGS.newsletterSubscribedMsg = "{% trans "You're now subscribed. Welcome!" %}";
+  window.JD_STRINGS.newsletterUnsubscribedMsg = "{% trans 'You have been unsubscribed.' %}";
+  window.JD_STRINGS.genericError = "{% trans 'Something went wrong. Please try again.' %}";
 </script>
 <script src="{% static 'js/accounts/dashboard_base.js' %}"></script>
 {% block dashboard_js %}{% endblock %}

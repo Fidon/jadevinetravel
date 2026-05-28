@@ -8,8 +8,13 @@ class HotelBookingForm(forms.Form):
     Rendered on the hotel detail page.
     Validated server-side in HotelBookingView.
     Data stored in session on success — no DB write at this point.
+
+    Total price = price_per_night × nights × num_rooms
+    Guest validation: total_occupants <= max_guests × num_rooms
+    Pets validation: enforced if room_type.allows_pets=False
     """
     room_type_id = forms.IntegerField(widget=forms.HiddenInput())
+
     check_in_date = forms.DateField(
         label=_('Check-in Date'),
         widget=forms.DateInput(attrs={'type': 'text', 'class': 'jd-input', 'autocomplete': 'off'}),
@@ -20,10 +25,42 @@ class HotelBookingForm(forms.Form):
         widget=forms.DateInput(attrs={'type': 'text', 'class': 'jd-input', 'autocomplete': 'off'}),
         input_formats=['%Y-%m-%d', '%d/%m/%Y'],
     )
-    num_guests = forms.IntegerField(
-        label=_('Number of Guests'),
+    num_rooms = forms.IntegerField(
+        label=_('Number of Rooms'),
         min_value=1,
+        max_value=10,
+        initial=1,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_adults = forms.IntegerField(
+        label=_('Adults'),
+        min_value=1,
+        max_value=40,
+        initial=1,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_children = forms.IntegerField(
+        label=_('Children (2–12)'),
+        min_value=0,
         max_value=20,
+        initial=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_infants = forms.IntegerField(
+        label=_('Infants (under 2)'),
+        min_value=0,
+        max_value=10,
+        initial=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_pets = forms.IntegerField(
+        label=_('Pets'),
+        min_value=0,
+        max_value=5,
+        initial=0,
+        required=False,
         widget=forms.NumberInput(attrs={'class': 'jd-input'}),
     )
     special_requests = forms.CharField(
@@ -45,14 +82,18 @@ class HotelBookingForm(forms.Form):
             if check_out <= check_in:
                 self.add_error('check_out_date', _('Check-out must be after check-in.'))
 
+        # Normalise optional fields to 0 when omitted
+        cleaned['num_children'] = cleaned.get('num_children') or 0
+        cleaned['num_infants'] = cleaned.get('num_infants') or 0
+        cleaned['num_pets'] = cleaned.get('num_pets') or 0
+
         return cleaned
 
 
 class CarBookingForm(forms.Form):
     """
     Rendered on the car detail page.
-    Conditional server-side validation: licence required for self-drive.
-    Data stored in session on success — no DB write at this point.
+    Pets enforced server-side in CarBookingView against car.allows_pets.
     """
     RENTAL_MODE_CHOICES = [
         ('with_driver', _('With Driver')),
@@ -79,10 +120,41 @@ class CarBookingForm(forms.Form):
         widget=forms.DateInput(attrs={'type': 'text', 'class': 'jd-input', 'autocomplete': 'off'}),
         input_formats=['%Y-%m-%d', '%d/%m/%Y'],
     )
+    num_adults = forms.IntegerField(
+        label=_('Adults'),
+        min_value=1,
+        max_value=20,
+        initial=1,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_children = forms.IntegerField(
+        label=_('Children (2–12)'),
+        min_value=0,
+        max_value=20,
+        initial=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_infants = forms.IntegerField(
+        label=_('Infants (under 2)'),
+        min_value=0,
+        max_value=10,
+        initial=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_pets = forms.IntegerField(
+        label=_('Pets'),
+        min_value=0,
+        max_value=5,
+        initial=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
     driver_licence_number = forms.CharField(
         label=_('Driver\'s Licence Number'),
         max_length=50,
-        required=False,  # Conditionally required — enforced in clean()
+        required=False,
         widget=forms.TextInput(attrs={'class': 'jd-input'}),
     )
     special_requests = forms.CharField(
@@ -99,7 +171,6 @@ class CarBookingForm(forms.Form):
         returns = cleaned.get('return_date')
         today = timezone.now().date()
 
-        # Licence is required for self-drive — enforced server-side, not just jQuery
         if rental_mode == 'self_drive' and not licence:
             self.add_error(
                 'driver_licence_number',
@@ -113,33 +184,18 @@ class CarBookingForm(forms.Form):
             if returns <= pickup:
                 self.add_error('return_date', _('Return date must be after pickup date.'))
 
+        cleaned['num_children'] = cleaned.get('num_children') or 0
+        cleaned['num_infants'] = cleaned.get('num_infants') or 0
+        cleaned['num_pets'] = cleaned.get('num_pets') or 0
+
         return cleaned
-
-
-class PaymentModeForm(forms.Form):
-    """
-    On the booking summary page — user selects Pay Now or Pay on Arrival.
-    This form submit triggers the actual Booking DB record creation.
-    """
-    PAYMENT_MODE_CHOICES = [
-        ('pay_now', _('Pay Now — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas')),
-        ('pay_on_arrival', _('Pay on Arrival — Pay when you arrive in Tanzania')),
-    ]
-
-    payment_mode = forms.ChoiceField(
-        choices=PAYMENT_MODE_CHOICES,
-        widget=forms.RadioSelect(),
-        label=_('How would you like to pay?'),
-    )
 
 
 class TourBookingForm(forms.Form):
     """
     Rendered on the tour detail page.
-    Validated server-side in TourBookingView.
-    Data stored in session on success — no DB write at this point.
-    Tours always create bookings with status='pending_confirmation'
-    because Jadevine must manually confirm the preferred date.
+    num_participants = adults + children (infants travel free on tours).
+    Pets enforced server-side in TourBookingView against tour.allows_pets.
     """
     preferred_date = forms.DateField(
         label=_('Preferred Start Date'),
@@ -148,11 +204,35 @@ class TourBookingForm(forms.Form):
         ),
         input_formats=['%Y-%m-%d', '%d/%m/%Y'],
     )
-    num_participants = forms.IntegerField(
-        label=_('Number of Participants'),
+    num_adults = forms.IntegerField(
+        label=_('Adults'),
         min_value=1,
         max_value=50,
         initial=1,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_children = forms.IntegerField(
+        label=_('Children (2–12)'),
+        min_value=0,
+        max_value=20,
+        initial=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_infants = forms.IntegerField(
+        label=_('Infants (under 2)'),
+        min_value=0,
+        max_value=10,
+        initial=0,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'jd-input'}),
+    )
+    num_pets = forms.IntegerField(
+        label=_('Pets'),
+        min_value=0,
+        max_value=5,
+        initial=0,
+        required=False,
         widget=forms.NumberInput(attrs={'class': 'jd-input'}),
     )
     special_requests = forms.CharField(
@@ -164,13 +244,26 @@ class TourBookingForm(forms.Form):
     def clean(self):
         cleaned = super().clean()
         preferred_date = cleaned.get('preferred_date')
-        # num_participants = cleaned.get('num_participants')
         today = timezone.now().date()
 
         if preferred_date and preferred_date < today:
             self.add_error('preferred_date', _('Preferred date cannot be in the past.'))
 
-        # num_participants max against group_size_max is validated in the view,
-        # not here, because the form has no reference to the TourPackage instance.
+        cleaned['num_children'] = cleaned.get('num_children') or 0
+        cleaned['num_infants'] = cleaned.get('num_infants') or 0
+        cleaned['num_pets'] = cleaned.get('num_pets') or 0
 
         return cleaned
+
+
+class PaymentModeForm(forms.Form):
+    PAYMENT_MODE_CHOICES = [
+        ('pay_now', _('Pay Now — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas')),
+        ('pay_on_arrival', _('Pay on Arrival — Pay when you arrive in Tanzania')),
+    ]
+
+    payment_mode = forms.ChoiceField(
+        choices=PAYMENT_MODE_CHOICES,
+        widget=forms.RadioSelect(),
+        label=_('How would you like to pay?'),
+    )

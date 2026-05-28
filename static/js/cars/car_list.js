@@ -40,95 +40,66 @@
   }
 
   function renderCard(c) {
-    var imgHtml = c.cover_photo
-      ? '<img src="' +
-        c.cover_photo +
-        '" alt="' +
-        c.name +
-        '" class="car-card-img" loading="lazy">'
-      : '<div class="car-card-img-placeholder"><i class="bi bi-car-front-fill"></i></div>';
+    const imgHtml = c.cover_photo
+      ? `<img src="${c.cover_photo}" alt="${c.name}" class="car-card-img" loading="lazy">`
+      : `<div class="car-card-img-placeholder"><i class="bi bi-car-front-fill"></i></div>`;
 
-    var discountBadge = c.has_discount
-      ? '<span class="jd-discount-badge" style="position:absolute;top:14px;right:14px;">' +
-        c.discount_percent +
-        "% " +
-        (S.off || "off") +
-        "</span>"
+    // top-right
+    const discountBadge = c.has_discount
+      ? `<span class="jd-discount-badge" style="position:absolute;top:14px;right:14px;">${c.discount_percent}% ${S.off || "off"}</span>`
       : "";
 
-    var ratingBadge = c.avg_rating
-      ? '<span class="jd-rating-badge">' +
-        '<i class="bi bi-star-fill"></i> ' +
-        c.avg_rating +
-        '<span class="jd-rating-count">(' +
-        c.review_count +
-        ")</span>" +
-        "</span>"
+    // top-left — frosted white pill (car-card-type-badge-img in CSS)
+    const typeBadge = `<span class="car-card-type-badge-img">${c.vehicle_type}</span>`;
+
+    // bottom-right — heart button (positioned via .car-card .jd-fav-btn override in main.css)
+    const favBtn =
+      typeof JD_FAV !== "undefined"
+        ? JD_FAV.buildCardBtn(c.item_type, c.id, c.is_saved)
+        : "";
+
+    const ratingBadge = c.avg_rating
+      ? `<span class="jd-rating-badge"><i class="bi bi-star-fill"></i> ${c.avg_rating}<span class="jd-rating-count">(${c.review_count})</span></span>`
       : "";
 
-    var priceHtml = c.has_discount
-      ? '<span class="jd-price-original">$' +
-        parseFloat(c.price_per_day).toLocaleString() +
-        "</span>" +
-        '<span class="car-card-price-amount">$' +
-        parseFloat(c.display_price).toLocaleString() +
-        "</span>"
-      : '<span class="car-card-price-amount">$' +
-        parseFloat(c.price_per_day).toLocaleString() +
-        "</span>";
+    const priceHtml = c.has_discount
+      ? `<span class="jd-price-original">$${parseFloat(c.price_per_day).toLocaleString()}</span>
+         <span class="car-card-price-amount">$${parseFloat(c.display_price).toLocaleString()}</span>`
+      : `<span class="car-card-price-amount">$${parseFloat(c.price_per_day).toLocaleString()}</span>`;
 
-    return (
-      '<div class="col-lg-4 col-md-6 jd-reveal">' +
-      '<div class="car-card">' +
-      '<div class="car-card-img-wrap" style="position:relative;">' +
-      imgHtml +
-      '<span class="car-card-type-badge">' +
-      c.vehicle_type +
-      "</span>" +
-      discountBadge +
-      "</div>" +
-      '<div class="car-card-body">' +
-      '<div class="d-flex align-items-center justify-content-between mb-1">' +
-      '<h3 class="car-card-name mb-0">' +
-      c.name +
-      "</h3>" +
-      ratingBadge +
-      "</div>" +
-      '<div class="car-card-specs">' +
-      '<span class="car-spec-pill"><i class="bi bi-people-fill"></i> ' +
-      c.capacity +
-      " " +
-      (S.capacity || "passengers") +
-      "</span>" +
-      '<span class="car-spec-pill"><i class="bi bi-gear-fill"></i> ' +
-      c.transmission +
-      "</span>" +
-      '<span class="car-spec-pill"><i class="bi bi-droplet-fill"></i> ' +
-      c.fuel_type +
-      "</span>" +
-      "</div>" +
-      '<div class="car-card-modes">' +
-      renderModes(c.offers_self_drive, c.offers_driver) +
-      "</div>" +
-      '<p class="car-card-desc">' +
-      (c.description || "") +
-      "</p>" +
-      '<div class="car-card-footer">' +
-      "<div>" +
-      priceHtml +
-      '<div class="car-card-price-label">' +
-      (S.perDay || "/ day") +
-      "</div></div>" +
-      '<a href="' +
-      c.url +
-      '" class="btn-accent-jd" style="padding:10px 22px;font-size:0.7rem;">' +
-      (S.viewCar || "View & Book") +
-      "</a>" +
-      "</div>" +
-      "</div>" +
-      "</div>" +
-      "</div>"
-    );
+    return `
+      <div class="col-lg-4 col-md-6 jd-reveal">
+        <div class="car-card">
+          <div class="car-card-img-wrap" style="position:relative;">
+            <a href="${c.url}" style="display:block;height:100%;">${imgHtml}</a>
+            ${typeBadge}
+            ${discountBadge}
+            ${favBtn}
+          </div>
+          <div class="car-card-body">
+            <div class="d-flex align-items-center justify-content-between mb-1">
+              <h3 class="car-card-name mb-0">${c.name}</h3>
+              ${ratingBadge}
+            </div>
+            <div class="car-card-specs">
+              <span class="car-spec-pill"><i class="bi bi-people-fill"></i> ${c.capacity} ${S.capacity || "passengers"}</span>
+              <span class="car-spec-pill"><i class="bi bi-gear-fill"></i> ${c.transmission}</span>
+              <span class="car-spec-pill"><i class="bi bi-droplet-fill"></i> ${c.fuel_type}</span>
+            </div>
+            <div class="car-card-modes">${renderModes(c.offers_self_drive, c.offers_driver)}</div>
+            <p class="car-card-desc">${c.description || ""}</p>
+            <div class="car-card-footer">
+              <div>
+                ${priceHtml}
+                <div class="car-card-price-label">${S.perDay || "/ day"}</div>
+              </div>
+              <a href="${c.url}" class="btn-accent-jd" style="padding:10px 22px;font-size:0.7rem;">
+                ${S.viewCar || "View & Book"}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>`;
   }
 
   function fetchCars() {
@@ -139,11 +110,14 @@
       $("#filter-max-price").val(urlParams.get("max_price"));
     if (urlParams.has("rental_mode") && urlParams.get("rental_mode") !== "")
       $("#filter-rental-mode").val(urlParams.get("rental_mode"));
+    if (urlParams.has("q") && urlParams.get("q") !== "")
+      $("#search-input").val(urlParams.get("q"));
 
     const params = {
       vehicle_type: $("#filter-vehicle-type").val(),
       rental_mode: $("#filter-rental-mode").val(),
       max_price: $("#filter-max-price").val(),
+      q: $("#search-input").val().trim(),
     };
 
     showSkeletons(6);
@@ -157,16 +131,13 @@
         Grid.empty();
         const cars = data.cars || [];
         Count.text(cars.length);
-
         if (cars.length === 0) {
           Empty.show();
           return;
         }
-
         cars.forEach(function (c) {
           Grid.append(renderCard(c));
         });
-
         if (window.JD && window.JD.initReveal) {
           window.JD.initReveal();
         } else {
@@ -194,12 +165,22 @@
     "change",
     onFilterChange,
   );
+  $("#search-input").on("input", onFilterChange);
+
+  $("#search-input").on("input", function () {
+    $("#btn-search-clear").toggle($(this).val().length > 0);
+  });
+  $("#btn-search-clear").on("click", function () {
+    $("#search-input").val("").trigger("input");
+  });
 
   function clearFilters() {
     if (window.location.search.length > 1) {
       window.location.href = window.location.pathname;
     } else {
       $("#filter-vehicle-type, #filter-rental-mode, #filter-max-price").val("");
+      $("#search-input").val("");
+      $("#btn-search-clear").hide();
       fetchCars();
     }
   }

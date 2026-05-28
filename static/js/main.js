@@ -5,7 +5,7 @@ $(function () {
   var $navbar = $(".jd-navbar");
   var $hamburger = $(".jd-hamburger");
   var $mobileMenu = $(".jd-mobile-menu");
-  var heroHeight = 80; // px from top before navbar goes solid
+  var heroHeight = 80;
   var isAlwaysSolid = $navbar.hasClass("navbar-scrolled");
 
   function updateNavbar() {
@@ -17,11 +17,9 @@ $(function () {
     }
   }
 
-  // Run on load and on scroll
   updateNavbar();
   $(window).on("scroll.navbar", updateNavbar);
 
-  // Hamburger toggle
   $hamburger.on("click", function () {
     var isOpen = $mobileMenu.hasClass("open");
     $hamburger.toggleClass("open", !isOpen);
@@ -29,14 +27,12 @@ $(function () {
     $("body").toggleClass("overflow-hidden", !isOpen);
   });
 
-  // Close mobile menu when a link is clicked
   $mobileMenu.on("click", "a", function () {
     $hamburger.removeClass("open");
     $mobileMenu.removeClass("open");
     $("body").removeClass("overflow-hidden");
   });
 
-  // Close on ESC
   $(document).on("keydown", function (e) {
     if (e.key === "Escape" && $mobileMenu.hasClass("open")) {
       $hamburger.removeClass("open");
@@ -46,34 +42,42 @@ $(function () {
   });
 
   /* ----------------------------------------------------------
-   2. ACTIVE NAV LINK — highlight current page
-   ---------------------------------------------------------- */
+     2. ACTIVE NAV LINK
+     ---------------------------------------------------------- */
   var currentPath = window.location.pathname;
 
-  // Desktop nav links
-  $(".jd-nav-link").each(function () {
-    var href = $(this).attr("href");
-    if (!href) return;
-    if (href === "/" && (currentPath === "/" || currentPath === "")) {
-      $(this).addClass("active");
-    } else if (href !== "/" && currentPath.indexOf(href) === 0) {
-      $(this).addClass("active");
-    }
-  });
+  // Longest-match algorithm — prevents /hotels/ activating when on /hotels/detail/
+  function setActiveLink($links) {
+    var bestMatch = "";
+    var $bestEl = null;
 
-  // Mobile nav links — same logic
-  $(".jd-mobile-nav-link").each(function () {
-    var href = $(this).attr("href");
-    if (!href) return;
-    if (href === "/" && (currentPath === "/" || currentPath === "")) {
-      $(this).addClass("active");
-    } else if (href !== "/" && currentPath.indexOf(href) === 0) {
-      $(this).addClass("active");
-    }
-  });
+    $links.each(function () {
+      var href = $(this).attr("href");
+      if (!href || href === "#") return;
+
+      if (href === "/" || href === "") {
+        if (currentPath === "/" || currentPath === "") {
+          if (href.length > bestMatch.length) {
+            bestMatch = href;
+            $bestEl = $(this);
+          }
+        }
+      } else if (currentPath.startsWith(href)) {
+        if (href.length > bestMatch.length) {
+          bestMatch = href;
+          $bestEl = $(this);
+        }
+      }
+    });
+
+    if ($bestEl) $bestEl.addClass("active");
+  }
+
+  setActiveLink($(".jd-nav-link"));
+  setActiveLink($(".jd-mobile-nav-link"));
 
   /* ----------------------------------------------------------
-     3. SCROLL REVEAL — IntersectionObserver for .jd-reveal
+     3. SCROLL REVEAL
      ---------------------------------------------------------- */
   if ("IntersectionObserver" in window) {
     var revealObserver = new IntersectionObserver(
@@ -92,33 +96,20 @@ $(function () {
       revealObserver.observe(this);
     });
   } else {
-    // Fallback for old browsers
     $(".jd-reveal").addClass("revealed");
   }
 
-  /* ----------------------------------------------------------
-     3b. PAGE-LOAD REVEAL — staggered reveal for above-fold
-         structural elements marked with .jd-load-reveal.
-         Also exposes JD.initReveal() so page JS can call it
-         after dynamically injecting cards.
-     ---------------------------------------------------------- */
   function triggerLoadReveals() {
     $(".jd-load-reveal").each(function () {
       var $el = $(this);
       var delay = parseInt($el.attr("data-delay") || "0", 10);
-      // Base delay 80ms per step so the sequence feels natural
       setTimeout(function () {
         $el.addClass("revealed");
       }, delay * 80);
     });
   }
-
-  // Fire on DOMContentLoaded — already inside $(function(){}) so fires immediately
   triggerLoadReveals();
 
-  // Expose initReveal so page JS (tour_list.js, car_list.js, hotel_list.js)
-  // can call JD.initReveal() after injecting cards into the DOM.
-  // Observes any .jd-reveal elements not yet being watched.
   window.JD = window.JD || {};
   JD.initReveal = function () {
     if (!("IntersectionObserver" in window)) {
@@ -133,8 +124,6 @@ $(function () {
 
   /* ----------------------------------------------------------
      4. TOAST NOTIFICATIONS
-     Usage: JD.toast('Message here', 'success')
-     Types: 'success', 'error', 'info', '' (default)
      ---------------------------------------------------------- */
   window.JD = window.JD || {};
 
@@ -149,14 +138,12 @@ $(function () {
       "": "bi-bell-fill",
     };
 
-    var icon = iconMap[type] || iconMap[""];
-
     var $toast = $(
       '<div class="jd-toast toast-' +
         type +
         '">' +
         '<i class="bi ' +
-        icon +
+        (iconMap[type] || iconMap[""]) +
         '"></i>' +
         "<span>" +
         message +
@@ -164,19 +151,14 @@ $(function () {
         "</div>",
     );
 
-    // Create container if it doesn't exist
     if ($("#jd-toast-container").length === 0) {
       $("body").append('<div id="jd-toast-container"></div>');
     }
 
     $("#jd-toast-container").append($toast);
-
-    // Trigger animation after paint
     setTimeout(function () {
       $toast.addClass("show");
     }, 10);
-
-    // Auto dismiss
     setTimeout(function () {
       $toast.removeClass("show");
       setTimeout(function () {
@@ -186,8 +168,7 @@ $(function () {
   };
 
   /* ----------------------------------------------------------
-     5. CSRF HELPER — for AJAX POST requests
-     Usage: JD.csrfToken()
+     5. CSRF HELPER
      ---------------------------------------------------------- */
   JD.csrfToken = function () {
     return $("[name=csrfmiddlewaretoken]").val() || getCookie("csrftoken");
@@ -202,22 +183,17 @@ $(function () {
 
   /* ----------------------------------------------------------
      6. LANGUAGE SWITCHER
+        Shared handler — used by:
+        a) Floating pill (desktop + mobile)
+        b) Mobile menu inline buttons
      ---------------------------------------------------------- */
-  $(document).on("click", ".jd-lang-btn", function () {
-    var lang = $(this).data("lang");
+  function submitLang(lang) {
     if (!lang) return;
-
     var cleanPath = window.location.pathname.replace(
       /^\/(en|fr|ru|sw)(\/|$)/,
       "/",
     );
-
-    // Submit Django's built-in language form
-    var $form = $("<form>", {
-      method: "POST",
-      action: "/i18n/setlang/",
-    });
-
+    var $form = $("<form>", { method: "POST", action: "/i18n/setlang/" });
     $form.append(
       $("<input>", {
         type: "hidden",
@@ -229,19 +205,52 @@ $(function () {
       $("<input>", { type: "hidden", name: "language", value: lang }),
     );
     $form.append(
-      $("<input>", {
-        type: "hidden",
-        name: "next",
-        value: cleanPath,
-      }),
+      $("<input>", { type: "hidden", name: "next", value: cleanPath }),
     );
-
     $("body").append($form);
     $form.submit();
+  }
+
+  // ── Floating pill ──────────────────────────────────────────
+  var $floatLang = $("#jd-float-lang");
+  var $floatPill = $("#jd-float-lang-pill");
+  var $floatDropdown = $("#jd-float-lang-dropdown");
+
+  $floatPill.on("click", function (e) {
+    e.stopPropagation();
+    var isOpen = $floatLang.hasClass("open");
+    $floatLang.toggleClass("open", !isOpen);
+    $floatPill.attr("aria-expanded", !isOpen);
+  });
+
+  // Click on a language option in the floating dropdown
+  $floatDropdown.on("click", ".jd-float-lang-item", function () {
+    submitLang($(this).data("lang"));
+  });
+
+  // Close when clicking outside
+  $(document).on("click.floatlang", function (e) {
+    if (!$(e.target).closest("#jd-float-lang").length) {
+      $floatLang.removeClass("open");
+      $floatPill.attr("aria-expanded", "false");
+    }
+  });
+
+  // Close on ESC
+  $(document).on("keydown.floatlang", function (e) {
+    if (e.key === "Escape") {
+      $floatLang.removeClass("open");
+      $floatPill.attr("aria-expanded", "false");
+    }
+  });
+
+  // ── Mobile menu inline language buttons ───────────────────
+  $(document).on("click", ".jd-lang-option", function () {
+    submitLang($(this).data("lang"));
   });
 
   /* ----------------------------------------------------------
-     7. SMOOTH SCROLL for anchor links
+     7. SMOOTH SCROLL
      ---------------------------------------------------------- */
   $(document).on("click", 'a[href^="#"]', function (e) {
     var target = $(this).attr("href");
@@ -249,16 +258,14 @@ $(function () {
       e.preventDefault();
       var offset = parseInt($(".jd-navbar").css("height")) + 20;
       $("html, body").animate(
-        {
-          scrollTop: $(target).offset().top - offset,
-        },
+        { scrollTop: $(target).offset().top - offset },
         600,
       );
     }
   });
 
   /* ----------------------------------------------------------
-     8. NEWSLETTER FORM (global — used on homepage + footer)
+     8. NEWSLETTER FORM
      ---------------------------------------------------------- */
   $(document).on("submit", ".jd-newsletter-form", function (e) {
     e.preventDefault();
@@ -268,7 +275,6 @@ $(function () {
     var email = $input.val().trim();
 
     if (!email) return;
-
     $btn.prop("disabled", true).text("...");
 
     $.ajax({

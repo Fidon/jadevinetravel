@@ -33,14 +33,14 @@
     {% if photos %}
     <div class="hotel-gallery-grid" id="hotel-gallery">
       <div class="gallery-main">
-        <a href="{{ photos.0.image.url }}" class="gallery-link" data-gallery="hotel">
+        <a href="{{ photos.0.image.url }}" class="hotel-gallery-link" data-gallery="hotel">
           <img src="{{ photos.0.image.url }}" alt="{{ hotel.name }}" class="gallery-img-main" loading="eager">
           <div class="gallery-overlay"><i class="bi bi-fullscreen"></i></div>
         </a>
       </div>
       <div class="gallery-side">
         {% for photo in photos|slice:"1:5" %}
-        <a href="{{ photo.image.url }}" class="gallery-link gallery-side-item" data-gallery="hotel">
+        <a href="{{ photo.image.url }}" class="hotel-gallery-link gallery-side-item" data-gallery="hotel">
           <img src="{{ photo.image.url }}" alt="{{ hotel.name }}" class="gallery-img-side" loading="lazy">
           <div class="gallery-overlay">
             {% if forloop.last and photos|length > 5 %}
@@ -54,7 +54,7 @@
       </div>
     </div>
     {% for photo in photos|slice:"5:" %}
-    <a href="{{ photo.image.url }}" class="gallery-link d-none" data-gallery="hotel">
+    <a href="{{ photo.image.url }}" class="hotel-gallery-link d-none" data-gallery="hotel">
       <img src="{{ photo.image.url }}" alt="{{ hotel.name }}" loading="lazy">
     </a>
     {% endfor %}
@@ -73,7 +73,6 @@
       <!-- LEFT: Hotel info -->
       <div class="col-lg-7 jd-load-reveal" data-delay="3">
 
-        <!-- Header -->
         <div class="hotel-detail-header">
           <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
             <div>
@@ -109,6 +108,23 @@
           <div class="jd-divider mt-4 mb-4"></div>
         </div>
 
+        <!-- Favourite button — below header, before description -->
+        <div class="jd-fav-detail-wrap mb-4">
+          {% if is_saved is not None %}
+          <button type="button"
+                  class="jd-fav-btn jd-fav-btn--detail {% if is_saved %}jd-fav-btn--saved{% endif %}"
+                  data-item-type="hotel"
+                  data-item-id="{{ hotel.id }}"
+                  data-saved="{{ is_saved|yesno:'true,false' }}"
+                  data-toggle-url="{{ favourite_toggle_url }}">
+            <i class="bi {% if is_saved %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+            <span class="jd-fav-label">
+              {% if is_saved %}{% trans "Saved" %}{% else %}{% trans "Save" %}{% endif %}
+            </span>
+          </button>
+          {% endif %}
+        </div>
+
         <!-- Description -->
         <div class="hotel-description jd-reveal">
           <span class="eyebrow">{% trans "About This Hotel" %}</span>
@@ -127,13 +143,17 @@
                  data-price="{{ rt.price }}"
                  data-display-price="{{ rt.display_price }}"
                  data-max-guests="{{ rt.max_guests }}"
+                 data-allows-pets="{{ rt.allows_pets|yesno:'true,false' }}"
                  data-name="{{ rt.name }}">
               <div class="room-type-top">
                 <div style="flex:1;">
                   <h5 class="room-type-name">{{ rt.name }}</h5>
                   <p class="room-type-desc">{{ rt.description }}</p>
                   <div class="room-type-meta">
-                    <span><i class="bi bi-people-fill me-1"></i>{% blocktrans with max=rt.max_guests %}Max {{ max }} guests{% endblocktrans %}</span>
+                    <span>
+                      <i class="bi bi-people-fill me-1"></i>
+                      {% blocktrans with max=rt.max_guests %}Max {{ max }} guests per room{% endblocktrans %}
+                    </span>
                   </div>
                   {% if rt.amenities %}
                   <div class="room-amenities mt-2">
@@ -142,7 +162,6 @@
                     {% endfor %}
                   </div>
                   {% endif %}
-                  <!-- Policy badges -->
                   <div class="d-flex gap-2 flex-wrap mt-2">
                     {% if not rt.is_refundable %}
                     <span class="jd-badge jd-badge-danger" style="font-size:10px;">
@@ -154,9 +173,13 @@
                       <i class="bi bi-credit-card me-1"></i>{% trans "Pay Now only" %}
                     </span>
                     {% endif %}
+                    {% if rt.allows_pets %}
+                    <span class="jd-badge jd-badge-success" style="font-size:10px;">
+                      <i class="bi bi-heart me-1"></i>{% trans "Pets welcome" %}
+                    </span>
+                    {% endif %}
                   </div>
                 </div>
-                <!-- Price column -->
                 <div class="room-type-price-wrap">
                   {% if rt.has_discount %}
                   <span class="jd-discount-badge mb-2">{{ rt.discount_percent }}% {% trans "off" %}</span>
@@ -167,12 +190,36 @@
                   {% else %}
                   <span class="room-type-price">${{ rt.price }}</span>
                   {% endif %}
-                  <span class="room-type-price-label">{% trans "/ night" %}</span>
+                  <span class="room-type-price-label">{% trans "/ room / night" %}</span>
                 </div>
               </div>
               <div class="room-select-indicator">
                 <i class="bi bi-check-circle-fill me-2"></i>{% trans "Selected" %}
               </div>
+
+              <!-- Room type photo strip — shown when room is selected -->
+              {% if rt.photos %}
+              <div class="room-photo-strip" id="room-strip-{{ rt.id }}">
+                <div class="room-photo-strip-inner">
+                  {% for photo in rt.photos %}
+                  <a href="{{ photo.url }}"
+                     class="room-strip-thumb room-strip-link"
+                     data-gallery="room-{{ rt.id }}"
+                     data-room-gallery="{{ rt.id }}">
+                    <img src="{{ photo.url }}"
+                         alt="{{ rt.name }}"
+                         loading="lazy">
+                    {% if forloop.first %}
+                    <span class="room-strip-label">
+                      <i class="bi bi-images me-1"></i>{{ rt.photos|length }} {% trans "photos" %}
+                    </span>
+                    {% endif %}
+                  </a>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+
             </div>
             {% endfor %}
           </div>
@@ -198,14 +245,14 @@
       <div class="col-lg-5 jd-load-reveal" data-delay="4">
         <div class="hotel-booking-panel" id="booking-panel">
 
-          <!-- Price header — updated by JS on room selection -->
+          <!-- Price header -->
           <div class="booking-price-header">
             <div>
               <span class="booking-price-from">{% trans "From" %}</span>
               <span class="booking-price-amount" id="display-price">
                 {% if room_types %}${{ room_types.0.display_price }}{% else %}${{ hotel.price_per_night }}{% endif %}
               </span>
-              <span class="booking-price-per">{% trans "/ night" %}</span>
+              <span class="booking-price-per">{% trans "/ room / night" %}</span>
             </div>
             <div class="jd-stars">
               {% for i in "12345" %}
@@ -253,20 +300,107 @@
                 </div>
               </div>
 
-              <!-- Guests -->
+              <!-- Number of Rooms -->
               <div class="jd-form-group mt-3">
-                <label class="jd-label" for="id_num_guests">{% trans "Guests" %}</label>
+                <label class="jd-label">{% trans "Rooms" %}</label>
                 <div class="guest-counter">
-                  <button type="button" class="guest-counter-btn" id="btn-guests-minus">
+                  <button type="button" class="guest-counter-btn" id="btn-rooms-minus">
                     <i class="bi bi-dash"></i>
                   </button>
-                  <input type="number" name="num_guests" id="id_num_guests"
+                  <input type="number" name="num_rooms" id="id_num_rooms"
                          class="jd-input guest-counter-input"
-                         value="{{ booking_prefill.num_guests|default:'1' }}"
-                         min="1" max="20" readonly>
-                  <button type="button" class="guest-counter-btn" id="btn-guests-plus">
+                         value="{{ booking_prefill.num_rooms|default:'1' }}"
+                         min="1" max="10" readonly>
+                  <button type="button" class="guest-counter-btn" id="btn-rooms-plus">
                     <i class="bi bi-plus"></i>
                   </button>
+                </div>
+              </div>
+
+              <!-- Guests breakdown -->
+              <div class="jd-form-group mt-3">
+                <label class="jd-label">{% trans "Guests" %}</label>
+                <div class="guests-breakdown">
+
+                  <!-- Adults -->
+                  <div class="guest-row">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Adults" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-adults-minus">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="number" name="num_adults" id="id_num_adults"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_adults|default:'1' }}"
+                             min="1" max="40" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-adults-plus">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Children -->
+                  <div class="guest-row">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Children" %}</span>
+                      <span class="guest-type-sub">{% trans "Ages 2–12" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-children-minus">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="number" name="num_children" id="id_num_children"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_children|default:'0' }}"
+                             min="0" max="20" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-children-plus">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Infants -->
+                  <div class="guest-row">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Infants" %}</span>
+                      <span class="guest-type-sub">{% trans "Under 2" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-infants-minus">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="number" name="num_infants" id="id_num_infants"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_infants|default:'0' }}"
+                             min="0" max="10" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-infants-plus">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Pets — hidden by default; shown/hidden by JS based on room policy -->
+                  <div class="guest-row" id="pets-row" style="display:none;">
+                    <div class="guest-row-label">
+                      <span class="guest-type-title">{% trans "Pets" %}</span>
+                      <span class="guest-type-sub">{% trans "Dogs, cats" %}</span>
+                    </div>
+                    <div class="guest-counter guest-counter-sm">
+                      <button type="button" class="guest-counter-btn" id="btn-pets-minus">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="number" name="num_pets" id="id_num_pets"
+                             class="jd-input guest-counter-input"
+                             value="{{ booking_prefill.num_pets|default:'0' }}"
+                             min="0" max="5" readonly>
+                      <button type="button" class="guest-counter-btn" id="btn-pets-plus">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
                 <p class="guest-max-note" id="guest-max-note"></p>
               </div>
@@ -311,7 +445,6 @@
                 {% trans "This room requires Pay Now — Pay on Arrival is not available." %}
               </div>
 
-              <!-- Form errors -->
               {% if booking_prefill %}
               <div class="booking-server-errors" id="server-errors">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -319,7 +452,6 @@
               </div>
               {% endif %}
 
-              <!-- Submit -->
               {% if room_types %}
               <button type="submit" class="btn-accent-jd w-100 justify-content-center booking-submit-btn">
                 <i class="bi bi-calendar-check me-2"></i>
@@ -340,7 +472,6 @@
             </div>
           </form>
 
-          <!-- Pay on Arrival note — toggled by JS -->
           <div class="poa-note" id="poa-note">
             <i class="bi bi-cash-coin me-2"></i>
             {% trans "Pay on Arrival available — pay when you reach Tanzania" %}
@@ -360,15 +491,19 @@
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
+<script src="{% static 'js/core/favourites.js' %}"></script>
 <script>
   window.JD_ROOM_TYPES = {{ room_types_json|safe }};
   window.JD_HOTEL_BASE_PRICE = "{{ hotel.price_per_night }}";
   window.JD_STRINGS = window.JD_STRINGS || {};
-  window.JD_STRINGS.off = "{% trans 'off' %}";
-  window.JD_STRINGS.nonRefundable = "{% trans 'Non-refundable' %}";
-  window.JD_STRINGS.payNowOnly = "{% trans 'This room requires Pay Now — Pay on Arrival not available.' %}";
-  window.JD_STRINGS.freeCancel = "{% trans 'Free cancellation applies — cancel 14+ days before for a full refund.' %}";
+  window.JD_STRINGS.saveToFavourites     = "{% trans 'Save' %}";
+  window.JD_STRINGS.savedToFavourites    = "{% trans 'Saved' %}";
+  window.JD_STRINGS.addedToFavourites    = "{% trans 'Added to favourites' %}";
+  window.JD_STRINGS.removedFromFavourites = "{% trans 'Removed from favourites' %}";
+  window.JD_STRINGS.favouriteError       = "{% trans 'Could not update favourites. Try again.' %}";
+  window.JD_STRINGS.maxGuestsPerRoom = "{% trans 'Max {max} guests per room' %}";
+  window.JD_STRINGS.maxCapacityReached = "{% trans 'Maximum capacity reached for selected rooms' %}";
+  window.JD_STRINGS.petsNotAllowed = "{% trans 'Pets are not allowed in this room type.' %}";
 </script>
 <script src="{% static 'js/hotels/hotel_detail.js' %}"></script>
 {% endblock %}

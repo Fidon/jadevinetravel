@@ -67,7 +67,6 @@
 
 {% block content %}
 
-<!-- Rejection reason banner -->
 {% if hotel.approval_status == 'rejected' and hotel.rejection_reason %}
 <div class="portal-alert portal-alert--error mb-4">
   <i class="bi bi-x-circle-fill"></i>
@@ -78,7 +77,6 @@
 </div>
 {% endif %}
 
-<!-- Approved listing edit warning for mini-admins -->
 {% if mini_admin and hotel.approval_status == 'approved' %}
 <div class="portal-edit-warning mb-4">
   <i class="bi bi-exclamation-triangle-fill"></i>
@@ -144,7 +142,9 @@
       {% if room_types %}
       <div class="room-types-portal-list">
         {% for rt in room_types %}
-        <div class="room-type-portal-item">
+        <div class="room-type-portal-item" id="room-type-item-{{ rt.pk }}">
+
+          <!-- Room type header row -->
           <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
             <div style="flex:1;">
               <div style="font-weight:600;margin-bottom:0.2rem;">{{ rt.name }}</div>
@@ -166,6 +166,9 @@
                 {% if not rt.allows_pay_on_arrival %}
                 <span class="approval-badge approval-badge--pending" style="font-size:0.65rem;">{% trans "Pay Now only" %}</span>
                 {% endif %}
+                {% if rt.allows_pets %}
+                <span class="approval-badge" style="background:#e8f5e9;color:#2d7a4f;font-size:0.65rem;">{% trans "Pets allowed" %}</span>
+                {% endif %}
                 {% if not rt.is_available %}
                 <span class="approval-badge" style="background:var(--color-light);color:var(--color-muted);font-size:0.65rem;">{% trans "Unavailable" %}</span>
                 {% endif %}
@@ -179,6 +182,15 @@
                       data-bs-target="#editRoomModal"
                       data-room-id="{{ rt.pk }}">
                 <i class="bi bi-pencil"></i>
+              </button>
+              <button type="button"
+                      class="portal-icon-btn js-toggle-room-photos"
+                      title="{% trans 'Manage photos' %}"
+                      data-room-id="{{ rt.pk }}">
+                <i class="bi bi-images"></i>
+                {% with count=rt.room_photos.count %}
+                {% if count %}<span class="photo-count-badge">{{ count }}</span>{% endif %}
+                {% endwith %}
               </button>
               <form method="post"
                     action="{% url 'portal:hotel_room_delete' hotel.pk rt.pk %}"
@@ -194,6 +206,57 @@
               </form>
             </div>
           </div>
+
+          <!-- Room type photo panel — collapsed by default, toggled by JS -->
+          <div class="room-photo-panel" id="room-photo-panel-{{ rt.pk }}" style="display:none;">
+            <div class="room-photo-panel-header">
+              <span style="font-size:var(--text-xs);font-weight:600;color:var(--color-text);">
+                {% trans "Room Photos" %}
+              </span>
+              <span style="font-size:var(--text-xs);color:var(--color-muted);">
+                {% trans "Drag to reorder. First photo shown to customers." %}
+              </span>
+            </div>
+
+            <!-- Upload area -->
+            <div class="room-photo-upload-area"
+                 id="room-upload-area-{{ rt.pk }}"
+                 data-room-id="{{ rt.pk }}">
+              <input type="file"
+                     id="room-photo-input-{{ rt.pk }}"
+                     class="room-photo-file-input"
+                     data-room-id="{{ rt.pk }}"
+                     accept="image/jpeg,image/png,image/webp"
+                     multiple>
+              <i class="bi bi-cloud-upload"></i>
+              <span>{% trans "Click to upload or drag & drop" %}</span>
+              <span style="font-size:var(--text-xs);">{% trans "JPEG, PNG, WebP — max 8 MB" %}</span>
+              <div class="photo-upload-spinner room-upload-spinner" id="room-upload-spinner-{{ rt.pk }}" style="display:none;"></div>
+            </div>
+
+            <!-- Photo grid -->
+            <div class="photo-grid room-photo-grid mt-2"
+                 id="room-photo-grid-{{ rt.pk }}"
+                 data-room-id="{{ rt.pk }}">
+              {% for photo in rt.room_photos.all %}
+              <div class="photo-item" data-photo-id="{{ photo.pk }}">
+                <img src="{{ photo.image.url }}" alt="{{ rt.name }}" loading="lazy">
+                <div class="photo-item-actions">
+                  <button type="button"
+                          class="photo-action-btn photo-action-btn--delete js-delete-room-photo"
+                          data-photo-id="{{ photo.pk }}"
+                          data-room-id="{{ rt.pk }}"
+                          title="{% trans 'Delete photo' %}">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+          </div>
+          <!-- /room-photo-panel -->
+
         </div>
         {% endfor %}
       </div>
@@ -207,17 +270,16 @@
 
   </div>
 
-  <!-- ── Right column: photos ── -->
+  <!-- ── Right column: hotel photos ── -->
   <div class="col-lg-5">
     <div class="portal-card">
       <div class="portal-card-header">
-        <h2 class="portal-card-title">{% trans "Photos" %}</h2>
+        <h2 class="portal-card-title">{% trans "Hotel Photos" %}</h2>
         <span style="font-size:var(--text-xs);color:var(--color-muted);">
           {% trans "Drag to reorder. First photo is shown on listing cards." %}
         </span>
       </div>
 
-      <!-- Upload area -->
       <div class="photo-upload-area" id="photo-upload-area">
         <input type="file" id="photo-file-input" accept="image/jpeg,image/png,image/webp" multiple>
         <i class="bi bi-cloud-upload" style="font-size:1.5rem;"></i>
@@ -226,7 +288,6 @@
         <div class="photo-upload-spinner" id="upload-spinner"></div>
       </div>
 
-      <!-- Photo grid — sortable -->
       <div class="photo-grid mt-3" id="photo-grid">
         {% for photo in photos %}
         <div class="photo-item {% if photo.is_cover %}is-cover{% endif %}"
@@ -265,18 +326,15 @@
     <div class="modal-content">
       <form method="post" action="{% url 'portal:hotel_room_add' hotel.pk %}">
         {% csrf_token %}
-
         <div class="modal-header">
           <h5 class="modal-title" id="addRoomModalLabel">
             <i class="bi bi-plus-circle me-2"></i>{% trans "Add Room Type" %}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
         <div class="modal-body" style="padding:1.5rem;">
           {% include "portal/includes/room_type_form_fields.html" with form=room_form %}
         </div>
-
         <div class="modal-footer">
           <button type="button" class="btn-outline-jd" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
           <button type="submit" class="btn-primary-jd"
@@ -284,31 +342,27 @@
             <i class="bi bi-check-lg"></i> {% trans "Add Room Type" %}
           </button>
         </div>
-
       </form>
     </div>
   </div>
 </div>
 
-<!-- EDIT ROOM TYPE MODAL — populated by JS -->
+<!-- EDIT ROOM TYPE MODAL -->
 <div class="modal fade portal-modal" id="editRoomModal" tabindex="-1"
      aria-labelledby="editRoomModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <form method="post" id="edit-room-form" action="">
         {% csrf_token %}
-
         <div class="modal-header">
           <h5 class="modal-title" id="editRoomModalLabel">
             <i class="bi bi-pencil me-2"></i>{% trans "Edit Room Type" %}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
         <div class="modal-body" style="padding:1.5rem;">
           {% include "portal/includes/room_type_form_fields.html" with form=room_form %}
         </div>
-        
         <div class="modal-footer">
           <button type="button" class="btn-outline-jd" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
           <button type="submit" class="btn-primary-jd"
@@ -321,7 +375,7 @@
   </div>
 </div>
 
-<!-- Rejection modal — reuse same pattern as list page -->
+<!-- REJECTION MODAL -->
 {% if not mini_admin %}
 <div class="modal fade portal-modal portal-modal--danger"
      id="rejectModal" tabindex="-1" aria-hidden="true">
@@ -369,6 +423,9 @@
     photoDelete:   '/portal/hotels/{{ hotel.pk }}/photos/__ID__/delete/',
     photoSetCover: '/portal/hotels/{{ hotel.pk }}/photos/__ID__/cover/',
     photoReorder:  '{% url "portal:hotel_photo_reorder" hotel.pk %}',
+    roomPhotoUpload:  '/portal/hotels/{{ hotel.pk }}/rooms/__RID__/photos/upload/',
+    roomPhotoDelete:  '/portal/hotels/{{ hotel.pk }}/rooms/__RID__/photos/__ID__/delete/',
+    roomPhotoReorder: '/portal/hotels/{{ hotel.pk }}/rooms/__RID__/photos/reorder/',
   };
   window.HOTEL_ROOM_TYPES = {{ room_types_json|safe }};
 </script>

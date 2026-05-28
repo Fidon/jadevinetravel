@@ -553,3 +553,97 @@ def send_contact_reply_email(message_id, reply_text):
     )
 
     _send(subject, text_body, html_body, recipient)
+
+
+# ===========================================================================
+# TASK 6 — Notify mini-admin: their listing was edited by Super Admin
+# ===========================================================================
+def send_listing_edited_by_admin_email(listing_type, listing_id, edited_by_id):
+    """
+    Sent to the mini-admin who owns the listing when a Super Admin edits it.
+    Does NOT fire when the mini-admin edits their own listing (that path
+    already goes through the approval reset flow).
+
+    Called via:
+        async_task(
+            'apps.portal.tasks.send_listing_edited_by_admin_email',
+            'hotel', hotel.pk, request.user.pk,
+        )
+    """
+    from apps.accounts.models import CustomUser
+
+    listing = _get_listing(listing_type, listing_id)
+
+    if not listing.created_by:
+        return  # Super Admin's own listing — nobody to notify
+
+    if not hasattr(listing.created_by, 'miniadminprofile'):
+        return  # Created by another Super Admin — skip
+
+    editor = CustomUser.objects.get(pk=edited_by_id)
+    label = _listing_label(listing_type)
+    portal_url = _get_portal_url(_portal_detail_path(listing_type, listing_id))
+    recipient = listing.created_by.email
+    first_name = listing.created_by.first_name or listing.created_by.username
+    listing_name = listing.name
+    editor_name = editor.get_full_name() or editor.username
+    edited_at = timezone.now().strftime('%d %b %Y at %H:%M UTC')
+
+    subject = f'Your {label} listing has been updated — {listing_name}'
+
+    text_body = (
+        f'Dear {first_name},\n\n'
+        f'The Jadevine team has made updates to your {label} listing '
+        f'"{listing_name}".\n\n'
+        f'Updated by: {editor_name}\n'
+        f'Date:       {edited_at}\n\n'
+        f'Your listing remains live. You can review the changes in the portal:\n'
+        f'{portal_url}\n\n'
+        f'If you have questions about the changes made, please contact the '
+        f'Jadevine team at info@jadevinetours.com.\n\n'
+        f'Jadevine Travel & Tours\nZanzibar, Tanzania'
+    )
+
+    html_body = (
+        _email_header(f'Your {label} Listing Was Updated', listing_name)
+        + f"""
+        <div style="text-align:center;margin-bottom:28px;">
+          <div style="width:72px;height:72px;background:#eaf4fb;border-radius:50%;
+                      margin:0 auto 16px;line-height:72px;font-size:32px;
+                      display:inline-flex;align-items:center;justify-content:center;">
+            ✏️
+          </div>
+          <h2 style="font-size:22px;font-weight:700;color:#1a4d2e;margin-bottom:8px;">
+            Listing Updated
+          </h2>
+          <p style="font-size:15px;color:#5a5550;line-height:1.6;margin:0;">
+            Dear {first_name}, the Jadevine team has made changes to
+            your {label} listing. It remains live on the website.
+          </p>
+        </div>
+
+        {_section_title('Update Details')}
+        <table width="100%" cellpadding="0" cellspacing="0">
+          {_detail_row('Listing Name', listing_name)}
+          {_detail_row('Type', label)}
+          {_detail_row('Updated By', editor_name)}
+          {_detail_row('Date', edited_at)}
+          {_detail_row('Status', '&#x2705; Still Live')}
+        </table>
+
+        <div style="background:#eaf4fb;border:1px solid #2471a3;border-radius:8px;
+                    padding:14px 18px;margin-top:24px;font-size:14px;color:#2471a3;
+                    line-height:1.7;">
+          Your listing is still live and accepting bookings. Log in to the portal
+          to review any changes. If anything looks incorrect, contact the Jadevine
+          team at
+          <a href="mailto:info@jadevinetours.com"
+             style="color:#2471a3;">info@jadevinetours.com</a>.
+        </div>
+
+        {_portal_button(portal_url, 'Review My Listing →')}
+        """
+        + _email_footer(recipient)
+    )
+
+    _send(subject, text_body, html_body, recipient)

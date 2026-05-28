@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404, render
 from .models import CarRental
 from apps.reviews.models import Review
+from apps.core.models import SavedFavourite
 from django.db.models import Avg, Count
 
 
@@ -42,7 +43,6 @@ class CarListView(View):
         elif rental_mode == 'with_driver':
             qs = qs.filter(offers_driver=True)
         if pickup_location:
-            # JSONField contains list of strings — filter using contains
             qs = qs.filter(pickup_locations__contains=pickup_location)
         if max_price:
             try:
@@ -50,14 +50,27 @@ class CarListView(View):
             except ValueError:
                 pass
 
+        search_q = request.GET.get('q', '').strip()
+        if search_q:
+            qs = qs.filter(name__icontains=search_q)
+
         lang = request.LANGUAGE_CODE
 
+        saved_ids = set()
+        if request.user.is_authenticated:
+            saved_ids = set(
+                SavedFavourite.objects.filter(
+                    user=request.user,
+                    car__in=qs
+                ).values_list('car_id', flat=True)
+            )
+
         cars_data = []
+
         for car in qs:
             cover = car.cover_photo
             review_data = Review.objects.filter(
-                car=car,
-                status='approved'
+                car=car, status='approved'
             ).aggregate(avg=Avg('rating'), total=Count('id'))
             avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
             review_count = review_data['total'] if review_data['total'] >= 1 else 0
@@ -81,11 +94,14 @@ class CarListView(View):
                 'offers_driver': car.offers_driver,
                 'allows_pay_on_arrival': car.allows_pay_on_arrival,
                 'is_refundable': car.is_refundable,
+                'allows_pets': car.allows_pets,
                 'description': car.get_description(lang)[:120] + '...' if car.get_description(lang) else '',
                 'cover_photo': cover.image.url if cover else None,
                 'avg_rating': avg_rating,
                 'review_count': review_count,
                 'url': request.build_absolute_uri(f"/cars/{car.slug}/"),
+                'is_saved': car.id in saved_ids,
+                'item_type': 'car',
             })
 
         return JsonResponse({'cars': cars_data})
@@ -111,13 +127,12 @@ class CarDetailView(DetailView):
 
         context['description'] = car.get_description(lang)
         context['photos'] = car.photos.all()
-        context['pickup_locations'] = car.pickup_locations  # list of strings
+        context['pickup_locations'] = car.pickup_locations
         context['pickup_locations_json'] = json.dumps(car.pickup_locations)
         context['booking_prefill'] = self.request.session.pop('booking_prefill', None)
-        
+
         review_data = Review.objects.filter(
-            car=car,
-            status='approved'
+            car=car, status='approved'
         ).aggregate(avg=Avg('rating'), total=Count('id'))
         context['avg_rating'] = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
         context['review_count'] = review_data['total'] if review_data['total'] >= 1 else 0
@@ -129,6 +144,14 @@ class CarDetailView(DetailView):
         context['display_price'] = str(discounted) if discounted else str(car.price_per_day)
         context['allows_pay_on_arrival'] = car.allows_pay_on_arrival
         context['is_refundable'] = car.is_refundable
+        context['allows_pets'] = car.allows_pets
+
+        context['is_saved'] = (
+            self.request.user.is_authenticated and
+            SavedFavourite.objects.filter(
+                user=self.request.user, car=car
+            ).exists()
+        )
+        context['favourite_toggle_url'] = '/favourites/toggle/'
 
         return context
-    

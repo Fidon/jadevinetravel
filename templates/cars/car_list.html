@@ -29,11 +29,26 @@
   </div>
 </section>
 
-<!-- Filters -->
+<!-- Search + Filters -->
 <section class="car-filters-bar jd-load-reveal" data-delay="2">
   <div class="container">
-    <div class="car-filters-inner">
 
+    <!-- Prominent search bar -->
+    <div class="listing-search-wrap">
+      <div class="listing-search-input-wrap">
+        <i class="bi bi-search listing-search-icon"></i>
+        <input type="text"
+               id="search-input"
+               class="jd-input listing-search-input"
+               placeholder="{% trans 'Search vehicles by name...' %}"
+               autocomplete="off">
+        <button type="button" class="listing-search-clear" id="btn-search-clear" style="display:none;" aria-label="{% trans 'Clear search' %}">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="car-filters-inner mt-3">
       <div class="filter-group">
         <label class="jd-label">{% trans "Vehicle Type" %}</label>
         <select class="jd-input" id="filter-vehicle-type">
@@ -45,7 +60,6 @@
           <option value="van">{% trans "Van" %}</option>
         </select>
       </div>
-
       <div class="filter-group">
         <label class="jd-label">{% trans "Rental Mode" %}</label>
         <select class="jd-input" id="filter-rental-mode">
@@ -54,7 +68,6 @@
           <option value="self_drive">{% trans "Self Drive" %}</option>
         </select>
       </div>
-
       <div class="filter-group">
         <label class="jd-label">{% trans "Max Price / Day" %}</label>
         <select class="jd-input" id="filter-max-price">
@@ -65,11 +78,9 @@
           <option value="200">{% trans "Up to $200" %}</option>
         </select>
       </div>
-
       <button class="btn-outline-jd" id="btn-clear-filters">
         <i class="bi bi-x-lg"></i> {% trans "Clear" %}
       </button>
-
     </div>
   </div>
 </section>
@@ -77,38 +88,39 @@
 <!-- Results -->
 <section class="section-py-sm">
   <div class="container">
-
     <div class="d-flex align-items-center justify-content-between mb-4 jd-load-reveal" data-delay="3">
       <p class="car-results-count mb-0">
         <span id="results-count">—</span> {% trans "vehicles found" %}
       </p>
     </div>
-
-    <!-- Empty state -->
     <div id="cars-empty" class="car-empty-state" style="display:none;">
       <i class="bi bi-car-front-fill"></i>
       <h4>{% trans "No vehicles found" %}</h4>
-      <p>{% trans "Try adjusting your filters to see more results." %}</p>
+      <p>{% trans "Try adjusting your filters or search term." %}</p>
       <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
     </div>
-
-    <!-- Car grid -->
     <div class="row g-4" id="cars-grid"></div>
-
   </div>
 </section>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
   window.JD_STRINGS = window.JD_STRINGS || {};
-  window.JD_STRINGS.viewCar      = "{% trans 'View & Book' %}";
-  window.JD_STRINGS.carsNotFound = "{% trans 'Failed to load vehicles. Please try again.' %}";
-  window.JD_STRINGS.withDriver   = "{% trans 'With Driver' %}";
-  window.JD_STRINGS.selfDrive    = "{% trans 'Self Drive' %}";
-  window.JD_STRINGS.perDay       = "{% trans '/ day' %}";
-  window.JD_STRINGS.capacity     = "{% trans 'passengers' %}";
-  window.JD_STRINGS.off          = "{% trans 'off' %}";
+  window.JD_STRINGS.viewCar               = "{% trans 'View & Book' %}";
+  window.JD_STRINGS.carsNotFound          = "{% trans 'Failed to load vehicles. Please try again.' %}";
+  window.JD_STRINGS.withDriver            = "{% trans 'With Driver' %}";
+  window.JD_STRINGS.selfDrive             = "{% trans 'Self Drive' %}";
+  window.JD_STRINGS.perDay                = "{% trans '/ day' %}";
+  window.JD_STRINGS.capacity             = "{% trans 'passengers' %}";
+  window.JD_STRINGS.off                   = "{% trans 'off' %}";
+  window.JD_STRINGS.saveToFavourites      = "{% trans 'Save' %}";
+  window.JD_STRINGS.savedToFavourites     = "{% trans 'Saved' %}";
+  window.JD_STRINGS.addedToFavourites     = "{% trans 'Added to favourites' %}";
+  window.JD_STRINGS.removedFromFavourites = "{% trans 'Removed from favourites' %}";
+  window.JD_STRINGS.favouriteError        = "{% trans 'Could not update favourites. Try again.' %}";
 </script>
+<script src="{% static 'js/core/favourites.js' %}"></script>
 <script src="{% static 'js/cars/car_list.js' %}"></script>
 {% endblock %}

@@ -12,17 +12,24 @@
     for (var i = 0; i < n; i++) {
       Grid.append(
         '<div class="col-lg-4 col-md-6">' +
-          '<div class="tour-skeleton">' +
-          '<div class="skeleton-img"></div>' +
+          '<div class="tour-skeleton"><div class="skeleton-img"></div>' +
           '<div class="skeleton-body">' +
           '<div class="skeleton-line w-80 mb-3"></div>' +
           '<div class="skeleton-line w-60"></div>' +
           '<div class="skeleton-line w-40 mt-3"></div>' +
-          "</div>" +
-          "</div>" +
-          "</div>",
+          "</div></div></div>",
       );
     }
+  }
+
+  function escHtml(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   function renderHighlights(highlights) {
@@ -46,28 +53,35 @@
         '" class="tour-card-img" loading="lazy">'
       : '<div class="tour-card-img-placeholder"><i class="bi bi-map"></i></div>';
 
-    var featuredBadge = t.is_featured
-      ? '<span class="tour-card-featured-badge">' +
-        (S.featured || "Featured") +
-        "</span>"
-      : "";
+    // top-left — frosted white pill
+    var typeBadge =
+      '<span class="tour-card-type-badge tour-card-type-badge--' +
+      escHtml(t.tour_type) +
+      '" style="position:absolute;top:14px;left:14px;z-index:2;">' +
+      escHtml(t.tour_type_display) +
+      "</span>";
 
+    // top-right
     var discountBadge = t.has_discount
-      ? '<span class="jd-discount-badge" style="position:absolute;top:14px;right:14px;">' +
+      ? '<span class="jd-discount-badge" style="position:absolute;top:14px;right:14px;z-index:2;">' +
         t.discount_percent +
         "% " +
         (S.off || "off") +
         "</span>"
       : "";
 
+    // bottom-right — heart (positioned via CSS .tour-card .jd-fav-btn override)
+    var favBtn =
+      typeof JD_FAV !== "undefined"
+        ? JD_FAV.buildCardBtn(t.item_type, t.id, t.is_saved)
+        : "";
+
     var ratingBadge = t.avg_rating
-      ? '<span class="jd-rating-badge">' +
-        '<i class="bi bi-star-fill"></i> ' +
+      ? '<span class="jd-rating-badge"><i class="bi bi-star-fill"></i> ' +
         t.avg_rating +
         '<span class="jd-rating-count">(' +
         t.review_count +
-        ")</span>" +
-        "</span>"
+        ")</span></span>"
       : "";
 
     var durationLabel =
@@ -89,18 +103,17 @@
     return (
       '<div class="col-lg-4 col-md-6 jd-reveal">' +
       '<div class="tour-card">' +
+      // Image wrap — overflow:visible so heart isn't clipped (handled in CSS)
+      '<div class="tour-card-img-wrap" style="position:relative;">' +
       '<a href="' +
       escHtml(t.url) +
-      '" class="tour-card-img-wrap" style="position:relative;">' +
+      '" style="display:block;height:100%;">' +
       imgHtml +
-      featuredBadge +
-      discountBadge +
-      '<span class="tour-card-type-badge tour-card-type-badge--' +
-      escHtml(t.tour_type) +
-      '">' +
-      escHtml(t.tour_type_display) +
-      "</span>" +
       "</a>" +
+      typeBadge +
+      discountBadge +
+      favBtn +
+      "</div>" +
       '<div class="tour-card-body">' +
       '<div class="d-flex align-items-center justify-content-between mb-1">' +
       '<h3 class="tour-card-name mb-0">' +
@@ -123,8 +136,7 @@
       '<ul class="tour-card-highlights">' +
       renderHighlights(t.highlights) +
       "</ul>" +
-      '<div class="tour-card-footer">' +
-      "<div>" +
+      '<div class="tour-card-footer"><div>' +
       priceHtml +
       '<div class="tour-card-price-label">' +
       (S.perPerson || "/ person") +
@@ -134,26 +146,26 @@
       '" class="btn-accent-jd" style="padding:10px 22px;font-size:0.7rem;">' +
       (S.viewTour || "View Details") +
       "</a>" +
-      "</div>" +
-      "</div>" +
-      "</div>" +
-      "</div>"
+      "</div></div></div></div>"
     );
   }
 
   function fetchTours() {
-    const urlParams = new URLSearchParams(window.location.search);
+    var urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has("tour_type") && urlParams.get("tour_type") !== "")
       $("#filter-tour-type").val(urlParams.get("tour_type"));
     if (urlParams.has("max_price") && urlParams.get("max_price") !== "")
       $("#filter-max-price").val(urlParams.get("max_price"));
     if (urlParams.has("max_duration") && urlParams.get("max_duration") !== "")
       $("#filter-max-duration").val(urlParams.get("max_duration"));
+    if (urlParams.has("q") && urlParams.get("q") !== "")
+      $("#search-input").val(urlParams.get("q"));
 
     var params = {
       tour_type: $("#filter-tour-type").val(),
       max_duration: $("#filter-max-duration").val(),
       max_price: $("#filter-max-price").val(),
+      q: $("#search-input").val().trim(),
     };
 
     showSkeletons(6);
@@ -167,17 +179,13 @@
         Grid.empty();
         var tours = data.tours || [];
         Count.text(tours.length);
-
         if (!tours.length) {
           Empty.show();
           return;
         }
-
         $.each(tours, function (i, t) {
           Grid.append(renderCard(t));
         });
-
-        // Trigger scroll reveal on newly rendered cards
         if (window.JD && window.JD.initReveal) {
           window.JD.initReveal();
         } else {
@@ -205,28 +213,27 @@
     "change",
     onFilterChange,
   );
+  $("#search-input").on("input", onFilterChange);
+
+  $("#search-input").on("input", function () {
+    $("#btn-search-clear").toggle($(this).val().length > 0);
+  });
+  $("#btn-search-clear").on("click", function () {
+    $("#search-input").val("").trigger("input");
+  });
 
   function clearFilters() {
     if (window.location.search.length > 1) {
       window.location.href = window.location.pathname;
     } else {
       $("#filter-tour-type, #filter-max-duration, #filter-max-price").val("");
+      $("#search-input").val("");
+      $("#btn-search-clear").hide();
       fetchTours();
     }
   }
 
   $("#btn-clear-filters, #btn-empty-clear").on("click", clearFilters);
 
-  function escHtml(str) {
-    if (!str) return "";
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  // Initial load
   fetchTours();
 })(jQuery);

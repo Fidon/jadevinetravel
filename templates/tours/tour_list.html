@@ -29,11 +29,26 @@
   </div>
 </section>
 
-<!-- Filters -->
+<!-- Search + Filters -->
 <section class="tour-filters-bar jd-load-reveal" data-delay="2">
   <div class="container">
-    <div class="tour-filters-inner">
 
+    <!-- Prominent search bar -->
+    <div class="listing-search-wrap">
+      <div class="listing-search-input-wrap">
+        <i class="bi bi-search listing-search-icon"></i>
+        <input type="text"
+               id="search-input"
+               class="jd-input listing-search-input"
+               placeholder="{% trans 'Search tours by name...' %}"
+               autocomplete="off">
+        <button type="button" class="listing-search-clear" id="btn-search-clear" style="display:none;" aria-label="{% trans 'Clear search' %}">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="tour-filters-inner mt-3">
       <div class="filter-group">
         <label class="jd-label">{% trans "Tour Type" %}</label>
         <select class="jd-input" id="filter-tour-type">
@@ -45,7 +60,6 @@
           <option value="combined">{% trans "Combined" %}</option>
         </select>
       </div>
-
       <div class="filter-group">
         <label class="jd-label">{% trans "Max Duration" %}</label>
         <select class="jd-input" id="filter-max-duration">
@@ -56,7 +70,6 @@
           <option value="7">{% trans "Up to 7 Days" %}</option>
         </select>
       </div>
-
       <div class="filter-group">
         <label class="jd-label">{% trans "Max Price / Person" %}</label>
         <select class="jd-input" id="filter-max-price">
@@ -67,11 +80,9 @@
           <option value="1000">{% trans "Under $1,000" %}</option>
         </select>
       </div>
-
       <button class="btn-outline-jd" id="btn-clear-filters">
         <i class="bi bi-x-lg"></i> {% trans "Clear" %}
       </button>
-
     </div>
   </div>
 </section>
@@ -79,41 +90,42 @@
 <!-- Results -->
 <section class="section-py-sm">
   <div class="container">
-    
     <div class="d-flex align-items-center justify-content-between mb-4 jd-load-reveal" data-delay="3">
       <p class="tour-results-count mb-0">
         <span id="results-count">{{ tour_count }}</span> {% trans "packages found" %}
       </p>
     </div>
-
-    <!-- Empty state -->
     <div id="tours-empty" class="tour-empty-state" style="display:none;">
       <i class="bi bi-binoculars"></i>
       <h4>{% trans "No tours found" %}</h4>
-      <p>{% trans "Try adjusting your filters to see more results." %}</p>
+      <p>{% trans "Try adjusting your filters or search term." %}</p>
       <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
     </div>
-
-    <!-- Tour grid -->
     <div class="row g-4" id="tours-grid"></div>
-
   </div>
 </section>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
   window.JD_STRINGS = window.JD_STRINGS || {};
-  window.JD_STRINGS.viewTour    = "{% trans 'View Details' %}";
-  window.JD_STRINGS.toursError  = "{% trans 'Failed to load tours. Please try again.' %}";
-  window.JD_STRINGS.featured    = "{% trans 'Featured' %}";
-  window.JD_STRINGS.perPerson   = "{% trans '/ person' %}";
-  window.JD_STRINGS.from        = "{% trans 'From' %}";
-  window.JD_STRINGS.maxGroup    = "{% trans 'Max' %}";
-  window.JD_STRINGS.days        = "{% trans 'days' %}";
-  window.JD_STRINGS.day         = "{% trans 'day' %}";
-  window.JD_STRINGS.people      = "{% trans 'people' %}";
-  window.JD_STRINGS.off         = "{% trans 'off' %}";
+  window.JD_STRINGS.viewTour              = "{% trans 'View Details' %}";
+  window.JD_STRINGS.toursError            = "{% trans 'Failed to load tours. Please try again.' %}";
+  window.JD_STRINGS.featured              = "{% trans 'Featured' %}";
+  window.JD_STRINGS.perPerson             = "{% trans '/ person' %}";
+  window.JD_STRINGS.from                  = "{% trans 'From' %}";
+  window.JD_STRINGS.maxGroup              = "{% trans 'Max' %}";
+  window.JD_STRINGS.days                  = "{% trans 'days' %}";
+  window.JD_STRINGS.day                   = "{% trans 'day' %}";
+  window.JD_STRINGS.people                = "{% trans 'people' %}";
+  window.JD_STRINGS.off                   = "{% trans 'off' %}";
+  window.JD_STRINGS.saveToFavourites      = "{% trans 'Save' %}";
+  window.JD_STRINGS.savedToFavourites     = "{% trans 'Saved' %}";
+  window.JD_STRINGS.addedToFavourites     = "{% trans 'Added to favourites' %}";
+  window.JD_STRINGS.removedFromFavourites = "{% trans 'Removed from favourites' %}";
+  window.JD_STRINGS.favouriteError        = "{% trans 'Could not update favourites. Try again.' %}";
 </script>
+<script src="{% static 'js/core/favourites.js' %}"></script>
 <script src="{% static 'js/tours/tour_list.js' %}"></script>
 {% endblock %}

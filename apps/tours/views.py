@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 
 from .models import TourPackage
+from apps.core.models import SavedFavourite
 
 
 class TourListView(View):
@@ -16,6 +17,7 @@ class TourListView(View):
         tour_type = request.GET.get('tour_type', '').strip()
         max_price = request.GET.get('max_price', '').strip()
         max_dur   = request.GET.get('max_duration', '').strip()
+        search_q  = request.GET.get('q', '').strip()
 
         if tour_type and tour_type != 'all':
             qs = qs.filter(tour_type=tour_type)
@@ -29,9 +31,19 @@ class TourListView(View):
                 qs = qs.filter(duration_days__lte=int(max_dur))
             except ValueError:
                 pass
+        if search_q:
+            qs = qs.filter(name_en__icontains=search_q)
 
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            data = [self._serialize(t, lang) for t in qs]
+            saved_ids = set()
+            if request.user.is_authenticated:
+                saved_ids = set(
+                    SavedFavourite.objects.filter(
+                        user=request.user,
+                        tour_package__in=qs
+                    ).values_list('tour_package_id', flat=True)
+                )
+            data = [self._serialize(t, lang, saved_ids) for t in qs]
             return JsonResponse({'tours': data, 'count': len(data)})
 
         all_tours = TourPackage.objects.filter(is_active=True)
@@ -39,20 +51,16 @@ class TourListView(View):
             'tour_count': all_tours.count(),
         })
 
-    def _serialize(self, tour, lang):
+    def _serialize(self, tour, lang, saved_ids=None):
         from apps.reviews.models import Review
         from django.db.models import Avg, Count
 
         cover = tour.cover_image.url if tour.cover_image else None
-
-        # Discount
         discounted = tour.get_discounted_price()
         has_discount = discounted is not None
 
-        # Rating — only if 3+ approved reviews
         review_data = Review.objects.filter(
-            tour_package=tour,
-            status='approved'
+            tour_package=tour, status='approved'
         ).aggregate(avg=Avg('rating'), total=Count('id'))
         avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
         review_count = review_data['total'] if review_data['total'] >= 1 else 0
@@ -77,6 +85,8 @@ class TourListView(View):
             'avg_rating': avg_rating,
             'review_count': review_count,
             'url': f'/tours/{tour.slug}/',
+            'is_saved': tour.id in (saved_ids or set()),
+            'item_type': 'tour',
         }
 
 
@@ -102,17 +112,21 @@ class TourDetailView(View):
             for p in photos
         ])
 
-        # Discount
         discounted_price = tour.get_discounted_price()
         display_price = discounted_price or tour.price_per_person
 
-        # Rating
         review_data = Review.objects.filter(
-            tour_package=tour,
-            status='approved'
+            tour_package=tour, status='approved'
         ).aggregate(avg=Avg('rating'), total=Count('id'))
         avg_rating = round(review_data['avg'], 1) if review_data['avg'] and review_data['total'] >= 1 else None
         review_count = review_data['total'] if review_data['total'] >= 1 else 0
+
+        is_saved = (
+            request.user.is_authenticated and
+            SavedFavourite.objects.filter(
+                user=request.user, tour_package=tour
+            ).exists()
+        )
 
         return render(request, self.template_name, {
             'tour': tour,
@@ -132,6 +146,9 @@ class TourDetailView(View):
             'discount_percent': tour.discount_percent,
             'allows_pay_on_arrival': tour.allows_pay_on_arrival,
             'is_refundable': tour.is_refundable,
+            'allows_pets': tour.allows_pets,
             'avg_rating': avg_rating,
             'review_count': review_count,
+            'is_saved': is_saved,
+            'favourite_toggle_url': '/favourites/toggle/',
         })

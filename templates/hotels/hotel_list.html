@@ -29,11 +29,26 @@
   </div>
 </section>
 
-<!-- Filters -->
+<!-- Search + Filters -->
 <section class="hotel-filters-bar jd-load-reveal" data-delay="2">
   <div class="container">
-    <div class="hotel-filters-inner">
 
+    <!-- Prominent search bar -->
+    <div class="listing-search-wrap">
+      <div class="listing-search-input-wrap">
+        <i class="bi bi-search listing-search-icon"></i>
+        <input type="text"
+               id="search-input"
+               class="jd-input listing-search-input"
+               placeholder="{% trans 'Search hotels by name...' %}"
+               autocomplete="off">
+        <button type="button" class="listing-search-clear" id="btn-search-clear" style="display:none;" aria-label="{% trans 'Clear search' %}">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="hotel-filters-inner mt-3">
       <div class="filter-group">
         <label class="jd-label">{% trans "Destination" %}</label>
         <select class="jd-input" id="filter-location">
@@ -42,7 +57,6 @@
           <option value="dar_es_salaam">{% trans "Dar es Salaam" %}</option>
         </select>
       </div>
-
       <div class="filter-group">
         <label class="jd-label">{% trans "Star Rating" %}</label>
         <select class="jd-input" id="filter-stars">
@@ -54,7 +68,6 @@
           <option value="1">★</option>
         </select>
       </div>
-
       <div class="filter-group">
         <label class="jd-label">{% trans "Max Price / Night" %}</label>
         <select class="jd-input" id="filter-max-price">
@@ -66,7 +79,6 @@
           <option value="500">{% trans "Up to $500" %}</option>
         </select>
       </div>
-
       <div class="filter-group">
         <label class="jd-label">{% trans "Guests" %}</label>
         <select class="jd-input" id="filter-guests">
@@ -78,11 +90,9 @@
           <option value="5">5+</option>
         </select>
       </div>
-
       <button class="btn-outline-jd" id="btn-clear-filters">
         <i class="bi bi-x-lg"></i> {% trans "Clear" %}
       </button>
-
     </div>
   </div>
 </section>
@@ -90,33 +100,22 @@
 <!-- Results -->
 <section class="section-py-sm">
   <div class="container">
-
-    <!-- Results count -->
     <div class="d-flex align-items-center justify-content-between mb-4 jd-load-reveal" data-delay="3">
       <p class="hotel-results-count mb-0">
         <span id="results-count">—</span> {% trans "hotels found" %}
       </p>
     </div>
-
-    <!-- Loading spinner -->
     <div id="hotels-loading" class="text-center py-5" style="display:none !important;">
       <div class="jd-spinner mx-auto"></div>
       <p class="text-muted mt-3 small">{% trans "Finding hotels..." %}</p>
     </div>
-
-    <!-- Empty state -->
     <div id="hotels-empty" class="hotel-empty-state" style="display:none;">
       <i class="bi bi-building-x"></i>
       <h4>{% trans "No hotels found" %}</h4>
-      <p>{% trans "Try adjusting your filters to see more results." %}</p>
+      <p>{% trans "Try adjusting your filters or search term." %}</p>
       <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
     </div>
-
-    <!-- Hotel grid -->
-    <div class="row g-4" id="hotels-grid">
-      <!-- Populated by hotel_list.js via AJAX -->
-    </div>
-
+    <div class="row g-4" id="hotels-grid"></div>
   </div>
 </section>
 
@@ -125,11 +124,17 @@
 {% block extra_js %}
 <script>
   window.JD_STRINGS = window.JD_STRINGS || {};
-  window.JD_STRINGS.viewHotel = "{% trans 'View Hotel' %}";
-  window.JD_STRINGS.hotelsNotFound = "{% trans 'Failed to load hotels. Please try again.' %}";
-  window.JD_STRINGS.off         = "{% trans 'off' %}";
-  window.JD_STRINGS.reviews     = "{% trans 'reviews' %}";
-  window.JD_STRINGS.perNight    = "{% trans 'per night' %}";
+  window.JD_STRINGS.viewHotel             = "{% trans 'View Hotel' %}";
+  window.JD_STRINGS.hotelsNotFound        = "{% trans 'Failed to load hotels. Please try again.' %}";
+  window.JD_STRINGS.off                   = "{% trans 'off' %}";
+  window.JD_STRINGS.reviews               = "{% trans 'reviews' %}";
+  window.JD_STRINGS.perNight              = "{% trans 'per night' %}";
+  window.JD_STRINGS.saveToFavourites      = "{% trans 'Save' %}";
+  window.JD_STRINGS.savedToFavourites     = "{% trans 'Saved' %}";
+  window.JD_STRINGS.addedToFavourites     = "{% trans 'Added to favourites' %}";
+  window.JD_STRINGS.removedFromFavourites = "{% trans 'Removed from favourites' %}";
+  window.JD_STRINGS.favouriteError        = "{% trans 'Could not update favourites. Try again.' %}";
 </script>
+<script src="{% static 'js/core/favourites.js' %}"></script>
 <script src="{% static 'js/hotels/hotel_list.js' %}"></script>
 {% endblock %}

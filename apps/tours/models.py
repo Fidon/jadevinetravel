@@ -54,28 +54,18 @@ class TourPackage(models.Model):
         verbose_name=_('Featured'),
         help_text=_('Show in Featured Packages section on homepage')
     )
-    # Discount
-    discount_percent = models.PositiveSmallIntegerField(
-        default=0,
-        verbose_name=_('Discount (%)'),
-        help_text=_('0 = no discount. Applied to price per person.')
-    )
-    discount_expires_at = models.DateTimeField(
-        blank=True, null=True,
-        verbose_name=_('Discount Expires At'),
-        help_text=_('Leave blank for a permanent discount.')
-    )
 
-    # Per-package booking policy
-    is_refundable = models.BooleanField(
-        default=True,
-        verbose_name=_('Refundable'),
-        help_text=_('If unchecked, this package is non-refundable regardless of cancellation policy.')
-    )
-    allows_pay_on_arrival = models.BooleanField(
-        default=True,
-        verbose_name=_('Allows Pay on Arrival'),
-        help_text=_('If unchecked, only Pay Now is accepted for this package.')
+    # Discount
+    discount_percent = models.PositiveSmallIntegerField(default=0, verbose_name=_('Discount (%)'))
+    discount_expires_at = models.DateTimeField(blank=True, null=True)
+
+    # Booking policy
+    is_refundable = models.BooleanField(default=True, verbose_name=_('Refundable'))
+    allows_pay_on_arrival = models.BooleanField(default=True, verbose_name=_('Allows Pay on Arrival'))
+    allows_pets = models.BooleanField(
+        default=False,
+        verbose_name=_('Pets Allowed'),
+        help_text=_('If unchecked, pets are not permitted on this tour.')
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -107,19 +97,15 @@ class TourPackage(models.Model):
         return getattr(self, f'description_{lang}', None) or self.description_en
 
     def get_highlights(self, lang='en'):
-        val = getattr(self, f'highlights_{lang}', None)
-        return val if val else self.highlights_en
+        return getattr(self, f'highlights_{lang}', None) or self.highlights_en
 
     def get_inclusions(self, lang='en'):
-        val = getattr(self, f'inclusions_{lang}', None)
-        return val if val else self.inclusions_en
+        return getattr(self, f'inclusions_{lang}', None) or self.inclusions_en
 
     def get_exclusions(self, lang='en'):
-        val = getattr(self, f'exclusions_{lang}', None)
-        return val if val else self.exclusions_en
-    
+        return getattr(self, f'exclusions_{lang}', None) or self.exclusions_en
+
     def get_discounted_price(self):
-        """Returns discounted price per person if active, else None."""
         from django.utils import timezone
         from decimal import Decimal
 
@@ -131,7 +117,6 @@ class TourPackage(models.Model):
         return (self.price_per_person * factor).quantize(Decimal('0.01'))
 
     def get_display_price(self):
-        """Price per person the customer actually pays."""
         return self.get_discounted_price() or self.price_per_person
 
     @property

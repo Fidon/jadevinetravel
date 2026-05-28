@@ -6,36 +6,26 @@
     : $("[name=csrfmiddlewaretoken]").first().val();
 
   // =========================================================================
-  // REJECTION MODAL — list page + detail page
-  // Populates the form action and hotel name when the reject button is clicked
+  // REJECTION MODAL
   // =========================================================================
   $(document).on("click", '[data-bs-target="#rejectModal"]', function () {
     var $btn = $(this);
     var hotelPk = $btn.data("hotel-pk");
-    var hotelName = $btn.data("hotel-name");
     var nextVal = $btn.data("next") || "";
 
-    $("#rejectModal #reject-hotel-name").text(hotelName);
+    $("#rejectModal #reject-hotel-name").text($btn.data("hotel-name"));
     $("#rejectModal #reject-next").val(nextVal);
-
-    // Build reject URL — detail page already sets action; list page needs dynamic URL
-    // Use a pattern string injected from template if available
-    var actionUrl = "/portal/hotels/" + hotelPk + "/reject/";
-    $("#reject-form").attr("action", actionUrl);
-
-    // Reset textarea and disable submit
+    $("#reject-form").attr("action", "/portal/hotels/" + hotelPk + "/reject/");
     $("#id_rejection_reason").val("");
     $("#reject-submit-btn").prop("disabled", true);
   });
 
-  // Enable submit button once rejection reason has ≥ 10 chars
   $(document).on("input", "#id_rejection_reason", function () {
-    var len = $(this).val().trim().length;
-    $("#reject-submit-btn").prop("disabled", len < 10);
+    $("#reject-submit-btn").prop("disabled", $(this).val().trim().length < 10);
   });
 
   // =========================================================================
-  // LANGUAGE TABS — form page (FR / RU descriptions)
+  // LANGUAGE TABS
   // =========================================================================
   $(document).on("click", ".lang-tab", function () {
     var target = $(this).data("target");
@@ -46,7 +36,7 @@
   });
 
   // =========================================================================
-  // EDIT ROOM MODAL — populate fields from data attributes
+  // EDIT ROOM MODAL — populate fields from HOTEL_ROOM_TYPES data
   // =========================================================================
   $(document).on("click", ".js-edit-room-btn", function () {
     var roomId = parseInt($(this).data("room-id"));
@@ -74,16 +64,14 @@
     $modal
       .find('[name="allows_pay_on_arrival"]')
       .prop("checked", rt.allows_pay_on_arrival);
+    $modal.find('[name="allows_pets"]').prop("checked", rt.allows_pets);
     $modal.find('[name="is_available"]').prop("checked", rt.is_available);
-    $modal.find('[name="description_fr"]').val(rt.description_fr);
-    $modal.find('[name="description_ru"]').val(rt.description_ru);
-
     $("#edit-room-form").attr("action", rt.edit_url);
   });
 
   // =========================================================================
-  // PHOTO MANAGEMENT — hotel detail page only
-  // Runs only when HOTEL_URLS is defined (set in portal_hotel_detail.html)
+  // HOTEL PHOTO MANAGEMENT
+  // Runs only when HOTEL_URLS is defined (portal_hotel_detail.html only)
   // =========================================================================
   if (!window.HOTEL_URLS) return;
 
@@ -93,13 +81,10 @@
   var $fileInput = $("#photo-file-input");
   var $spinner = $("#upload-spinner");
 
-  // ── Upload ──────────────────────────────────────────────────────────────
+  // ── Hotel photo upload ───────────────────────────────────────────────────
   $uploadArea.on("click", function (e) {
-    if (!$(e.target).is($fileInput)) {
-      $fileInput.trigger("click");
-    }
+    if (!$(e.target).is($fileInput)) $fileInput.trigger("click");
   });
-
   $fileInput.on("click", function (e) {
     e.stopPropagation();
   });
@@ -108,29 +93,23 @@
     e.preventDefault();
     $uploadArea.addClass("drag-over");
   });
-
   $uploadArea.on("dragleave drop", function (e) {
     e.preventDefault();
     $uploadArea.removeClass("drag-over");
-    if (e.type === "drop") {
-      uploadFiles(e.originalEvent.dataTransfer.files);
-    }
+    if (e.type === "drop") uploadHotelFiles(e.originalEvent.dataTransfer.files);
   });
-
   $fileInput.on("change", function () {
-    uploadFiles(this.files);
-    this.value = ""; // reset so same file can be re-uploaded if needed
+    uploadHotelFiles(this.files);
+    this.value = "";
   });
 
-  function uploadFiles(files) {
-    if (!files || files.length === 0) return;
+  function uploadHotelFiles(files) {
+    if (!files || !files.length) return;
     $spinner.show();
-
-    // Upload sequentially to avoid overwhelming the server
     var queue = Array.from(files);
 
-    function uploadNext() {
-      if (queue.length === 0) {
+    function next() {
+      if (!queue.length) {
         $spinner.hide();
         return;
       }
@@ -146,24 +125,20 @@
         processData: false,
         contentType: false,
         success: function (data) {
-          if (data.success) {
-            appendPhotoToGrid(data);
-          } else {
-            JD.toast(data.error || "Upload failed", "error");
-          }
-          uploadNext();
+          if (data.success) appendHotelPhoto(data);
+          else JD.toast(data.error || "Upload failed", "error");
+          next();
         },
         error: function () {
-          JD.toast("Upload failed. Please try again.", "error");
-          uploadNext();
+          JD.toast("Upload failed.", "error");
+          next();
         },
       });
     }
-
-    uploadNext();
+    next();
   }
 
-  function appendPhotoToGrid(data) {
+  function appendHotelPhoto(data) {
     var html =
       '<div class="photo-item' +
       (data.is_cover ? " is-cover" : "") +
@@ -181,66 +156,85 @@
       '<button type="button" class="photo-action-btn photo-action-btn--delete js-delete-photo" data-photo-id="' +
       data.photo_id +
       '" title="Delete"><i class="bi bi-trash3"></i></button>' +
-      "</div>" +
-      "</div>";
+      "</div></div>";
     $grid.append(html);
-    // Reinitialise sortable to include new item
-    initSortable();
+    initHotelSortable();
   }
 
-  // ── Set cover ────────────────────────────────────────────────────────────
+  // ── Hotel set cover ──────────────────────────────────────────────────────
   $(document).on("click", ".js-set-cover", function (e) {
     e.stopPropagation();
     var photoId = $(this).data("photo-id");
-    var url = URLS.photoSetCover.replace("__ID__", photoId);
-
-    $.post(url, { csrfmiddlewaretoken: csrf }, function (data) {
-      if (data.success) {
-        // Update cover state in DOM
-        $grid.find(".photo-item").removeClass("is-cover");
-        $grid.find(".photo-cover-badge").remove();
-        var $item = $grid.find('[data-photo-id="' + data.photo_id + '"]');
-        $item.addClass("is-cover");
-        $item.prepend('<span class="photo-cover-badge">Cover</span>');
-      }
-    });
+    $.post(
+      URLS.photoSetCover.replace("__ID__", photoId),
+      { csrfmiddlewaretoken: csrf },
+      function (data) {
+        if (data.success) {
+          $grid.find(".photo-item").removeClass("is-cover");
+          $grid.find(".photo-cover-badge").remove();
+          var $item = $grid.find('[data-photo-id="' + data.photo_id + '"]');
+          $item.addClass("is-cover");
+          $item.prepend('<span class="photo-cover-badge">Cover</span>');
+        }
+      },
+    );
   });
 
-  // ── Delete ───────────────────────────────────────────────────────────────
-  var _pendingPhotoDelete = null;
+  // ── Hotel photo delete ───────────────────────────────────────────────────
+  var _pendingHotelPhotoDelete = null;
+
   $(document).on("click", ".js-delete-photo", function (e) {
     e.stopPropagation();
     var photoId = $(this).data("photo-id");
-    var $item = $(this).closest(".photo-item");
-    _pendingPhotoDelete = { photoId: photoId, $item: $item };
-
+    _pendingHotelPhotoDelete = {
+      photoId: photoId,
+      $item: $(this).closest(".photo-item"),
+    };
+    window._photoDeletePending = true;
     $("#confirm-modal-title").text("Delete Photo");
     $("#confirm-modal-body").text("Delete this photo? This cannot be undone.");
-    window._photoDeletePending = true;
     $("#confirmModal").modal("show");
   });
 
   $(document).on("portal:photo-delete-confirmed", function () {
-    if (!_pendingPhotoDelete) return;
-    var photoId = _pendingPhotoDelete.photoId;
-    var $item = _pendingPhotoDelete.$item;
-    _pendingPhotoDelete = null;
-
-    var url = URLS.photoDelete.replace("__ID__", photoId);
-    $.post(url, { csrfmiddlewaretoken: csrf }, function (data) {
-      if (data.success) {
-        $item.fadeOut(200, function () {
-          $(this).remove();
-        });
-      } else {
-        JD.toast("Could not delete photo. Please try again.", "error");
-      }
-    });
+    if (_pendingHotelPhotoDelete) {
+      var d = _pendingHotelPhotoDelete;
+      _pendingHotelPhotoDelete = null;
+      $.post(
+        URLS.photoDelete.replace("__ID__", d.photoId),
+        { csrfmiddlewaretoken: csrf },
+        function (data) {
+          if (data.success)
+            d.$item.fadeOut(200, function () {
+              $(this).remove();
+            });
+          else JD.toast("Could not delete photo.", "error");
+        },
+      );
+    } else if (_pendingRoomPhotoDelete) {
+      // Delegated to room photo handler below
+      var d = _pendingRoomPhotoDelete;
+      _pendingRoomPhotoDelete = null;
+      var url = URLS.roomPhotoDelete
+        .replace("__RID__", d.roomId)
+        .replace("__ID__", d.photoId);
+      $.post(url, { csrfmiddlewaretoken: csrf }, function (data) {
+        if (data.success) {
+          d.$item.fadeOut(200, function () {
+            $(this).remove();
+          });
+          updateRoomPhotoBadge(d.roomId);
+        } else {
+          JD.toast("Could not delete photo.", "error");
+        }
+      });
+    }
+    window._photoDeletePending = false;
   });
 
-  // ── Drag-to-reorder (jQuery UI Sortable) ─────────────────────────────────
-  function initSortable() {
-    if (typeof $.fn.sortable === "undefined") return; // jQuery UI not loaded
+  // ── Hotel photo reorder ──────────────────────────────────────────────────
+  function initHotelSortable() {
+    if (typeof $.fn.sortable === "undefined") return;
     $grid.sortable({
       items: ".photo-item",
       cursor: "grabbing",
@@ -260,6 +254,171 @@
       },
     });
   }
+  initHotelSortable();
 
-  initSortable();
+  // =========================================================================
+  // ROOM TYPE PHOTO MANAGEMENT
+  // =========================================================================
+  var _pendingRoomPhotoDelete = null;
+
+  // ── Toggle photo panel ───────────────────────────────────────────────────
+  $(document).on("click", ".js-toggle-room-photos", function () {
+    var roomId = $(this).data("room-id");
+    var $panel = $("#room-photo-panel-" + roomId);
+    var isVisible = $panel.is(":visible");
+    // Close all other open panels first
+    $(".room-photo-panel").slideUp(150);
+    if (!isVisible) $panel.slideDown(200);
+  });
+
+  // ── Room photo upload ────────────────────────────────────────────────────
+  $(document).on("click", ".room-photo-upload-area", function (e) {
+    var roomId = $(this).data("room-id");
+    var $input = $("#room-photo-input-" + roomId);
+    if (!$(e.target).is($input)) $input.trigger("click");
+  });
+
+  $(document).on("click", ".room-photo-file-input", function (e) {
+    e.stopPropagation();
+  });
+
+  $(document).on("dragover", ".room-photo-upload-area", function (e) {
+    e.preventDefault();
+    $(this).addClass("drag-over");
+  });
+  $(document).on("dragleave drop", ".room-photo-upload-area", function (e) {
+    e.preventDefault();
+    $(this).removeClass("drag-over");
+    if (e.type === "drop") {
+      uploadRoomFiles(
+        $(this).data("room-id"),
+        e.originalEvent.dataTransfer.files,
+      );
+    }
+  });
+
+  $(document).on("change", ".room-photo-file-input", function () {
+    uploadRoomFiles($(this).data("room-id"), this.files);
+    this.value = "";
+  });
+
+  function uploadRoomFiles(roomId, files) {
+    if (!files || !files.length) return;
+    var $spinner = $("#room-upload-spinner-" + roomId);
+    $spinner.show();
+    var queue = Array.from(files);
+
+    function next() {
+      if (!queue.length) {
+        $spinner.hide();
+        return;
+      }
+      var file = queue.shift();
+      var fd = new FormData();
+      fd.append("image", file);
+      fd.append("csrfmiddlewaretoken", csrf);
+      var url = URLS.roomPhotoUpload.replace("__RID__", roomId);
+
+      $.ajax({
+        url: url,
+        method: "POST",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          if (data.success) {
+            appendRoomPhoto(roomId, data);
+            updateRoomPhotoBadge(roomId);
+          } else {
+            JD.toast(data.error || "Upload failed", "error");
+          }
+          next();
+        },
+        error: function () {
+          JD.toast("Upload failed.", "error");
+          next();
+        },
+      });
+    }
+    next();
+  }
+
+  function appendRoomPhoto(roomId, data) {
+    var html =
+      '<div class="photo-item" data-photo-id="' +
+      data.photo_id +
+      '">' +
+      '<img src="' +
+      data.url +
+      '" alt="room photo" loading="lazy">' +
+      '<div class="photo-item-actions">' +
+      '<button type="button" class="photo-action-btn photo-action-btn--delete js-delete-room-photo"' +
+      ' data-photo-id="' +
+      data.photo_id +
+      '" data-room-id="' +
+      roomId +
+      '"' +
+      ' title="Delete"><i class="bi bi-trash3"></i></button>' +
+      "</div></div>";
+    $("#room-photo-grid-" + roomId).append(html);
+    initRoomSortable(roomId);
+  }
+
+  // ── Room photo delete ────────────────────────────────────────────────────
+  $(document).on("click", ".js-delete-room-photo", function (e) {
+    e.stopPropagation();
+    _pendingRoomPhotoDelete = {
+      photoId: $(this).data("photo-id"),
+      roomId: $(this).data("room-id"),
+      $item: $(this).closest(".photo-item"),
+    };
+    _pendingHotelPhotoDelete = null;
+    window._photoDeletePending = true;
+    $("#confirm-modal-title").text("Delete Room Photo");
+    $("#confirm-modal-body").text(
+      "Delete this room photo? This cannot be undone.",
+    );
+    $("#confirmModal").modal("show");
+  });
+
+  // ── Room photo reorder ───────────────────────────────────────────────────
+  function initRoomSortable(roomId) {
+    if (typeof $.fn.sortable === "undefined") return;
+    var $grid = $("#room-photo-grid-" + roomId);
+    if ($grid.data("ui-sortable")) $grid.sortable("destroy");
+    $grid.sortable({
+      items: ".photo-item",
+      cursor: "grabbing",
+      opacity: 0.8,
+      stop: function () {
+        var order = [];
+        $grid.find(".photo-item").each(function () {
+          order.push(parseInt($(this).data("photo-id")));
+        });
+        $.ajax({
+          url: URLS.roomPhotoReorder.replace("__RID__", roomId),
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ order: order }),
+          headers: { "X-CSRFToken": csrf },
+        });
+      },
+    });
+  }
+
+  // Initialise sortable for all room grids that already have photos on page load
+  $(".room-photo-grid").each(function () {
+    var roomId = $(this).data("room-id");
+    if ($(this).find(".photo-item").length) initRoomSortable(roomId);
+  });
+
+  // ── Update the photo count badge on the toggle button ───────────────────
+  function updateRoomPhotoBadge(roomId) {
+    var count = $("#room-photo-grid-" + roomId).find(".photo-item").length;
+    var $btn = $('.js-toggle-room-photos[data-room-id="' + roomId + '"]');
+    $btn.find(".photo-count-badge").remove();
+    if (count > 0) {
+      $btn.append('<span class="photo-count-badge">' + count + "</span>");
+    }
+  }
 })(jQuery);

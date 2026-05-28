@@ -380,8 +380,19 @@
                     </span>
                   </div>
 
+                  {% if package.has_active_discount %}
+                  <span class="jd-discount-badge" style="position:absolute;top:14px;right:14px;">
+                    {{ package.discount_percent }}% {% trans "off" %}
+                  </span>
+                  {% endif %}
+
                   <div class="jd-package-card-price-tag">
-                    {% trans "From" %} <span>${{ package.price_per_person|floatformat:0 }}</span>
+                    {% if package.has_active_discount %}
+                      <span style="text-decoration:line-through;opacity:0.6;font-size:1.4em;margin-right:6px;">${{ package.price_per_person|floatformat:0 }}</span>
+                      <span>${{ package.get_display_price|floatformat:0 }}</span>
+                    {% else %}
+                      {% trans "From" %} <span>${{ package.price_per_person|floatformat:0 }}</span>
+                    {% endif %}
                   </div>
                 </div>
 
