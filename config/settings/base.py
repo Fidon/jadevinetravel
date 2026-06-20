@@ -100,7 +100,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-DEFAULT_SITE_URL = os.environ.get('DEFAULT_SITE_URL', 'http://127.0.0.1:8000')
+DEFAULT_SITE_URL = os.environ.get('DEFAULT_SITE_URL', 'https://jadevinetravel.com/')
 ACCOUNT_ADAPTER = 'apps.accounts.adapters.AccountAdapter'
 ACCOUNT_FORMS = {'signup': 'apps.accounts.forms.CustomSignupForm'}
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
@@ -157,10 +157,19 @@ Q_CLUSTER = {
     'orm': 'default',
 }
 
-# Email — overridden per environment
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'fidonamos@gmail.com')
+# Email
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Jadevine Travel & Tours <info@jadevinetravel.com>')
 ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'fidontakakwa@gmail.com')
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+# PesaPal
+PESAPAL_CONSUMER_KEY    = os.environ.get('PESAPAL_CONSUMER_KEY', '')
+PESAPAL_CONSUMER_SECRET = os.environ.get('PESAPAL_CONSUMER_SECRET', '')
+PESAPAL_ENVIRONMENT     = os.environ.get('PESAPAL_ENVIRONMENT', 'sandbox')
 
-DEFAULT_SITE_URL = "http://127.0.0.1:8000"

@@ -42,57 +42,62 @@
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-8">
 
-        <div class="payment-stub-card">
-          <div class="payment-stub-icon">
-            <i class="bi bi-credit-card-2-front"></i>
+        {% if payment_error %}
+        {# Shown only when PesaPal submit_order_request throws an exception #}
+        <div class="payment-error-card">
+          <div class="payment-error-icon">
+            <i class="bi bi-exclamation-triangle"></i>
           </div>
-
-          <span class="eyebrow">{% trans "Step 3 of 4" %}</span>
-          <h1 class="section-heading my-3">{% trans "Complete <em>Payment</em>" %}</h1>
-
-          <!-- Booking reference -->
-          <div class="payment-ref-badge">
-            <span class="payment-ref-label">{% trans "Booking Reference" %}</span>
+          <span class="eyebrow eyebrow-danger">{% trans "Payment Error" %}</span>
+          <h1 class="section-heading my-3">{% trans "Could Not Connect to Payment Gateway" %}</h1>
+          <p class="payment-error-desc">
+            {% trans "We were unable to connect to PesaPal at this time. Your booking has been saved — you can try again or contact us for assistance." %}
+          </p>
+          <div class="payment-ref-badge mt-4">
+            <span class="payment-ref-label">{% trans "Your Booking Reference" %}</span>
             <span class="payment-ref-value">{{ booking.reference }}</span>
           </div>
-
-          <!-- Amount due -->
-          <div class="payment-amount-display">
-            <span class="payment-amount-label">{% trans "Amount Due" %}</span>
-            <span class="payment-amount-value">${{ booking.total_price }}</span>
-            <span class="payment-amount-currency">USD</span>
+          <div class="payment-error-actions mt-4">
+            <a href="{% url 'bookings:payment' booking.reference %}" class="btn-primary-jd w-100 justify-content-center">
+              <i class="bi bi-arrow-repeat me-2"></i>
+              {% trans "Try Again" %}
+            </a>
+            <a href="https://wa.me/255683956372?text={% trans 'I need help with my booking' %} {{ booking.reference }}"
+               target="_blank" rel="noopener"
+               class="btn-outline-jd w-100 justify-content-center mt-3">
+              <i class="bi bi-whatsapp me-2"></i>
+              {% trans "Contact Support via WhatsApp" %}
+            </a>
           </div>
+        </div>
 
-          {% if pesapal_stub %}
-          <!-- Phase 6 stub message -->
-          <div class="payment-stub-notice">
-            <i class="bi bi-tools me-2"></i>
-            <div>
-              <strong>{% trans "Payment gateway coming in Phase 6" %}</strong>
-              <p class="mb-0 mt-1">
-                {% trans "PesaPal integration is not yet live. To test the full flow, use the button below to simulate a successful payment." %}
-              </p>
-            </div>
+        {% else %}
+        {#
+          This template normally never renders its body — PaymentOptionsView
+          redirects directly to PesaPal on GET. This card is a fallback
+          shown only if something goes wrong before the redirect fires.
+          In normal flow: user hits /book/payment/<ref>/ → immediate redirect to PesaPal.
+        #}
+        <div class="payment-stub-card">
+          <div class="payment-stub-icon">
+            <i class="bi bi-arrow-clockwise spin"></i>
           </div>
-
-          <!-- Simulate payment button (dev only) -->
-          <a href="{% url 'bookings:confirmation' booking.reference %}"
+          <span class="eyebrow">{% trans "Step 3 of 4" %}</span>
+          <h1 class="section-heading my-3">{% trans "Redirecting to Payment…" %}</h1>
+          <p class="payment-stub-note">
+            {% trans "You are being redirected to PesaPal's secure payment page. If you are not redirected automatically, click the button below." %}
+          </p>
+          <a href="{% url 'bookings:payment' booking.reference %}"
              class="btn-accent-jd w-100 justify-content-center mt-4"
              style="padding:16px;">
-            <i class="bi bi-check-circle me-2"></i>
-            {% trans "Simulate Payment Success (Dev Only)" %}
+            <i class="bi bi-credit-card me-2"></i>
+            {% trans "Proceed to Payment" %}
           </a>
-
-          {% endif %}
-
-          <p class="payment-stub-note mt-3">
-            {% trans "In production, you will be redirected to PesaPal's secure payment page to complete payment via Visa, Mastercard, or M-Pesa." %}
-          </p>
-
           <a href="{% url 'bookings:summary' booking.reference %}" class="btn-ghost-jd mt-3">
             <i class="bi bi-arrow-left me-2"></i> {% trans "Back to Summary" %}
           </a>
         </div>
+        {% endif %}
 
       </div>
     </div>

@@ -399,3 +399,51 @@
     font-size: var(--text-xl);
   }
 }
+
+/* ── Discount / pricing ─────────────────────────────────────────── */
+.price-original {
+  text-decoration: line-through;
+  color: var(--color-muted);
+  font-weight: 400;
+  margin-right: 6px;
+  font-size: 0.9em;
+}
+
+.price-original-total {
+  font-size: 0.85em;
+}
+
+.price-discounted {
+  color: var(--color-text);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.price-discount-badge {
+  display: inline-block;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 20px;
+  border: 1px solid #a5d6a7;
+  vertical-align: middle;
+}
+
+.price-savings-row {
+  background: #f0faf0;
+  border: 1px solid #a5d6a7;
+  border-radius: var(--radius-md);
+  padding: 8px 12px !important;
+  margin: 4px 0;
+  font-size: var(--text-sm);
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.price-savings-amount {
+  color: #2e7d32;
+  font-weight: 700;
+}

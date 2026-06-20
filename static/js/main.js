@@ -1,3 +1,53 @@
+/* ============================================================
+   PAGE LOADER — dismiss logic (vanilla, no jQuery dependency)
+   ============================================================ */
+(function () {
+  var docEl = document.documentElement;
+  if (!docEl.classList.contains("jd-loading")) return;
+
+  var MIN_VISIBLE = 400; // floor — prevents an ugly one-frame flash on cache-hot loads
+  var MAX_VISIBLE = 2500; // ceiling — a loader must never trap the user behind a stalled asset
+  var navStart = Date.now();
+
+  function elapsed() {
+    return window.performance && performance.now
+      ? performance.now()
+      : Date.now() - navStart;
+  }
+
+  function dismiss() {
+    if (!docEl.classList.contains("jd-loading")) return;
+    var wait = Math.max(0, MIN_VISIBLE - elapsed());
+    setTimeout(function () {
+      docEl.classList.remove("jd-loading");
+    }, wait);
+  }
+
+  // Reveal as soon as the DOM is parseable — NOT on window.load.
+  // window.load waits for every image/font; on slow Tanzania connectivity that
+  // would hide readable content behind the spinner for seconds. Luxury is fast.
+  if (
+    document.readyState === "interactive" ||
+    document.readyState === "complete"
+  ) {
+    dismiss();
+  } else {
+    document.addEventListener("DOMContentLoaded", dismiss);
+  }
+  window.addEventListener("load", dismiss); // belt-and-suspenders
+
+  // Hard safety net — force-dismiss even if something stalls.
+  setTimeout(function () {
+    docEl.classList.remove("jd-loading");
+  }, MAX_VISIBLE);
+
+  // bfcache: if the user navigated away before dismiss, the back/forward restore
+  // would reappear with the loader frozen on top. pageshow + persisted clears it.
+  window.addEventListener("pageshow", function (e) {
+    if (e.persisted) docEl.classList.remove("jd-loading");
+  });
+})();
+
 $(function () {
   /* ----------------------------------------------------------
      1. NAVBAR — scroll state + hamburger + mobile menu
@@ -266,7 +316,12 @@ $(function () {
 
   /* ----------------------------------------------------------
      8. NEWSLETTER FORM
+        User-facing strings come from window.JD_STRINGS (defined in
+        base.html via {% trans %}). English fallbacks guard against
+        JD_STRINGS being absent. Server-supplied messages still win.
      ---------------------------------------------------------- */
+  var STR = window.JD_STRINGS || {};
+
   $(document).on("submit", ".jd-newsletter-form", function (e) {
     e.preventDefault();
     var $form = $(this);
@@ -275,7 +330,7 @@ $(function () {
     var email = $input.val().trim();
 
     if (!email) return;
-    $btn.prop("disabled", true).text("...");
+    $btn.prop("disabled", true).text(STR.subscribing || "Subscribing…");
 
     $.ajax({
       url: "/contact/newsletter/",
@@ -283,17 +338,26 @@ $(function () {
       data: { email: email, csrfmiddlewaretoken: JD.csrfToken() },
       success: function (res) {
         if (res.success) {
-          JD.toast(res.message || "Subscribed! Thank you.", "success");
+          JD.toast(
+            res.message || STR.subscribed || "Subscribed! Thank you.",
+            "success",
+          );
           $input.val("");
         } else {
-          JD.toast(res.error || "Something went wrong.", "error");
+          JD.toast(
+            res.error || STR.newsletterError || "Something went wrong.",
+            "error",
+          );
         }
       },
       error: function () {
-        JD.toast("Network error. Please try again.", "error");
+        JD.toast(
+          STR.networkError || "Network error. Please try again.",
+          "error",
+        );
       },
       complete: function () {
-        $btn.prop("disabled", false).text("Subscribe");
+        $btn.prop("disabled", false).text(STR.subscribe || "Subscribe");
       },
     });
   });

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}{% trans "Booking Confirmed" %} — Jadevine Travel & Tours{% endblock %}
+{% block title %}{% trans "Review Booking" %} — Jadevine Travel & Tours{% endblock %}
 {% block navbar_class %}navbar-scrolled{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/bookings/booking_confirmation.css' %}">
+<link rel="stylesheet" href="{% static 'css/bookings/booking_summary.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -19,18 +19,18 @@
         <span class="step-label">{% trans "Select" %}</span>
       </div>
       <div class="booking-step-line completed"></div>
-      <div class="booking-step completed">
-        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+      <div class="booking-step active">
+        <span class="step-num">2</span>
         <span class="step-label">{% trans "Review" %}</span>
       </div>
-      <div class="booking-step-line completed"></div>
-      <div class="booking-step completed">
-        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+      <div class="booking-step-line"></div>
+      <div class="booking-step">
+        <span class="step-num">3</span>
         <span class="step-label">{% trans "Payment" %}</span>
       </div>
-      <div class="booking-step-line completed"></div>
-      <div class="booking-step active">
-        <span class="step-num"><i class="bi bi-check-lg"></i></span>
+      <div class="booking-step-line"></div>
+      <div class="booking-step">
+        <span class="step-num">4</span>
         <span class="step-label">{% trans "Confirmed" %}</span>
       </div>
     </div>
@@ -39,276 +39,435 @@
 
 <section class="section-py">
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center g-4">
+
+      <!-- LEFT — Booking details -->
       <div class="col-lg-7">
 
-        <!-- Success banner -->
-        <div class="confirmation-banner jd-reveal">
-          <div class="confirmation-check">
-            <i class="bi bi-check-lg"></i>
+        {% if is_session_booking %}
+        {# ── SESSION BOOKING (not yet saved to DB) ── #}
+
+        {% with d=booking_data %}
+
+        <!-- Service summary card -->
+        <div class="summary-card">
+          <div class="summary-card-header">
+            {% if d.service_type == 'hotel' %}
+            <i class="bi bi-building summary-card-icon"></i>
+            <div>
+              <div class="summary-card-type">{% trans "Hotel Booking" %}</div>
+              <div class="summary-card-name">{{ d.hotel_name }}</div>
+            </div>
+            {% elif d.service_type == 'car' %}
+            <i class="bi bi-car-front summary-card-icon"></i>
+            <div>
+              <div class="summary-card-type">{% trans "Car Rental" %}</div>
+              <div class="summary-card-name">{{ d.car_name }}</div>
+            </div>
+            {% elif d.service_type == 'tour' %}
+            <i class="bi bi-compass summary-card-icon"></i>
+            <div>
+              <div class="summary-card-type">{% trans "Safari & Tour" %}</div>
+              <div class="summary-card-name">{{ d.tour_name }}</div>
+            </div>
+            {% endif %}
           </div>
 
-          {% if booking.payment_mode == 'pay_on_arrival' %}
-          <span class="eyebrow eyebrow-white">{% trans "Reservation Confirmed" %}</span>
-          <h1 class="confirmation-title">{% trans "You're All Set!" %}</h1>
-          <p class="confirmation-subtitle">
-            {% trans "Your reservation is confirmed. Payment will be collected when you arrive in Tanzania." %}
-          </p>
-          {% else %}
-          <span class="eyebrow eyebrow-white">{% trans "Booking Confirmed" %}</span>
-          <h1 class="confirmation-title">{% trans "Booking Confirmed!" %}</h1>
-          <p class="confirmation-subtitle">
-            {% trans "Your booking is confirmed and a confirmation email is on its way to you." %}
-          </p>
-          {% endif %}
+          <div class="summary-details">
+
+            {% if d.service_type == 'hotel' %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Room Type" %}</span>
+              <span class="summary-value">{{ d.room_type_name }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Rooms" %}</span>
+              <span class="summary-value">{{ d.num_rooms }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Check-in" %}</span>
+              <span class="summary-value">{{ d.check_in_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Check-out" %}</span>
+              <span class="summary-value">{{ d.check_out_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Duration" %}</span>
+              <span class="summary-value">{{ d.nights }} {% trans "night(s)" %}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Adults" %}</span>
+              <span class="summary-value">{{ d.num_adults }}</span>
+            </div>
+            {% if d.num_children %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Children" %}</span>
+              <span class="summary-value">{{ d.num_children }}</span>
+            </div>
+            {% endif %}
+            {% if d.num_infants %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Infants" %}</span>
+              <span class="summary-value">{{ d.num_infants }}</span>
+            </div>
+            {% endif %}
+            {% if d.num_pets %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Pets" %}</span>
+              <span class="summary-value">{{ d.num_pets }}</span>
+            </div>
+            {% endif %}
+
+            {% elif d.service_type == 'car' %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Vehicle Type" %}</span>
+              <span class="summary-value">{{ d.vehicle_type }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Rental Mode" %}</span>
+              <span class="summary-value">
+                {% if d.rental_mode == 'self_drive' %}{% trans "Self Drive" %}{% else %}{% trans "With Driver" %}{% endif %}
+              </span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Pickup Location" %}</span>
+              <span class="summary-value">{{ d.pickup_location }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Pickup Date" %}</span>
+              <span class="summary-value">{{ d.pickup_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Return Date" %}</span>
+              <span class="summary-value">{{ d.return_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Duration" %}</span>
+              <span class="summary-value">{{ d.num_days }} {% trans "day(s)" %}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Adults" %}</span>
+              <span class="summary-value">{{ d.num_adults }}</span>
+            </div>
+            {% if d.num_children %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Children" %}</span>
+              <span class="summary-value">{{ d.num_children }}</span>
+            </div>
+            {% endif %}
+            {% if d.num_infants %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Infants" %}</span>
+              <span class="summary-value">{{ d.num_infants }}</span>
+            </div>
+            {% endif %}
+
+            {% elif d.service_type == 'tour' %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Tour Type" %}</span>
+              <span class="summary-value">{{ d.tour_type_display }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Duration" %}</span>
+              <span class="summary-value">{{ d.duration_days }} {% trans "day(s)" %}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Preferred Start Date" %}</span>
+              <span class="summary-value">{{ d.preferred_date }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Adults" %}</span>
+              <span class="summary-value">{{ d.num_adults }}</span>
+            </div>
+            {% if d.num_children %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Children" %}</span>
+              <span class="summary-value">{{ d.num_children }}</span>
+            </div>
+            {% endif %}
+            {% if d.num_infants %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Infants" %}</span>
+              <span class="summary-value">{{ d.num_infants }} <span class="text-muted" style="font-size:0.8em;">({% trans "free" %})</span></span>
+            </div>
+            {% endif %}
+            {% endif %}
+
+            {% if d.special_requests %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Special Requests" %}</span>
+              <span class="summary-value">{{ d.special_requests }}</span>
+            </div>
+            {% endif %}
+
+            {% if not d.is_refundable %}
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Refund Policy" %}</span>
+              <span class="summary-value">
+                <span class="jd-badge jd-badge-danger">{% trans "Non-refundable" %}</span>
+              </span>
+            </div>
+            {% endif %}
+
+            {% if d.service_type == 'tour' %}
+            <div class="summary-row summary-row--notice">
+              <i class="bi bi-info-circle me-2"></i>
+              {% trans "Our team will confirm your preferred start date within 24–48 hours." %}
+            </div>
+            {% endif %}
+
+          </div>
         </div>
 
-        <!-- Reference card -->
-        <div class="confirmation-ref-card jd-reveal">
-          <div class="confirmation-ref-label">{% trans "Your Booking Reference" %}</div>
-          <div class="confirmation-ref-number">{{ booking.reference }}</div>
-          <p class="confirmation-ref-note">
-            {% trans "Save this reference number. You'll need it for any changes or enquiries." %}
-          </p>
-        </div>
+        <!-- Price breakdown -->
+        <div class="price-breakdown-card">
+          <div class="price-breakdown-title">{% trans "Price Breakdown" %}</div>
 
-        <!-- Booking details -->
-        <div class="confirmation-details-card jd-reveal">
-          <div class="confirmation-details-title">{% trans "Booking Summary" %}</div>
+          {% if d.service_type == 'hotel' %}
+          <div class="price-row">
+            <span>
+              {% trans "Rate per night" %}
+              {% if d.has_discount %}
+              <span class="price-original">${{ d.original_price_per_night }}</span>
+              <span class="price-discounted">${{ d.price_per_night }}</span>
+              <span class="price-discount-badge">-{{ d.discount_percent }}%</span>
+              {% else %}
+              <span>${{ d.price_per_night }}</span>
+              {% endif %}
+            </span>
+          </div>
+          <div class="price-row">
+            <span>{{ d.nights }} {% trans "night(s)" %} × {{ d.num_rooms }} {% trans "room(s)" %}</span>
+            <span>
+              {% if d.has_discount %}
+              <span class="price-original">${{ d.original_total }}</span>
+              {% endif %}
+              ${{ d.total_price }}
+            </span>
+          </div>
 
-          {% if booking.service_type == 'hotel' %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Service" %}</span>
-            <span class="confirmation-value">{% trans "Hotel Booking" %}</span>
+          {% elif d.service_type == 'car' %}
+          <div class="price-row">
+            <span>
+              {% trans "Rate per day" %}
+              {% if d.has_discount %}
+              <span class="price-original">${{ d.original_price_per_day }}</span>
+              <span class="price-discounted">${{ d.price_per_day }}</span>
+              <span class="price-discount-badge">-{{ d.discount_percent }}%</span>
+              {% else %}
+              <span>${{ d.price_per_day }}</span>
+              {% endif %}
+            </span>
           </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Hotel" %}</span>
-            <span class="confirmation-value">{{ booking.hotel.name }}</span>
+          <div class="price-row">
+            <span>{{ d.num_days }} {% trans "day(s)" %}</span>
+            <span>
+              {% if d.has_discount %}
+              <span class="price-original">${{ d.original_total }}</span>
+              {% endif %}
+              ${{ d.total_price }}
+            </span>
           </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Room Type" %}</span>
-            <span class="confirmation-value">{{ booking.room_type.name }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Rooms" %}</span>
-            <span class="confirmation-value">{{ booking.num_rooms }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Check-in" %}</span>
-            <span class="confirmation-value">{{ booking.check_in_date }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Check-out" %}</span>
-            <span class="confirmation-value">{{ booking.check_out_date }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Adults" %}</span>
-            <span class="confirmation-value">{{ booking.num_adults }}</span>
-          </div>
-          {% if booking.num_children %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Children" %}</span>
-            <span class="confirmation-value">{{ booking.num_children }}</span>
-          </div>
-          {% endif %}
-          {% if booking.num_infants %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Infants" %}</span>
-            <span class="confirmation-value">{{ booking.num_infants }}</span>
-          </div>
-          {% endif %}
-          {% if booking.num_pets %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Pets" %}</span>
-            <span class="confirmation-value">{{ booking.num_pets }}</span>
-          </div>
-          {% endif %}
 
-          {% elif booking.service_type == 'car' %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Service" %}</span>
-            <span class="confirmation-value">{% trans "Car Rental" %}</span>
+          {% elif d.service_type == 'tour' %}
+          <div class="price-row">
+            <span>
+              {% trans "Rate per person" %}
+              {% if d.has_discount %}
+              <span class="price-original">${{ d.original_price_per_person }}</span>
+              <span class="price-discounted">${{ d.price_per_person }}</span>
+              <span class="price-discount-badge">-{{ d.discount_percent }}%</span>
+              {% else %}
+              <span>${{ d.price_per_person }}</span>
+              {% endif %}
+            </span>
           </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Vehicle" %}</span>
-            <span class="confirmation-value">{{ booking.car }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Rental Mode" %}</span>
-            <span class="confirmation-value">{{ booking.get_rental_mode_display }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Pickup Location" %}</span>
-            <span class="confirmation-value">{{ booking.pickup_location }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Pickup Date" %}</span>
-            <span class="confirmation-value">{{ booking.pickup_date }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Return Date" %}</span>
-            <span class="confirmation-value">{{ booking.return_date }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Adults" %}</span>
-            <span class="confirmation-value">{{ booking.num_adults }}</span>
-          </div>
-          {% if booking.num_children %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Children" %}</span>
-            <span class="confirmation-value">{{ booking.num_children }}</span>
-          </div>
-          {% endif %}
-          {% if booking.num_infants %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Infants" %}</span>
-            <span class="confirmation-value">{{ booking.num_infants }}</span>
-          </div>
-          {% endif %}
-          {% if booking.num_pets %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Pets" %}</span>
-            <span class="confirmation-value">{{ booking.num_pets }}</span>
-          </div>
-          {% endif %}
-
-          {% elif booking.service_type == 'tour' %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Service" %}</span>
-            <span class="confirmation-value">{% trans "Safari & Tour" %}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Tour" %}</span>
-            <span class="confirmation-value">{{ booking.tour_package.name_en }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Preferred Date" %}</span>
-            <span class="confirmation-value">{{ booking.preferred_date }}</span>
-          </div>
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Adults" %}</span>
-            <span class="confirmation-value">{{ booking.num_adults }}</span>
-          </div>
-          {% if booking.num_children %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Children" %}</span>
-            <span class="confirmation-value">{{ booking.num_children }}</span>
-          </div>
-          {% endif %}
-          {% if booking.num_infants %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Infants" %}</span>
-            <span class="confirmation-value">
-              {{ booking.num_infants }}
-              <span class="text-muted" style="font-size:0.8em;">({% trans "free" %})</span>
+          <div class="price-row">
+            <span>{{ d.num_participants }} {% trans "participant(s)" %}</span>
+            <span>
+              {% if d.has_discount %}
+              <span class="price-original">${{ d.original_total }}</span>
+              {% endif %}
+              ${{ d.total_price }}
             </span>
           </div>
           {% endif %}
-          {% if booking.num_pets %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Pets" %}</span>
-            <span class="confirmation-value">{{ booking.num_pets }}</span>
-          </div>
-          {% endif %}
+
+          {% if d.has_discount %}
+            <div class="price-row price-savings-row">
+              <span>🎉 {% trans "You save" %}</span>
+              <span class="price-savings-amount">-${{ d.savings }}</span>
+            </div>
           {% endif %}
 
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Payment Method" %}</span>
-            <span class="confirmation-value">{{ booking.get_payment_mode_display }}</span>
-          </div>
-
-          {% if not booking.is_refundable %}
-          <div class="confirmation-row">
-            <span class="confirmation-label">{% trans "Refund Policy" %}</span>
-            <span class="confirmation-value">
-              <span class="jd-badge jd-badge-danger">{% trans "Non-refundable" %}</span>
+          <div class="price-row price-row-total">
+            <span>{% trans "Total" %}</span>
+            <span>
+              {% if d.has_discount %}
+              <span class="price-original price-original-total">${{ d.original_total }}</span>
+              {% endif %}
+              ${{ d.total_price }}
+              <span class="price-currency">USD</span>
             </span>
           </div>
-          {% endif %}
 
-          <div class="confirmation-row confirmation-row-total">
-            <span class="confirmation-label">{% trans "Total" %}</span>
-            <span class="confirmation-value">${{ booking.total_price }} USD</span>
-          </div>
-
-          {% if booking.payment_mode == 'pay_on_arrival' %}
-          <div class="confirmation-poa-notice">
-            <i class="bi bi-cash-coin me-2"></i>
-            {% trans "Payment due on arrival in Tanzania. Our team will be in touch to confirm your booking details." %}
-          </div>
-          {% endif %}
+          <p class="price-note">
+            <i class="bi bi-shield-check text-success me-1"></i>
+            {% trans "No charge yet — you will review and pay on the next step." %}
+          </p>
         </div>
 
-        <!-- Next steps -->
-        <div class="confirmation-next-steps jd-reveal">
-          <div class="confirmation-details-title">{% trans "What Happens Next?" %}</div>
+        <!-- Payment method form -->
+        <div class="payment-method-card">
+          <div class="payment-method-title">{% trans "Choose Payment Method" %}</div>
 
-          <div class="next-step-item">
-            <div class="next-step-num">1</div>
+          <form method="post" action="{% url 'bookings:summary' 'pending' %}" id="payment-mode-form">
+            {% csrf_token %}
+
+            <!-- Pay Now option -->
+            <label class="payment-option">
+              <input type="radio" name="payment_mode" value="pay_now" checked>
+              <div class="payment-option-content">
+                <div class="payment-option-header">
+                  <span class="payment-option-title">
+                    <i class="bi bi-credit-card me-2 text-primary"></i>
+                    {% trans "Pay Now" %}
+                  </span>
+                </div>
+                <p class="payment-option-desc">
+                  {% trans "Pay securely online via Visa, Mastercard, or M-Pesa. Your booking is confirmed instantly." %}
+                </p>
+                <div class="payment-icons">
+                  <span class="payment-icon-badge">Visa</span>
+                  <span class="payment-icon-badge">Mastercard</span>
+                  <span class="payment-icon-badge">Airtel Money</span>
+                  <span class="payment-icon-badge">Mixx By Yas</span>
+                  <span class="payment-icon-badge">PesaPal</span>
+                </div>
+              </div>
+            </label>
+
+            <!-- Pay on Arrival option — only shown if listing allows it -->
+            {% if d.allows_pay_on_arrival %}
+            <label class="payment-option">
+              <input type="radio" name="payment_mode" value="pay_on_arrival">
+              <div class="payment-option-content">
+                <div class="payment-option-header">
+                  <span class="payment-option-title">
+                    <i class="bi bi-cash-coin me-2 text-success"></i>
+                    {% trans "Pay on Arrival" %}
+                  </span>
+                </div>
+                <p class="payment-option-desc">
+                  {% trans "Reserve now, pay when you arrive in Tanzania. Cash (USD or TZS) accepted." %}
+                </p>
+              </div>
+            </label>
+            {% else %}
+            <div class="summary-row--notice mb-3">
+              <i class="bi bi-info-circle me-2"></i>
+              {% trans "This listing requires Pay Now — Pay on Arrival is not available." %}
+            </div>
+            {% endif %}
+
+            {% if payment_form.payment_mode.errors %}
+            <div class="alert alert-danger py-2 px-3 mt-2" style="font-size:0.875rem;">
+              {{ payment_form.payment_mode.errors }}
+            </div>
+            {% endif %}
+
+            <button type="submit" class="btn-accent-jd summary-confirm-btn" id="confirm-btn">
+              <i class="bi bi-lock me-2"></i>
+              {% trans "Confirm &amp; Continue" %}
+            </button>
+
+            <p class="summary-no-charge-note">
+              <i class="bi bi-shield-check"></i>
+              {% trans "No charge until you complete payment on the next step." %}
+            </p>
+
+          </form>
+        </div>
+
+        {% endwith %}
+
+        {% else %}
+        {# ── DB BOOKING (already saved — e.g. user navigated back) ── #}
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <i class="bi bi-receipt summary-card-icon"></i>
             <div>
-              <div class="next-step-title">{% trans "Confirmation Email" %}</div>
-              <p class="next-step-desc">
-                {% trans "A confirmation email with your booking details has been sent to your registered email address." %}
-              </p>
+              <div class="summary-card-type">{% trans "Existing Booking" %}</div>
+              <div class="summary-card-name">{{ booking.reference }}</div>
             </div>
           </div>
-
-          {% if booking.service_type == 'tour' %}
-          <div class="next-step-item">
-            <div class="next-step-num">2</div>
-            <div>
-              <div class="next-step-title">{% trans "Date Confirmation" %}</div>
-              <p class="next-step-desc">
-                {% trans "Our team will confirm your preferred tour date within 24–48 hours via email or WhatsApp." %}
-              </p>
+          <div class="summary-details">
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Status" %}</span>
+              <span class="summary-value">{{ booking.get_status_display }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">{% trans "Payment" %}</span>
+              <span class="summary-value">{{ booking.get_payment_mode_display }}</span>
+            </div>
+            <div class="summary-row summary-row-total">
+              <span class="summary-label">{% trans "Total" %}</span>
+              <span class="summary-value">${{ booking.total_price }} USD</span>
             </div>
           </div>
+        </div>
+        <div class="mt-3">
+          {% if booking.payment_status == 'pending' and booking.payment_mode == 'pay_now' %}
+          <a href="{% url 'bookings:payment' booking.reference %}" class="btn-accent-jd w-100 justify-content-center">
+            <i class="bi bi-credit-card me-2"></i>{% trans "Proceed to Payment" %}
+          </a>
           {% else %}
-          <div class="next-step-item">
-            <div class="next-step-num">2</div>
-            <div>
-              <div class="next-step-title">{% trans "Prepare for Arrival" %}</div>
-              <p class="next-step-desc">
-                {% trans "Your booking is confirmed. Review the details above and contact us if you have any questions." %}
-              </p>
-            </div>
-          </div>
+          <a href="{% url 'bookings:confirmation' booking.reference %}" class="btn-primary-jd w-100 justify-content-center">
+            <i class="bi bi-check-circle me-2"></i>{% trans "View Confirmation" %}
+          </a>
           {% endif %}
-
-          <div class="next-step-item">
-            <div class="next-step-num">3</div>
-            <div>
-              <div class="next-step-title">{% trans "Manage Your Booking" %}</div>
-              <p class="next-step-desc">
-                {% trans "View, download, or cancel your booking anytime from your personal dashboard." %}
-              </p>
-            </div>
-          </div>
         </div>
-
-        <!-- Action buttons -->
-        <div class="confirmation-actions jd-reveal">
-          <a href="{% url 'accounts:dashboard' %}" class="btn-primary-jd">
-            <i class="bi bi-grid me-2"></i>
-            {% trans "Go to My Dashboard" %}
-          </a>
-          <a href="{% url 'tours:list' %}" class="btn-outline-jd">
-            <i class="bi bi-compass me-2"></i>
-            {% trans "Explore More Tours" %}
-          </a>
-        </div>
-
-        <!-- WhatsApp support -->
-        <div class="confirmation-support jd-reveal">
-          <p>{% trans "Questions about your booking?" %}</p>
-          <a href="https://wa.me/255713529019?text=My booking reference is {{ booking.reference }}"
-             target="_blank" rel="noopener" class="confirmation-whatsapp">
-            <i class="bi bi-whatsapp me-2"></i>
-            {% trans "Chat with Us on WhatsApp" %}
-          </a>
-        </div>
+        {% endif %}
 
       </div>
+
+      <!-- RIGHT — Trust sidebar -->
+      <div class="col-lg-4 d-none d-lg-block">
+        <div class="summary-trust-sidebar">
+
+          <div class="trust-item">
+            <i class="bi bi-shield-check trust-icon"></i>
+            <div>
+              <div class="trust-title">{% trans "Secure Booking" %}</div>
+              <p class="trust-desc">{% trans "Your payment is processed securely via PesaPal. No card details are stored on our servers." %}</p>
+            </div>
+          </div>
+
+          <div class="trust-item">
+            <i class="bi bi-arrow-counterclockwise trust-icon"></i>
+            <div>
+              <div class="trust-title">{% trans "Free Cancellation" %}</div>
+              <p class="trust-desc">{% trans "Most bookings can be cancelled for a full refund if done within the cancellation window." %}</p>
+            </div>
+          </div>
+
+          <div class="trust-item">
+            <i class="bi bi-headset trust-icon"></i>
+            <div>
+              <div class="trust-title">{% trans "24/7 Support" %}</div>
+              <p class="trust-desc">{% trans "Our team is always available to help via WhatsApp or email." %}</p>
+            </div>
+          </div>
+
+          <a href="https://wa.me/255683956372" target="_blank" rel="noopener" class="trust-whatsapp-btn">
+            <i class="bi bi-whatsapp me-2"></i>
+            {% trans "Chat with Us" %}
+          </a>
+
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -316,5 +475,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/bookings/booking_confirmation.js' %}"></script>
+<script src="{% static 'js/bookings/booking_summary.js' %}"></script>
 {% endblock %}

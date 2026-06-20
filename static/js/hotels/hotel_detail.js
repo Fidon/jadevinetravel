@@ -164,22 +164,22 @@
     $guestMaxNote.text(
       "Max " +
         selectedMaxGuests +
-        " guests per room × " +
+        " adults/children per room × " +
         rooms +
         " room" +
         (rooms > 1 ? "s" : "") +
         " = " +
         maxTotal +
-        " guests total",
+        " total. Infants & pets excluded.",
     );
   }
 
   /* ── Capacity check: total occupants vs max allowed ── */
   function getTotalOccupants() {
+    // Infants excluded — they don't count against room capacity
     return (
       (parseInt($("#id_num_adults").val()) || 0) +
-      (parseInt($("#id_num_children").val()) || 0) +
-      (parseInt($("#id_num_infants").val()) || 0)
+      (parseInt($("#id_num_children").val()) || 0)
     );
   }
 
@@ -264,7 +264,7 @@
     null,
   );
 
-  /* ── Infants counter ── */
+  /* ── Infants counter; max 5 ── */
   makeCounter(
     $("#btn-infants-minus"),
     $("#btn-infants-plus"),
@@ -273,7 +273,7 @@
       return 0;
     },
     function () {
-      return 10;
+      return 5;
     },
     null,
   );
@@ -370,7 +370,11 @@
     const maxTotal = selectedMaxGuests * rooms;
     if (getTotalOccupants() > maxTotal) {
       JD.toast(
-        "Too many guests: max " + maxTotal + " for " + rooms + " room(s)",
+        "Max " +
+          maxTotal +
+          " adults/children for " +
+          rooms +
+          " room(s). Infants and pets are not counted.",
         "error",
       );
       valid = false;

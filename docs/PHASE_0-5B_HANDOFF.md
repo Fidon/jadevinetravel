@@ -66,9 +66,9 @@ EMAIL\_HOST\_USER=your-gmail@gmail.com
 
 EMAIL\_HOST\_PASSWORD=your-app-password
 
-ADMIN\_NOTIFICATION\_EMAIL=fidontakakwa@gmail.com
+ADMIN\_NOTIFICATION\_EMAIL=jadevinetravel@gmailcom
 
-DEFAULT\_SITE\_URL=http://127.0.0.1:8000
+DEFAULT\_SITE\_URL=http://jadevinetravel.com/
 
 ```
 
@@ -96,9 +96,9 @@ ACCOUNT\_PASSWORD\_CHANGE\_REDIRECT\_URL = '/accounts/password/change/'
 
 ACCOUNT\_EMAIL\_CONFIRMATION\_HMAC = True
 
-ADMIN\_NOTIFICATION\_EMAIL = os.environ.get('ADMIN\_NOTIFICATION\_EMAIL', 'fidontakakwa@gmail.com')
+ADMIN\_NOTIFICATION\_EMAIL = os.environ.get('ADMIN\_NOTIFICATION\_EMAIL', 'jadevinetravel@gmailcom')
 
-DEFAULT\_SITE\_URL = os.environ.get('DEFAULT\_SITE\_URL', 'http://127.0.0.1:8000')
+DEFAULT\_SITE\_URL = os.environ.get('DEFAULT\_SITE\_URL', 'http://jadevinetravel.com/')
 
 
 

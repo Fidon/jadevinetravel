@@ -760,7 +760,7 @@ Configured in `config/settings/development.py` — reads all values from `.env`.
 
 \*\*Sending account:\*\* `jovinjames@gmail.com` (Gmail App Password, not account password)
 
-\*\*Admin notification recipient:\*\* `fidontakakwa@gmail.com` — stored as `ADMIN\_NOTIFICATION\_EMAIL` in `.env` and `base.py`. Never derived from `DEFAULT\_FROM\_EMAIL`.
+\*\*Admin notification recipient:\*\* `jadevinetravel@gmailcom` — stored as `ADMIN\_NOTIFICATION\_EMAIL` in `.env` and `base.py`. Never derived from `DEFAULT\_FROM\_EMAIL`.
 
 
 
@@ -782,7 +782,7 @@ EMAIL\_HOST\_PASSWORD=<app\_password>
 
 DEFAULT\_FROM\_EMAIL=Jadevine Travel \& Tours <jovinjames@gmail.com>
 
-ADMIN\_NOTIFICATION\_EMAIL=fidontakakwa@gmail.com
+ADMIN\_NOTIFICATION\_EMAIL=jadevinetravel@gmailcom
 
 ```
 
@@ -796,7 +796,7 @@ DEFAULT\_FROM\_EMAIL = os.environ.get('DEFAULT\_FROM\_EMAIL', 'noreply@jadevinet
 
 SERVER\_EMAIL = DEFAULT\_FROM\_EMAIL
 
-ADMIN\_NOTIFICATION\_EMAIL = os.environ.get('ADMIN\_NOTIFICATION\_EMAIL', 'fidontakakwa@gmail.com')
+ADMIN\_NOTIFICATION\_EMAIL = os.environ.get('ADMIN\_NOTIFICATION\_EMAIL', 'jadevinetravel@gmailcom')
 
 ```
 
@@ -1668,25 +1668,25 @@ value = getattr(obj, f'field\_{lang}', None) or obj.field\_en
 
 \- `python manage.py runserver` starts cleanly with zero errors and zero warnings
 
-\- `http://127.0.0.1:8000/` loads full homepage with all animations
+\- `http://jadevinetravel.com//` loads full homepage with all animations
 
-\- `http://127.0.0.1:8000/admin/` loads Django admin, superuser login works
+\- `http://jadevinetravel.com//admin/` loads Django admin, superuser login works
 
-\- `http://127.0.0.1:8000/hotels/` loads hotel list with AJAX filtering, skeleton loaders, load-reveal
+\- `http://jadevinetravel.com//hotels/` loads hotel list with AJAX filtering, skeleton loaders, load-reveal
 
-\- `http://127.0.0.1:8000/hotels/<slug>/` loads hotel detail with GLightbox, Flatpickr, booking form
+\- `http://jadevinetravel.com//hotels/<slug>/` loads hotel detail with GLightbox, Flatpickr, booking form
 
 \- Hotel booking flow end-to-end: Pay Now and Pay on Arrival ✅
 
-\- `http://127.0.0.1:8000/cars/` loads car list with AJAX filtering, skeleton loaders, load-reveal
+\- `http://jadevinetravel.com//cars/` loads car list with AJAX filtering, skeleton loaders, load-reveal
 
-\- `http://127.0.0.1:8000/cars/<slug>/` loads car detail with rental mode toggle, conditional licence field
+\- `http://jadevinetravel.com//cars/<slug>/` loads car detail with rental mode toggle, conditional licence field
 
 \- Car booking flow end-to-end: Pay Now and Pay on Arrival ✅
 
-\- `http://127.0.0.1:8000/tours/` loads tour list with AJAX filtering, skeleton loaders, load-reveal ✅
+\- `http://jadevinetravel.com//tours/` loads tour list with AJAX filtering, skeleton loaders, load-reveal ✅
 
-\- `http://127.0.0.1:8000/tours/<slug>/` loads tour detail with itinerary accordion, GLightbox, Flatpickr, participant counter, live price breakdown ✅
+\- `http://jadevinetravel.com//tours/<slug>/` loads tour detail with itinerary accordion, GLightbox, Flatpickr, participant counter, live price breakdown ✅
 
 \- Tour booking flow end-to-end: Pay Now and Pay on Arrival, always pending\_confirmation ✅
 
@@ -1694,7 +1694,7 @@ value = getattr(obj, f'field\_{lang}', None) or obj.field\_en
 
 \- Pay on Arrival confirmation email sent to customer via Gmail SMTP ✅
 
-\- Pay on Arrival admin notification email sent to fidontakakwa@gmail.com ✅
+\- Pay on Arrival admin notification email sent to jadevinetravel@gmailcom ✅
 
 \- Booking records verified in `/admin/` with correct service\_type, status, payment\_mode, snapshotted prices
 

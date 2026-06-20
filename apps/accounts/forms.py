@@ -56,12 +56,18 @@ class CustomSignupForm(AllauthSignupForm):
         self.fields['password2'].widget.attrs['placeholder'] = _('Confirm password')
         self.fields['password2'].widget.attrs['autocomplete'] = 'new-password'
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '').strip().lower()
+        if not email:
+            return email
+        from apps.accounts.models import CustomUser
+        if CustomUser.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError(
+                _('An account with this email address already exists.')
+            )
+        return email
+
     def save(self, request):
-        """
-        allauth calls form.save(request) at the end of signup.
-        We delegate to the adapter via super() — adapter.save_user()
-        reads first_name, last_name, preferred_language from self.cleaned_data.
-        """
         user = super().save(request)
         return user
 

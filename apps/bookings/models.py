@@ -225,5 +225,5 @@ class Booking(models.Model):
 
     @property
     def total_occupants(self):
-        """Total people across adults + children + infants."""
-        return (self.num_adults or 0) + (self.num_children or 0) + (self.num_infants or 0)
+        """Billable occupants — adults + children only. Infants excluded from capacity."""
+        return (self.num_adults or 0) + (self.num_children or 0)

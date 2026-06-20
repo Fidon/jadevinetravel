@@ -97,17 +97,24 @@ class HotelForm(forms.ModelForm):
             'description_ru':   _('Description — Russian (optional)'),
         }
 
-    def clean_name(self):
-        name = self.cleaned_data.get('name', '').strip()
-        if not name:
-            raise forms.ValidationError(_('Hotel name is required.'))
-        return name
-
-    def clean_price_per_night(self):
-        price = self.cleaned_data.get('price_per_night')
+    def clean_price_per_person(self):
+        price = self.cleaned_data.get('price_per_person')
         if price is not None and price <= 0:
             raise forms.ValidationError(_('Price must be greater than zero.'))
         return price
+
+    def clean_discount_expires_at(self):
+        from django.utils import timezone
+        expires_at = self.cleaned_data.get('discount_expires_at')
+        if expires_at and expires_at <= timezone.now():
+            raise forms.ValidationError(
+                _('Expiry date must be in the future.')
+            )
+        return expires_at
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.highlights_en = self._text_to_list('highlights_en_text')
 
 
 class HotelRoomTypeForm(forms.ModelForm):
@@ -196,7 +203,16 @@ class HotelRoomTypeForm(forms.ModelForm):
     def clean_amenities_text(self):
         raw = self.cleaned_data.get('amenities_text', '')
         lines = [line.strip() for line in raw.splitlines() if line.strip()]
-        return lines  # returns a list
+        return lines
+
+    def clean_discount_expires_at(self):
+        from django.utils import timezone
+        expires_at = self.cleaned_data.get('discount_expires_at')
+        if expires_at and expires_at <= timezone.now():
+            raise forms.ValidationError(
+                _('Expiry date must be in the future.')
+            )
+        return expires_at
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -350,6 +366,15 @@ class CarRentalForm(forms.ModelForm):
     def clean_pickup_locations_text(self):
         raw = self.cleaned_data.get('pickup_locations_text', '')
         return [line.strip() for line in raw.splitlines() if line.strip()]
+
+    def clean_discount_expires_at(self):
+        from django.utils import timezone
+        expires_at = self.cleaned_data.get('discount_expires_at')
+        if expires_at and expires_at <= timezone.now():
+            raise forms.ValidationError(
+                _('Expiry date must be in the future.')
+            )
+        return expires_at
 
     def save(self, commit=True):
         instance = super().save(commit=False)

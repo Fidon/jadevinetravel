@@ -1,6 +1,7 @@
 {% load static i18n %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_CODE == 'ar' %}dir="rtl"{% endif %}>
+<html lang="{{ LANGUAGE_CODE }}" class="jd-loading"{% if LANGUAGE_CODE == 'ar' %} dir="rtl"{% endif %}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,10 +17,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  <style>
+    html.jd-loading { overflow: hidden; }
+    #jd-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(circle at 50% 38%, #163021 0%, #0b1810 48%, #050a07 100%);
+    }
+  </style>
+  <noscript>
+    <style>
+      html.jd-loading { overflow: auto !important; }
+      #jd-loader { display: none !important; }
+    </style>
+  </noscript>
+
   {% block extra_css %}{% endblock %}
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
+
+  <!-- ============================================================
+       PAGE LOADER  (public site only)
+       ============================================================ -->
+  <div id="jd-loader" role="status" aria-live="polite" aria-label="{% trans 'Loading' %}">
+    <div class="jd-loader-inner">
+      <div class="jd-loader-emblem">
+        <span class="jd-loader-ring" aria-hidden="true"></span>
+        <img src="{% static 'images/logo.png' %}" alt="" class="jd-loader-logo" />
+      </div>
+      <div class="jd-loader-wordmark">Jadevine</div>
+      <div class="jd-loader-sub">{% trans "Travel & Tours" %}</div>
+    </div>
+  </div>
 
   <!-- ============================================================
        NAVBAR
@@ -105,11 +135,31 @@
        ============================================================ -->
   <footer class="jd-footer">
     <div class="container">
-      <div class="row g-5">
 
-        <div class="col-lg-4 col-md-6">
-          <div class="jd-footer-brand">Jadevine</div>
-          <div class="jd-footer-brand-sub">{% trans "Travel & Tours" %}</div>
+      <!-- Newsletter band -->
+      <div class="jd-footer-top">
+        <div class="jd-footer-top-copy">
+          <div class="jd-footer-top-title">{% trans "Travel inspiration, straight to your inbox" %}</div>
+          <div class="jd-footer-top-sub">{% trans "Curated escapes, seasonal offers and Zanzibar travel tips. No spam." %}</div>
+        </div>
+        <form class="jd-newsletter-form">
+          {% csrf_token %}
+          <input type="email" class="jd-newsletter-input" placeholder="{% trans 'Your email address' %}" required />
+          <button type="submit" class="btn-accent-jd jd-newsletter-btn">{% trans "Subscribe" %}</button>
+        </form>
+      </div>
+
+      <!-- Main -->
+      <div class="jd-footer-main">
+
+        <div class="jd-footer-brand-block">
+          <div class="jd-footer-brand-row">
+            <img src="{% static 'images/logo.png' %}" alt="Jadevine Travel & Tours" class="jd-footer-emblem" />
+            <div>
+              <p class="jd-footer-brand">Jadevine</p>
+              <div class="jd-footer-brand-sub">{% trans "Travel & Tours" %}</div>
+            </div>
+          </div>
           <p class="jd-footer-desc">
             {% trans "Your trusted partner for unforgettable travel experiences across Zanzibar and Tanzania." %}
           </p>
@@ -121,7 +171,7 @@
           </div>
         </div>
 
-        <div class="col-lg-2 col-md-6 col-6">
+        <div>
           <div class="jd-footer-heading">{% trans "Services" %}</div>
           <nav class="jd-footer-links">
             <a href="{% url 'hotels:list' %}" class="jd-footer-link">{% trans "Hotels" %}</a>
@@ -131,7 +181,7 @@
           </nav>
         </div>
 
-        <div class="col-lg-2 col-md-6 col-6">
+        <div>
           <div class="jd-footer-heading">{% trans "Company" %}</div>
           <nav class="jd-footer-links">
             <a href="{% url 'core:about' %}" class="jd-footer-link">{% trans "About Us" %}</a>
@@ -141,7 +191,7 @@
           </nav>
         </div>
 
-        <div class="col-lg-4 col-md-6">
+        <div>
           <div class="jd-footer-heading">{% trans "Contact Us" %}</div>
           <div class="jd-footer-contact-item">
             <i class="bi bi-geo-alt-fill"></i>
@@ -155,20 +205,11 @@
             <i class="bi bi-envelope-fill"></i>
             <a href="mailto:info@jadevinetours.com" class="jd-footer-link">info@jadevinetours.com</a>
           </div>
-          <div class="mt-4">
-            <div class="jd-footer-heading">{% trans "Newsletter" %}</div>
-            <form class="jd-newsletter-form d-flex gap-2">
-              {% csrf_token %}
-              <input type="email" class="jd-input" placeholder="{% trans 'Your email' %}" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12);color:var(--color-white);" required />
-              <button type="submit" class="btn-accent-jd flex-shrink-0" style="padding:12px 18px;">
-                <i class="bi bi-send"></i>
-              </button>
-            </form>
-          </div>
         </div>
 
       </div>
 
+      <!-- Bottom -->
       <div class="jd-footer-bottom">
         <span class="jd-footer-copy">&copy; {% now "Y" %} Jadevine Travel &amp; Tours. {% trans "All rights reserved" %}</span>
         <span class="jd-footer-copy jd-developer-credit">
@@ -177,6 +218,7 @@
         </span>
         <span class="jd-footer-copy">{% trans "Zanzibar, Tanzania" %} &mdash; {% trans "Licensed by Tanzania Tourism Board" %}</span>
       </div>
+
     </div>
   </footer>
 
@@ -220,7 +262,7 @@
   </div>
 
   <!-- WhatsApp floating button -->
-  <a href="https://wa.me/255713529019?text=Hello%2C%20I%27d%20like%20to%20book%20a%20tour"
+  <a href="https://wa.me/255683956372?text=Hello%2C%20I%27d%20like%20to%20book%20a%20tour"
      class="jd-whatsapp-btn"
      target="_blank"
      rel="noopener noreferrer"
@@ -233,6 +275,23 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Global JS i18n strings (must load before main.js) -->
+  {% trans "Subscribe" as jd_s_subscribe %}
+  {% trans "Subscribing…" as jd_s_subscribing %}
+  {% trans "Subscribed! Thank you." as jd_s_subscribed %}
+  {% trans "Something went wrong." as jd_s_newsletter_error %}
+  {% trans "Network error. Please try again." as jd_s_network_error %}
+  <script>
+    window.JD_STRINGS = {
+      subscribe: "{{ jd_s_subscribe|escapejs }}",
+      subscribing: "{{ jd_s_subscribing|escapejs }}",
+      subscribed: "{{ jd_s_subscribed|escapejs }}",
+      newsletterError: "{{ jd_s_newsletter_error|escapejs }}",
+      networkError: "{{ jd_s_network_error|escapejs }}"
+    };
+  </script>
+
   <script src="{% static 'js/main.js' %}"></script>
   {% block extra_js %}{% endblock %}
 </body>

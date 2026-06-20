@@ -42,24 +42,63 @@
     <div class="row justify-content-center">
       <div class="col-lg-7">
 
-        <!-- Success banner -->
+        {% if booking.payment_status == 'failed' %}
+        {# ------------------------------------------------------------------ #}
+        {# FAILED PAYMENT STATE                                                #}
+        {# Customer lands here after PesaPal redirects back on payment failure #}
+        {# ------------------------------------------------------------------ #}
+        <div class="confirmation-banner confirmation-banner-failed jd-reveal">
+          <div class="confirmation-check confirmation-check-failed">
+            <i class="bi bi-x-lg"></i>
+          </div>
+          <span class="eyebrow eyebrow-white">{% trans "Payment Failed" %}</span>
+          <h1 class="confirmation-title">{% trans "Payment Was Not Completed" %}</h1>
+          <p class="confirmation-subtitle">
+            {% trans "Your booking has been saved but payment was not successful. Please try again or choose a different payment method." %}
+          </p>
+        </div>
+
+        <div class="confirmation-ref-card jd-reveal">
+          <div class="confirmation-ref-label">{% trans "Your Booking Reference" %}</div>
+          <div class="confirmation-ref-number">{{ booking.reference }}</div>
+          <p class="confirmation-ref-note">
+            {% trans "Use this reference when contacting us for support." %}
+          </p>
+        </div>
+
+        <div class="confirmation-actions jd-reveal">
+          <a href="{% url 'bookings:payment' booking.reference %}" class="btn-primary-jd">
+            <i class="bi bi-arrow-repeat me-2"></i>
+            {% trans "Try Payment Again" %}
+          </a>
+          <a href="https://wa.me/255683956372?text={% trans 'I need help completing payment for booking' %} {{ booking.reference }}"
+             target="_blank" rel="noopener" class="btn-outline-jd">
+            <i class="bi bi-whatsapp me-2"></i>
+            {% trans "Contact Support" %}
+          </a>
+        </div>
+
+        {% elif booking.payment_status == 'paid' or booking.payment_mode == 'pay_on_arrival' %}
+        {# ------------------------------------------------------------------ #}
+        {# SUCCESS STATE — paid online OR pay on arrival                       #}
+        {# ------------------------------------------------------------------ #}
         <div class="confirmation-banner jd-reveal">
           <div class="confirmation-check">
             <i class="bi bi-check-lg"></i>
           </div>
 
           {% if booking.payment_mode == 'pay_on_arrival' %}
-          <span class="eyebrow eyebrow-white">{% trans "Reservation Confirmed" %}</span>
-          <h1 class="confirmation-title">{% trans "You're All Set!" %}</h1>
-          <p class="confirmation-subtitle">
-            {% trans "Your reservation is confirmed. Payment will be collected when you arrive in Tanzania." %}
-          </p>
+            <span class="eyebrow eyebrow-white">{% trans "Reservation Confirmed" %}</span>
+            <h1 class="confirmation-title">{% trans "You're All Set!" %}</h1>
+            <p class="confirmation-subtitle">
+              {% trans "Your reservation is confirmed. Payment will be collected when you arrive in Tanzania." %}
+            </p>
           {% else %}
-          <span class="eyebrow eyebrow-white">{% trans "Booking Confirmed" %}</span>
-          <h1 class="confirmation-title">{% trans "Booking Confirmed!" %}</h1>
-          <p class="confirmation-subtitle">
-            {% trans "Your booking is confirmed and a confirmation email is on its way to you." %}
-          </p>
+            <span class="eyebrow eyebrow-white">{% trans "Booking Confirmed" %}</span>
+            <h1 class="confirmation-title">{% trans "Payment Received!" %}</h1>
+            <p class="confirmation-subtitle">
+              {% trans "Your payment has been confirmed and a receipt has been sent to your email." %}
+            </p>
           {% endif %}
         </div>
 
@@ -127,6 +166,24 @@
             <span class="confirmation-label">{% trans "Return Date" %}</span>
             <span class="confirmation-value">{{ booking.return_date }}</span>
           </div>
+
+          {% elif booking.service_type == 'tour' %}
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Service" %}</span>
+            <span class="confirmation-value">{% trans "Safari & Tour" %}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Package" %}</span>
+            <span class="confirmation-value">{{ booking.tour_package }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Preferred Date" %}</span>
+            <span class="confirmation-value">{{ booking.preferred_date }}</span>
+          </div>
+          <div class="confirmation-row">
+            <span class="confirmation-label">{% trans "Participants" %}</span>
+            <span class="confirmation-value">{{ booking.num_participants }}</span>
+          </div>
           {% endif %}
 
           <div class="confirmation-row">
@@ -144,7 +201,13 @@
           {% endif %}
 
           <div class="confirmation-row confirmation-row-total">
-            <span class="confirmation-label">{% trans "Total" %}</span>
+            <span class="confirmation-label">
+              {% if booking.payment_status == 'paid' %}
+                {% trans "Total Paid" %}
+              {% else %}
+                {% trans "Total Due on Arrival" %}
+              {% endif %}
+            </span>
             <span class="confirmation-value">${{ booking.total_price }} USD</span>
           </div>
 
@@ -165,7 +228,11 @@
             <div>
               <div class="next-step-title">{% trans "Confirmation Email" %}</div>
               <p class="next-step-desc">
-                {% trans "A confirmation email with your booking details has been sent to your registered email address." %}
+                {% if booking.payment_status == 'paid' %}
+                  {% trans "A payment receipt and booking confirmation has been sent to your email address." %}
+                {% else %}
+                  {% trans "A confirmation email with your booking details has been sent to your registered email address." %}
+                {% endif %}
               </p>
             </div>
           </div>
@@ -218,12 +285,41 @@
         <!-- WhatsApp support -->
         <div class="confirmation-support jd-reveal">
           <p>{% trans "Questions about your booking?" %}</p>
-          <a href="https://wa.me/255713529019?text=My booking reference is {{ booking.reference }}"
+          <a href="https://wa.me/255683956372?text={% trans 'My booking reference is' %} {{ booking.reference }}"
              target="_blank" rel="noopener" class="confirmation-whatsapp">
             <i class="bi bi-whatsapp me-2"></i>
             {% trans "Chat with Us on WhatsApp" %}
           </a>
         </div>
+
+        {% else %}
+        {# ------------------------------------------------------------------ #}
+        {# PENDING STATE — Pay Now booking, IPN not yet received               #}
+        {# Customer lands here before IPN fires (e.g. navigated back manually) #}
+        {# ------------------------------------------------------------------ #}
+        <div class="confirmation-banner confirmation-banner-pending jd-reveal">
+          <div class="confirmation-check confirmation-check-pending">
+            <i class="bi bi-hourglass-split"></i>
+          </div>
+          <span class="eyebrow eyebrow-white">{% trans "Processing" %}</span>
+          <h1 class="confirmation-title">{% trans "Payment Pending" %}</h1>
+          <p class="confirmation-subtitle">
+            {% trans "Your payment is being processed. This page will update automatically once confirmed. This usually takes under 60 seconds." %}
+          </p>
+        </div>
+
+        <div class="confirmation-ref-card jd-reveal">
+          <div class="confirmation-ref-label">{% trans "Your Booking Reference" %}</div>
+          <div class="confirmation-ref-number">{{ booking.reference }}</div>
+        </div>
+
+        <div class="confirmation-actions jd-reveal">
+          <a href="{% url 'accounts:dashboard' %}" class="btn-outline-jd">
+            <i class="bi bi-grid me-2"></i>
+            {% trans "Go to Dashboard" %}
+          </a>
+        </div>
+        {% endif %}
 
       </div>
     </div>

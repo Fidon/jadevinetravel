@@ -623,14 +623,14 @@ The `dateFormat: 'Y-m-d'` is what gets submitted in the POST. The `altFormat` is
 
 ## CURRENTLY WORKING
 - `python manage.py runserver` starts cleanly with zero errors and zero warnings
-- `http://127.0.0.1:8000/` loads full homepage
-- `http://127.0.0.1:8000/admin/` loads Django admin, superuser login works
-- `http://127.0.0.1:8000/hotels/` loads hotel list with AJAX filtering and skeleton loaders
-- `http://127.0.0.1:8000/hotels/<slug>/` loads hotel detail with photo gallery (GLightbox), room type selector, Flatpickr date pickers, price breakdown
+- `http://jadevinetravel.com//` loads full homepage
+- `http://jadevinetravel.com//admin/` loads Django admin, superuser login works
+- `http://jadevinetravel.com//hotels/` loads hotel list with AJAX filtering and skeleton loaders
+- `http://jadevinetravel.com//hotels/<slug>/` loads hotel detail with photo gallery (GLightbox), room type selector, Flatpickr date pickers, price breakdown
 - Hotel booking flow end-to-end: detail → summary (session) → Pay on Arrival → confirmation ✅
 - Hotel booking flow end-to-end: detail → summary (session) → Pay Now → payment stub → confirmation ✅
-- `http://127.0.0.1:8000/cars/` loads car list with AJAX filtering and skeleton loaders
-- `http://127.0.0.1:8000/cars/<slug>/` loads car detail with rental mode toggle, licence field conditional display, Flatpickr, price breakdown
+- `http://jadevinetravel.com//cars/` loads car list with AJAX filtering and skeleton loaders
+- `http://jadevinetravel.com//cars/<slug>/` loads car detail with rental mode toggle, licence field conditional display, Flatpickr, price breakdown
 - Car booking flow end-to-end: same as hotel ✅
 - Booking records verified in `/admin/` with correct `service_type`, `status`, `payment_mode`, and snapshotted prices
 - Navbar stays solid on all inner pages (navbar fix applied to `main.js`)

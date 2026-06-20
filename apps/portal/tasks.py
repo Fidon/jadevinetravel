@@ -26,7 +26,7 @@ def _get_admin_email():
 
 
 def _get_portal_url(path=''):
-    base = getattr(settings, 'DEFAULT_SITE_URL', 'http://127.0.0.1:8000')
+    base = getattr(settings, 'DEFAULT_SITE_URL', 'http://jadevinetravel.com/')
     return f"{base.rstrip('/')}{path}"
 
 
@@ -545,7 +545,7 @@ def send_contact_reply_email(message_id, reply_text):
         <hr style="border:none;border-top:1px solid #e0d5c8;margin:28px 0;">
         <p style="font-size:13px;color:#9e8e7e;text-align:center;line-height:1.7;">
           Questions? Reply to this email or WhatsApp us at
-          <a href="https://wa.me/255713529019"
+          <a href="https://wa.me/255683956372"
              style="color:#c89666;text-decoration:none;">+255 713 529 019</a>
         </p>
         """

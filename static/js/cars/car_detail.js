@@ -25,10 +25,8 @@
     onChange: function (dates) {
       pickupDate = dates[0] || null;
       if (pickupDate) {
-        const minReturn = new Date(pickupDate);
-        minReturn.setDate(minReturn.getDate() + 1);
-        fpReturn.set("minDate", minReturn);
-        if (returnDate && returnDate <= pickupDate) {
+        fpReturn.set("minDate", pickupDate);
+        if (returnDate && returnDate < pickupDate) {
           fpReturn.clear();
           returnDate = null;
         }
@@ -38,7 +36,7 @@
   });
 
   const fpReturn = flatpickr("#id_return_date", {
-    minDate: new Date(Date.now() + 86400000),
+    minDate: "today",
     dateFormat: "Y-m-d",
     altInput: true,
     altFormat: "D, d M Y",
@@ -55,18 +53,20 @@
       $("#price-breakdown").hide();
       return;
     }
-    const days = Math.round((returnDate - pickupDate) / 86400000);
-    if (days < 1) {
+    const rawDays = Math.round((returnDate - pickupDate) / 86400000);
+    if (rawDays < 0) {
       $("#price-breakdown").hide();
       return;
     }
+    // Same-day = 1 billable day (transfer use case)
+    const days = rawDays === 0 ? 1 : rawDays;
     const total = (PRICE_PER_DAY * days).toFixed(2);
     $("#breakdown-rate-label").text(
       "$" +
         PRICE_PER_DAY.toFixed(2) +
         " × " +
         days +
-        (days === 1 ? " day" : " days"),
+        (days === 1 ? " day (transfer)" : " days"),
     );
     $("#breakdown-rate-amount").text("$" + total);
     $("#breakdown-total").text(
@@ -93,10 +93,10 @@
 
   /* ── Passenger total ── */
   function getTotalPassengers() {
+    // Infants excluded from vehicle capacity check
     return (
       (parseInt($("#id_num_adults").val()) || 0) +
-      (parseInt($("#id_num_children").val()) || 0) +
-      (parseInt($("#id_num_infants").val()) || 0)
+      (parseInt($("#id_num_children").val()) || 0)
     );
   }
 
@@ -129,9 +129,7 @@
       return 1;
     },
     function () {
-      var others =
-        (parseInt($("#id_num_children").val()) || 0) +
-        (parseInt($("#id_num_infants").val()) || 0);
+      var others = parseInt($("#id_num_children").val()) || 0;
       return Math.max(1, CAR_CAPACITY - others);
     },
   );
@@ -145,9 +143,7 @@
       return 0;
     },
     function () {
-      var others =
-        (parseInt($("#id_num_adults").val()) || 0) +
-        (parseInt($("#id_num_infants").val()) || 0);
+      var others = parseInt($("#id_num_adults").val()) || 0;
       return Math.max(0, CAR_CAPACITY - others);
     },
   );

@@ -181,8 +181,8 @@ class CarBookingForm(forms.Form):
             self.add_error('pickup_date', _('Pickup date cannot be in the past.'))
 
         if pickup and returns:
-            if returns <= pickup:
-                self.add_error('return_date', _('Return date must be after pickup date.'))
+            if returns < pickup:
+                self.add_error('return_date', _('Return date cannot be before pickup date.'))
 
         cleaned['num_children'] = cleaned.get('num_children') or 0
         cleaned['num_infants'] = cleaned.get('num_infants') or 0

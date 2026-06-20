@@ -27,7 +27,7 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER=your-gmail@gmail.com
 EMAIL_HOST_PASSWORD=your-app-password
-ADMIN_NOTIFICATION_EMAIL=fidontakakwa@gmail.com
+ADMIN_NOTIFICATION_EMAIL=jadevinetravel@gmailcom
 
 Settings split:
 - `config/settings/base.py` — shared
@@ -40,7 +40,7 @@ ACCOUNT_ADAPTER = 'apps.accounts.adapters.AccountAdapter'
 ACCOUNT_FORMS = {'signup': 'apps.accounts.forms.CustomSignupForm'}
 ACCOUNT_PASSWORD_CHANGE_REDIRECT_URL = '/accounts/password/change/'
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
-ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'fidontakakwa@gmail.com')
+ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'jadevinetravel@gmailcom')
 ```
 
 ## TECH STACK
@@ -597,7 +597,7 @@ Customer submits cancellation:
 ├── booking.is_refundable == True, PAY_NOW + refund > 0%
 │     → status = 'cancellation_requested'
 │     → Branded HTML email to customer
-│     → Branded HTML alert to fidontakakwa@gmail.com
+│     → Branded HTML alert to jadevinetravel@gmailcom
 │     → Admin processes PesaPal refund manually
 │     → Admin marks payment_status='refunded' in portal (Phase 5)
 │
@@ -619,7 +619,7 @@ Customer submits cancellation:
 ## EMAIL TASKS
 
 ### apps/accounts/tasks.py — Cancellation emails
-Admin emails always go to `fidontakakwa@gmail.com` (`ADMIN_EMAIL` constant).
+Admin emails always go to `jadevinetravel@gmailcom` (`ADMIN_EMAIL` constant).
 
 Template context variables:
 
@@ -804,7 +804,7 @@ EMAIL_BACKEND=django.core.mail.backends.filebased.EmailBackend  # file
 - Booking detail: status banner, refund info (gated by payment status + is_refundable), review section
 - Review submission: star picker, one per booking, pending moderation
 - Cancellation: correct flow per payment mode and is_refundable, branded emails
-- Cancellation admin alert: `fidontakakwa@gmail.com`, gold portal button, table layout
+- Cancellation admin alert: `jadevinetravel@gmailcom`, gold portal button, table layout
 - POA admin email: amount right-aligned via table, gold portal button
 - PDF: flat header, gold accent, correct phone
 - Discount badges: list cards and detail pages for all three services

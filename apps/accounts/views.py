@@ -98,17 +98,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         user = self.request.user
         today = date.today()
 
-        upcoming = Booking.objects.filter(
-            user=user,
-        ).exclude(
-            status__in=['cancelled', 'completed', 'no_show', 'cancellation_requested']
-        ).filter(
-            # service_date is a property, not a DB field — we must filter on all
-            # possible date fields and take non-null ones
-            **{}  # can't filter on property; use Q objects below
-        )
-
-        # Filter upcoming bookings across all three date field possibilities
         from django.db.models import Q
         upcoming = Booking.objects.filter(user=user).exclude(
             status__in=['cancelled', 'completed', 'no_show']
@@ -120,7 +109,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             'check_in_date', 'preferred_date', 'pickup_date'
         )[:3]
 
+        fav_count = SavedFavourite.objects.filter(user=user).count()
+
         ctx['upcoming_bookings'] = upcoming
+        ctx['fav_count'] = fav_count
         ctx['user'] = user
         return ctx
 
