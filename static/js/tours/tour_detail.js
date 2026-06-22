@@ -148,7 +148,10 @@
     var dateVal = $("#id_preferred_date").val();
     if (!dateVal) {
       e.preventDefault();
-      JD.toast("Please select a preferred start date.", "error");
+      JD.toast(
+        S.selectPreferredDate || "Please select a preferred start date.",
+        "error",
+      );
       return false;
     }
 

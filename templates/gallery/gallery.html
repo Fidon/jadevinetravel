@@ -98,20 +98,20 @@
         <a href="{{ item.image_url }}"
            class="gallery-lightbox-link glightbox"
            data-gallery="jadevine-gallery"
-           data-description="{{ item.caption }}">
+           data-description="{{ item.caption }}" aria-label="{% if item.caption %}{{ item.caption }}{% else %}{% trans 'View photo' %}{% endif %}">
           <div class="gallery-grid-thumb">
             <img src="{{ item.image_url }}"
                  alt="{{ item.caption }}"
                  loading="lazy">
             <div class="gallery-grid-overlay">
-              <i class="bi bi-zoom-in gallery-grid-zoom-icon"></i>
+              <i class="bi bi-zoom-in gallery-grid-zoom-icon" aria-hidden="true"></i>
               {% if item.caption %}
               <span class="gallery-grid-caption">{{ item.caption }}</span>
               {% endif %}
             </div>
             {% if item.is_featured %}
             <span class="gallery-grid-featured-badge">
-              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill" aria-hidden="true"></i>
             </span>
             {% endif %}
           </div>
@@ -126,19 +126,19 @@
            class="gallery-lightbox-link glightbox"
            data-gallery="jadevine-gallery"
            data-type="video"
-           data-description="{{ item.caption }}">
+           data-description="{{ item.caption }}" aria-label="{% if item.caption %}{{ item.caption }}{% else %}{% trans 'Play video' %}{% endif %}">
           <div class="gallery-grid-thumb">
             <div class="gallery-video-placeholder">
-              <i class="bi bi-play-circle-fill gallery-video-play-icon"></i>
+              <i class="bi bi-play-circle-fill gallery-video-play-icon" aria-hidden="true"></i>
               {% if item.caption %}
               <span class="gallery-video-caption-text">{{ item.caption }}</span>
               {% endif %}
             </div>
             <div class="gallery-grid-overlay">
-              <i class="bi bi-play-circle gallery-grid-zoom-icon"></i>
+              <i class="bi bi-play-circle gallery-grid-zoom-icon" aria-hidden="true"></i>
             </div>
             <span class="gallery-video-badge">
-              <i class="bi bi-play-fill"></i> VIDEO
+              <i class="bi bi-play-fill" aria-hidden="true"></i> VIDEO
             </span>
           </div>
         </a>

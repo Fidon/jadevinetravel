@@ -46,18 +46,18 @@
         </div>
         <div>
           <div class="contact-quick-label">{% trans "WhatsApp" %}</div>
-          <div class="contact-quick-value">+255 713 529 019</div>
+          <div class="contact-quick-value">+255 683 956 372</div>
         </div>
       </a>
 
-      <a href="mailto:info@jadevinetours.com"
+      <a href="mailto:info@jadevinetravel.com"
          class="contact-quick-item">
         <div class="contact-quick-icon">
           <i class="bi bi-envelope-fill"></i>
         </div>
         <div>
           <div class="contact-quick-label">{% trans "Email" %}</div>
-          <div class="contact-quick-value">info@jadevinetours.com</div>
+          <div class="contact-quick-value">info@jadevinetravel.com</div>
         </div>
       </a>
 
@@ -134,25 +134,25 @@
             <div class="contact-inquiry-tabs" id="inquiryTabs">
               <button type="button"
                       class="contact-inquiry-tab active"
-                      data-value="general">
+                      data-value="general" aria-pressed="true">
                 <i class="bi bi-chat-dots"></i>
                 {% trans "General" %}
               </button>
               <button type="button"
                       class="contact-inquiry-tab"
-                      data-value="custom_tour">
+                      data-value="custom_tour" aria-pressed="false">
                 <i class="bi bi-compass"></i>
                 {% trans "Custom Tour" %}
               </button>
               <button type="button"
                       class="contact-inquiry-tab"
-                      data-value="partnership">
+                      data-value="partnership" aria-pressed="false">
                 <i class="bi bi-handshake"></i>
                 {% trans "Partnership" %}
               </button>
               <button type="button"
                       class="contact-inquiry-tab"
-                      data-value="press">
+                      data-value="press" aria-pressed="false">
                 <i class="bi bi-camera"></i>
                 {% trans "Press" %}
               </button>
@@ -168,11 +168,11 @@
                     {% trans "Full Name" %}
                     <span class="contact-required">*</span>
                   </label>
-                  <input type="text" class="jd-input" id="contactName"
+                  <input type="text" class="jd-input" id="contactName" aria-describedby="contactNameError"
                          name="name" autocomplete="name"
                          placeholder="{% trans 'Your full name' %}">
                   <div class="contact-field-error"
-                       id="contactNameError"></div>
+                       id="contactNameError" role="alert"></div>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -181,11 +181,11 @@
                     {% trans "Email Address" %}
                     <span class="contact-required">*</span>
                   </label>
-                  <input type="email" class="jd-input" id="contactEmail"
+                  <input type="email" class="jd-input" id="contactEmail" aria-describedby="contactEmailError"
                          name="email" autocomplete="email"
                          placeholder="you@example.com">
                   <div class="contact-field-error"
-                       id="contactEmailError"></div>
+                       id="contactEmailError" role="alert"></div>
                 </div>
               </div>
             </div>
@@ -202,7 +202,7 @@
                   </label>
                   <input type="tel" class="jd-input" id="contactPhone"
                          name="phone" autocomplete="tel"
-                         placeholder="+255 7XX XXX XXX">
+                         placeholder="+255 XXX XXX XXX">
                 </div>
               </div>
               <div class="col-sm-6">
@@ -235,11 +235,11 @@
                 {% trans "Subject" %}
                 <span class="contact-required">*</span>
               </label>
-              <input type="text" class="jd-input" id="contactSubject"
+              <input type="text" class="jd-input" id="contactSubject" aria-describedby="contactSubjectError"
                      name="subject"
                      placeholder="{% trans 'What is your enquiry about?' %}">
               <div class="contact-field-error"
-                   id="contactSubjectError"></div>
+                   id="contactSubjectError" role="alert"></div>
             </div>
 
             <!-- Message -->
@@ -248,13 +248,13 @@
                 {% trans "Message" %}
                 <span class="contact-required">*</span>
               </label>
-              <textarea class="jd-input" id="contactMessage"
+              <textarea class="jd-input" id="contactMessage" aria-describedby="contactMessageError"
                         name="message" rows="6"
                         placeholder="{% trans 'Tell us more about what you are looking for…' %}"></textarea>
               <div class="contact-field-error"
-                   id="contactMessageError"></div>
+                   id="contactMessageError" role="alert"></div>
               <div class="contact-char-count"
-                   id="contactCharCount">0 {% trans "characters" %}</div>
+                   id="contactCharCount" aria-live="polite">0 {% trans "characters" %}</div>
             </div>
 
             <!-- Submit -->
@@ -302,7 +302,7 @@
                 <div class="contact-info-label">{% trans "WhatsApp" %}</div>
                 <a href="https://wa.me/255683956372" target="_blank"
                    rel="noopener" class="contact-info-value contact-info-link">
-                  +255 713 529 019
+                  +255 683 956 372
                 </a>
               </div>
             </div>
@@ -313,9 +313,9 @@
               </div>
               <div>
                 <div class="contact-info-label">{% trans "Email" %}</div>
-                <a href="mailto:info@jadevinetours.com"
+                <a href="mailto:info@jadevinetravel.com"
                    class="contact-info-value contact-info-link">
-                  info@jadevinetours.com
+                  info@jadevinetravel.com
                 </a>
               </div>
             </div>
@@ -335,18 +335,18 @@
 
           <!-- Social links -->
           <div class="contact-social-row">
-            <a href="#" class="contact-social-btn" aria-label="Instagram">
+            <a target="_blank" href="https://www.instagram.com/jadevine_travel" class="contact-social-btn" aria-label="Instagram">
               <i class="bi bi-instagram"></i>
             </a>
-            <a href="#" class="contact-social-btn" aria-label="Facebook">
+            <a target="_blank" href="https://www.facebook.com/jadevinetravel/" class="contact-social-btn" aria-label="Facebook">
               <i class="bi bi-facebook"></i>
             </a>
-            <a href="https://wa.me/255683956372" target="_blank"
+            <a target="_blank" href="https://wa.me/255683956372" target="_blank"
                rel="noopener" class="contact-social-btn contact-social-btn--wa"
                aria-label="WhatsApp">
               <i class="bi bi-whatsapp"></i>
             </a>
-            <a href="#" class="contact-social-btn" aria-label="TripAdvisor">
+            <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g488129-d19961135-Reviews-Jadevine_Travel_Tours-Stone_Town_Zanzibar_City_Zanzibar_Island_Zanzibar_Archipel.html" class="contact-social-btn" aria-label="TripAdvisor">
               <i class="bi bi-star-fill"></i>
             </a>
           </div>
@@ -355,7 +355,7 @@
         <!-- Map -->
         <div class="contact-map-wrap jd-reveal jd-reveal-delay-2">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.8!2d39.1948!3d-6.1622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cd0a73e1b0975%3A0xa6c5e8a67b6fd0b0!2sStone%20Town%2C%20Zanzibar!5e0!3m2!1sen!2stz!4v1620000000000!5m2!1sen!2stz"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.7581747644667!2d39.2273077!3d-6.163132300000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cd05ca73a25f7%3A0x76ddd473d7d4bf73!2sJadevine%20Travel%20%26%20Tours!5e0!3m2!1sen!2stz!4v1782052910830!5m2!1sen!2stz"
             width="100%"
             height="280"
             style="border:0;"

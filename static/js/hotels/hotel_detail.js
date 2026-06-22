@@ -102,15 +102,19 @@
     }
     const rooms = parseInt($("#id_num_rooms").val()) || 1;
     const total = (selectedPrice * nights * rooms).toFixed(2);
+    const nightWord = nights === 1 ? S.night || "night" : S.nights || "nights";
+    const roomWord = rooms === 1 ? S.room || "room" : S.rooms || "rooms";
     $rateLabel.text(
       "$" +
         selectedPrice.toFixed(2) +
         " × " +
         nights +
-        (nights === 1 ? " night" : " nights") +
+        " " +
+        nightWord +
         " × " +
         rooms +
-        (rooms === 1 ? " room" : " rooms"),
+        " " +
+        roomWord,
     );
     $rateAmount.text("$" + total);
     $totalAmount.text(
@@ -161,16 +165,16 @@
   function updateGuestNote() {
     const rooms = parseInt($("#id_num_rooms").val()) || 1;
     const maxTotal = selectedMaxGuests * rooms;
+    const roomWord = rooms > 1 ? S.rooms || "rooms" : S.room || "room";
+    const tmpl =
+      S.guestMaxNote ||
+      "Max {max} adults/children per room × {rooms} {roomWord} = {total} total. Infants & pets excluded.";
     $guestMaxNote.text(
-      "Max " +
-        selectedMaxGuests +
-        " adults/children per room × " +
-        rooms +
-        " room" +
-        (rooms > 1 ? "s" : "") +
-        " = " +
-        maxTotal +
-        " total. Infants & pets excluded.",
+      tmpl
+        .replace("{max}", selectedMaxGuests)
+        .replace("{rooms}", rooms)
+        .replace("{roomWord}", roomWord)
+        .replace("{total}", maxTotal),
     );
   }
 
@@ -353,15 +357,15 @@
     var valid = true;
 
     if (!checkInDate) {
-      JD.toast("Please select a check-in date", "error");
+      JD.toast(S.selectCheckIn || "Please select a check-in date", "error");
       valid = false;
     }
     if (!checkOutDate) {
-      JD.toast("Please select a check-out date", "error");
+      JD.toast(S.selectCheckOut || "Please select a check-out date", "error");
       valid = false;
     }
     if (!selectedRoomId) {
-      JD.toast("Please select a room type", "error");
+      JD.toast(S.selectRoomType || "Please select a room type", "error");
       valid = false;
     }
 
@@ -369,12 +373,11 @@
     const rooms = parseInt($("#id_num_rooms").val()) || 1;
     const maxTotal = selectedMaxGuests * rooms;
     if (getTotalOccupants() > maxTotal) {
+      var tmpl =
+        S.occupancyError ||
+        "Max {max} adults/children for {rooms} room(s). Infants and pets are not counted.";
       JD.toast(
-        "Max " +
-          maxTotal +
-          " adults/children for " +
-          rooms +
-          " room(s). Infants and pets are not counted.",
+        tmpl.replace("{max}", maxTotal).replace("{rooms}", rooms),
         "error",
       );
       valid = false;

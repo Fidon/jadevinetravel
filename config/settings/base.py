@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-k3@04+7%2^tm(6-8_5hfn2aypd4qg=yh7vruakk#1=+p%lvte@')
 
-DEBUG = False  # overridden per environment
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -51,14 +51,14 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',       # i18n
+    'django.middleware.locale.LocaleMiddleware',
     'apps.portal.middleware.PortalLanguageLockMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',    # required by allauth
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'apps.core.context_processors.seo',
                 'apps.portal.context_processors.portal_context',
             ],
         },
@@ -90,7 +91,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Custom user model — defined before any other model
+# Custom user model
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # django-allauth
@@ -100,7 +101,13 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-DEFAULT_SITE_URL = os.environ.get('DEFAULT_SITE_URL', 'https://jadevinetravel.com/')
+DEFAULT_SITE_URL = os.environ.get('DEFAULT_SITE_URL', 'https://jadevinetravel.com')
+SITE_URL = os.environ.get('SITE_URL', DEFAULT_SITE_URL)
+
+# SEO / analytics
+GA4_MEASUREMENT_ID = os.environ.get('GA4_MEASUREMENT_ID', '')
+GSC_VERIFICATION = os.environ.get('GSC_VERIFICATION', '')
+
 ACCOUNT_ADAPTER = 'apps.accounts.adapters.AccountAdapter'
 ACCOUNT_FORMS = {'signup': 'apps.accounts.forms.CustomSignupForm'}
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
@@ -139,7 +146,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files — overridden in production to use S3
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

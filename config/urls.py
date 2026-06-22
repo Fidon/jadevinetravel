@@ -3,10 +3,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
 from apps.accounts.views import JadevineLoginView
+from apps.core.sitemaps import sitemaps as all_sitemaps
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sitemap.xml', sitemap, {'sitemaps': all_sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(
+        template_name='robots.txt', content_type='text/plain'), name='robots'),
+
     path('book/', include('apps.bookings.urls')),
     path('reviews/', include('apps.reviews.urls')),
     path('portal/', include('apps.portal.urls')),

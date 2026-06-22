@@ -52,7 +52,7 @@ DJANGO\_SETTINGS\_MODULE=config.settings.development
 
 SECRET\_KEY=your-secret-key-here
 
-DEFAULT\_FROM\_EMAIL=noreply@jadevinetours.com
+DEFAULT\_FROM\_EMAIL=noreply@jadevinetravel.com
 
 ```
 
@@ -792,7 +792,7 @@ ADMIN\_NOTIFICATION\_EMAIL=jadevinetravel@gmailcom
 
 ```python
 
-DEFAULT\_FROM\_EMAIL = os.environ.get('DEFAULT\_FROM\_EMAIL', 'noreply@jadevinetours.com')
+DEFAULT\_FROM\_EMAIL = os.environ.get('DEFAULT\_FROM\_EMAIL', 'noreply@jadevinetravel.com')
 
 SERVER\_EMAIL = DEFAULT\_FROM\_EMAIL
 

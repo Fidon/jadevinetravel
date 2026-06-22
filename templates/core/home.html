@@ -67,7 +67,7 @@
               <i class="bi bi-car-front"></i>
               {% trans "Car Rentals" %}
             </button>
-            <button class="jd-booking-tab disabled-tab" data-target="">
+            <button class="jd-booking-tab disabled-tab" data-target="" aria-disabled="true">
               <i class="bi bi-airplane"></i>
               {% trans "Flights" %}
               <span class="jd-coming-soon-pill">{% trans "Soon" %}</span>
@@ -82,7 +82,7 @@
                   <label class="jd-label">{% trans "Destination" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-geo-alt jd-input-icon"></i>
-                    <select class="jd-input" name="hotel_location">
+                    <select class="jd-input" name="hotel_location" aria-label="{% trans 'Destination' %}">
                       <option value="">{% trans "All Destinations" %}</option>
                       <option value="zanzibar">{% trans "Zanzibar" %}</option>
                       <option value="dar_es_salaam">{% trans "Dar es Salaam" %}</option>
@@ -93,7 +93,7 @@
                   <label class="jd-label">{% trans "Guests" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-people jd-input-icon"></i>
-                    <select class="jd-input" name="guests">
+                    <select class="jd-input" name="guests" aria-label="{% trans 'Guests' %}">
                       <option value="">{% trans "Any" %}</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -107,7 +107,7 @@
                   <label class="jd-label">{% trans "Max price/night" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-currency-dollar jd-input-icon"></i>
-                    <select class="jd-input" name="price">
+                    <select class="jd-input" name="price" aria-label="{% trans 'Max price/night' %}">
                       <option value="">{% trans "Any Price" %}</option>
                       <option value="50">{% trans "Up to $50" %}</option>
                       <option value="100">{% trans "Up to $100" %}</option>
@@ -132,7 +132,7 @@
                   <label class="jd-label">{% trans "Tour Type" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-binoculars jd-input-icon"></i>
-                    <select class="jd-input" name="tour_type">
+                    <select class="jd-input" name="tour_type" aria-label="{% trans 'Tour Type' %}">
                       <option value="">{% trans "All Tours" %}</option>
                       <option value="safari">{% trans "Safari" %}</option>
                       <option value="beach">{% trans "Beach" %}</option>
@@ -146,7 +146,7 @@
                   <label class="jd-label">{% trans "Max Duration" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-calendar-day jd-input-icon"></i>
-                    <select class="jd-input" name="max_duration">
+                    <select class="jd-input" name="max_duration" aria-label="{% trans 'Max Duration' %}">
                       <option value="">{% trans "Any Duration" %}</option>
                       <option value="1">{% trans "1 Day" %}</option>
                       <option value="3">{% trans "Up to 3 Days" %}</option>
@@ -159,7 +159,7 @@
                   <label class="jd-label">{% trans "Max Price/person" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-currency-dollar jd-input-icon"></i>
-                    <select class="jd-input" name="max_price">
+                    <select class="jd-input" name="max_price" aria-label="{% trans 'Max Price/person' %}">
                       <option value="">{% trans "Any Price" %}</option>
                       <option value="100">{% trans "Under $100" %}</option>
                       <option value="300">{% trans "Under $300" %}</option>
@@ -183,7 +183,7 @@
                   <label class="jd-label">{% trans "Vehicle Type" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-car-front jd-input-icon"></i>
-                    <select class="jd-input" name="vehicle_type">
+                    <select class="jd-input" name="vehicle_type" aria-label="{% trans 'Vehicle Type' %}">
                       <option value="">{% trans "All Types" %}</option>
                       <option value="sedan">{% trans "Sedan" %}</option>
                       <option value="suv">{% trans "SUV" %}</option>
@@ -197,7 +197,7 @@
                   <label class="jd-label">{% trans "Rental Mode" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-gear-wide-connected jd-input-icon"></i>
-                    <select class="jd-input" name="rental_mode">
+                    <select class="jd-input" name="rental_mode" aria-label="{% trans 'Rental Mode' %}">
                       <option value="">{% trans "Any Mode" %}</option>
                       <option value="with_driver">{% trans "With Driver" %}</option>
                       <option value="self_drive">{% trans "Self Drive" %}</option>
@@ -208,7 +208,7 @@
                   <label class="jd-label">{% trans "Max Price/Day" %}</label>
                   <div class="jd-input-icon-wrap">
                     <i class="bi bi-currency-dollar jd-input-icon"></i>
-                    <select class="jd-input" name="max_price">
+                    <select class="jd-input" name="max_price" aria-label="{% trans 'Max Price/Day' %}">
                       <option value="">{% trans "Any Price" %}</option>
                       <option value="50">{% trans "Up to $50" %}</option>
                       <option value="100">{% trans "Up to $100" %}</option>
@@ -618,6 +618,8 @@
                {% if item.image %}
                data-img="{{ item.image.url }}"
                data-caption="{{ item.get_caption }}"
+               role="button" tabindex="0"
+               aria-label="{% if item.get_caption %}{{ item.get_caption }}{% else %}{% trans 'View photo' %}{% endif %}"
                {% endif %}>
             {% if item.image %}
               <img src="{{ item.image.url }}"
@@ -630,7 +632,7 @@
               </div>
             {% endif %}
             <div class="jd-gallery-item-overlay">
-              <i class="bi bi-zoom-in"></i>
+              <i class="bi bi-zoom-in" aria-hidden="true"></i>
             </div>
           </div>
         {% endfor %}
@@ -673,7 +675,7 @@
         <div class="jd-newsletter-input-wrap">
           <input type="email"
                  class="jd-input"
-                 name="email"
+                 name="email" aria-label="{% trans 'Enter your email address' %}"
                  placeholder="{% trans 'Enter your email address' %}"
                  required />
           <button type="submit" class="jd-newsletter-submit">
@@ -692,5 +694,10 @@
 {% endblock %}
 
 {% block extra_js %}
+  <script>
+    window.JD_STRINGS = window.JD_STRINGS || {};
+    window.JD_STRINGS.close = "{% trans 'Close' %}";
+    window.JD_STRINGS.viewPhoto = "{% trans 'View photo' %}";
+  </script>
   <script src="{% static 'js/core/home.js' %}"></script>
 {% endblock %}

@@ -1,4 +1,8 @@
 $(function () {
+  "use strict";
+
+  var S = window.JD_STRINGS || {};
+
   /* ----------------------------------------------------------
      1. HERO — Ken Burns effect on load
      ---------------------------------------------------------- */
@@ -120,18 +124,24 @@ $(function () {
   /* ----------------------------------------------------------
      5. GALLERY ITEMS — simple lightbox using Bootstrap modal
      ---------------------------------------------------------- */
-  $(document).on("click", ".jd-gallery-item[data-img]", function () {
-    var imgSrc = $(this).data("img");
-    var caption = $(this).data("caption") || "";
+  function openGalleryModal($item) {
+    var imgSrc = $item.data("img");
+    var caption = $item.data("caption") || "";
 
     // Inject or reuse modal
     if ($("#jd-gallery-modal").length === 0) {
       $("body").append(
-        '<div class="modal fade" id="jd-gallery-modal" tabindex="-1">' +
+        '<div class="modal fade" id="jd-gallery-modal" tabindex="-1"' +
+          ' aria-label="' +
+          (S.viewPhoto || "View photo") +
+          '">' +
           '<div class="modal-dialog modal-xl modal-dialog-centered">' +
           '<div class="modal-content bg-dark border-0">' +
           '<div class="modal-body p-0 text-center position-relative">' +
-          '<button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"></button>' +
+          '<button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"' +
+          ' data-bs-dismiss="modal" aria-label="' +
+          (S.close || "Close") +
+          '"></button>' +
           '<img id="jd-gallery-modal-img" src="" alt="" style="max-height:85vh;width:100%;object-fit:contain;" />' +
           '<p id="jd-gallery-modal-caption" class="text-white-50 py-3 mb-0" style="font-size:0.85rem;"></p>' +
           "</div>" +
@@ -141,14 +151,28 @@ $(function () {
       );
     }
 
-    $("#jd-gallery-modal-img").attr("src", imgSrc);
+    // Caption doubles as the image's accessible name; fall back to generic label.
+    $("#jd-gallery-modal-img")
+      .attr("src", imgSrc)
+      .attr("alt", caption || S.viewPhoto || "View photo");
     $("#jd-gallery-modal-caption").text(caption);
     new bootstrap.Modal(document.getElementById("jd-gallery-modal")).show();
+  }
+
+  $(document).on("click", ".jd-gallery-item[data-img]", function () {
+    openGalleryModal($(this));
+  });
+
+  // Keyboard activation (Enter / Space) — tiles expose role="button" tabindex="0"
+  $(document).on("keydown", ".jd-gallery-item[data-img]", function (e) {
+    if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+      e.preventDefault();
+      openGalleryModal($(this));
+    }
   });
 
   /* ----------------------------------------------------------
-     6. PACKAGE CARD — hover sound cue via CSS is enough,
-        but we add a subtle tilt effect here
+     6. PACKAGE CARD — subtle tilt effect on hover
      ---------------------------------------------------------- */
   $(document).on("mousemove", ".jd-package-card", function (e) {
     var $card = $(this);

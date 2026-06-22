@@ -4,766 +4,1185 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Jadevine Travel & Tours\n"
-"POT-Creation-Date: 2026-05-08 11:23+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-22 15:00+0300\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
+#: .\apps\accounts\forms.py:16 .\templates\cars\car_detail.html:164
+#: .\templates\contact\contact.html:217
 msgid "English"
 msgstr "Английский"
 
+#: .\apps\accounts\forms.py:17
 msgid "Français"
 msgstr "Французский"
 
+#: .\apps\accounts\forms.py:18
 msgid "Русский"
 msgstr "Русский"
 
+#: .\apps\accounts\forms.py:23 .\templates\account\signup.html:44
 msgid "First Name"
 msgstr "Имя"
 
+#: .\apps\accounts\forms.py:26 .\apps\accounts\forms.py:110
+#: .\templates\account\signup.html:47
 msgid "First name"
 msgstr "Имя"
 
+#: .\apps\accounts\forms.py:32 .\templates\account\signup.html:55
 msgid "Last Name"
 msgstr "Фамилия"
 
+#: .\apps\accounts\forms.py:35 .\apps\accounts\forms.py:114
+#: .\templates\account\signup.html:58
 msgid "Last name"
 msgstr "Фамилия"
 
+#: .\apps\accounts\forms.py:41 .\apps\accounts\models.py:48
+#: .\templates\account\signup.html:109 .\templates\contact\contact.html:211
 msgid "Preferred Language"
 msgstr "Предпочитаемый язык"
 
+#: .\apps\accounts\forms.py:52
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
+#: .\apps\accounts\forms.py:54 .\templates\account\login.html:76
+#: .\templates\account\signup.html:80
 msgid "Password"
 msgstr "Пароль"
 
+#: .\apps\accounts\forms.py:56
 msgid "Confirm password"
 msgstr "Подтвердите пароль"
 
+#: .\apps\accounts\forms.py:66
+msgid "An account with this email address already exists."
+msgstr "Аккаунт с этим адресом электронной почты уже существует."
+
+#: .\apps\accounts\forms.py:118
 msgid "+255 7XX XXX XXX"
 msgstr "+255 7XX XXX XXX"
 
+#: .\apps\accounts\forms.py:122
 msgid "Select or type your nationality"
 msgstr "Выберите или введите вашу национальность"
 
+#: .\apps\accounts\forms.py:139
 msgid "Please select a valid nationality from the list."
 msgstr "Пожалуйста, выберите действительную национальность из списка."
 
+#: .\apps\accounts\forms.py:147
 msgid "This phone number is already used by another user."
 msgstr "Этот номер телефона уже используется другим пользователем."
 
+#: .\apps\accounts\forms.py:159
 msgid "Reason for cancellation (optional)"
 msgstr "Причина отмены (необязательно)"
 
+#: .\apps\accounts\forms.py:163
 msgid "Let us know why you are cancelling (optional)"
 msgstr "Сообщите нам, почему вы отменяете (необязательно)"
 
+#: .\apps\accounts\forms.py:168 .\templates\accounts\booking_detail.html:347
 msgid "I understand and confirm this cancellation"
 msgstr "Я понимаю и подтверждаю эту отмену"
 
+#: .\apps\accounts\forms.py:170
 msgid "You must confirm to proceed with cancellation."
 msgstr "Вы должны подтвердить, чтобы продолжить отмену."
 
+#: .\apps\accounts\models.py:36
 msgid "Phone Number"
 msgstr "Номер телефона"
 
+#: .\apps\accounts\models.py:42
 msgid "Nationality"
 msgstr "Гражданство"
 
+#: .\apps\accounts\models.py:54
 msgid "Profile Photo"
 msgstr "Фото профиля"
 
+#: .\apps\accounts\models.py:58
 msgid "User"
 msgstr "Пользователь"
 
+#: .\apps\accounts\models.py:59
 msgid "Users"
 msgstr "Пользователи"
 
+#: .\apps\accounts\models.py:89 .\apps\hotels\models.py:47
 msgid "Created By"
 msgstr "Создано"
 
+#: .\apps\accounts\models.py:94
 msgid "Mini-Admin Profile"
 msgstr "Профиль мини-администратора"
 
+#: .\apps\accounts\models.py:95
 msgid "Mini-Admin Profiles"
 msgstr "Профили мини-администраторов"
 
+#: .\apps\accounts\views.py:74
 msgid "No refund — service date has passed or no policy applies."
 msgstr "Возврат невозможен — дата услуги прошла или политика не применяется."
 
+#: .\apps\accounts\views.py:215
 msgid "This booking cannot be cancelled."
 msgstr "Это бронирование не может быть отменено."
 
+#: .\apps\accounts\views.py:220
 msgid "This booking cannot be cancelled — the service date has passed."
 msgstr "Это бронирование не может быть отменено — дата услуги прошла."
 
+#: .\apps\accounts\views.py:225
 msgid "Please confirm the cancellation."
 msgstr "Пожалуйста, подтвердите отмену."
 
+#: .\apps\accounts\views.py:243
 msgid ""
 "Your cancellation request has been submitted. We will process your refund "
 "and confirm within 2–3 business days."
 msgstr ""
-"Ваш запрос на отмену отправлен. Мы обработаем возврат средств "
-"и подтвердим в течение 2–3 рабочих дней."
+"Ваш запрос на отмену отправлен. Мы обработаем возврат средств и подтвердим в "
+"течение 2–3 рабочих дней."
 
+#: .\apps\accounts\views.py:256
 msgid "Your booking has been cancelled."
 msgstr "Ваше бронирование отменено."
 
+#: .\apps\accounts\views.py:313
 msgid "Your profile has been updated."
 msgstr "Ваш профиль обновлён."
 
+#: .\apps\accounts\views.py:754
 msgid "Please enter your email address."
 msgstr "Пожалуйста, введите ваш адрес электронной почты."
 
+#: .\apps\accounts\views.py:765
 msgid "This email is already verified. You can sign in."
 msgstr "Этот адрес электронной почты уже подтверждён. Вы можете войти."
 
+#: .\apps\accounts\views.py:775
 msgid "Your email is already verified. You can sign in."
 msgstr "Ваш адрес электронной почты уже подтверждён. Вы можете войти."
 
+#: .\apps\bookings\forms.py:19
 msgid "Check-in Date"
 msgstr "Дата заезда"
 
+#: .\apps\bookings\forms.py:24
 msgid "Check-out Date"
 msgstr "Дата выезда"
 
-msgid "Number of Guests"
-msgstr "Количество гостей"
+#: .\apps\bookings\forms.py:29 .\apps\bookings\models.py:144
+msgid "Number of Rooms"
+msgstr "Количество номеров"
 
+#: .\apps\bookings\forms.py:36 .\apps\bookings\forms.py:124
+#: .\apps\bookings\forms.py:208 .\apps\bookings\models.py:126
+#: .\templates\bookings\booking_summary.html:100
+#: .\templates\bookings\booking_summary.html:150
+#: .\templates\bookings\booking_summary.html:180
+#: .\templates\cars\car_detail.html:311 .\templates\cars\car_detail.html:315
+#: .\templates\hotels\hotel_detail.html:328
+#: .\templates\hotels\hotel_detail.html:334
+#: .\templates\tours\tour_detail.html:278
+#: .\templates\tours\tour_detail.html:282
+msgid "Adults"
+msgstr "Взрослые"
+
+#: .\apps\bookings\forms.py:43 .\apps\bookings\forms.py:131
+#: .\apps\bookings\forms.py:215 .\apps\bookings\models.py:130
+msgid "Children (2–12)"
+msgstr "Дети (2–12 лет)"
+
+#: .\apps\bookings\forms.py:51 .\apps\bookings\forms.py:139
+#: .\apps\bookings\forms.py:223 .\apps\bookings\models.py:134
+msgid "Infants (under 2)"
+msgstr "Младенцы (до 2 лет)"
+
+#: .\apps\bookings\forms.py:59 .\apps\bookings\forms.py:147
+#: .\apps\bookings\forms.py:231 .\apps\bookings\models.py:138
+#: .\templates\bookings\booking_summary.html:117
+#: .\templates\cars\car_detail.html:356 .\templates\cars\car_detail.html:361
+#: .\templates\hotels\hotel_detail.html:387
+#: .\templates\hotels\hotel_detail.html:394
+#: .\templates\tours\tour_detail.html:323
+#: .\templates\tours\tour_detail.html:328
+msgid "Pets"
+msgstr "Питомцы"
+
+#: .\apps\bookings\forms.py:67 .\apps\bookings\forms.py:161
+#: .\apps\bookings\forms.py:239 .\templates\accounts\booking_detail.html:165
+#: .\templates\bookings\booking_summary.html:199
+#: .\templates\cars\car_detail.html:392
+#: .\templates\hotels\hotel_detail.html:411
+#: .\templates\tours\tour_detail.html:357
 msgid "Special Requests"
 msgstr "Особые пожелания"
 
+#: .\apps\bookings\forms.py:79
 msgid "Check-in date cannot be in the past."
 msgstr "Дата заезда не может быть в прошлом."
 
+#: .\apps\bookings\forms.py:83
 msgid "Check-out must be after check-in."
 msgstr "Дата выезда должна быть после даты заезда."
 
+#: .\apps\bookings\forms.py:99 .\apps\bookings\models.py:81
+#: .\templates\bookings\booking_summary.html:130
+#: .\templates\cars\car_detail.html:223 .\templates\cars\car_list.html:68
+#: .\templates\cars\car_list.html:115 .\templates\core\home.html:202
 msgid "With Driver"
 msgstr "С водителем"
 
+#: .\apps\bookings\forms.py:100 .\apps\bookings\models.py:80
+#: .\templates\bookings\booking_summary.html:130
+#: .\templates\cars\car_detail.html:241 .\templates\cars\car_list.html:69
+#: .\templates\cars\car_list.html:116 .\templates\core\home.html:203
 msgid "Self Drive"
 msgstr "Самостоятельное вождение"
 
+#: .\apps\bookings\forms.py:104 .\templates\accounts\booking_detail.html:137
+#: .\templates\bookings\booking_confirmation.html:154
+#: .\templates\bookings\booking_summary.html:128
+#: .\templates\cars\car_detail.html:214 .\templates\cars\car_list.html:65
+#: .\templates\core\home.html:197 .\templates\core\home.html:200
 msgid "Rental Mode"
 msgstr "Режим аренды"
 
+#: .\apps\bookings\forms.py:109 .\templates\accounts\booking_detail.html:143
+#: .\templates\bookings\booking_confirmation.html:158
+#: .\templates\bookings\booking_summary.html:134
+#: .\templates\cars\car_detail.html:252
 msgid "Pickup Location"
 msgstr "Место получения"
 
+#: .\apps\bookings\forms.py:114 .\templates\accounts\booking_detail.html:148
+#: .\templates\bookings\booking_confirmation.html:162
+#: .\templates\bookings\booking_summary.html:138
+#: .\templates\cars\car_detail.html:275
 msgid "Pickup Date"
 msgstr "Дата получения"
 
+#: .\apps\bookings\forms.py:119 .\templates\accounts\booking_detail.html:152
+#: .\templates\bookings\booking_confirmation.html:166
+#: .\templates\bookings\booking_summary.html:142
+#: .\templates\cars\car_detail.html:288
 msgid "Return Date"
 msgstr "Дата возврата"
 
+#: .\apps\bookings\forms.py:155 .\templates\cars\car_detail.html:378
 msgid "Driver's Licence Number"
 msgstr "Номер водительского удостоверения"
 
+#: .\apps\bookings\forms.py:177
 msgid "Driver's licence number is required for self-drive rentals."
 msgstr "Номер водительского удостоверения обязателен для аренды без водителя."
 
+#: .\apps\bookings\forms.py:181
 msgid "Pickup date cannot be in the past."
 msgstr "Дата получения не может быть в прошлом."
 
-msgid "Return date must be after pickup date."
-msgstr "Дата возврата должна быть после даты получения."
+#: .\apps\bookings\forms.py:185
+msgid "Return date cannot be before pickup date."
+msgstr "Дата возврата не может быть раньше даты получения."
 
-msgid "Pay Now — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
-msgstr "Оплатить сейчас — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
-
-msgid "Pay on Arrival — Pay when you arrive in Tanzania"
-msgstr "Оплата при заезде — оплатите по прибытии в Танзанию"
-
-msgid "How would you like to pay?"
-msgstr "Как вы хотите оплатить?"
-
+#: .\apps\bookings\forms.py:201 .\templates\bookings\booking_summary.html:176
+#: .\templates\tours\tour_detail.html:256
 msgid "Preferred Start Date"
 msgstr "Предпочтительная дата начала"
 
-msgid "Number of Participants"
-msgstr "Количество участников"
-
+#: .\apps\bookings\forms.py:250
 msgid "Preferred date cannot be in the past."
 msgstr "Предпочтительная дата не может быть в прошлом."
 
+#: .\apps\bookings\forms.py:261
+msgid "Pay Now — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
+msgstr "Оплатить сейчас — Visa, Mastercard, M-Pesa, AirtelMoney, MixxYas"
+
+#: .\apps\bookings\forms.py:262
+msgid "Pay on Arrival — Pay when you arrive in Tanzania"
+msgstr "Оплата при заезде — оплатите по прибытии в Танзанию"
+
+#: .\apps\bookings\forms.py:268
+msgid "How would you like to pay?"
+msgstr "Как вы хотите оплатить?"
+
+#: .\apps\bookings\models.py:18 .\apps\bookings\models.py:47
+#: .\apps\hotels\models.py:60 .\apps\reviews\models.py:10
+#: .\templates\accounts\favourites.html:36
+#: .\templates\bookings\booking_confirmation.html:124
 msgid "Hotel"
 msgstr "Отель"
 
+#: .\apps\bookings\models.py:19 .\apps\bookings\models.py:48
+#: .\apps\reviews\models.py:11 .\templates\accounts\favourites.html:59
+#: .\templates\bookings\booking_confirmation.html:173
+#: .\templates\bookings\booking_summary.html:70
 msgid "Safari & Tour"
 msgstr "Сафари и тур"
 
+#: .\apps\bookings\models.py:20 .\apps\bookings\models.py:49
+#: .\apps\cars\models.py:110 .\apps\cars\views.py:210
+#: .\apps\reviews\models.py:12 .\templates\accounts\favourites.html:82
+#: .\templates\bookings\booking_confirmation.html:147
+#: .\templates\bookings\booking_summary.html:64
 msgid "Car Rental"
 msgstr "Аренда автомобиля"
 
+#: .\apps\bookings\models.py:25
 msgid "Minimum Days Before Service"
 msgstr "Минимальное количество дней до услуги"
 
+#: .\apps\bookings\models.py:26
 msgid "Cancellation must be made at least this many days before service date"
 msgstr "Отмена должна быть сделана не менее чем за столько дней до даты услуги"
 
+#: .\apps\bookings\models.py:29
 msgid "Refund Percentage"
 msgstr "Процент возврата"
 
+#: .\apps\bookings\models.py:30
 msgid "0 = no refund, 50 = half, 100 = full refund"
 msgstr "0 = без возврата, 50 = половина, 100 = полный возврат"
 
+#: .\apps\bookings\models.py:32
 msgid "Label (English)"
 msgstr "Метка (английский)"
 
+#: .\apps\bookings\models.py:36 .\templates\accounts\booking_detail.html:291
 msgid "Cancellation Policy"
 msgstr "Политика отмены"
 
+#: .\apps\bookings\models.py:37
 msgid "Cancellation Policies"
 msgstr "Политики отмены"
 
+#: .\apps\bookings\models.py:53
 msgid "Pay Now (Online)"
 msgstr "Оплатить сейчас (онлайн)"
 
+#: .\apps\bookings\models.py:54 .\templates\bookings\booking_summary.html:359
 msgid "Pay on Arrival"
 msgstr "Оплата при заезде"
 
+#: .\apps\bookings\models.py:58
 msgid "Pending"
 msgstr "Ожидает"
 
+#: .\apps\bookings\models.py:59
 msgid "Paid"
 msgstr "Оплачено"
 
+#: .\apps\bookings\models.py:60
 msgid "Refunded"
 msgstr "Возвращено"
 
+#: .\apps\bookings\models.py:61
 msgid "Failed"
 msgstr "Ошибка"
 
+#: .\apps\bookings\models.py:65
 msgid "Pending Confirmation"
 msgstr "Ожидает подтверждения"
 
+#: .\apps\bookings\models.py:66
+#: .\templates\bookings\booking_confirmation.html:34
+#: .\templates\bookings\booking_summary.html:34
+#: .\templates\bookings\payment_options.html:34
 msgid "Confirmed"
 msgstr "Подтверждено"
 
+#: .\apps\bookings\models.py:67
 msgid "Cancellation Requested"
 msgstr "Запрошена отмена"
 
+#: .\apps\bookings\models.py:68
 msgid "Cancelled"
 msgstr "Отменено"
 
+#: .\apps\bookings\models.py:69
 msgid "Completed"
 msgstr "Завершено"
 
+#: .\apps\bookings\models.py:70
 msgid "No Show"
 msgstr "Неявка"
 
+#: .\apps\bookings\models.py:87
 msgid "Booking Reference"
 msgstr "Номер бронирования"
 
+#: .\apps\bookings\models.py:185
 msgid "Is Refundable"
 msgstr "Возвратный"
 
+#: .\apps\bookings\models.py:186
 msgid ""
-"Snapshotted from the listing at booking time. False = non-refundable "
-"regardless of policy."
+"Snapshotted from listing at booking time. False = non-refundable regardless "
+"of policy."
 msgstr ""
-"Записано из объявления в момент бронирования. False = невозвратный "
+"Зафиксировано из объявления в момент бронирования. False = невозвратно "
 "независимо от политики."
 
+#: .\apps\bookings\models.py:191 .\apps\cars\models.py:102
+#: .\apps\hotels\models.py:147 .\apps\tours\models.py:67
+msgid "Pets Allowed"
+msgstr "Питомцы разрешены"
+
+#: .\apps\bookings\models.py:192
+msgid "Snapshotted from listing at booking time."
+msgstr "Зафиксировано из объявления в момент бронирования."
+
+#: .\apps\bookings\models.py:207
 msgid "Booking"
 msgstr "Бронирование"
 
+#: .\apps\bookings\models.py:208
 msgid "Bookings"
 msgstr "Бронирования"
 
+#: .\apps\bookings\views.py:42
 msgid "Selected room type is not available."
 msgstr "Выбранный тип номера недоступен."
 
-msgid "This room type accommodates a maximum of %(max)s guests."
-msgstr "Этот тип номера вмещает максимум %(max)s гостей."
+#: .\apps\bookings\views.py:56
+#, python-format
+msgid ""
+"%(rooms)s room(s) of this type accommodate a maximum of %(max)s adults/"
+"children total."
+msgstr ""
+"%(rooms)s номер(ов) этого типа вмещают максимум %(max)s взрослых/детей в "
+"общей сложности."
 
+#: .\apps\bookings\views.py:63
+msgid "This room type does not allow pets."
+msgstr "В этом типе номера питомцы не допускаются."
+
+#: .\apps\bookings\views.py:132
 msgid "This vehicle does not offer self-drive rental."
 msgstr "Этот автомобиль не предлагается в аренду без водителя."
 
+#: .\apps\bookings\views.py:135
 msgid "This vehicle does not offer a driver option."
 msgstr "Для этого автомобиля нет опции водителя."
 
+#: .\apps\bookings\views.py:147
+#, python-format
+msgid "This vehicle has a maximum capacity of %(cap)s passengers."
+msgstr "Максимальная вместимость этого автомобиля — %(cap)s пассажиров."
+
+#: .\apps\bookings\views.py:154
+msgid "This vehicle does not allow pets."
+msgstr "В этом автомобиле питомцы не допускаются."
+
+#: .\apps\bookings\views.py:226
+#, python-format
 msgid "This tour accommodates a maximum of %(max)s participants."
 msgstr "Этот тур вмещает максимум %(max)s участников."
 
+#: .\apps\bookings\views.py:233
+msgid "This tour does not allow pets."
+msgstr "На этом туре питомцы не допускаются."
+
+#: .\apps\bookings\views.py:292 .\apps\bookings\views.py:311
 msgid "Your booking session has expired. Please start again."
 msgstr "Ваша сессия бронирования истекла. Пожалуйста, начните заново."
 
+#: .\apps\bookings\views.py:451
+msgid ""
+"We could not connect to the payment gateway. Please try again or contact "
+"support."
+msgstr ""
+"Не удалось подключиться к платёжному шлюзу. Пожалуйста, попробуйте снова или "
+"обратитесь в поддержку."
+
+#: .\apps\cars\models.py:10 .\templates\cars\car_list.html:57
+#: .\templates\core\home.html:188
 msgid "Sedan"
 msgstr "Седан"
 
+#: .\apps\cars\models.py:11 .\templates\cars\car_list.html:58
+#: .\templates\core\home.html:189
 msgid "SUV"
 msgstr "Внедорожник"
 
+#: .\apps\cars\models.py:12 .\templates\cars\car_list.html:60
+#: .\templates\core\home.html:191
 msgid "Minibus"
 msgstr "Микроавтобус"
 
+#: .\apps\cars\models.py:13 .\templates\cars\car_list.html:59
+#: .\templates\core\home.html:190
 msgid "4x4 Safari"
 msgstr "4x4 Сафари"
 
+#: .\apps\cars\models.py:14 .\templates\cars\car_list.html:61
+#: .\templates\core\home.html:192
 msgid "Van"
 msgstr "Фургон"
 
+#: .\apps\cars\models.py:18
 msgid "Petrol"
 msgstr "Бензин"
 
+#: .\apps\cars\models.py:19
 msgid "Diesel"
 msgstr "Дизель"
 
+#: .\apps\cars\models.py:23
 msgid "Manual"
 msgstr "Механическая"
 
+#: .\apps\cars\models.py:24
 msgid "Automatic"
 msgstr "Автоматическая"
 
+#: .\apps\cars\models.py:28 .\apps\hotels\models.py:15
 msgid "Pending Review"
 msgstr "На рассмотрении"
 
+#: .\apps\cars\models.py:29 .\apps\hotels\models.py:16
+#: .\apps\reviews\models.py:17
 msgid "Approved"
 msgstr "Одобрено"
 
+#: .\apps\cars\models.py:30 .\apps\hotels\models.py:17
+#: .\apps\reviews\models.py:18
 msgid "Rejected"
 msgstr "Отклонено"
 
+#: .\apps\cars\models.py:33
 msgid "Vehicle Name"
 msgstr "Название автомобиля"
 
+#: .\apps\cars\models.py:36 .\templates\bookings\booking_summary.html:124
+#: .\templates\cars\car_list.html:54 .\templates\core\home.html:183
+#: .\templates\core\home.html:186
 msgid "Vehicle Type"
 msgstr "Тип транспортного средства"
 
+#: .\apps\cars\models.py:38
 msgid "Make"
 msgstr "Марка"
 
+#: .\apps\cars\models.py:39
 msgid "Model"
 msgstr "Модель"
 
+#: .\apps\cars\models.py:40 .\templates\cars\car_detail.html:156
 msgid "Year"
 msgstr "Год"
 
+#: .\apps\cars\models.py:41
 msgid "Passenger Capacity"
 msgstr "Вместимость пассажиров"
 
+#: .\apps\cars\models.py:45
 msgid "Price Per Day (USD)"
 msgstr "Цена в день (USD)"
 
+#: .\apps\cars\models.py:48
 msgid "Offers Self-Drive"
 msgstr "Доступна аренда без водителя"
 
+#: .\apps\cars\models.py:49
 msgid "Offers Driver"
 msgstr "Доступен водитель"
 
+#: .\apps\cars\models.py:50
 msgid "Driver Speaks English"
 msgstr "Водитель говорит по-английски"
 
+#: .\apps\cars\models.py:51
 msgid "Driver Speaks French"
 msgstr "Водитель говорит по-французски"
 
+#: .\apps\cars\models.py:55 .\templates\cars\car_detail.html:172
 msgid "Pickup Locations"
 msgstr "Места получения"
 
+#: .\apps\cars\models.py:56
 msgid "List of location names e.g. [\"Zanzibar Airport\", \"Stone Town\"]"
 msgstr "Список мест, например [\"Аэропорт Занзибара\", \"Стоун-Таун\"]"
 
+#: .\apps\cars\models.py:76
 msgid "Available for Booking"
 msgstr "Доступно для бронирования"
 
+#: .\apps\cars\models.py:77
 msgid "Toggle off during maintenance"
 msgstr "Отключить на время технического обслуживания"
 
+#: .\apps\cars\models.py:81 .\apps\hotels\models.py:54
+#: .\apps\tours\models.py:51
 msgid "Active / Visible"
 msgstr "Активно / Видимо"
 
-msgid "True only when approval_status = approved"
-msgstr "Истина только при approval_status = одобрено"
-
+#: .\apps\cars\models.py:87 .\apps\hotels\models.py:125
+#: .\apps\tours\models.py:59
 msgid "Discount (%)"
 msgstr "Скидка (%)"
 
-msgid "0 = no discount. Applied to price per day."
-msgstr "0 = без скидки. Применяется к цене в день."
-
-msgid "Discount Expires At"
-msgstr "Срок действия скидки"
-
-msgid "Leave blank for a permanent discount."
-msgstr "Оставьте пустым для постоянной скидки."
-
+#: .\apps\cars\models.py:94 .\apps\hotels\models.py:137
+#: .\apps\tours\models.py:63
 msgid "Refundable"
 msgstr "Возвратный"
 
-msgid ""
-"If unchecked, this vehicle is non-refundable regardless of cancellation "
-"policy."
-msgstr ""
-"Если не отмечено, этот автомобиль невозвратный независимо от политики "
-"отмены."
-
+#: .\apps\cars\models.py:98 .\apps\hotels\models.py:142
+#: .\apps\tours\models.py:64
 msgid "Allows Pay on Arrival"
 msgstr "Разрешает оплату при заезде"
 
-msgid "If unchecked, only Pay Now is accepted for this vehicle."
-msgstr "Если не отмечено, для этого автомобиля принимается только немедленная оплата."
+#: .\apps\cars\models.py:103
+msgid "If unchecked, pets are not permitted in this vehicle."
+msgstr "Если не отмечено, питомцы не допускаются в этом автомобиле."
 
+#: .\apps\cars\models.py:111 .\apps\cars\views.py:206 .\templates\404.html:63
+#: .\templates\base.html:196 .\templates\base.html:239
+#: .\templates\base.html:306 .\templates\cars\car_detail.html:20
+#: .\templates\core\home.html:68 .\templates\core\home.html:313
 msgid "Car Rentals"
 msgstr "Аренда автомобилей"
 
+#: .\apps\cars\views.py:33 .\templates\cars\car_list.html:4
 msgid "Car Rentals in Zanzibar & Tanzania"
 msgstr "Аренда автомобилей на Занзибаре и в Танзании"
 
+#: .\apps\cars\views.py:205 .\apps\hotels\views.py:239
+#: .\apps\tours\views.py:176 .\templates\base.html:236
+#: .\templates\cars\car_detail.html:18 .\templates\hotels\hotel_detail.html:18
+#: .\templates\tours\tour_detail.html:18
+msgid "Home"
+msgstr "Главная"
+
+#: .\apps\cars\views.py:212
+#, python-format
+msgid "Rent a %(name)s in Zanzibar or Tanzania with Jadevine Travel & Tours."
+msgstr ""
+"Арендуйте %(name)s на Занзибаре или в Танзании с Jadevine Travel & Tours."
+
+#: .\apps\contact\models.py:7
 msgid "General Inquiry"
 msgstr "Общий запрос"
 
+#: .\apps\contact\models.py:8
 msgid "Custom Tour Request"
 msgstr "Запрос на индивидуальный тур"
 
+#: .\apps\contact\models.py:9 .\templates\contact\contact.html:151
 msgid "Partnership"
 msgstr "Партнёрство"
 
+#: .\apps\contact\models.py:10
 msgid "Press / Media"
 msgstr "Пресса / СМИ"
 
+#: .\apps\contact\models.py:14
 msgid "New"
 msgstr "Новое"
 
+#: .\apps\contact\models.py:15
 msgid "In Progress"
 msgstr "В работе"
 
+#: .\apps\contact\models.py:16
 msgid "Resolved"
 msgstr "Решено"
 
+#: .\apps\contact\models.py:25
 msgid "Name"
 msgstr "Имя"
 
+#: .\apps\contact\models.py:26 .\templates\contact\contact.html:59
+#: .\templates\contact\contact.html:315 .\templates\core\about.html:503
 msgid "Email"
 msgstr "Электронная почта"
 
+#: .\apps\contact\models.py:27
 msgid "Phone"
 msgstr "Телефон"
 
+#: .\apps\contact\models.py:28 .\templates\contact\contact.html:235
 msgid "Subject"
 msgstr "Тема"
 
+#: .\apps\contact\models.py:29 .\templates\contact\contact.html:248
 msgid "Message"
 msgstr "Сообщение"
 
+#: .\apps\contact\models.py:39
 msgid "Internal notes — never shown to customer"
 msgstr "Внутренние заметки — никогда не показываются клиенту"
 
+#: .\apps\contact\models.py:44
 msgid "Contact Message"
 msgstr "Сообщение"
 
+#: .\apps\contact\models.py:45
 msgid "Contact Messages"
 msgstr "Сообщения"
 
+#: .\apps\contact\models.py:58
 msgid "Newsletter Subscriber"
 msgstr "Подписчик рассылки"
 
+#: .\apps\contact\models.py:59
 msgid "Newsletter Subscribers"
 msgstr "Подписчики рассылки"
 
+#: .\apps\contact\views.py:31
 msgid "Name is required."
 msgstr "Имя обязательно."
 
+#: .\apps\contact\views.py:33
 msgid "A valid email address is required."
 msgstr "Требуется действительный адрес электронной почты."
 
+#: .\apps\contact\views.py:35
 msgid "Subject is required."
 msgstr "Тема обязательна."
 
+#: .\apps\contact\views.py:38 .\templates\contact\contact.html:454
 msgid "Message must be at least 10 characters."
 msgstr "Сообщение должно содержать не менее 10 символов."
 
+#: .\apps\contact\views.py:72
 msgid "Thank you for your message! We will respond within 24 hours."
 msgstr "Спасибо за ваше сообщение! Мы ответим в течение 24 часов."
 
+#: .\apps\contact\views.py:84 .\templates\contact\contact.html:453
 msgid "Please enter a valid email address."
 msgstr "Пожалуйста, введите действительный адрес электронной почты."
 
+#: .\apps\contact\views.py:96
 msgid "This email is already subscribed."
 msgstr "Этот адрес уже подписан."
 
+#: .\apps\contact\views.py:105
 msgid "Thank you for subscribing! We'll be in touch soon."
 msgstr "Спасибо за подписку! Мы свяжемся с вами в ближайшее время."
 
+#: .\apps\core\models.py:25
 msgid "Saved Favourite"
 msgstr "Сохранённое избранное"
 
+#: .\apps\core\models.py:26
 msgid "Saved Favourites"
 msgstr "Сохранённые избранные"
 
+#: .\apps\gallery\models.py:7 .\apps\tours\models.py:16
 msgid "Name (English)"
 msgstr "Название (английский)"
 
+#: .\apps\gallery\models.py:14
 msgid "Gallery Category"
 msgstr "Категория галереи"
 
+#: .\apps\gallery\models.py:15
 msgid "Gallery Categories"
 msgstr "Категории галереи"
 
+#: .\apps\gallery\models.py:38 .\templates\core\home.html:649
 msgid "Photo"
 msgstr "Фото"
 
+#: .\apps\gallery\models.py:39
 msgid "Video"
 msgstr "Видео"
 
+#: .\apps\gallery\models.py:51
 msgid "YouTube or Vimeo embed URL"
 msgstr "URL для встраивания YouTube или Vimeo"
 
+#: .\apps\gallery\models.py:61
 msgid "Show in Gallery Highlights section on homepage"
 msgstr "Показать в разделе лучших фото галереи на главной странице"
 
+#: .\apps\gallery\models.py:67
 msgid "Gallery Item"
 msgstr "Элемент галереи"
 
+#: .\apps\gallery\models.py:68
 msgid "Gallery Items"
 msgstr "Элементы галереи"
 
+#: .\apps\hotels\models.py:10 .\templates\core\home.html:87
+#: .\templates\hotels\hotel_list.html:57
 msgid "Zanzibar"
 msgstr "Занзибар"
 
+#: .\apps\hotels\models.py:11 .\templates\core\home.html:88
+#: .\templates\hotels\hotel_list.html:58
 msgid "Dar es Salaam"
 msgstr "Дар-эс-Салам"
 
+#: .\apps\hotels\models.py:22
 msgid "Hotel Name"
 msgstr "Название отеля"
 
+#: .\apps\hotels\models.py:25 .\templates\hotels\hotel_detail.html:232
 msgid "Location"
 msgstr "Расположение"
 
+#: .\apps\hotels\models.py:28 .\apps\hotels\models.py:107
+#: .\apps\tours\models.py:24 .\apps\tours\models.py:135
 msgid "Description (English)"
 msgstr "Описание (английский)"
 
+#: .\apps\hotels\models.py:29
 msgid "Description (French)"
 msgstr "Описание (французский)"
 
+#: .\apps\hotels\models.py:30
 msgid "Description (Russian)"
 msgstr "Описание (русский)"
 
+#: .\apps\hotels\models.py:32 .\templates\hotels\hotel_list.html:62
 msgid "Star Rating"
 msgstr "Звёздность"
 
+#: .\apps\hotels\models.py:34
 msgid "Price Per Night (USD)"
 msgstr "Цена за ночь (USD)"
 
+#: .\apps\hotels\models.py:36 .\templates\contact\contact.html:290
+#: .\templates\core\about.html:482
 msgid "Address"
 msgstr "Адрес"
 
+#: .\apps\hotels\models.py:39
 msgid "TripAdvisor URL"
 msgstr "URL TripAdvisor"
 
+#: .\apps\hotels\models.py:51
 msgid "Approval Status"
 msgstr "Статус одобрения"
 
+#: .\apps\hotels\models.py:53 .\apps\reviews\models.py:82
 msgid "Rejection Reason"
 msgstr "Причина отклонения"
 
+#: .\apps\hotels\models.py:61 .\apps\hotels\views.py:240
+#: .\templates\404.html:55 .\templates\base.html:194 .\templates\base.html:237
+#: .\templates\base.html:304 .\templates\core\home.html:60
+#: .\templates\core\home.html:281 .\templates\hotels\hotel_detail.html:20
 msgid "Hotels"
 msgstr "Отели"
 
+#: .\apps\hotels\models.py:94
 msgid "Cover Photo"
 msgstr "Обложка"
 
+#: .\apps\hotels\models.py:106
 msgid "Room Type Name"
 msgstr "Название типа номера"
 
+#: .\apps\hotels\models.py:112
 msgid "Price Per Night (USD) — overrides hotel base price if set"
 msgstr "Цена за ночь (USD) — переопределяет базовую цену отеля, если задана"
 
-msgid "Max Guests"
-msgstr "Макс. гостей"
+#: .\apps\hotels\models.py:114
+msgid "Max Guests Per Room"
+msgstr "Макс. гостей на номер"
 
+#: .\apps\hotels\models.py:117
 msgid "Amenities"
 msgstr "Удобства"
 
+#: .\apps\hotels\models.py:118
 msgid "List of amenity strings e.g. [\"WiFi\", \"AC\", \"Pool view\"]"
-msgstr "Список удобств, например [\"WiFi\", \"Кондиционер\", \"Вид на бассейн\"]"
+msgstr ""
+"Список удобств, например [\"WiFi\", \"Кондиционер\", \"Вид на бассейн\"]"
 
+#: .\apps\hotels\models.py:126
 msgid "0 = no discount. Applied to the effective price per night."
 msgstr "0 = без скидки. Применяется к эффективной цене за ночь."
 
-msgid ""
-"If unchecked, this room is non-refundable regardless of cancellation policy."
-msgstr ""
-"Если не отмечено, этот номер невозвратный независимо от политики отмены."
+#: .\apps\hotels\models.py:130
+msgid "Discount Expires At"
+msgstr "Срок действия скидки"
 
+#: .\apps\hotels\models.py:131
+msgid "Leave blank for a permanent discount."
+msgstr "Оставьте пустым для постоянной скидки."
+
+#: .\apps\hotels\models.py:138
+msgid "If unchecked, non-refundable regardless of cancellation policy."
+msgstr "Если не отмечено, невозвратно независимо от политики отмены."
+
+#: .\apps\hotels\models.py:143
 msgid "If unchecked, only Pay Now is accepted for this room type."
-msgstr "Если не отмечено, для этого типа номера принимается только немедленная оплата."
+msgstr ""
+"Если не отмечено, для этого типа номера принимается только немедленная "
+"оплата."
 
+#: .\apps\hotels\models.py:148
+msgid "If unchecked, pets are not permitted in this room type."
+msgstr "Если не отмечено, питомцы не допускаются в этом типе номера."
+
+#: .\apps\hotels\models.py:152 .\templates\accounts\booking_detail.html:97
+#: .\templates\bookings\booking_confirmation.html:128
+#: .\templates\bookings\booking_summary.html:80
 msgid "Room Type"
 msgstr "Тип номера"
 
+#: .\apps\hotels\models.py:153 .\templates\hotels\hotel_detail.html:137
 msgid "Room Types"
 msgstr "Типы номеров"
 
+#: .\apps\hotels\models.py:203
+msgid "Room Type Photo"
+msgstr "Фото типа номера"
+
+#: .\apps\hotels\models.py:204
+msgid "Room Type Photos"
+msgstr "Фотографии типа номера"
+
+#: .\apps\hotels\views.py:32 .\templates\hotels\hotel_list.html:4
 msgid "Hotels in Zanzibar & Dar es Salaam"
 msgstr "Отели на Занзибаре и в Дар-эс-Саламе"
 
+#: .\apps\hotels\views.py:246
+#, python-format
+msgid "Book %(name)s in %(location)s with Jadevine Travel & Tours."
+msgstr "Забронируйте %(name)s в %(location)s с Jadevine Travel & Tours."
+
+#: .\apps\reviews\forms.py:12
 msgid "Rating must be at least 1."
 msgstr "Оценка должна быть не менее 1."
 
+#: .\apps\reviews\forms.py:13
 msgid "Rating cannot exceed 10."
 msgstr "Оценка не может превышать 10."
 
+#: .\apps\reviews\forms.py:14
 msgid "Please select a rating."
 msgstr "Пожалуйста, выберите оценку."
 
+#: .\apps\reviews\forms.py:22
 msgid "Tell us about your experience (optional)…"
 msgstr "Расскажите о своём опыте (необязательно)…"
 
+#: .\apps\reviews\models.py:16
 msgid "Pending Approval"
 msgstr "Ожидает одобрения"
 
+#: .\apps\reviews\models.py:31
 msgid "One review per booking — enforced at DB level."
 msgstr "Один отзыв на бронирование — применяется на уровне базы данных."
 
+#: .\apps\reviews\models.py:57
 msgid "Rating (1–10)"
 msgstr "Оценка (1–10)"
 
+#: .\apps\reviews\models.py:62
 msgid "Comment"
 msgstr "Комментарий"
 
+#: .\apps\reviews\models.py:70
 msgid "Moderation Status"
 msgstr "Статус модерации"
 
+#: .\apps\reviews\models.py:89
+#: .\templates\bookings\booking_confirmation.html:24
+#: .\templates\bookings\booking_summary.html:24
+#: .\templates\bookings\payment_options.html:24
 msgid "Review"
 msgstr "Отзыв"
 
+#: .\apps\reviews\models.py:90
 msgid "Reviews"
 msgstr "Отзывы"
 
+#: .\apps\reviews\views.py:40
 msgid "You can only review a booking after the service has been completed."
 msgstr "Вы можете оставить отзыв только после завершения услуги."
 
+#: .\apps\reviews\views.py:48
 msgid "You have already submitted a review for this booking."
 msgstr "Вы уже оставили отзыв для этого бронирования."
 
+#: .\apps\reviews\views.py:57
 msgid "Invalid submission. Please select a rating between 1 and 10."
 msgstr "Недействительная отправка. Пожалуйста, выберите оценку от 1 до 10."
 
+#: .\apps\reviews\views.py:79
 msgid "Thank you for your review! It will appear on the listing once approved."
 msgstr "Спасибо за отзыв! Он появится в объявлении после одобрения."
 
+#: .\apps\tours\models.py:9 .\templates\core\home.html:137
+#: .\templates\tours\tour_list.html:57
 msgid "Safari"
 msgstr "Сафари"
 
+#: .\apps\tours\models.py:10 .\templates\core\home.html:138
+#: .\templates\tours\tour_list.html:58
 msgid "Beach"
 msgstr "Пляж"
 
+#: .\apps\tours\models.py:11 .\templates\core\home.html:139
+#: .\templates\tours\tour_list.html:59
 msgid "Cultural"
 msgstr "Культурный"
 
+#: .\apps\tours\models.py:12 .\templates\core\home.html:140
+#: .\templates\tours\tour_list.html:60
 msgid "Climbing"
 msgstr "Восхождение"
 
+#: .\apps\tours\models.py:13
 msgid "Combined Safari & Beach"
 msgstr "Сафари и пляж (комбо)"
 
+#: .\apps\tours\models.py:17
 msgid "Name (French)"
 msgstr "Название (французский)"
 
+#: .\apps\tours\models.py:18
 msgid "Name (Russian)"
 msgstr "Название (русский)"
 
+#: .\apps\tours\models.py:21 .\templates\bookings\booking_summary.html:168
+#: .\templates\core\home.html:132 .\templates\core\home.html:135
+#: .\templates\tours\tour_list.html:54
 msgid "Tour Type"
 msgstr "Тип тура"
 
+#: .\apps\tours\models.py:28
 msgid "Duration (Days)"
 msgstr "Продолжительность (дней)"
 
+#: .\apps\tours\models.py:29
 msgid "Maximum Group Size"
 msgstr "Максимальный размер группы"
 
+#: .\apps\tours\models.py:31
 msgid "Price Per Person (USD)"
 msgstr "Цена на человека (USD)"
 
+#: .\apps\tours\models.py:34
 msgid "Highlights (English)"
 msgstr "Особенности (английский)"
 
+#: .\apps\tours\models.py:38
 msgid "Inclusions (English)"
 msgstr "Включено (английский)"
 
+#: .\apps\tours\models.py:42
 msgid "Exclusions (English)"
 msgstr "Не включено (английский)"
 
+#: .\apps\tours\models.py:54 .\templates\core\home.html:350
+#: .\templates\tours\tour_list.html:117
 msgid "Featured"
 msgstr "Рекомендуемое"
 
+#: .\apps\tours\models.py:55
 msgid "Show in Featured Packages section on homepage"
 msgstr "Показать в разделе рекомендуемых пакетов на главной странице"
 
-msgid "0 = no discount. Applied to price per person."
-msgstr "0 = без скидки. Применяется к цене на человека."
+#: .\apps\tours\models.py:68
+msgid "If unchecked, pets are not permitted on this tour."
+msgstr "Если не отмечено, питомцы не допускаются на этом туре."
 
-msgid ""
-"If unchecked, this package is non-refundable regardless of cancellation "
-"policy."
-msgstr ""
-"Если не отмечено, этот пакет невозвратный независимо от политики отмены."
-
-msgid "If unchecked, only Pay Now is accepted for this package."
-msgstr "Если не отмечено, для этого пакета принимается только немедленная оплата."
-
+#: .\apps\tours\models.py:75
 msgid "Tour Package"
 msgstr "Туристический пакет"
 
+#: .\apps\tours\models.py:76 .\templates\core\about.html:277
+#: .\templates\core\home.html:241 .\templates\core\home.html:468
 msgid "Tour Packages"
 msgstr "Туристические пакеты"
 
+#: .\apps\tours\models.py:131
 msgid "Day Number"
 msgstr "Номер дня"
 
+#: .\apps\tours\models.py:132
 msgid "Title (English)"
 msgstr "Заголовок (английский)"
 
+#: .\apps\tours\views.py:177 .\templates\404.html:59 .\templates\base.html:195
+#: .\templates\base.html:238 .\templates\base.html:305
+#: .\templates\core\home.html:64 .\templates\core\home.html:297
+#: .\templates\tours\tour_detail.html:20
+msgid "Safaris & Tours"
+msgstr "Сафари и туры"
+
+#: .\apps\tours\views.py:210
+msgid "Safari & Tour Package"
+msgstr "Пакет сафари & туров"
+
+#: .\apps\tours\views.py:212
+#, python-format
+msgid "Book the %(name)s package with Jadevine Travel & Tours."
+msgstr "Забронируйте пакет %(name)s с Jadevine Travel & Tours."
+
+#: .\templates\404.html:4
 msgid "Page Not Found — Jadevine Travel & Tours"
 msgstr "Страница не найдена — Jadevine Travel & Tours"
 
+#: .\templates\404.html:5
 msgid "The page you are looking for could not be found."
 msgstr "Запрашиваемая страница не найдена."
 
+#: .\templates\404.html:37
 msgid "Lost in Paradise"
 msgstr "Потеряны в раю"
 
+#: .\templates\404.html:41
 msgid "This page seems to have"
 msgstr "Похоже, эта страница"
 
+#: .\templates\404.html:41
 msgid "wandered off"
 msgstr "куда-то исчезла"
 
+#: .\templates\404.html:46
 msgid ""
 "The page you are looking for may have been moved, renamed, or may never have "
 "existed. Let us guide you back to your journey."
 msgstr ""
-"Страница, которую вы ищете, возможно, была перемещена, переименована или никогда "
-"не существовала. Позвольте нам вернуть вас к путешествию."
+"Страница, которую вы ищете, возможно, была перемещена, переименована или "
+"никогда не существовала. Позвольте нам вернуть вас к путешествию."
 
+#: .\templates\404.html:51
 msgid "Where would you like to go?"
 msgstr "Куда вы хотите перейти?"
 
-msgid "Safaris & Tours"
-msgstr "Сафари и туры"
-
+#: .\templates\404.html:67 .\templates\base.html:322
 msgid "Contact Us"
 msgstr "Свяжитесь с нами"
 
+#: .\templates\404.html:76
 msgid "Back to Homepage"
 msgstr "На главную"
 
+#: .\templates\404.html:80
 msgid "Go Back"
 msgstr "Назад"
 
+#: .\templates\account\email_confirm.html:4
 msgid "Confirm Email"
 msgstr "Подтвердите почту"
 
+#: .\templates\account\email_confirm.html:28
 msgid "Verifying your email"
 msgstr "Проверка вашей почты"
 
+#: .\templates\account\email_confirm.html:30
+#, python-format
 msgid ""
 "\n"
 "                  Confirming <strong>%(email)s</strong>…\n"
@@ -773,183 +1192,270 @@ msgstr ""
 "                  Подтверждение <strong>%(email)s</strong>…\n"
 "                "
 
+#: .\templates\account\email_confirm.html:55
 msgid "Email confirmed!"
 msgstr "Почта подтверждена!"
 
+#: .\templates\account\email_confirm.html:58
 msgid "Your account is now active. You can sign in."
 msgstr "Ваш аккаунт теперь активен. Вы можете войти."
 
+#: .\templates\account\email_confirm.html:62 .\templates\account\login.html:5
+#: .\templates\account\login.html:104
+#: .\templates\account\password_reset_from_key_done.html:19
+#: .\templates\account\signup.html:128 .\templates\base.html:216
+#: .\templates\base.html:247
 msgid "Sign In"
 msgstr "Войти"
 
+#: .\templates\account\email_confirm.html:75
 msgid "Link expired or invalid"
 msgstr "Ссылка истекла или недействительна"
 
+#: .\templates\account\email_confirm.html:78
 msgid "This verification link is no longer valid. Request a new one below."
-msgstr "Эта ссылка для подтверждения больше не действительна. Запросите новую ниже."
+msgstr ""
+"Эта ссылка для подтверждения больше не действительна. Запросите новую ниже."
 
+#: .\templates\account\email_confirm.html:82
+#: .\templates\account\resend_verification.html:4
+#: .\templates\account\verification_sent.html:38
 msgid "Resend Verification Email"
 msgstr "Повторно отправить письмо"
 
+#: .\templates\account\email_confirm.html:86
+#: .\templates\account\password_reset.html:39
+#: .\templates\account\password_reset_done.html:37
+#: .\templates\account\resend_verification.html:29
+#: .\templates\account\resend_verification.html:71
+#: .\templates\account\verification_sent.html:41
 msgid "Back to Sign In"
 msgstr "Вернуться ко входу"
 
+#: .\templates\account\email_confirm.html:127
 msgid "Auto-confirm failed. Please click below."
 msgstr "Автоматическое подтверждение не удалось. Нажмите кнопку ниже."
 
+#: .\templates\account\email_confirm.html:130
 msgid "Confirm Email Address"
 msgstr "Подтвердить адрес почты"
 
+#: .\templates\account\login.html:6
 msgid "Sign in to your Jadevine account to manage your bookings."
 msgstr "Войдите в свой аккаунт Jadevine для управления бронированиями."
 
+#: .\templates\account\login.html:26 .\templates\accounts\dashboard.html:15
 msgid "Welcome back"
 msgstr "С возвращением"
 
+#: .\templates\account\login.html:27
 msgid "Sign in to manage your bookings"
 msgstr "Войдите для управления бронированиями"
 
+#: .\templates\account\login.html:34
 msgid "Incorrect email address or password."
 msgstr "Неверный адрес электронной почты или пароль."
 
+#: .\templates\account\login.html:41
+#: .\templates\account\resend_verification.html:39
 msgid "Resend verification email"
 msgstr "Повторно отправить письмо"
 
+#: .\templates\account\login.html:62 .\templates\account\password_reset.html:26
+#: .\templates\account\resend_verification.html:55
+#: .\templates\account\signup.html:67 .\templates\accounts\profile.html:99
+#: .\templates\contact\contact.html:181
 msgid "Email Address"
 msgstr "Адрес электронной почты"
 
+#: .\templates\account\login.html:67 .\templates\account\password_reset.html:30
+#: .\templates\account\resend_verification.html:60
+#: .\templates\account\signup.html:72
 msgid "your@email.com"
 msgstr "ваша@почта.ru"
 
+#: .\templates\account\login.html:81
 msgid "Your password"
 msgstr "Ваш пароль"
 
+#: .\templates\account\login.html:83
 msgid "Show password"
 msgstr "Показать пароль"
 
+#: .\templates\account\login.html:96
 msgid "Remember me"
 msgstr "Запомнить меня"
 
+#: .\templates\account\login.html:99
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
+#: .\templates\account\login.html:108
 msgid "New to Jadevine?"
 msgstr "Впервые на Jadevine?"
 
+#: .\templates\account\login.html:111
 msgid "Create an account"
 msgstr "Создать аккаунт"
 
+#: .\templates\account\logout.html:4
+#: .\templates\accounts\includes\dashboard_sidebar.html:53
+#: .\templates\base.html:212 .\templates\base.html:245
 msgid "Sign Out"
 msgstr "Выйти"
 
+#: .\templates\account\logout.html:22
 msgid "Sign out?"
 msgstr "Выйти из аккаунта?"
 
+#: .\templates\account\logout.html:24
 msgid "You will be signed out of your Jadevine account."
 msgstr "Вы выйдете из своего аккаунта Jadevine."
 
+#: .\templates\account\logout.html:31
 msgid "Yes, Sign Out"
 msgstr "Да, выйти"
 
+#: .\templates\account\logout.html:35
 msgid "or"
 msgstr "или"
 
+#: .\templates\account\logout.html:39
+#: .\templates\account\password_change.html:107
 msgid "Cancel"
 msgstr "Отмена"
 
+#: .\templates\account\password_change.html:4
+#: .\templates\account\password_change.html:5
+#: .\templates\account\password_change.html:18
+#: .\templates\accounts\includes\dashboard_sidebar.html:46
+#: .\templates\accounts\profile.html:149
 msgid "Change Password"
 msgstr "Изменить пароль"
 
+#: .\templates\account\password_change.html:16
+#: .\templates\accounts\profile.html:4 .\templates\accounts\profile.html:15
 msgid "My Profile"
 msgstr "Мой профиль"
 
+#: .\templates\account\password_change.html:55
 msgid "Current Password"
 msgstr "Текущий пароль"
 
+#: .\templates\account\password_change.html:60
 msgid "Your current password"
 msgstr "Ваш текущий пароль"
 
+#: .\templates\account\password_change.html:72
 msgid "New Password"
 msgstr "Новый пароль"
 
+#: .\templates\account\password_change.html:77
 msgid "New password"
 msgstr "Новый пароль"
 
+#: .\templates\account\password_change.html:89
 msgid "Confirm New Password"
 msgstr "Подтвердите новый пароль"
 
+#: .\templates\account\password_change.html:94
 msgid "Repeat new password"
 msgstr "Повторите новый пароль"
 
+#: .\templates\account\password_change.html:104
 msgid "Update Password"
 msgstr "Обновить пароль"
 
+#: .\templates\account\password_reset.html:4
 msgid "Reset Password"
 msgstr "Сбросить пароль"
 
+#: .\templates\account\password_reset.html:18
 msgid "Reset your password"
 msgstr "Сбросьте свой пароль"
 
+#: .\templates\account\password_reset.html:20
 msgid "Enter your email and we'll send you a reset link."
 msgstr "Введите почту, и мы отправим вам ссылку для сброса."
 
+#: .\templates\account\password_reset.html:34
 msgid "Send Reset Link"
 msgstr "Отправить ссылку для сброса"
 
+#: .\templates\account\password_reset.html:37
+#: .\templates\account\resend_verification.html:69
 msgid "Remembered it?"
 msgstr "Вспомнили пароль?"
 
+#: .\templates\account\password_reset_done.html:4
 msgid "Check Your Email"
 msgstr "Проверьте почту"
 
+#: .\templates\account\password_reset_done.html:25
+#: .\templates\account\verification_sent.html:23
 msgid "Check your inbox"
 msgstr "Проверьте входящие"
 
+#: .\templates\account\password_reset_done.html:28
 msgid ""
 "If an account exists with that email, we've sent a password reset link. "
 "Check your spam folder if you don't see it."
 msgstr ""
-"Если аккаунт с такой почтой существует, мы отправили ссылку для сброса пароля. "
-"Проверьте папку спама, если не видите письмо."
+"Если аккаунт с такой почтой существует, мы отправили ссылку для сброса "
+"пароля. Проверьте папку спама, если не видите письмо."
 
+#: .\templates\account\password_reset_done.html:33
 msgid ""
 "The reset link expires in 3 days. After that you'll need to request a new "
 "one."
 msgstr ""
-"Ссылка для сброса действует 3 дня. После этого вам нужно будет запросить новую."
+"Ссылка для сброса действует 3 дня. После этого вам нужно будет запросить "
+"новую."
 
+#: .\templates\account\password_reset_done.html:41
 msgid "Didn't receive it?"
 msgstr "Не получили письмо?"
 
+#: .\templates\account\password_reset_done.html:43
 msgid "Try again"
 msgstr "Попробовать снова"
 
+#: .\templates\account\password_reset_from_key.html:4
+#: .\templates\account\password_reset_from_key.html:50
 msgid "Set New Password"
 msgstr "Установить новый пароль"
 
+#: .\templates\account\password_reset_from_key.html:18
 msgid "Set a new password"
 msgstr "Установите новый пароль"
 
+#: .\templates\account\password_reset_from_key.html:24
 msgid ""
 "This password reset link is invalid or has expired. Please request a new one."
 msgstr ""
 "Эта ссылка для сброса пароля недействительна или истекла. Запросите новую."
 
+#: .\templates\account\password_reset_from_key.html:27
 msgid "Request New Link"
 msgstr "Запросить новую ссылку"
 
+#: .\templates\account\password_reset_from_key_done.html:4
 msgid "Password Updated"
 msgstr "Пароль обновлён"
 
+#: .\templates\account\password_reset_from_key_done.html:16
 msgid "Password updated"
 msgstr "Пароль обновлён"
 
+#: .\templates\account\password_reset_from_key_done.html:17
 msgid "Your password has been changed successfully. You can now sign in."
 msgstr "Ваш пароль успешно изменён. Теперь вы можете войти."
 
+#: .\templates\account\resend_verification.html:24
 msgid "Verification link sent"
 msgstr "Ссылка для подтверждения отправлена"
 
+#: .\templates\account\resend_verification.html:26
 msgid ""
 "If an account with that email exists and is unverified, we've sent a fresh "
 "verification link. Check your inbox and spam folder."
@@ -957,15 +1463,22 @@ msgstr ""
 "Если аккаунт с такой почтой существует и не подтверждён, мы отправили новую "
 "ссылку. Проверьте входящие и папку спама."
 
+#: .\templates\account\resend_verification.html:41
 msgid "Enter your email address and we'll send you a new verification link."
-msgstr "Введите адрес электронной почты, и мы отправим новую ссылку для подтверждения."
+msgstr ""
+"Введите адрес электронной почты, и мы отправим новую ссылку для "
+"подтверждения."
 
+#: .\templates\account\resend_verification.html:65
 msgid "Send Verification Link"
 msgstr "Отправить ссылку"
 
+#: .\templates\account\signup.html:4 .\templates\account\signup.html:117
+#: .\templates\base.html:317
 msgid "Create Account"
 msgstr "Создать аккаунт"
 
+#: .\templates\account\signup.html:5
 msgid ""
 "Create a Jadevine account to book hotels, safaris, and car rentals in "
 "Tanzania."
@@ -973,74 +1486,99 @@ msgstr ""
 "Создайте аккаунт Jadevine для бронирования отелей, сафари и аренды "
 "автомобилей в Танзании."
 
+#: .\templates\account\signup.html:23
 msgid "Create your account"
 msgstr "Создайте свой аккаунт"
 
+#: .\templates\account\signup.html:24
 msgid "Start planning your Tanzania adventure"
 msgstr "Начните планировать своё приключение в Танзании"
 
+#: .\templates\account\signup.html:85
 msgid "Create a password"
 msgstr "Создайте пароль"
 
+#: .\templates\account\signup.html:96
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
+#: .\templates\account\signup.html:101
 msgid "Repeat your password"
 msgstr "Повторите пароль"
 
+#: .\templates\account\signup.html:121
 msgid ""
 "By creating an account, you agree to our\n"
 "              <a href=\"#\">Terms of Service</a> and <a href=\"#\">Privacy "
 "Policy</a>."
 msgstr ""
 "Создавая аккаунт, вы соглашаетесь с нашими\n"
-"              <a href=\"#\">Условиями использования</a> и <a href=\"#\">Политикой "
-"конфиденциальности</a>."
+"              <a href=\"#\">Условиями использования</a> и <a "
+"href=\"#\">Политикой конфиденциальности</a>."
 
+#: .\templates\account\signup.html:126
 msgid "Already have an account?"
 msgstr "Уже есть аккаунт?"
 
+#: .\templates\account\verification_sent.html:4
 msgid "Verify Your Email"
 msgstr "Подтвердите почту"
 
+#: .\templates\account\verification_sent.html:5
 msgid "Check your inbox to verify your email address."
 msgstr "Проверьте входящие для подтверждения адреса электронной почты."
 
+#: .\templates\account\verification_sent.html:26
 msgid ""
 "We've sent a verification link to your email address. Click the link to "
 "activate your account."
 msgstr ""
-"Мы отправили ссылку для подтверждения на ваш адрес электронной почты. Нажмите "
-"ссылку для активации аккаунта."
+"Мы отправили ссылку для подтверждения на ваш адрес электронной почты. "
+"Нажмите ссылку для активации аккаунта."
 
+#: .\templates\account\verification_sent.html:32
 msgid ""
 "Didn't receive the email? Check your spam folder. The link expires in 3 days."
-msgstr ""
-"Не получили письмо? Проверьте папку спама. Ссылка действует 3 дня."
+msgstr "Не получили письмо? Проверьте папку спама. Ссылка действует 3 дня."
 
+#: .\templates\accounts\booking_detail.html:4
+#: .\templates\accounts\booking_detail.html:5
 msgid "Booking Detail"
 msgstr "Детали бронирования"
 
+#: .\templates\accounts\booking_detail.html:15
+#: .\templates\accounts\booking_history.html:4
+#: .\templates\accounts\booking_history.html:5
+#: .\templates\accounts\booking_history.html:15
+#: .\templates\accounts\includes\dashboard_sidebar.html:31
 msgid "My Bookings"
 msgstr "Мои бронирования"
 
+#: .\templates\accounts\booking_detail.html:22
 msgid "Download PDF"
 msgstr "Скачать PDF"
 
+#: .\templates\accounts\booking_detail.html:26
+#: .\templates\accounts\booking_detail.html:315
 msgid "Cancel Booking"
 msgstr "Отменить бронирование"
 
+#: .\templates\accounts\booking_detail.html:52
 msgid "Your booking is confirmed and ready. We look forward to seeing you."
 msgstr "Ваше бронирование подтверждено. Ждём вас с нетерпением."
 
+#: .\templates\accounts\booking_detail.html:54
 msgid ""
 "We will confirm your preferred date within 24–48 hours and send you an email."
 msgstr ""
 "Мы подтвердим выбранную дату в течение 24–48 часов и отправим вам письмо."
 
+#: .\templates\accounts\booking_detail.html:56
 msgid "Your booking is being reviewed. We will confirm it shortly."
-msgstr "Ваше бронирование рассматривается. Мы подтвердим его в ближайшее время."
+msgstr ""
+"Ваше бронирование рассматривается. Мы подтвердим его в ближайшее время."
 
+#: .\templates\accounts\booking_detail.html:58
 msgid ""
 "Your cancellation request is being processed. We will contact you within 2–3 "
 "business days."
@@ -1048,16 +1586,18 @@ msgstr ""
 "Ваш запрос на отмену обрабатывается. Мы свяжемся с вами в течение 2–3 "
 "рабочих дней."
 
+#: .\templates\accounts\booking_detail.html:60
 msgid "This booking has been cancelled. Contact us if you have any questions."
 msgstr "Это бронирование отменено. Свяжитесь с нами, если у вас есть вопросы."
 
+#: .\templates\accounts\booking_detail.html:62
 msgid ""
 "We hope you had a wonderful experience. Thank you for travelling with "
 "Jadevine."
 msgstr ""
-"Надеемся, вы прекрасно провели время. Спасибо, что путешествуете с "
-"Jadevine."
+"Надеемся, вы прекрасно провели время. Спасибо, что путешествуете с Jadevine."
 
+#: .\templates\accounts\booking_detail.html:64
 msgid ""
 "This booking was marked as a no-show. Please contact us if you believe this "
 "is an error."
@@ -1065,81 +1605,136 @@ msgstr ""
 "Это бронирование отмечено как неявка. Свяжитесь с нами, если считаете, что "
 "это ошибка."
 
+#: .\templates\accounts\booking_detail.html:102
+#: .\templates\bookings\booking_confirmation.html:132
+#: .\templates\bookings\booking_summary.html:88
+#: .\templates\hotels\hotel_detail.html:277
 msgid "Check-in"
 msgstr "Заезд"
 
+#: .\templates\accounts\booking_detail.html:106
+#: .\templates\bookings\booking_confirmation.html:136
+#: .\templates\bookings\booking_summary.html:92
+#: .\templates\hotels\hotel_detail.html:290
 msgid "Check-out"
 msgstr "Выезд"
 
+#: .\templates\accounts\booking_detail.html:111
+#: .\templates\bookings\booking_summary.html:96
+#: .\templates\bookings\booking_summary.html:146
+#: .\templates\bookings\booking_summary.html:172
 msgid "Duration"
 msgstr "Продолжительность"
 
+#: .\templates\accounts\booking_detail.html:112
+#: .\templates\bookings\booking_summary.html:97
+#: .\templates\bookings\booking_summary.html:241
 msgid "night(s)"
 msgstr "ночей"
 
+#: .\templates\accounts\booking_detail.html:117
+#: .\templates\bookings\booking_confirmation.html:140
+#: .\templates\core\home.html:93 .\templates\core\home.html:96
+#: .\templates\hotels\hotel_detail.html:322
+#: .\templates\hotels\hotel_list.html:84
 msgid "Guests"
 msgstr "Гости"
 
+#: .\templates\accounts\booking_detail.html:124
+#: .\templates\bookings\booking_confirmation.html:180
 msgid "Preferred Date"
 msgstr "Предпочтительная дата"
 
+#: .\templates\accounts\booking_detail.html:129
+#: .\templates\bookings\booking_confirmation.html:184
+#: .\templates\tours\tour_detail.html:270
 msgid "Participants"
 msgstr "Участники"
 
+#: .\templates\accounts\booking_detail.html:157
 msgid "Days"
 msgstr "Дней"
 
+#: .\templates\accounts\booking_detail.html:180
 msgid "Your Review"
 msgstr "Ваш отзыв"
 
+#: .\templates\accounts\booking_detail.html:182
 msgid "Review Submitted"
 msgstr "Отзыв отправлен"
 
+#: .\templates\accounts\booking_detail.html:183
 msgid "Share Your Experience"
 msgstr "Поделитесь впечатлениями"
 
+#: .\templates\accounts\booking_detail.html:210
 msgid "Your review is awaiting moderation."
 msgstr "Ваш отзыв ожидает модерации."
 
+#: .\templates\accounts\booking_detail.html:221
 msgid "How would you rate your experience? Tap a star to select your rating."
 msgstr "Как вы оцениваете свой опыт? Нажмите на звезду для оценки."
 
+#: .\templates\accounts\booking_detail.html:225
 msgid "Rating"
 msgstr "Оценка"
 
+#: .\templates\accounts\booking_detail.html:230
 msgid "out of 10"
 msgstr "из 10"
 
+#: .\templates\accounts\booking_detail.html:233
 msgid "No rating selected"
 msgstr "Оценка не выбрана"
 
+#: .\templates\accounts\booking_detail.html:243
 msgid "Comment (optional)"
 msgstr "Комментарий (необязательно)"
 
+#: .\templates\accounts\booking_detail.html:249
 msgid "Tell us about your experience…"
 msgstr "Расскажите о своём опыте…"
 
+#: .\templates\accounts\booking_detail.html:252
 msgid "Submit Review"
 msgstr "Отправить отзыв"
 
+#: .\templates\accounts\booking_detail.html:267
+#: .\templates\bookings\booking_confirmation.html:29
+#: .\templates\bookings\booking_summary.html:29
+#: .\templates\bookings\booking_summary.html:411
+#: .\templates\bookings\payment_options.html:29
 msgid "Payment"
 msgstr "Оплата"
 
+#: .\templates\accounts\booking_detail.html:269
 msgid "Base Price"
 msgstr "Базовая цена"
 
+#: .\templates\accounts\booking_detail.html:273
+#: .\templates\bookings\booking_summary.html:305
+#: .\templates\bookings\booking_summary.html:415
+#: .\templates\cars\car_detail.html:407
+#: .\templates\hotels\hotel_detail.html:426
+#: .\templates\tours\tour_detail.html:349
 msgid "Total"
 msgstr "Итого"
 
+#: .\templates\accounts\booking_detail.html:277
 msgid "Payment Mode"
 msgstr "Способ оплаты"
 
+#: .\templates\accounts\booking_detail.html:281
 msgid "Payment Status"
 msgstr "Статус оплаты"
 
+#: .\templates\accounts\booking_detail.html:296
+#: .\templates\accounts\booking_detail.html:326
 msgid "refund"
 msgstr "возврат"
 
+#: .\templates\accounts\booking_detail.html:300
+#, python-format
 msgid ""
 "\n"
 "          %(days)s day(s) until service date\n"
@@ -1149,73 +1744,99 @@ msgstr ""
 "          %(days)s дней до даты услуги\n"
 "        "
 
+#: .\templates\accounts\booking_detail.html:323
 msgid "Based on our cancellation policy:"
 msgstr "Согласно нашей политике отмены:"
 
+#: .\templates\accounts\booking_detail.html:329
 msgid ""
 "Your cancellation request will be reviewed. The refund will be processed "
 "within 2–3 business days."
 msgstr ""
-"Ваш запрос на отмену будет рассмотрен. Возврат будет обработан "
-"в течение 2–3 рабочих дней."
+"Ваш запрос на отмену будет рассмотрен. Возврат будет обработан в течение 2–3 "
+"рабочих дней."
 
+#: .\templates\accounts\booking_detail.html:338
 msgid "Reason (optional)"
 msgstr "Причина (необязательно)"
 
+#: .\templates\accounts\booking_detail.html:342
 msgid "Let us know why you are cancelling..."
 msgstr "Сообщите нам, почему вы отменяете..."
 
+#: .\templates\accounts\booking_detail.html:352
 msgid "Keep Booking"
 msgstr "Сохранить бронирование"
 
+#: .\templates\accounts\booking_detail.html:355
 msgid "Confirm Cancellation"
 msgstr "Подтвердить отмену"
 
+#: .\templates\accounts\booking_detail.html:368
 msgid "Processing…"
 msgstr "Обработка…"
 
+#: .\templates\accounts\booking_detail.html:369
 msgid "Please select a rating before submitting."
 msgstr "Пожалуйста, выберите оценку перед отправкой."
 
+#: .\templates\accounts\booking_detail.html:370
 msgid "Terrible"
 msgstr "Ужасно"
 
+#: .\templates\accounts\booking_detail.html:371
 msgid "Very Poor"
 msgstr "Очень плохо"
 
+#: .\templates\accounts\booking_detail.html:372
 msgid "Poor"
 msgstr "Плохо"
 
+#: .\templates\accounts\booking_detail.html:373
 msgid "Below Average"
 msgstr "Ниже среднего"
 
+#: .\templates\accounts\booking_detail.html:374
 msgid "Average"
 msgstr "Средне"
 
+#: .\templates\accounts\booking_detail.html:375
 msgid "Good"
 msgstr "Хорошо"
 
+#: .\templates\accounts\booking_detail.html:376
 msgid "Very Good"
 msgstr "Очень хорошо"
 
+#: .\templates\accounts\booking_detail.html:377
 msgid "Excellent"
 msgstr "Отлично"
 
+#: .\templates\accounts\booking_detail.html:378
 msgid "Outstanding"
 msgstr "Превосходно"
 
+#: .\templates\accounts\booking_detail.html:379
 msgid "Perfect"
 msgstr "Идеально"
 
+#: .\templates\accounts\booking_history.html:14
+#: .\templates\accounts\favourites.html:14 .\templates\accounts\profile.html:14
 msgid "Account"
 msgstr "Аккаунт"
 
+#: .\templates\accounts\booking_history.html:25
+#: .\templates\gallery\gallery.html:74
 msgid "All"
 msgstr "Все"
 
+#: .\templates\accounts\booking_history.html:45
+#: .\templates\accounts\dashboard.html:60
 msgid "View booking"
 msgstr "Просмотр бронирования"
 
+#: .\templates\accounts\booking_history.html:84
+#, python-format
 msgid ""
 "\n"
 "          Page %(current)s of %(total)s\n"
@@ -1225,191 +1846,421 @@ msgstr ""
 "          Страница %(current)s из %(total)s\n"
 "        "
 
+#: .\templates\accounts\booking_history.html:98
 msgid "No bookings found"
 msgstr "Бронирования не найдены"
 
+#: .\templates\accounts\booking_history.html:99
 msgid "No bookings match the selected filter."
 msgstr "Нет бронирований, соответствующих выбранному фильтру."
 
+#: .\templates\accounts\dashboard.html:4 .\templates\base.html:210
 msgid "My Dashboard"
 msgstr "Мой кабинет"
 
+#: .\templates\accounts\dashboard.html:5
 msgid "Manage your bookings and account."
 msgstr "Управляйте своими бронированиями и аккаунтом."
 
+#: .\templates\accounts\dashboard.html:6
+#: .\templates\accounts\includes\dashboard_sidebar.html:26
+#: .\templates\base.html:244
 msgid "Dashboard"
 msgstr "Панель управления"
 
+#: .\templates\accounts\dashboard.html:19
 msgid "New Booking"
 msgstr "Новое бронирование"
 
+#: .\templates\accounts\dashboard.html:31
 msgid "Upcoming"
 msgstr "Предстоящие"
 
+#: .\templates\accounts\dashboard.html:40
+#: .\templates\accounts\favourites.html:4
+#: .\templates\accounts\favourites.html:5
+#: .\templates\accounts\favourites.html:15
+#: .\templates\accounts\includes\dashboard_sidebar.html:36
+#: .\templates\cars\car_detail.html:129 .\templates\cars\car_detail.html:486
+#: .\templates\cars\car_list.html:121 .\templates\hotels\hotel_detail.html:122
+#: .\templates\hotels\hotel_detail.html:500
+#: .\templates\hotels\hotel_list.html:136
+#: .\templates\tours\tour_detail.html:139
+#: .\templates\tours\tour_detail.html:444 .\templates\tours\tour_list.html:126
 msgid "Saved"
 msgstr "Сохранённые"
 
+#: .\templates\accounts\dashboard.html:48
 msgid "Upcoming Bookings"
 msgstr "Предстоящие бронирования"
 
+#: .\templates\accounts\dashboard.html:50
 msgid "View all"
 msgstr "Смотреть все"
 
+#: .\templates\accounts\dashboard.html:108
 msgid "No upcoming bookings"
 msgstr "Нет предстоящих бронирований"
 
+#: .\templates\accounts\dashboard.html:109
 msgid "When you make a booking, it will appear here."
 msgstr "Когда вы сделаете бронирование, оно появится здесь."
 
+#: .\templates\accounts\dashboard.html:111
+#: .\templates\accounts\favourites.html:105
 msgid "Explore Hotels"
 msgstr "Смотреть отели"
 
+#: .\templates\accounts\dashboard_base.html:12
 msgid "Open menu"
 msgstr "Открыть меню"
 
+#: .\templates\accounts\dashboard_base.html:15
 msgid "My Account"
 msgstr "Мой аккаунт"
 
+#: .\templates\accounts\dashboard_base.html:41
 msgid "Processing..."
 msgstr "Обработка..."
 
+#: .\templates\accounts\dashboard_base.html:42
 msgid "Could not remove. Please try again."
 msgstr "Не удалось удалить. Пожалуйста, попробуйте снова."
 
+#: .\templates\accounts\dashboard_base.html:43
 msgid "Photo must be under 5MB."
 msgstr "Фото должно быть меньше 5 МБ."
 
+#: .\templates\accounts\dashboard_base.html:44
+#: .\templates\accounts\profile.html:176 .\templates\base.html:275
+#: .\templates\base.html:407 .\templates\core\home.html:682
+msgid "Subscribe"
+msgstr "Подписаться"
+
+#: .\templates\accounts\dashboard_base.html:45
+#: .\templates\accounts\profile.html:174
+msgid "Unsubscribe"
+msgstr "Отписаться"
+
+#: .\templates\accounts\dashboard_base.html:46
+#: .\templates\accounts\profile.html:163
+msgid "Subscribed"
+msgstr "Подписан"
+
+#: .\templates\accounts\dashboard_base.html:47
+#: .\templates\accounts\profile.html:165
+msgid "Not subscribed"
+msgstr "Не подписан"
+
+#: .\templates\accounts\dashboard_base.html:48
+msgid "You're now subscribed. Welcome!"
+msgstr "Вы успешно подписались. Добро пожаловать!"
+
+#: .\templates\accounts\dashboard_base.html:49
+msgid "You have been unsubscribed."
+msgstr "Вы отписались."
+
+#: .\templates\accounts\dashboard_base.html:50
+msgid "Something went wrong. Please try again."
+msgstr "Что-то пошло не так. Пожалуйста, попробуйте снова."
+
+#: .\templates\accounts\favourites.html:40
+#: .\templates\accounts\favourites.html:63
+#: .\templates\accounts\favourites.html:86
 msgid "View"
 msgstr "Смотреть"
 
+#: .\templates\accounts\favourites.html:42
+#: .\templates\accounts\favourites.html:65
+#: .\templates\accounts\favourites.html:88
 msgid "Remove from saved"
 msgstr "Удалить из сохранённых"
 
+#: .\templates\accounts\favourites.html:61 .\templates\cars\car_detail.html:484
+#: .\templates\core\home.html:405 .\templates\tours\tour_detail.html:86
+#: .\templates\tours\tour_list.html:121
 msgid "days"
 msgstr "дней"
 
+#: .\templates\accounts\favourites.html:103
 msgid "Nothing saved yet"
 msgstr "Пока ничего не сохранено"
 
+#: .\templates\accounts\favourites.html:104
 msgid "Tap the heart icon on any hotel, tour, or car to save it here."
-msgstr "Нажмите значок сердца на любом отеле, туре или автомобиле, чтобы сохранить его здесь."
+msgstr ""
+"Нажмите значок сердца на любом отеле, туре или автомобиле, чтобы сохранить "
+"его здесь."
 
+#: .\templates\accounts\includes\dashboard_sidebar.html:17
 msgid "Close menu"
 msgstr "Закрыть меню"
 
+#: .\templates\accounts\includes\dashboard_sidebar.html:41
+#: .\templates\accounts\profile.html:5
 msgid "Profile"
 msgstr "Профиль"
 
+#: .\templates\accounts\profile.html:41
 msgid "Personal Information"
 msgstr "Личная информация"
 
+#: .\templates\accounts\profile.html:59
 msgid "Change Photo"
 msgstr "Изменить фото"
 
+#: .\templates\accounts\profile.html:63
 msgid "JPG, PNG or GIF. Max 5MB."
 msgstr "JPG, PNG или GIF. Макс. 5 МБ."
 
+#: .\templates\accounts\profile.html:67
 msgid "Remove current photo"
 msgstr "Удалить текущее фото"
 
+#: .\templates\accounts\profile.html:101
 msgid "Email cannot be changed here. Contact support if needed."
 msgstr "Здесь нельзя изменить почту. При необходимости обратитесь в поддержку."
 
+#: .\templates\accounts\profile.html:136
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
+#: .\templates\accounts\profile.html:146
 msgid "Security"
 msgstr "Безопасность"
 
+#: .\templates\accounts\profile.html:147
 msgid "Keep your account secure by using a strong, unique password."
 msgstr "Защитите свой аккаунт, используя надёжный уникальный пароль."
 
+#: .\templates\accounts\profile.html:155
+msgid "Newsletter"
+msgstr "Рассылка"
+
+#: .\templates\accounts\profile.html:157
+msgid ""
+"Receive travel inspiration, exclusive offers, and Zanzibar highlights "
+"directly to your inbox."
+msgstr ""
+"Получайте вдохновение для путешествий, эксклюзивные предложения и лучшее о "
+"Занзибаре прямо на вашу почту."
+
+#: .\templates\base.html:19
+msgid ""
+"Jadevine Travel & Tours — Hotels, Safaris & Car Rentals in Zanzibar, Tanzania"
+msgstr ""
+"Jadevine Travel & Tours — отели, сафари & аренда автомобилей на Занзибаре, в "
+"Танзании"
+
+#: .\templates\base.html:20
+msgid ""
+"Book hotels, safaris, tours and car rentals across Zanzibar and Tanzania "
+"with Jadevine Travel & Tours. Trusted local partners, secure payment, "
+"instant confirmation."
+msgstr ""
+"Бронируйте отели, сафари, туры и аренду автомобилей на Занзибаре и в "
+"Танзании с Jadevine Travel & Tours. Надёжные местные партнёры, безопасная "
+"оплата, мгновенное подтверждение."
+
+#: .\templates\base.html:21
 msgid "Jadevine Travel & Tours — Zanzibar, Tanzania"
 msgstr "Jadevine Travel & Tours — Занзибар, Танзания"
 
+#: .\templates\base.html:22
 msgid ""
-"Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Hotels, "
-"safaris, car rentals and more."
+"Book hotels, safaris, tours and car rentals across Zanzibar and Tanzania "
+"with Jadevine Travel & Tours."
 msgstr ""
-"Откройте для себя Занзибар и Танзанию с Jadevine Travel & Tours. Отели, "
-"сафари, аренда автомобилей и многое другое."
+"Бронируйте отели, сафари, туры и аренду автомобилей на Занзибаре и в "
+"Танзании с Jadevine Travel & Tours."
 
+#: .\templates\base.html:23
+msgid ""
+"Book hotels, safaris, tours and car rentals across Zanzibar and Tanzania."
+msgstr ""
+"Бронируйте отели, сафари, туры и аренду автомобилей на Занзибаре и в "
+"Танзании."
+
+#: .\templates\base.html:170
+msgid "Loading"
+msgstr "Загрузка"
+
+#: .\templates\base.html:177 .\templates\base.html:190
+#: .\templates\base.html:233 .\templates\base.html:287
 msgid "Travel & Tours"
 msgstr "Путешествия и туры"
 
+#: .\templates\base.html:197 .\templates\base.html:240
+#: .\templates\base.html:315
 msgid "Gallery"
 msgstr "Галерея"
 
+#: .\templates\base.html:198 .\templates\base.html:241
 msgid "About"
 msgstr "О нас"
 
+#: .\templates\base.html:199 .\templates\base.html:242
+#: .\templates\base.html:316
 msgid "Contact"
 msgstr "Контакты"
 
+#: .\templates\base.html:217 .\templates\base.html:248
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-msgid "Home"
-msgstr "Главная"
+#: .\templates\base.html:221
+msgid "Toggle menu"
+msgstr "Показать/скрыть меню"
 
+#: .\templates\base.html:269
+msgid "Travel inspiration, straight to your inbox"
+msgstr "Вдохновение для путешествий — прямо на вашу почту"
+
+#: .\templates\base.html:270
+msgid "Curated escapes, seasonal offers and Zanzibar travel tips. No spam."
+msgstr ""
+"Тщательно отобранные маршруты, сезонные предложения и советы о путешествиях "
+"на Занзибар. Без спама."
+
+#: .\templates\base.html:274
+msgid "Your email address"
+msgstr "Ваш адрес электронной почты"
+
+#: .\templates\base.html:291
 msgid ""
 "Your trusted partner for unforgettable travel experiences across Zanzibar "
 "and Tanzania."
 msgstr ""
-"Ваш надёжный партнёр для незабываемых путешествий по Занзибару "
-"и Танзании."
+"Ваш надёжный партнёр для незабываемых путешествий по Занзибару и Танзании."
 
+#: .\templates\base.html:302 .\templates\core\home.html:266
 msgid "Services"
 msgstr "Услуги"
 
+#: .\templates\base.html:307 .\templates\core\home.html:72
 msgid "Flights"
 msgstr "Рейсы"
 
+#: .\templates\base.html:307
 msgid "coming soon"
 msgstr "скоро"
 
+#: .\templates\base.html:312
 msgid "Company"
 msgstr "Компания"
 
+#: .\templates\base.html:314
 msgid "About Us"
 msgstr "О нас"
 
+#: .\templates\base.html:325 .\templates\contact\contact.html:292
+#: .\templates\core\about.html:483
 msgid "Stone Town, Zanzibar, Tanzania"
 msgstr "Стоун-Таун, Занзибар, Танзания"
 
-msgid "Newsletter"
-msgstr "Рассылка"
-
-msgid "Your email"
-msgstr "Ваша почта"
-
+#: .\templates\base.html:341
 msgid "All rights reserved"
 msgstr "Все права защищены"
 
+#: .\templates\base.html:343
 msgid "Design by"
 msgstr "Дизайн:"
 
+#: .\templates\base.html:346
 msgid "Zanzibar, Tanzania"
 msgstr "Занзибар, Танзания"
 
+#: .\templates\base.html:346
 msgid "Licensed by Tanzania Tourism Board"
 msgstr "Лицензировано Tanzania Tourism Board"
 
+#: .\templates\base.html:356
+msgid "Language"
+msgstr "Язык"
+
+#: .\templates\base.html:396
+msgid "Chat on WhatsApp"
+msgstr "Напишите нам в WhatsApp"
+
+#: .\templates\base.html:398
 msgid "Chat with us"
 msgstr "Напишите нам"
 
+#: .\templates\base.html:408
+msgid "Subscribing…"
+msgstr "Подписка…"
+
+#: .\templates\base.html:409
+msgid "Subscribed! Thank you."
+msgstr "Вы подписались! Спасибо."
+
+#: .\templates\base.html:410
+msgid "Something went wrong."
+msgstr "Что-то пошло не так."
+
+#: .\templates\base.html:411 .\templates\contact\contact.html:450
+msgid "Network error. Please try again."
+msgstr "Ошибка сети. Пожалуйста, попробуйте снова."
+
+#: .\templates\bookings\booking_confirmation.html:4
+#: .\templates\bookings\booking_confirmation.html:97
 msgid "Booking Confirmed"
 msgstr "Бронирование подтверждено"
 
+#: .\templates\bookings\booking_confirmation.html:19
+#: .\templates\bookings\booking_summary.html:19
+#: .\templates\bookings\payment_options.html:19
 msgid "Select"
 msgstr "Выбрать"
 
+#: .\templates\bookings\booking_confirmation.html:54
+msgid "Payment Failed"
+msgstr "Платёж не прошёл"
+
+#: .\templates\bookings\booking_confirmation.html:55
+msgid "Payment Was Not Completed"
+msgstr "Платёж не был завершён"
+
+#: .\templates\bookings\booking_confirmation.html:57
+msgid ""
+"Your booking has been saved but payment was not successful. Please try again "
+"or choose a different payment method."
+msgstr ""
+"Ваше бронирование сохранено, но платёж не прошёл. Пожалуйста, попробуйте "
+"снова или выберите другой способ оплаты."
+
+#: .\templates\bookings\booking_confirmation.html:62
+#: .\templates\bookings\booking_confirmation.html:107
+#: .\templates\bookings\booking_confirmation.html:312
+#: .\templates\bookings\payment_options.html:57
+msgid "Your Booking Reference"
+msgstr "Ваш номер бронирования"
+
+#: .\templates\bookings\booking_confirmation.html:65
+msgid "Use this reference when contacting us for support."
+msgstr "Указывайте этот номер при обращении в поддержку."
+
+#: .\templates\bookings\booking_confirmation.html:72
+msgid "Try Payment Again"
+msgstr "Повторить оплату"
+
+#: .\templates\bookings\booking_confirmation.html:74
+msgid "I need help completing payment for booking"
+msgstr "Мне нужна помощь с завершением оплаты бронирования"
+
+#: .\templates\bookings\booking_confirmation.html:77
+msgid "Contact Support"
+msgstr "Связаться с поддержкой"
+
+#: .\templates\bookings\booking_confirmation.html:91
 msgid "Reservation Confirmed"
 msgstr "Бронирование подтверждено"
 
+#: .\templates\bookings\booking_confirmation.html:92
 msgid "You're All Set!"
 msgstr "Всё готово!"
 
+#: .\templates\bookings\booking_confirmation.html:94
 msgid ""
 "Your reservation is confirmed. Payment will be collected when you arrive in "
 "Tanzania."
@@ -1417,56 +2268,95 @@ msgstr ""
 "Ваше бронирование подтверждено. Оплата будет получена при вашем прибытии в "
 "Танзанию."
 
-msgid "Booking Confirmed!"
-msgstr "Бронирование подтверждено!"
+#: .\templates\bookings\booking_confirmation.html:98
+msgid "Payment Received!"
+msgstr "Платёж получен!"
 
+#: .\templates\bookings\booking_confirmation.html:100
 msgid ""
-"Your booking is confirmed and a confirmation email is on its way to you."
-msgstr ""
-"Ваше бронирование подтверждено, и письмо с подтверждением уже отправлено вам."
+"Your payment has been confirmed and a receipt has been sent to your email."
+msgstr "Ваш платёж подтверждён, чек отправлен на вашу электронную почту."
 
-msgid "Your Booking Reference"
-msgstr "Ваш номер бронирования"
-
+#: .\templates\bookings\booking_confirmation.html:110
 msgid ""
 "Save this reference number. You'll need it for any changes or enquiries."
 msgstr ""
 "Сохраните этот номер. Он понадобится вам для любых изменений или запросов."
 
+#: .\templates\bookings\booking_confirmation.html:116
 msgid "Booking Summary"
 msgstr "Сводка бронирования"
 
+#: .\templates\bookings\booking_confirmation.html:120
+#: .\templates\bookings\booking_confirmation.html:146
+#: .\templates\bookings\booking_confirmation.html:172
 msgid "Service"
 msgstr "Услуга"
 
+#: .\templates\bookings\booking_confirmation.html:121
+#: .\templates\bookings\booking_summary.html:58
 msgid "Hotel Booking"
 msgstr "Бронирование отеля"
 
+#: .\templates\bookings\booking_confirmation.html:150
 msgid "Vehicle"
 msgstr "Транспортное средство"
 
+#: .\templates\bookings\booking_confirmation.html:176
+msgid "Package"
+msgstr "Пакет"
+
+#: .\templates\bookings\booking_confirmation.html:190
 msgid "Payment Method"
 msgstr "Способ оплаты"
 
+#: .\templates\bookings\booking_confirmation.html:196
+#: .\templates\bookings\booking_summary.html:206
 msgid "Refund Policy"
 msgstr "Политика возврата"
 
+#: .\templates\bookings\booking_confirmation.html:198
+#: .\templates\bookings\booking_summary.html:208
+#: .\templates\cars\car_detail.html:416
+#: .\templates\hotels\hotel_detail.html:168
+#: .\templates\hotels\hotel_detail.html:435
+#: .\templates\tours\tour_detail.html:375
 msgid "Non-refundable"
 msgstr "Невозвратный"
 
+#: .\templates\bookings\booking_confirmation.html:206
+msgid "Total Paid"
+msgstr "Итого оплачено"
+
+#: .\templates\bookings\booking_confirmation.html:208
+msgid "Total Due on Arrival"
+msgstr "Итого к оплате при заезде"
+
+#: .\templates\bookings\booking_confirmation.html:217
 msgid ""
 "Payment due on arrival in Tanzania. Our team will be in touch to confirm "
 "your booking details."
 msgstr ""
-"Оплата при прибытии в Танзанию. Наша команда свяжется с вами для подтверждения "
-"деталей бронирования."
+"Оплата при прибытии в Танзанию. Наша команда свяжется с вами для "
+"подтверждения деталей бронирования."
 
+#: .\templates\bookings\booking_confirmation.html:224
 msgid "What Happens Next?"
 msgstr "Что дальше?"
 
+#: .\templates\bookings\booking_confirmation.html:229
 msgid "Confirmation Email"
 msgstr "Письмо с подтверждением"
 
+#: .\templates\bookings\booking_confirmation.html:232
+msgid ""
+"A payment receipt and booking confirmation has been sent to your email "
+"address."
+msgstr ""
+"Чек об оплате и подтверждение бронирования отправлены на ваш адрес "
+"электронной почты."
+
+#: .\templates\bookings\booking_confirmation.html:234
 msgid ""
 "A confirmation email with your booking details has been sent to your "
 "registered email address."
@@ -1474,270 +2364,492 @@ msgstr ""
 "Письмо с подтверждением и деталями бронирования отправлено на ваш "
 "зарегистрированный адрес электронной почты."
 
+#: .\templates\bookings\booking_confirmation.html:244
 msgid "Date Confirmation"
 msgstr "Подтверждение даты"
 
+#: .\templates\bookings\booking_confirmation.html:246
 msgid ""
 "Our team will confirm your preferred tour date within 24–48 hours via email "
 "or WhatsApp."
 msgstr ""
-"Наша команда подтвердит предпочтительную дату тура в течение 24–48 часов по почте "
-"или через WhatsApp."
+"Наша команда подтвердит предпочтительную дату тура в течение 24–48 часов по "
+"почте или через WhatsApp."
 
+#: .\templates\bookings\booking_confirmation.html:254
 msgid "Prepare for Arrival"
 msgstr "Подготовьтесь к прибытию"
 
+#: .\templates\bookings\booking_confirmation.html:256
 msgid ""
 "Your booking is confirmed. Review the details above and contact us if you "
 "have any questions."
 msgstr ""
-"Ваше бронирование подтверждено. Проверьте детали выше и свяжитесь с нами, если у вас "
-"есть вопросы."
+"Ваше бронирование подтверждено. Проверьте детали выше и свяжитесь с нами, "
+"если у вас есть вопросы."
 
+#: .\templates\bookings\booking_confirmation.html:265
 msgid "Manage Your Booking"
 msgstr "Управление бронированием"
 
+#: .\templates\bookings\booking_confirmation.html:267
 msgid ""
 "View, download, or cancel your booking anytime from your personal dashboard."
 msgstr ""
-"Просматривайте, скачивайте или отменяйте бронирование в любое время в личном кабинете."
+"Просматривайте, скачивайте или отменяйте бронирование в любое время в личном "
+"кабинете."
 
+#: .\templates\bookings\booking_confirmation.html:277
 msgid "Go to My Dashboard"
 msgstr "Перейти в кабинет"
 
+#: .\templates\bookings\booking_confirmation.html:281
 msgid "Explore More Tours"
 msgstr "Смотреть больше туров"
 
+#: .\templates\bookings\booking_confirmation.html:287
 msgid "Questions about your booking?"
 msgstr "Есть вопросы по бронированию?"
 
+#: .\templates\bookings\booking_confirmation.html:288
+msgid "My booking reference is"
+msgstr "Мой номер бронирования"
+
+#: .\templates\bookings\booking_confirmation.html:291
 msgid "Chat with Us on WhatsApp"
 msgstr "Напишите нам в WhatsApp"
 
-msgid "Review Your Booking"
-msgstr "Проверьте бронирование"
+#: .\templates\bookings\booking_confirmation.html:304
+msgid "Processing"
+msgstr "Обработка"
 
-msgid "Review and confirm your booking with Jadevine Travel & Tours."
-msgstr "Проверьте и подтвердите бронирование с Jadevine Travel & Tours."
+#: .\templates\bookings\booking_confirmation.html:305
+msgid "Payment Pending"
+msgstr "Платёж в обработке"
 
-msgid "Step 2 of 4"
-msgstr "Шаг 2 из 4"
+#: .\templates\bookings\booking_confirmation.html:307
+msgid ""
+"Your payment is being processed. This page will update automatically once "
+"confirmed. This usually takes under 60 seconds."
+msgstr ""
+"Ваш платёж обрабатывается. Эта страница обновится автоматически после "
+"подтверждения. Обычно это занимает менее 60 секунд."
 
-msgid "Review Your <em>Booking</em>"
-msgstr "Проверьте своё <em>бронирование</em>"
+#: .\templates\bookings\booking_confirmation.html:319
+msgid "Go to Dashboard"
+msgstr "Перейти в личный кабинет"
 
-msgid "Safari & Tour Booking"
-msgstr "Бронирование сафари и тура"
+#: .\templates\bookings\booking_summary.html:4
+#: .\templates\cars\car_detail.html:440
+#: .\templates\hotels\hotel_detail.html:458
+msgid "Review Booking"
+msgstr "Проверить бронирование"
 
+#: .\templates\bookings\booking_summary.html:84
+#: .\templates\hotels\hotel_detail.html:305
+#: .\templates\hotels\hotel_detail.html:310
+msgid "Rooms"
+msgstr "Номера"
+
+#: .\templates\bookings\booking_summary.html:105
+#: .\templates\bookings\booking_summary.html:155
+#: .\templates\bookings\booking_summary.html:185
+#: .\templates\cars\car_detail.html:325 .\templates\cars\car_detail.html:330
+#: .\templates\hotels\hotel_detail.html:347
+#: .\templates\hotels\hotel_detail.html:354
+#: .\templates\tours\tour_detail.html:292
+#: .\templates\tours\tour_detail.html:297
+msgid "Children"
+msgstr "Дети"
+
+#: .\templates\bookings\booking_summary.html:111
+#: .\templates\bookings\booking_summary.html:161
+#: .\templates\bookings\booking_summary.html:191
+#: .\templates\cars\car_detail.html:340 .\templates\cars\car_detail.html:345
+#: .\templates\hotels\hotel_detail.html:367
+#: .\templates\hotels\hotel_detail.html:374
+#: .\templates\tours\tour_detail.html:307
+#: .\templates\tours\tour_detail.html:312
+msgid "Infants"
+msgstr "Младенцы"
+
+#: .\templates\bookings\booking_summary.html:147
+#: .\templates\bookings\booking_summary.html:173
+#: .\templates\bookings\booking_summary.html:264
 msgid "day(s)"
 msgstr "дней"
 
-msgid ""
-"Jadevine will confirm your preferred date within 24–48 hours of booking."
-msgstr ""
-"Jadevine подтвердит выбранную дату в течение 24–48 часов после бронирования."
+#: .\templates\bookings\booking_summary.html:192
+msgid "free"
+msgstr "бесплатно"
 
+#: .\templates\bookings\booking_summary.html:216
+msgid "Our team will confirm your preferred start date within 24–48 hours."
+msgstr ""
+"Наша команда подтвердит выбранную вами дату начала в течение 24–48 часов."
+
+#: .\templates\bookings\booking_summary.html:225
 msgid "Price Breakdown"
 msgstr "Разбивка цены"
 
+#: .\templates\bookings\booking_summary.html:230
+msgid "Rate per night"
+msgstr "Цена за ночь"
+
+#: .\templates\bookings\booking_summary.html:241
+msgid "room(s)"
+msgstr "номер(ов)"
+
+#: .\templates\bookings\booking_summary.html:253
+msgid "Rate per day"
+msgstr "Цена за день"
+
+#: .\templates\bookings\booking_summary.html:276
+msgid "Rate per person"
+msgstr "Цена за человека"
+
+#: .\templates\bookings\booking_summary.html:287
 msgid "participant(s)"
 msgstr "участников"
 
-msgid "Price locked at time of search. No additional fees."
-msgstr "Цена зафиксирована на момент поиска. Никаких дополнительных сборов."
+#: .\templates\bookings\booking_summary.html:299
+msgid "You save"
+msgstr "Ваша экономия"
 
-msgid "Non-refundable Booking"
-msgstr "Невозвратное бронирование"
+#: .\templates\bookings\booking_summary.html:317
+msgid "No charge yet — you will review and pay on the next step."
+msgstr "Списания пока нет — вы проверите и оплатите на следующем шаге."
 
-msgid ""
-"This booking is non-refundable. Once confirmed, no refund will be issued "
-"regardless of cancellation date."
-msgstr ""
-"Это бронирование невозвратное. После подтверждения возврат не производится "
-"независимо от даты отмены."
-
+#: .\templates\bookings\booking_summary.html:323
 msgid "Choose Payment Method"
 msgstr "Выберите способ оплаты"
 
+#: .\templates\bookings\booking_summary.html:335
 msgid "Pay Now"
 msgstr "Оплатить сейчас"
 
-msgid "Recommended"
-msgstr "Рекомендуется"
-
+#: .\templates\bookings\booking_summary.html:339
 msgid ""
-"Pay securely online via Visa, Mastercard, or M-Pesa. Booking confirmed "
-"instantly."
+"Pay securely online via Visa, Mastercard, or M-Pesa. Your booking is "
+"confirmed instantly."
 msgstr ""
-"Оплатите безопасно онлайн через Visa, Mastercard или M-Pesa. Бронирование подтверждается "
-"мгновенно."
+"Оплачивайте безопасно онлайн картами Visa, Mastercard или через M-Pesa. Ваше "
+"бронирование подтверждается мгновенно."
 
+#: .\templates\bookings\booking_summary.html:363
 msgid ""
-"Reserve now, pay when you arrive in Tanzania. Your slot is held for you."
+"Reserve now, pay when you arrive in Tanzania. Cash (USD or TZS) accepted."
 msgstr ""
-"Забронируйте сейчас, оплатите при прибытии в Танзанию. Ваше место зарезервировано."
+"Забронируйте сейчас, оплатите по прибытии в Танзанию. Принимаются наличные "
+"(USD или TZS)."
 
-msgid ""
-"Pay on Arrival is not available for this booking. Online payment is required."
+#: .\templates\bookings\booking_summary.html:370
+msgid "This listing requires Pay Now — Pay on Arrival is not available."
 msgstr ""
-"Оплата при заезде недоступна для этого бронирования. Требуется онлайн-оплата."
+"Это объявление требует немедленной оплаты — оплата при заезде недоступна."
 
-msgid "Confirm Booking"
-msgstr "Подтвердить бронирование"
+#: .\templates\bookings\booking_summary.html:382
+msgid "Confirm &amp; Continue"
+msgstr "Подтвердить &amp; продолжить"
 
-msgid ""
-"By confirming, you agree to our cancellation policy. Your card will not be "
-"charged until you complete payment on the next screen."
-msgstr ""
-"Подтверждая, вы соглашаетесь с нашей политикой отмены. Ваша карта не будет "
-"списана до завершения оплаты на следующем экране."
+#: .\templates\bookings\booking_summary.html:387
+msgid "No charge until you complete payment on the next step."
+msgstr "Списание не произойдёт, пока вы не завершите оплату на следующем шаге."
 
+#: .\templates\bookings\booking_summary.html:401
+msgid "Existing Booking"
+msgstr "Существующее бронирование"
+
+#: .\templates\bookings\booking_summary.html:407
 msgid "Status"
 msgstr "Статус"
 
-msgid "Go Back & Edit"
-msgstr "Назад и изменить"
+#: .\templates\bookings\booking_summary.html:423
+#: .\templates\bookings\payment_options.html:94
+msgid "Proceed to Payment"
+msgstr "Перейти к оплате"
 
+#: .\templates\bookings\booking_summary.html:427
+msgid "View Confirmation"
+msgstr "Посмотреть подтверждение"
+
+#: .\templates\bookings\booking_summary.html:442
 msgid "Secure Booking"
 msgstr "Безопасное бронирование"
 
-msgid "Your data is encrypted and protected. We never store card details."
-msgstr "Ваши данные зашифрованы и защищены. Мы никогда не храним данные карты."
+#: .\templates\bookings\booking_summary.html:443
+msgid ""
+"Your payment is processed securely via PesaPal. No card details are stored "
+"on our servers."
+msgstr ""
+"Ваш платёж безопасно обрабатывается через PesaPal. Данные карты не хранятся "
+"на наших серверах."
 
-msgid "This booking cannot be refunded once confirmed."
-msgstr "Это бронирование не подлежит возврату после подтверждения."
-
+#: .\templates\bookings\booking_summary.html:450
 msgid "Free Cancellation"
 msgstr "Бесплатная отмена"
 
-msgid "Cancel 14+ days before your service for a full refund."
-msgstr "Отмените за 14+ дней до услуги для полного возврата средств."
+#: .\templates\bookings\booking_summary.html:451
+msgid ""
+"Most bookings can be cancelled for a full refund if done within the "
+"cancellation window."
+msgstr ""
+"Большинство бронирований можно отменить с полным возвратом средств, если "
+"сделать это в течение срока отмены."
 
+#: .\templates\bookings\booking_summary.html:458
 msgid "24/7 Support"
 msgstr "Поддержка 24/7"
 
-msgid "Questions? WhatsApp us anytime — we respond within minutes."
-msgstr "Есть вопросы? Напишите в WhatsApp в любое время — мы отвечаем в течение минут."
+#: .\templates\bookings\booking_summary.html:459
+msgid "Our team is always available to help via WhatsApp or email."
+msgstr ""
+"Наша команда всегда готова помочь через WhatsApp или электронную почту."
 
-msgid "Prefer to pay in person? Select Pay on Arrival — your slot is held."
-msgstr "Предпочитаете платить лично? Выберите оплату при заезде — ваше место сохранено."
+#: .\templates\bookings\booking_summary.html:465
+msgid "Chat with Us"
+msgstr "Напишите нам"
 
-msgid "Ask Us Anything"
-msgstr "Задайте любой вопрос"
-
+#: .\templates\bookings\payment_options.html:4
 msgid "Complete Payment"
 msgstr "Завершить оплату"
 
+#: .\templates\bookings\payment_options.html:51
+msgid "Payment Error"
+msgstr "Ошибка оплаты"
+
+#: .\templates\bookings\payment_options.html:52
+msgid "Could Not Connect to Payment Gateway"
+msgstr "Не удалось подключиться к платёжному шлюзу"
+
+#: .\templates\bookings\payment_options.html:54
+msgid ""
+"We were unable to connect to PesaPal at this time. Your booking has been "
+"saved — you can try again or contact us for assistance."
+msgstr ""
+"Сейчас не удалось подключиться к PesaPal. Ваше бронирование сохранено — вы "
+"можете попробовать снова или обратиться к нам за помощью."
+
+#: .\templates\bookings\payment_options.html:63
+msgid "Try Again"
+msgstr "Попробовать снова"
+
+#: .\templates\bookings\payment_options.html:65
+msgid "I need help with my booking"
+msgstr "Мне нужна помощь с бронированием"
+
+#: .\templates\bookings\payment_options.html:69
+msgid "Contact Support via WhatsApp"
+msgstr "Связаться с поддержкой через WhatsApp"
+
+#: .\templates\bookings\payment_options.html:85
 msgid "Step 3 of 4"
 msgstr "Шаг 3 из 4"
 
-msgid "Complete <em>Payment</em>"
-msgstr "Завершите <em>оплату</em>"
+#: .\templates\bookings\payment_options.html:86
+msgid "Redirecting to Payment…"
+msgstr "Перенаправление на оплату…"
 
-msgid "Amount Due"
-msgstr "Сумма к оплате"
-
-msgid "Payment gateway coming in Phase 6"
-msgstr "Платёжный шлюз появится в фазе 6"
-
+#: .\templates\bookings\payment_options.html:88
 msgid ""
-"PesaPal integration is not yet live. To test the full flow, use the button "
-"below to simulate a successful payment."
+"You are being redirected to PesaPal's secure payment page. If you are not "
+"redirected automatically, click the button below."
 msgstr ""
-"Интеграция PesaPal ещё не активна. Для тестирования полного процесса используйте кнопку "
-"ниже для симуляции успешного платежа."
+"Вы перенаправляетесь на безопасную страницу оплаты PesaPal. Если "
+"перенаправление не произошло автоматически, нажмите кнопку ниже."
 
-msgid "Simulate Payment Success (Dev Only)"
-msgstr "Симулировать успешный платёж (только для разработки)"
-
-msgid ""
-"In production, you will be redirected to PesaPal's secure payment page to "
-"complete payment via Visa, Mastercard, or M-Pesa."
-msgstr ""
-"В продакшене вы будете перенаправлены на защищённую страницу оплаты PesaPal для "
-"завершения платежа через Visa, Mastercard или M-Pesa."
-
+#: .\templates\bookings\payment_options.html:97
 msgid "Back to Summary"
 msgstr "Вернуться к сводке"
 
-msgid "Rent a %(name)s in Zanzibar or Tanzania with Jadevine Travel & Tours."
-msgstr "Арендуйте %(name)s на Занзибаре или в Танзании с Jadevine Travel & Tours."
+#: .\templates\cars\car_detail.html:16 .\templates\hotels\hotel_detail.html:16
+#: .\templates\tours\tour_detail.html:16
+msgid "Breadcrumb"
+msgstr "Навигационная цепочка"
 
+#: .\templates\cars\car_detail.html:46 .\templates\hotels\hotel_detail.html:46
+#: .\templates\hotels\hotel_detail.html:214
+#: .\templates\tours\tour_detail.html:45
 msgid "photos"
 msgstr "фото"
 
+#: .\templates\cars\car_detail.html:84
 msgid "With Driver Available"
 msgstr "Доступен водитель"
 
+#: .\templates\cars\car_detail.html:89
 msgid "Self Drive Available"
 msgstr "Доступна аренда без водителя"
 
-msgid "reviews"
-msgstr "отзывов"
+#: .\templates\cars\car_detail.html:94 .\templates\tours\tour_detail.html:110
+msgid "Pets Welcome"
+msgstr "Питомцы приветствуются"
 
-msgid "Vehicle Specifications"
-msgstr "Характеристики автомобиля"
-
-msgid "Capacity"
-msgstr "Вместимость"
-
-msgid "passengers"
-msgstr "пассажиров"
-
-msgid "Transmission"
-msgstr "Коробка передач"
-
-msgid "Fuel Type"
-msgstr "Тип топлива"
-
-msgid "Driver Languages"
-msgstr "Языки водителя"
-
-msgid "French"
-msgstr "Французский"
-
-msgid "About This Vehicle"
-msgstr "Об этом автомобиле"
-
-msgid "From"
-msgstr "От"
-
-msgid "/ day"
-msgstr "/ день"
-
+#: .\templates\cars\car_detail.html:99 .\templates\cars\car_list.html:119
+#: .\templates\core\home.html:385 .\templates\hotels\hotel_detail.html:185
+#: .\templates\hotels\hotel_list.html:132
+#: .\templates\tours\tour_detail.html:105 .\templates\tours\tour_list.html:124
 msgid "off"
 msgstr "скидка"
 
+#: .\templates\cars\car_detail.html:109
+#: .\templates\hotels\hotel_detail.html:102
+#: .\templates\hotels\hotel_list.html:133
+#: .\templates\tours\tour_detail.html:120
+msgid "reviews"
+msgstr "отзывов"
+
+#: .\templates\cars\car_detail.html:129 .\templates\cars\car_detail.html:485
+#: .\templates\cars\car_list.html:120 .\templates\hotels\hotel_detail.html:122
+#: .\templates\hotels\hotel_detail.html:499
+#: .\templates\hotels\hotel_list.html:135
+#: .\templates\tours\tour_detail.html:139
+#: .\templates\tours\tour_detail.html:443 .\templates\tours\tour_list.html:125
+msgid "Save"
+msgstr "Сохранить"
+
+#: .\templates\cars\car_detail.html:137
+msgid "Vehicle Specifications"
+msgstr "Характеристики автомобиля"
+
+#: .\templates\cars\car_detail.html:141
+msgid "Capacity"
+msgstr "Вместимость"
+
+#: .\templates\cars\car_detail.html:142 .\templates\cars\car_list.html:118
+msgid "passengers"
+msgstr "пассажиров"
+
+#: .\templates\cars\car_detail.html:146
+msgid "Transmission"
+msgstr "Коробка передач"
+
+#: .\templates\cars\car_detail.html:151
+msgid "Fuel Type"
+msgstr "Тип топлива"
+
+#: .\templates\cars\car_detail.html:162
+msgid "Driver Languages"
+msgstr "Языки водителя"
+
+#: .\templates\cars\car_detail.html:166 .\templates\contact\contact.html:221
+msgid "French"
+msgstr "Французский"
+
+#: .\templates\cars\car_detail.html:180
+msgid "About This Vehicle"
+msgstr "Об этом автомобиле"
+
+#: .\templates\cars\car_detail.html:194 .\templates\core\home.html:394
+#: .\templates\hotels\hotel_detail.html:251
+#: .\templates\tours\tour_detail.html:95 .\templates\tours\tour_detail.html:99
+#: .\templates\tours\tour_detail.html:234 .\templates\tours\tour_list.html:119
+msgid "From"
+msgstr "От"
+
+#: .\templates\cars\car_detail.html:201 .\templates\cars\car_list.html:117
+msgid "/ day"
+msgstr "/ день"
+
+#: .\templates\cars\car_detail.html:225
 msgid "English & French driver"
 msgstr "Водитель говорит по-английски и по-французски"
 
+#: .\templates\cars\car_detail.html:226
 msgid "French-speaking driver"
 msgstr "Франкоязычный водитель"
 
+#: .\templates\cars\car_detail.html:227
 msgid "English-speaking driver"
 msgstr "Англоязычный водитель"
 
+#: .\templates\cars\car_detail.html:242
 msgid "Licence required"
 msgstr "Требуется удостоверение"
 
+#: .\templates\cars\car_detail.html:255
 msgid "Select pickup location"
 msgstr "Выберите место получения"
 
+#: .\templates\cars\car_detail.html:266
 msgid "Enter pickup location"
 msgstr "Введите место получения"
 
+#: .\templates\cars\car_detail.html:280 .\templates\cars\car_detail.html:293
+#: .\templates\hotels\hotel_detail.html:282
+#: .\templates\hotels\hotel_detail.html:295
 msgid "Select date"
 msgstr "Выберите дату"
 
+#: .\templates\cars\car_detail.html:303
+msgid "Passengers"
+msgstr "Пассажиры"
+
+#: .\templates\cars\car_detail.html:305
+#, python-format
+msgid "Max %(cap)s passengers total"
+msgstr "Макс. %(cap)s пассажиров в общей сложности"
+
+#: .\templates\cars\car_detail.html:314 .\templates\cars\car_detail.html:329
+#: .\templates\cars\car_detail.html:344 .\templates\cars\car_detail.html:360
+#: .\templates\hotels\hotel_detail.html:307
+#: .\templates\hotels\hotel_detail.html:331
+#: .\templates\hotels\hotel_detail.html:351
+#: .\templates\hotels\hotel_detail.html:371
+#: .\templates\hotels\hotel_detail.html:391
+#: .\templates\tours\tour_detail.html:281
+#: .\templates\tours\tour_detail.html:296
+#: .\templates\tours\tour_detail.html:311
+#: .\templates\tours\tour_detail.html:327
+msgid "Decrease"
+msgstr "Уменьшить"
+
+#: .\templates\cars\car_detail.html:319 .\templates\cars\car_detail.html:334
+#: .\templates\cars\car_detail.html:349 .\templates\cars\car_detail.html:365
+#: .\templates\hotels\hotel_detail.html:314
+#: .\templates\hotels\hotel_detail.html:338
+#: .\templates\hotels\hotel_detail.html:358
+#: .\templates\hotels\hotel_detail.html:378
+#: .\templates\hotels\hotel_detail.html:398
+#: .\templates\tours\tour_detail.html:286
+#: .\templates\tours\tour_detail.html:301
+#: .\templates\tours\tour_detail.html:316
+#: .\templates\tours\tour_detail.html:332
+msgid "Increase"
+msgstr "Увеличить"
+
+#: .\templates\cars\car_detail.html:326
+#: .\templates\hotels\hotel_detail.html:348
+#: .\templates\tours\tour_detail.html:293
+msgid "Ages 2–12"
+msgstr "2–12 лет"
+
+#: .\templates\cars\car_detail.html:341
+#: .\templates\hotels\hotel_detail.html:368
+msgid "Under 2"
+msgstr "До 2 лет"
+
+#: .\templates\cars\car_detail.html:357
+#: .\templates\hotels\hotel_detail.html:388
+#: .\templates\tours\tour_detail.html:324
+msgid "Dogs, cats"
+msgstr "Собаки, кошки"
+
+#: .\templates\cars\car_detail.html:384
 msgid "Enter your licence number"
 msgstr "Введите номер удостоверения"
 
+#: .\templates\cars\car_detail.html:393 .\templates\contact\contact.html:200
+#: .\templates\hotels\hotel_detail.html:412
+#: .\templates\tours\tour_detail.html:358
 msgid "optional"
 msgstr "необязательно"
 
+#: .\templates\cars\car_detail.html:397
 msgid "Airport pickup time, child seat, any other requests..."
 msgstr "Время встречи в аэропорту, детское кресло, другие пожелания..."
 
+#: .\templates\cars\car_detail.html:418
 msgid ""
 "This vehicle is non-refundable. Once booked, no refund will be issued "
 "regardless of cancellation date."
@@ -1745,303 +2857,465 @@ msgstr ""
 "Этот автомобиль невозвратный. После бронирования возврат не производится "
 "независимо от даты отмены."
 
+#: .\templates\cars\car_detail.html:427
 msgid "This vehicle requires Pay Now — Pay on Arrival is not available."
-msgstr "Для этого автомобиля требуется немедленная оплата — оплата при заезде недоступна."
+msgstr ""
+"Для этого автомобиля требуется немедленная оплата — оплата при заезде "
+"недоступна."
 
+#: .\templates\cars\car_detail.html:434
+#: .\templates\hotels\hotel_detail.html:451
+#: .\templates\tours\tour_detail.html:393
 msgid "Please check your booking details and try again."
 msgstr "Пожалуйста, проверьте детали бронирования и попробуйте снова."
 
-msgid "Review Booking"
-msgstr "Проверить бронирование"
-
+#: .\templates\cars\car_detail.html:445
+#: .\templates\hotels\hotel_detail.html:469
+#: .\templates\tours\tour_detail.html:406
 msgid "No charge yet — review before payment"
 msgstr "Оплата не списана — проверьте перед оплатой"
 
+#: .\templates\cars\car_detail.html:454
+#: .\templates\hotels\hotel_detail.html:477
+#: .\templates\tours\tour_detail.html:415
 msgid "Pay on Arrival available — pay when you reach Tanzania"
 msgstr "Оплата при заезде доступна — оплатите по прибытии в Танзанию"
 
+#: .\templates\cars\car_detail.html:478
+#, python-brace-format
+msgid "Maximum capacity is {cap} passengers."
+msgstr "Максимальная вместимость — {cap} пассажиров."
+
+#: .\templates\cars\car_detail.html:479
+msgid "Please select a pickup location"
+msgstr "Пожалуйста, выберите место получения"
+
+#: .\templates\cars\car_detail.html:480
+msgid "Please select a pickup date"
+msgstr "Пожалуйста, выберите дату получения"
+
+#: .\templates\cars\car_detail.html:481
+msgid "Please select a return date"
+msgstr "Пожалуйста, выберите дату возврата"
+
+#: .\templates\cars\car_detail.html:482
+msgid "Licence number is required for self-drive"
+msgstr "Для аренды без водителя требуется номер водительского удостоверения"
+
+#: .\templates\cars\car_detail.html:483
+msgid "day (transfer)"
+msgstr "день (трансфер)"
+
+#: .\templates\cars\car_detail.html:487 .\templates\cars\car_list.html:122
+#: .\templates\hotels\hotel_detail.html:501
+#: .\templates\hotels\hotel_list.html:137
+#: .\templates\tours\tour_detail.html:445 .\templates\tours\tour_list.html:127
+msgid "Added to favourites"
+msgstr "Добавлено в избранное"
+
+#: .\templates\cars\car_detail.html:488 .\templates\cars\car_list.html:123
+#: .\templates\hotels\hotel_detail.html:502
+#: .\templates\hotels\hotel_list.html:138
+#: .\templates\tours\tour_detail.html:446 .\templates\tours\tour_list.html:128
+msgid "Removed from favourites"
+msgstr "Удалено из избранного"
+
+#: .\templates\cars\car_detail.html:489 .\templates\cars\car_list.html:124
+#: .\templates\hotels\hotel_detail.html:503
+#: .\templates\hotels\hotel_list.html:139
+#: .\templates\tours\tour_detail.html:447 .\templates\tours\tour_list.html:129
+msgid "Could not update favourites. Try again."
+msgstr "Не удалось обновить избранное. Попробуйте снова."
+
+#: .\templates\cars\car_list.html:5
 msgid ""
 "Rent a car in Zanzibar or Dar es Salaam with Jadevine Travel & Tours. "
 "Sedans, SUVs, 4x4 safari vehicles and minibuses with optional drivers."
 msgstr ""
-"Арендуйте автомобиль на Занзибаре или в Дар-эс-Саламе с Jadevine Travel & Tours. "
-"Седаны, внедорожники, 4x4 для сафари и микроавтобусы с опциональными водителями."
+"Арендуйте автомобиль на Занзибаре или в Дар-эс-Саламе с Jadevine Travel & "
+"Tours. Седаны, внедорожники, 4x4 для сафари и микроавтобусы с опциональными "
+"водителями."
 
+#: .\templates\cars\car_list.html:19
 msgid "Ground Transport"
 msgstr "Наземный транспорт"
 
+#: .\templates\cars\car_list.html:20
 msgid "Car Rentals in <em>Zanzibar</em> & Tanzania"
 msgstr "Аренда автомобилей на <em>Занзибаре</em> и в Танзании"
 
+#: .\templates\cars\car_list.html:24
 msgid ""
 "Sedans, 4x4 safari vehicles, minibuses and vans — with or without a "
 "bilingual driver."
 msgstr ""
-"Седаны, 4x4 для сафари, микроавтобусы и фургоны — с двуязычным водителем или без."
+"Седаны, 4x4 для сафари, микроавтобусы и фургоны — с двуязычным водителем или "
+"без."
 
+#: .\templates\cars\car_list.html:43 .\templates\cars\car_list.html:44
+msgid "Search vehicles by name..."
+msgstr "Поиск автомобилей по названию..."
+
+#: .\templates\cars\car_list.html:46 .\templates\hotels\hotel_list.html:46
+#: .\templates\tours\tour_list.html:46
+msgid "Clear search"
+msgstr "Очистить поиск"
+
+#: .\templates\cars\car_list.html:56 .\templates\core\home.html:187
+#: .\templates\tours\tour_list.html:56
 msgid "All Types"
 msgstr "Все типы"
 
+#: .\templates\cars\car_list.html:67 .\templates\core\home.html:201
 msgid "Any Mode"
 msgstr "Любой режим"
 
+#: .\templates\cars\car_list.html:73
 msgid "Max Price / Day"
 msgstr "Макс. цена / день"
 
+#: .\templates\cars\car_list.html:75 .\templates\core\home.html:111
+#: .\templates\core\home.html:163 .\templates\core\home.html:212
+#: .\templates\hotels\hotel_list.html:75 .\templates\tours\tour_list.html:77
 msgid "Any Price"
 msgstr "Любая цена"
 
+#: .\templates\cars\car_list.html:76 .\templates\core\home.html:112
+#: .\templates\core\home.html:213 .\templates\hotels\hotel_list.html:76
 msgid "Up to $50"
 msgstr "До $50"
 
+#: .\templates\cars\car_list.html:77 .\templates\core\home.html:113
+#: .\templates\core\home.html:214 .\templates\hotels\hotel_list.html:77
 msgid "Up to $100"
 msgstr "До $100"
 
+#: .\templates\cars\car_list.html:78 .\templates\core\home.html:215
 msgid "Up to $150"
 msgstr "До $150"
 
+#: .\templates\cars\car_list.html:79 .\templates\core\home.html:114
+#: .\templates\core\home.html:216 .\templates\hotels\hotel_list.html:78
 msgid "Up to $200"
 msgstr "До $200"
 
+#: .\templates\cars\car_list.html:83 .\templates\hotels\hotel_list.html:95
+#: .\templates\tours\tour_list.html:85
 msgid "Clear"
 msgstr "Очистить"
 
+#: .\templates\cars\car_list.html:94
 msgid "vehicles found"
 msgstr "автомобилей найдено"
 
+#: .\templates\cars\car_list.html:99
 msgid "No vehicles found"
 msgstr "Автомобили не найдены"
 
-msgid "Try adjusting your filters to see more results."
-msgstr "Попробуйте изменить фильтры, чтобы увидеть больше результатов."
+#: .\templates\cars\car_list.html:100 .\templates\hotels\hotel_list.html:116
+#: .\templates\tours\tour_list.html:102
+msgid "Try adjusting your filters or search term."
+msgstr "Попробуйте изменить фильтры или поисковый запрос."
 
+#: .\templates\cars\car_list.html:101 .\templates\hotels\hotel_list.html:117
+#: .\templates\tours\tour_list.html:103
 msgid "Clear Filters"
 msgstr "Сбросить фильтры"
 
+#: .\templates\cars\car_list.html:103 .\templates\hotels\hotel_list.html:119
+#: .\templates\tours\tour_list.html:105
+msgid "Search results"
+msgstr "Результаты поиска"
+
+#: .\templates\cars\car_list.html:113
 msgid "View & Book"
 msgstr "Смотреть и забронировать"
 
+#: .\templates\cars\car_list.html:114
 msgid "Failed to load vehicles. Please try again."
 msgstr "Не удалось загрузить автомобили. Пожалуйста, попробуйте снова."
 
+#: .\templates\contact\contact.html:4
 msgid "Contact Us — Jadevine Travel & Tours"
 msgstr "Свяжитесь с нами — Jadevine Travel & Tours"
 
+#: .\templates\contact\contact.html:5
 msgid ""
 "Get in touch with Jadevine Travel & Tours. Send an enquiry, request a custom "
 "tour, or reach us on WhatsApp for instant help."
 msgstr ""
-"Свяжитесь с Jadevine Travel & Tours. Отправьте запрос, заказайте индивидуальный "
-"тур или напишите в WhatsApp для мгновенной помощи."
+"Свяжитесь с Jadevine Travel & Tours. Отправьте запрос, заказайте "
+"индивидуальный тур или напишите в WhatsApp для мгновенной помощи."
 
+#: .\templates\contact\contact.html:22
 msgid "Get In Touch"
 msgstr "Свяжитесь с нами"
 
+#: .\templates\contact\contact.html:25
 msgid "We'd Love to"
 msgstr "Мы рады"
 
+#: .\templates\contact\contact.html:25
 msgid "Hear From You"
 msgstr "получить ваше сообщение"
 
+#: .\templates\contact\contact.html:28
 msgid ""
 "Ask a question, request a custom tour, or simply say hello. We respond "
 "within 24 hours."
 msgstr ""
-"Задайте вопрос, закажите индивидуальный тур или просто поздоровайтесь. Мы отвечаем "
-"в течение 24 часов."
+"Задайте вопрос, закажите индивидуальный тур или просто поздоровайтесь. Мы "
+"отвечаем в течение 24 часов."
 
+#: .\templates\contact\contact.html:48 .\templates\contact\contact.html:302
+#: .\templates\core\about.html:491
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
+#: .\templates\contact\contact.html:69 .\templates\core\about.html:470
 msgid "Office"
 msgstr "Офис"
 
+#: .\templates\contact\contact.html:70
 msgid "Stone Town, Zanzibar"
 msgstr "Стоун-Таун, Занзибар"
 
+#: .\templates\contact\contact.html:79 .\templates\contact\contact.html:328
+#: .\templates\core\about.html:515
 msgid "Response Time"
 msgstr "Время ответа"
 
+#: .\templates\contact\contact.html:80 .\templates\core\about.html:516
 msgid "Within 24 hours"
 msgstr "В течение 24 часов"
 
+#: .\templates\contact\contact.html:101 .\templates\core\about.html:523
 msgid "Send a Message"
 msgstr "Отправить сообщение"
 
+#: .\templates\contact\contact.html:103
 msgid "How Can We"
 msgstr "Чем мы можем"
 
+#: .\templates\contact\contact.html:103
 msgid "Help?"
 msgstr "помочь?"
 
+#: .\templates\contact\contact.html:107
 msgid "Fill in the form below and we will get back to you as soon as possible."
 msgstr "Заполните форму ниже, и мы свяжемся с вами как можно скорее."
 
+#: .\templates\contact\contact.html:118
 msgid "Message Sent!"
 msgstr "Сообщение отправлено!"
 
+#: .\templates\contact\contact.html:121
 msgid ""
 "Thank you for reaching out. We will respond to your message within 24 hours."
 msgstr ""
-"Спасибо, что обратились к нам. Мы ответим на ваше сообщение в течение 24 часов."
+"Спасибо, что обратились к нам. Мы ответим на ваше сообщение в течение 24 "
+"часов."
 
+#: .\templates\contact\contact.html:125
 msgid "Send Another Message"
 msgstr "Отправить ещё сообщение"
 
+#: .\templates\contact\contact.html:139
 msgid "General"
 msgstr "Общее"
 
+#: .\templates\contact\contact.html:145
 msgid "Custom Tour"
 msgstr "Индивидуальный тур"
 
+#: .\templates\contact\contact.html:157
 msgid "Press"
 msgstr "Пресса"
 
+#: .\templates\contact\contact.html:168
 msgid "Full Name"
 msgstr "Полное имя"
 
+#: .\templates\contact\contact.html:173
 msgid "Your full name"
 msgstr "Ваше полное имя"
 
+#: .\templates\contact\contact.html:198
 msgid "Phone / WhatsApp"
 msgstr "Телефон / WhatsApp"
 
+#: .\templates\contact\contact.html:225
 msgid "Russian"
 msgstr "Русский"
 
+#: .\templates\contact\contact.html:240
 msgid "What is your enquiry about?"
 msgstr "О чём ваш запрос?"
 
+#: .\templates\contact\contact.html:253
 msgid "Tell us more about what you are looking for…"
 msgstr "Расскажите подробнее, что вы ищете…"
 
+#: .\templates\contact\contact.html:257 .\templates\contact\contact.html:451
 msgid "characters"
 msgstr "символов"
 
+#: .\templates\contact\contact.html:264 .\templates\contact\contact.html:449
 msgid "Send Message"
 msgstr "Отправить сообщение"
 
+#: .\templates\contact\contact.html:269
 msgid "Your information is kept private and never shared with third parties."
 msgstr "Ваша информация конфиденциальна и никогда не передаётся третьим лицам."
 
+#: .\templates\contact\contact.html:281
 msgid "Visit or Reach Us"
 msgstr "Посетите нас или свяжитесь"
 
+#: .\templates\contact\contact.html:330
 msgid "We respond within 24 hours"
 msgstr "Мы отвечаем в течение 24 часов"
 
+#: .\templates\contact\contact.html:365 .\templates\core\about.html:543
 msgid "Jadevine Travel & Tours office location"
 msgstr "Расположение офиса Jadevine Travel & Tours"
 
+#: .\templates\contact\contact.html:382
 msgid "Common Questions"
 msgstr "Частые вопросы"
 
+#: .\templates\contact\contact.html:384
 msgid "Frequently"
 msgstr "Часто"
 
+#: .\templates\contact\contact.html:384
 msgid "Asked"
 msgstr "задаваемые вопросы"
 
+#: .\templates\contact\contact.html:394
 msgid "How quickly do you respond to enquiries?"
 msgstr "Как быстро вы отвечаете на запросы?"
 
+#: .\templates\contact\contact.html:397
 msgid ""
 "We respond to all enquiries within 24 hours. For urgent matters, WhatsApp is "
 "the fastest way to reach us — we are typically available within a few hours."
 msgstr ""
-"Мы отвечаем на все запросы в течение 24 часов. По срочным вопросам WhatsApp — "
-"самый быстрый способ связаться с нами: обычно мы доступны в течение нескольких часов."
+"Мы отвечаем на все запросы в течение 24 часов. По срочным вопросам WhatsApp "
+"— самый быстрый способ связаться с нами: обычно мы доступны в течение "
+"нескольких часов."
 
+#: .\templates\contact\contact.html:406
 msgid "Can I request a fully customised tour?"
 msgstr "Могу ли я заказать полностью индивидуальный тур?"
 
+#: .\templates\contact\contact.html:409
 msgid ""
 "Absolutely. Select 'Custom Tour Request' in the form above and describe what "
 "you have in mind. We will design an itinerary tailored specifically to your "
 "preferences, group size, and budget."
 msgstr ""
-"Конечно. Выберите «Запрос на индивидуальный тур» в форме выше и опишите, что вы "
-"имеете в виду. Мы разработаем маршрут специально под ваши "
-"предпочтения, размер группы и бюджет."
+"Конечно. Выберите «Запрос на индивидуальный тур» в форме выше и опишите, что "
+"вы имеете в виду. Мы разработаем маршрут специально под ваши предпочтения, "
+"размер группы и бюджет."
 
+#: .\templates\contact\contact.html:418
 msgid "What payment methods do you accept?"
 msgstr "Какие способы оплаты вы принимаете?"
 
+#: .\templates\contact\contact.html:421
 msgid ""
 "We accept Visa, Mastercard, M-Pesa, and other mobile money options through "
 "our secure PesaPal payment gateway. Pay on Arrival is also available for "
 "selected services."
 msgstr ""
-"Мы принимаем Visa, Mastercard, M-Pesa и другие варианты мобильных денег через "
-"наш защищённый платёжный шлюз PesaPal. Оплата при заезде также доступна для "
-"отдельных услуг."
+"Мы принимаем Visa, Mastercard, M-Pesa и другие варианты мобильных денег "
+"через наш защищённый платёжный шлюз PesaPal. Оплата при заезде также "
+"доступна для отдельных услуг."
 
+#: .\templates\contact\contact.html:430
 msgid "Do you offer services in languages other than English?"
 msgstr "Предоставляете ли вы услуги на языках, кроме английского?"
 
+#: .\templates\contact\contact.html:433
 msgid ""
 "Yes — our team serves clients in English, French, and Russian. Simply select "
 "your preferred language in the contact form and we will respond accordingly."
 msgstr ""
-"Да — наша команда обслуживает клиентов на английском, французском и русском языках. "
-"Просто выберите предпочтительный язык в форме обратной связи, и мы ответим соответственно."
+"Да — наша команда обслуживает клиентов на английском, французском и русском "
+"языках. Просто выберите предпочтительный язык в форме обратной связи, и мы "
+"ответим соответственно."
 
+#: .\templates\contact\contact.html:448
 msgid "Sending…"
 msgstr "Отправка…"
 
-msgid "Network error. Please try again."
-msgstr "Ошибка сети. Пожалуйста, попробуйте снова."
-
+#: .\templates\contact\contact.html:452
 msgid "This field is required."
 msgstr "Это поле обязательно."
 
+#: .\templates\core\about.html:4
 msgid "About Us — Jadevine Travel & Tours"
 msgstr "О нас — Jadevine Travel & Tours"
 
+#: .\templates\core\about.html:5
 msgid ""
 "Learn about Jadevine Travel & Tours — our story, mission, values, and the "
 "team behind your perfect Tanzania experience."
 msgstr ""
-"Узнайте о Jadevine Travel & Tours — нашей истории, миссии, ценностях и команде, "
-"стоящей за вашим идеальным путешествием в Танзанию."
+"Узнайте о Jadevine Travel & Tours — нашей истории, миссии, ценностях и "
+"команде, стоящей за вашим идеальным путешествием в Танзанию."
 
+#: .\templates\core\about.html:22 .\templates\core\home.html:498
 msgid "Our Story"
 msgstr "Наша история"
 
+#: .\templates\core\about.html:25
 msgid "Passion for"
 msgstr "Страсть к"
 
+#: .\templates\core\about.html:25
 msgid "Tanzania"
 msgstr "Танзании"
 
+#: .\templates\core\about.html:28
 msgid ""
 "Born in Zanzibar. Built for the world. We exist to share the beauty, "
 "culture, and wildlife of East Africa with every traveller who trusts us."
 msgstr ""
-"Рождены на Занзибаре. Созданы для всего мира. Мы существуем, чтобы делиться красотой, "
-"культурой и дикой природой Восточной Африки с каждым путешественником, который нам доверяет."
+"Рождены на Занзибаре. Созданы для всего мира. Мы существуем, чтобы делиться "
+"красотой, культурой и дикой природой Восточной Африки с каждым "
+"путешественником, который нам доверяет."
 
+#: .\templates\core\about.html:48
 msgid "Serengeti Safari"
 msgstr "Сафари в Серенгети"
 
+#: .\templates\core\about.html:52
 msgid "Zanzibar Beach"
 msgstr "Пляж Занзибара"
 
+#: .\templates\core\about.html:54
 msgid "Stone Town Zanzibar"
 msgstr "Стоун-Таун Занзибар"
 
+#: .\templates\core\about.html:58
 msgid "Years of Excellence"
 msgstr "Лет превосходства"
 
+#: .\templates\core\about.html:66
 msgid "Who We Are"
 msgstr "Кто мы"
 
+#: .\templates\core\about.html:68
 msgid "More Than a"
 msgstr "Больше чем"
 
+#: .\templates\core\about.html:68
 msgid "Travel Agency"
 msgstr "туристическое агентство"
 
+#: .\templates\core\about.html:73
 msgid ""
 "Jadevine Travel & Tours was founded in Zanzibar by a team of passionate "
 "locals who believe that travel, done well, changes lives. Since 2016, we "
@@ -2049,11 +3323,13 @@ msgid ""
 "destinations — from the spice-scented alleys of Stone Town to the vast, lion-"
 "prowled plains of the Serengeti."
 msgstr ""
-"Jadevine Travel & Tours была основана на Занзибаре командой страстных местных жителей, "
-"которые верят, что путешествия, выполненные качественно, меняют жизнь. С 2016 года мы "
-"создаём маршруты по самым удивительным направлениям Танзании — от пропитанных "
-"пряностями переулков Стоун-Тауна до бескрайних равнин Серенгети, где бродят львы."
+"Jadevine Travel & Tours была основана на Занзибаре командой страстных "
+"местных жителей, которые верят, что путешествия, выполненные качественно, "
+"меняют жизнь. С 2016 года мы создаём маршруты по самым удивительным "
+"направлениям Танзании — от пропитанных пряностями переулков Стоун-Тауна до "
+"бескрайних равнин Серенгети, где бродят львы."
 
+#: .\templates\core\about.html:76
 msgid ""
 "We started small — a handful of safari packages and a deep commitment to "
 "personal service. Today, we are a full-service platform handling hotels, "
@@ -2061,89 +3337,109 @@ msgid ""
 "partners across Zanzibar and mainland Tanzania."
 msgstr ""
 "Мы начинали с малого — несколько пакетов сафари и глубокая приверженность "
-"персональному сервису. Сегодня мы — полноценная платформа, занимающаяся отелями, "
-"турами, арендой автомобилей и многим другим, с растущей сетью доверенных местных "
-"партнёров по всему Занзибару и материковой Танзании."
+"персональному сервису. Сегодня мы — полноценная платформа, занимающаяся "
+"отелями, турами, арендой автомобилей и многим другим, с растущей сетью "
+"доверенных местных партнёров по всему Занзибару и материковой Танзании."
 
+#: .\templates\core\about.html:79
 msgid ""
 "What has never changed is our promise: every client is treated as a guest, "
 "not a booking reference. We respond within 24 hours, we are available on "
 "WhatsApp, and we do not rest until your experience is exactly as you "
 "imagined it."
 msgstr ""
-"Неизменным остаётся наше обещание: каждый клиент воспринимается как гость, "
-"а не как номер бронирования. Мы отвечаем в течение 24 часов, доступны в "
-"WhatsApp и не успокоимся, пока ваш опыт не будет именно таким, каким вы его представляли."
+"Неизменным остаётся наше обещание: каждый клиент воспринимается как гость, а "
+"не как номер бронирования. Мы отвечаем в течение 24 часов, доступны в "
+"WhatsApp и не успокоимся, пока ваш опыт не будет именно таким, каким вы его "
+"представляли."
 
+#: .\templates\core\about.html:85
 msgid "Headquartered in Stone Town, Zanzibar"
 msgstr "Штаб-квартира в Стоун-Тауне, Занзибар"
 
+#: .\templates\core\about.html:89
 msgid "Licensed by the Tanzania Tourism Board"
 msgstr "Лицензировано Tanzania Tourism Board"
 
+#: .\templates\core\about.html:93
 msgid "Serving clients in English, French, and Russian"
 msgstr "Обслуживаем клиентов на английском, французском и русском языках"
 
+#: .\templates\core\about.html:97
 msgid "Available via WhatsApp around the clock"
 msgstr "Доступны через WhatsApp круглосуточно"
 
+#: .\templates\core\about.html:113
 msgid "What Drives Us"
 msgstr "Что нас движет"
 
+#: .\templates\core\about.html:115
 msgid "Mission &"
 msgstr "Миссия и"
 
+#: .\templates\core\about.html:115
 msgid "Vision"
 msgstr "Видение"
 
+#: .\templates\core\about.html:125
 msgid "Our Mission"
 msgstr "Наша миссия"
 
+#: .\templates\core\about.html:127
 msgid ""
 "To make Tanzania's extraordinary natural and cultural heritage accessible to "
 "travellers from every corner of the world — through honest pricing, expert "
 "local knowledge, and a service that never lets you feel alone."
 msgstr ""
 "Сделать удивительное природное и культурное наследие Танзании доступным для "
-"путешественников со всего мира — через честные цены, экспертные местные знания "
-"и сервис, который никогда не оставит вас в одиночестве."
+"путешественников со всего мира — через честные цены, экспертные местные "
+"знания и сервис, который никогда не оставит вас в одиночестве."
 
+#: .\templates\core\about.html:137
 msgid "Our Vision"
 msgstr "Наше видение"
 
+#: .\templates\core\about.html:139
 msgid ""
 "To become East Africa's most trusted travel partner — known not for size, "
 "but for the depth of care we put into every single journey we plan, from the "
 "first enquiry to the final farewell."
 msgstr ""
-"Стать самым надёжным партнёром по путешествиям в Восточной Африке — известным не "
-"размером, а глубиной заботы, которую мы вкладываем в каждое путешествие, "
-"от первого запроса до последнего прощания."
+"Стать самым надёжным партнёром по путешествиям в Восточной Африке — "
+"известным не размером, а глубиной заботы, которую мы вкладываем в каждое "
+"путешествие, от первого запроса до последнего прощания."
 
+#: .\templates\core\about.html:149
 msgid "Our Commitment"
 msgstr "Наши обязательства"
 
+#: .\templates\core\about.html:151
 msgid ""
 "Responsible tourism that respects local communities, protects wildlife "
 "habitats, and ensures the Tanzania we love today remains a wonder for "
 "generations to come."
 msgstr ""
-"Ответственный туризм, уважающий местные сообщества, защищающий среду обитания "
-"дикой природы и обеспечивающий, что Танзания, которую мы любим сегодня, останется "
-"чудом для будущих поколений."
+"Ответственный туризм, уважающий местные сообщества, защищающий среду "
+"обитания дикой природы и обеспечивающий, что Танзания, которую мы любим "
+"сегодня, останется чудом для будущих поколений."
 
+#: .\templates\core\about.html:168
 msgid "What We Stand For"
 msgstr "Наши принципы"
 
+#: .\templates\core\about.html:170
 msgid "Our Core"
 msgstr "Наши основные"
 
+#: .\templates\core\about.html:170
 msgid "Values"
 msgstr "ценности"
 
+#: .\templates\core\about.html:182
 msgid "Integrity"
 msgstr "Честность"
 
+#: .\templates\core\about.html:184
 msgid ""
 "We quote honest prices, give honest advice, and never recommend something we "
 "would not choose ourselves. No hidden fees. No false promises."
@@ -2151,77 +3447,99 @@ msgstr ""
 "Мы называем честные цены, даём честные советы и никогда не рекомендуем то, "
 "чего не выбрали бы сами. Никаких скрытых сборов. Никаких ложных обещаний."
 
+#: .\templates\core\about.html:195
 msgid "Excellence"
 msgstr "Превосходство"
 
+#: .\templates\core\about.html:197
 msgid ""
 "Every detail matters — from the vehicle we send to pick you up, to the hotel "
 "we recommend for your honeymoon. We take pride in getting it exactly right."
 msgstr ""
 "Каждая деталь важна — от автомобиля, который мы отправим за вами, до отеля, "
-"который мы рекомендуем для вашего медового месяца. Мы гордимся тем, что делаем всё правильно."
+"который мы рекомендуем для вашего медового месяца. Мы гордимся тем, что "
+"делаем всё правильно."
 
+#: .\templates\core\about.html:208
 msgid "Community"
 msgstr "Сообщество"
 
+#: .\templates\core\about.html:210
 msgid ""
 "We partner with locally-owned hotels, guides, and operators. Tourism should "
 "benefit the communities it passes through, not bypass them."
 msgstr ""
 "Мы сотрудничаем с местными отелями, гидами и операторами. Туризм должен "
-"приносить пользу сообществам, через которые проходит, а не обходить их стороной."
+"приносить пользу сообществам, через которые проходит, а не обходить их "
+"стороной."
 
+#: .\templates\core\about.html:223
 msgid "Sustainability"
 msgstr "Устойчивость"
 
+#: .\templates\core\about.html:225
 msgid ""
 "We actively support conservation initiatives in the Serengeti and Zanzibar's "
 "marine parks. Your trip with us contributes, not depletes."
 msgstr ""
-"Мы активно поддерживаем инициативы по сохранению природы в Серенгети и морских "
-"парках Занзибара. Ваша поездка с нами вносит вклад, а не наносит ущерб."
+"Мы активно поддерживаем инициативы по сохранению природы в Серенгети и "
+"морских парках Занзибара. Ваша поездка с нами вносит вклад, а не наносит "
+"ущерб."
 
+#: .\templates\core\about.html:236
 msgid "Responsiveness"
 msgstr "Отзывчивость"
 
+#: .\templates\core\about.html:238
 msgid ""
 "Travel questions rarely follow office hours. We are reachable via WhatsApp "
 "and email at any hour, and we respond with speed and substance."
 msgstr ""
-"Вопросы о путешествиях редко возникают в рабочее время. Мы доступны через WhatsApp "
-"и электронную почту в любое время и отвечаем быстро и по существу."
+"Вопросы о путешествиях редко возникают в рабочее время. Мы доступны через "
+"WhatsApp и электронную почту в любое время и отвечаем быстро и по существу."
 
+#: .\templates\core\about.html:249
 msgid "Transparency"
 msgstr "Прозрачность"
 
+#: .\templates\core\about.html:251
 msgid ""
 "Our prices are clear, our cancellation policies are fair, and every "
 "inclusion and exclusion is spelled out before you confirm. No surprises."
 msgstr ""
-"Наши цены ясны, наши политики отмены справедливы, и каждое включение и исключение "
-"чётко обозначено до подтверждения. Никаких сюрпризов."
+"Наши цены ясны, наши политики отмены справедливы, и каждое включение и "
+"исключение чётко обозначено до подтверждения. Никаких сюрпризов."
 
+#: .\templates\core\about.html:270 .\templates\core\home.html:237
+#: .\templates\core\home.html:462
 msgid "Happy Clients"
 msgstr "Довольных клиентов"
 
+#: .\templates\core\about.html:284
 msgid "Years in Business"
 msgstr "Лет в бизнесе"
 
+#: .\templates\core\about.html:291 .\templates\core\home.html:480
 msgid "Hotel Partners"
 msgstr "Партнёров-отелей"
 
+#: .\templates\core\about.html:298
 msgid "Languages Served"
 msgstr "Языков обслуживания"
 
+#: .\templates\core\about.html:313
 msgid "The People Behind It"
 msgstr "Люди за этим стоящие"
 
+#: .\templates\core\about.html:315
 msgid "Meet the"
 msgstr "Познакомьтесь с"
 
+#: .\templates\core\about.html:315
 msgid "Team"
 msgstr "командой"
 
+#: .\templates\core\about.html:318
 msgid ""
 "Our small, dedicated team brings together decades of combined experience in "
 "Tanzanian travel, hospitality, and customer care."
@@ -2229,12 +3547,16 @@ msgstr ""
 "Наша небольшая преданная команда объединяет десятилетия совместного опыта в "
 "tanzanийском туризме, гостеприимстве и обслуживании клиентов."
 
+#: .\templates\core\about.html:357 .\templates\core\about.html:371
+#: .\templates\core\about.html:385
 msgid "Team Member"
 msgstr "Член команды"
 
+#: .\templates\core\about.html:358
 msgid "Founder & Managing Director"
 msgstr "Основатель и генеральный директор"
 
+#: .\templates\core\about.html:359
 msgid ""
 "Born and raised in Zanzibar with over a decade of experience crafting "
 "unforgettable East Africa journeys."
@@ -2242,19 +3564,23 @@ msgstr ""
 "Родился и вырос на Занзибаре, имея более десяти лет опыта создания "
 "незабываемых путешествий по Восточной Африке."
 
+#: .\templates\core\about.html:372
 msgid "Safari & Tours Specialist"
 msgstr "Специалист по сафари и турам"
 
+#: .\templates\core\about.html:373
 msgid ""
 "Expert guide with deep knowledge of the Serengeti, Ngorongoro, and "
 "Zanzibar's hidden gems."
 msgstr ""
-"Эксперт-гид с глубокими знаниями Серенгети, Нгоронгоро и "
-"скрытых жемчужин Занзибара."
+"Эксперт-гид с глубокими знаниями Серенгети, Нгоронгоро и скрытых жемчужин "
+"Занзибара."
 
+#: .\templates\core\about.html:386
 msgid "Customer Relations Manager"
 msgstr "Менеджер по работе с клиентами"
 
+#: .\templates\core\about.html:387
 msgid ""
 "Your first point of contact. Fluent in English and French, dedicated to "
 "making every client feel at home."
@@ -2262,103 +3588,134 @@ msgstr ""
 "Ваш первый контакт. Свободно говорит по-английски и по-французски, стремится "
 "сделать каждого клиента комфортным."
 
+#: .\templates\core\about.html:404
 msgid "Trust & Credentials"
 msgstr "Доверие и аккредитация"
 
+#: .\templates\core\about.html:406
 msgid "Licensed &"
 msgstr "Лицензировано и"
 
+#: .\templates\core\about.html:406
 msgid "Accredited"
 msgstr "аккредитовано"
 
+#: .\templates\core\about.html:417
 msgid "Tanzania Tourism Board"
 msgstr "Tanzania Tourism Board"
 
+#: .\templates\core\about.html:418
 msgid "Officially registered and licensed travel operator in Tanzania."
-msgstr "Официально зарегистрированный и лицензированный туроператор в Танзании."
+msgstr ""
+"Официально зарегистрированный и лицензированный туроператор в Танзании."
 
+#: .\templates\core\about.html:427 .\templates\core\home.html:529
 msgid "Secure Payments"
 msgstr "Безопасные платежи"
 
+#: .\templates\core\about.html:428
 msgid ""
 "All transactions processed via PesaPal — Visa, Mastercard, and mobile money."
 msgstr ""
-"Все транзакции обрабатываются через PesaPal — Visa, Mastercard и мобильные деньги."
+"Все транзакции обрабатываются через PesaPal — Visa, Mastercard и мобильные "
+"деньги."
 
+#: .\templates\core\about.html:437
 msgid "TripAdvisor Listed"
 msgstr "Зарегистрированы на TripAdvisor"
 
+#: .\templates\core\about.html:438
 msgid "Verified business listing with genuine customer reviews."
 msgstr "Проверенный бизнес-профиль с реальными отзывами клиентов."
 
+#: .\templates\core\about.html:449
 msgid "Eco-Conscious Travel"
 msgstr "Экологичный туризм"
 
+#: .\templates\core\about.html:450
 msgid "Committed to responsible tourism and conservation in every tour we run."
 msgstr "Привержены ответственному туризму и охране природы в каждом туре."
 
+#: .\templates\core\about.html:468
 msgid "Find Us"
 msgstr "Найдите нас"
 
+#: .\templates\core\about.html:470
 msgid "Visit Our"
 msgstr "Посетите наш"
 
+#: .\templates\core\about.html:473
 msgid ""
 "We are located in the heart of Stone Town — Zanzibar's historic centre, a "
 "UNESCO World Heritage Site. Come say hello, or reach us remotely — we are "
 "always available."
 msgstr ""
 "Мы находимся в самом сердце Стоун-Тауна — исторического центра Занзибара, "
-"объекта Всемирного наследия ЮНЕСКО. Приходите поздороваться или свяжитесь удалённо — "
-"мы всегда доступны."
+"объекта Всемирного наследия ЮНЕСКО. Приходите поздороваться или свяжитесь "
+"удалённо — мы всегда доступны."
 
+#: .\templates\core\about.html:527
 msgid "WhatsApp Us"
 msgstr "Напишите нам в WhatsApp"
 
+#: .\templates\core\about.html:560
 msgid "Ready to Explore?"
 msgstr "Готовы к исследованию?"
 
+#: .\templates\core\about.html:562
 msgid "Start Your Tanzania"
 msgstr "Начните своё"
 
+#: .\templates\core\about.html:562
 msgid "Adventure"
 msgstr "приключение в Танзании"
 
+#: .\templates\core\about.html:565
 msgid ""
 "Browse our safari packages, find the perfect hotel, or simply reach out — we "
 "will plan the rest."
 msgstr ""
-"Просмотрите наши пакеты сафари, найдите идеальный отель или просто свяжитесь с нами — "
-"мы спланируем остальное."
+"Просмотрите наши пакеты сафари, найдите идеальный отель или просто свяжитесь "
+"с нами — мы спланируем остальное."
 
+#: .\templates\core\about.html:569
 msgid "View Safari Packages"
 msgstr "Смотреть пакеты сафари"
 
+#: .\templates\core\about.html:572 .\templates\core\home.html:44
+#: .\templates\gallery\gallery.html:195
 msgid "Plan My Trip"
 msgstr "Спланировать поездку"
 
+#: .\templates\core\home.html:4
 msgid "Jadevine Travel & Tours — Zanzibar & Tanzania"
 msgstr "Jadevine Travel & Tours — Занзибар и Танзания"
 
+#: .\templates\core\home.html:5
 msgid ""
 "Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Book hotels, "
 "safari packages, car rentals and more."
 msgstr ""
-"Откройте для себя Занзибар и Танзанию с Jadevine Travel & Tours. Бронируйте отели, "
-"пакеты сафари, аренду автомобилей и многое другое."
+"Откройте для себя Занзибар и Танзанию с Jadevine Travel & Tours. Бронируйте "
+"отели, пакеты сафари, аренду автомобилей и многое другое."
 
+#: .\templates\core\home.html:26
 msgid "Zanzibar & Tanzania"
 msgstr "Занзибар и Танзания"
 
+#: .\templates\core\home.html:30
 msgid "Discover the"
 msgstr "Откройте"
 
+#: .\templates\core\home.html:30
 msgid "Heart"
 msgstr "сердце"
 
+#: .\templates\core\home.html:31
 msgid "of East Africa"
 msgstr "Восточной Африки"
 
+#: .\templates\core\home.html:35
 msgid ""
 "Luxury safaris, pristine beaches, and unforgettable cultural experiences — "
 "crafted exclusively for discerning travellers."
@@ -2366,128 +3723,169 @@ msgstr ""
 "Роскошные сафари, нетронутые пляжи и незабываемые культурные впечатления — "
 "созданные исключительно для взыскательных путешественников."
 
+#: .\templates\core\home.html:41
 msgid "Explore Tours"
 msgstr "Смотреть туры"
 
+#: .\templates\core\home.html:73
 msgid "Soon"
 msgstr "Скоро"
 
+#: .\templates\core\home.html:82 .\templates\core\home.html:85
+#: .\templates\hotels\hotel_list.html:54
 msgid "Destination"
 msgstr "Направление"
 
+#: .\templates\core\home.html:86 .\templates\hotels\hotel_list.html:56
 msgid "All Destinations"
 msgstr "Все направления"
 
+#: .\templates\core\home.html:97 .\templates\hotels\hotel_list.html:86
 msgid "Any"
 msgstr "Любое"
 
+#: .\templates\core\home.html:107 .\templates\core\home.html:110
 msgid "Max price/night"
 msgstr "Макс. цена/ночь"
 
+#: .\templates\core\home.html:115 .\templates\hotels\hotel_list.html:79
 msgid "Up to $350"
 msgstr "До $350"
 
+#: .\templates\core\home.html:116 .\templates\hotels\hotel_list.html:80
 msgid "Up to $500"
 msgstr "До $500"
 
+#: .\templates\core\home.html:121 .\templates\core\home.html:172
+#: .\templates\core\home.html:221
 msgid "Search"
 msgstr "Поиск"
 
+#: .\templates\core\home.html:136
 msgid "All Tours"
 msgstr "Все туры"
 
+#: .\templates\core\home.html:141
 msgid "Safari & Beach"
 msgstr "Сафари и пляж"
 
+#: .\templates\core\home.html:146 .\templates\core\home.html:149
+#: .\templates\tours\tour_list.html:65
 msgid "Max Duration"
 msgstr "Макс. продолжительность"
 
+#: .\templates\core\home.html:150 .\templates\tours\tour_list.html:67
 msgid "Any Duration"
 msgstr "Любая продолжительность"
 
+#: .\templates\core\home.html:151 .\templates\tours\tour_list.html:68
 msgid "1 Day"
 msgstr "1 день"
 
+#: .\templates\core\home.html:152 .\templates\tours\tour_list.html:69
 msgid "Up to 3 Days"
 msgstr "До 3 дней"
 
+#: .\templates\core\home.html:153 .\templates\tours\tour_list.html:70
 msgid "Up to 5 Days"
 msgstr "До 5 дней"
 
+#: .\templates\core\home.html:154 .\templates\tours\tour_list.html:71
 msgid "Up to 7 Days"
 msgstr "До 7 дней"
 
+#: .\templates\core\home.html:159 .\templates\core\home.html:162
 msgid "Max Price/person"
 msgstr "Макс. цена/человек"
 
+#: .\templates\core\home.html:164 .\templates\tours\tour_list.html:78
 msgid "Under $100"
 msgstr "До $100"
 
+#: .\templates\core\home.html:165 .\templates\tours\tour_list.html:79
 msgid "Under $300"
 msgstr "До $300"
 
+#: .\templates\core\home.html:166 .\templates\tours\tour_list.html:80
 msgid "Under $500"
 msgstr "До $500"
 
+#: .\templates\core\home.html:167 .\templates\tours\tour_list.html:81
 msgid "Under $1,000"
 msgstr "До $1 000"
 
+#: .\templates\core\home.html:208 .\templates\core\home.html:211
 msgid "Max Price/Day"
 msgstr "Макс. цена/день"
 
+#: .\templates\core\home.html:245 .\templates\core\home.html:474
 msgid "Years Experience"
 msgstr "Лет опыта"
 
+#: .\templates\core\home.html:251
 msgid "Scroll"
 msgstr "Прокрутить"
 
+#: .\templates\core\home.html:265
 msgid "What We Offer"
 msgstr "Что мы предлагаем"
 
+#: .\templates\core\home.html:266
 msgid "Our Premium"
 msgstr "Наши премиальные"
 
+#: .\templates\core\home.html:268
 msgid ""
 "From Zanzibar's spice-scented shores to the Serengeti's golden plains — we "
 "handle every detail."
 msgstr ""
-"От ароматных пряностями берегов Занзибара до золотых равнин Серенгети — "
-"мы берём на себя каждую деталь."
+"От ароматных пряностями берегов Занзибара до золотых равнин Серенгети — мы "
+"берём на себя каждую деталь."
 
+#: .\templates\core\home.html:282
 msgid ""
 "Curated stays in Zanzibar and Dar es Salaam — from boutique beach resorts to "
 "city hotels."
 msgstr ""
-"Отобранные варианты размещения на Занзибаре и в Дар-эс-Саламе — от бутик-курортов "
-"на пляже до городских отелей."
+"Отобранные варианты размещения на Занзибаре и в Дар-эс-Саламе — от бутик-"
+"курортов на пляже до городских отелей."
 
+#: .\templates\core\home.html:284
 msgid "Browse Hotels"
 msgstr "Смотреть отели"
 
+#: .\templates\core\home.html:298
 msgid ""
 "Serengeti, Ngorongoro, Zanzibar beach — expertly guided experiences for "
 "every traveller."
 msgstr ""
-"Серенгети, Нгоронгоро, пляжи Занзибара — профессионально организованные впечатления "
-"для каждого путешественника."
+"Серенгети, Нгоронгоро, пляжи Занзибара — профессионально организованные "
+"впечатления для каждого путешественника."
 
+#: .\templates\core\home.html:300
 msgid "View Packages"
 msgstr "Смотреть пакеты"
 
+#: .\templates\core\home.html:314
 msgid ""
 "Sedans, 4x4 safari vehicles and minibuses with optional bilingual drivers."
 msgstr ""
-"Седаны, 4x4 для сафари и микроавтобусы с опциональными двуязычными водителями."
+"Седаны, 4x4 для сафари и микроавтобусы с опциональными двуязычными "
+"водителями."
 
+#: .\templates\core\home.html:316
 msgid "Browse Vehicles"
 msgstr "Смотреть автомобили"
 
+#: .\templates\core\home.html:327
 msgid "Coming Soon"
 msgstr "Скоро"
 
+#: .\templates\core\home.html:330
 msgid "Domestic Flights"
 msgstr "Внутренние рейсы"
 
+#: .\templates\core\home.html:331
 msgid ""
 "Tanzania domestic routes: Zanzibar, Dar es Salaam, Kilimanjaro, Arusha and "
 "more."
@@ -2495,27 +3893,35 @@ msgstr ""
 "Внутренние маршруты Танзании: Занзибар, Дар-эс-Салам, Килиманджаро, Аруша и "
 "другие."
 
+#: .\templates\core\home.html:349
 msgid "Top Experiences"
 msgstr "Лучшие впечатления"
 
+#: .\templates\core\home.html:350
 msgid "Packages"
 msgstr "Пакеты"
 
+#: .\templates\core\home.html:353
 msgid "View All Packages"
 msgstr "Смотреть все пакеты"
 
+#: .\templates\core\home.html:373
 msgid "Photo coming soon"
 msgstr "Фото скоро"
 
+#: .\templates\core\home.html:409 .\templates\tours\tour_list.html:120
 msgid "Max"
 msgstr "Макс"
 
+#: .\templates\core\home.html:425 .\templates\tours\tour_list.html:115
 msgid "View Details"
 msgstr "Подробнее"
 
+#: .\templates\core\home.html:438
 msgid "Packages Coming Soon"
 msgstr "Пакеты скоро появятся"
 
+#: .\templates\core\home.html:439
 msgid ""
 "Our team is curating the finest Zanzibar and Tanzania experiences. Check "
 "back shortly."
@@ -2523,60 +3929,76 @@ msgstr ""
 "Наша команда подбирает лучшие впечатления на Занзибаре и в Танзании. "
 "Загляните позже."
 
+#: .\templates\core\home.html:440
 msgid "Enquire Now"
 msgstr "Запросить сейчас"
 
+#: .\templates\core\home.html:490
 msgid "Why Jadevine"
 msgstr "Почему Jadevine"
 
+#: .\templates\core\home.html:492
 msgid "Travel With"
 msgstr "Путешествуйте"
 
+#: .\templates\core\home.html:492
 msgid "Confidence"
 msgstr "с уверенностью"
 
+#: .\templates\core\home.html:495
 msgid ""
 "We've been crafting exceptional Tanzania travel experiences since 2016. "
 "Every booking is backed by local expertise and personal care."
 msgstr ""
-"Мы создаём исключительные путешествия по Танзании с 2016 года. "
-"Каждое бронирование подкреплено местными знаниями и личной заботой."
+"Мы создаём исключительные путешествия по Танзании с 2016 года. Каждое "
+"бронирование подкреплено местными знаниями и личной заботой."
 
+#: .\templates\core\home.html:509
 msgid "Licensed & Certified"
 msgstr "Лицензировано и сертифицировано"
 
+#: .\templates\core\home.html:510
 msgid ""
 "Fully registered with the Tanzania Tourism Board and all required "
 "authorities."
 msgstr ""
-"Полностью зарегистрированы в Tanzania Tourism Board и всех необходимых органах."
+"Полностью зарегистрированы в Tanzania Tourism Board и всех необходимых "
+"органах."
 
+#: .\templates\core\home.html:519
 msgid "Personal Service"
 msgstr "Персональный сервис"
 
+#: .\templates\core\home.html:520
 msgid ""
 "A dedicated team that responds within 24 hours and knows Zanzibar intimately."
 msgstr ""
-"Преданная команда, отвечающая в течение 24 часов и знающая Занзибар досконально."
+"Преданная команда, отвечающая в течение 24 часов и знающая Занзибар "
+"досконально."
 
+#: .\templates\core\home.html:530
 msgid ""
 "Pay online via Visa, Mastercard, M-Pesa — or pay on arrival. Your choice."
 msgstr ""
 "Оплатите онлайн через Visa, Mastercard, M-Pesa — или при заезде. Ваш выбор."
 
+#: .\templates\core\home.html:539
 msgid "Multilingual Support"
 msgstr "Многоязычная поддержка"
 
+#: .\templates\core\home.html:540
 msgid ""
 "We serve clients in English, French, and Russian — with more languages "
 "coming."
 msgstr ""
-"Мы обслуживаем клиентов на английском, французском и русском языках — и планируем "
-"добавить ещё."
+"Мы обслуживаем клиентов на английском, французском и русском языках — и "
+"планируем добавить ещё."
 
+#: .\templates\core\home.html:549
 msgid "Custom Itineraries"
 msgstr "Индивидуальные маршруты"
 
+#: .\templates\core\home.html:550
 msgid ""
 "We craft journeys tailored to your interests, budget, and pace for a unique "
 "Tanzanian adventure."
@@ -2584,49 +4006,69 @@ msgstr ""
 "Мы создаём маршруты, адаптированные к вашим интересам, бюджету и темпу, для "
 "уникального приключения в Танзании."
 
+#: .\templates\core\home.html:559
 msgid "24/7 Availability"
 msgstr "Доступность 24/7"
 
+#: .\templates\core\home.html:560
 msgid ""
 "Book online anytime. Our team is available via WhatsApp around the clock."
 msgstr ""
-"Бронируйте онлайн в любое время. Наша команда доступна через WhatsApp круглосуточно."
+"Бронируйте онлайн в любое время. Наша команда доступна через WhatsApp "
+"круглосуточно."
 
+#: .\templates\core\home.html:580
 msgid "Verified Reviews"
 msgstr "Проверенные отзывы"
 
+#: .\templates\core\home.html:581
 msgid "What Our Guests"
 msgstr "Что говорят"
 
+#: .\templates\core\home.html:581
 msgid "Say"
 msgstr "наши гости"
 
+#: .\templates\core\home.html:588
 msgid ""
 "TripAdvisor reviews will appear here once your business listing is verified."
 msgstr ""
 "Отзывы TripAdvisor появятся здесь после верификации вашего бизнес-профиля."
 
+#: .\templates\core\home.html:604 .\templates\gallery\gallery.html:24
 msgid "Visual Journey"
 msgstr "Визуальное путешествие"
 
+#: .\templates\core\home.html:606 .\templates\gallery\gallery.html:27
 msgid "Moments of"
 msgstr "Моменты"
 
+#: .\templates\core\home.html:606 .\templates\gallery\gallery.html:27
 msgid "Wonder"
 msgstr "удивления"
 
+#: .\templates\core\home.html:610
 msgid "Full Gallery"
 msgstr "Полная галерея"
 
+#: .\templates\core\home.html:622 .\templates\core\home.html:700
+#: .\templates\gallery\gallery.html:101
+msgid "View photo"
+msgstr "Посмотреть фото"
+
+#: .\templates\core\home.html:667
 msgid "Stay Connected"
 msgstr "Оставайтесь на связи"
 
+#: .\templates\core\home.html:668
 msgid "Get Exclusive"
 msgstr "Получайте эксклюзивные"
 
+#: .\templates\core\home.html:668
 msgid "Travel Offers"
 msgstr "туристические предложения"
 
+#: .\templates\core\home.html:670
 msgid ""
 "Subscribe for curated Zanzibar travel tips, early access to deals, and "
 "seasonal promotions."
@@ -2634,18 +4076,23 @@ msgstr ""
 "Подпишитесь для получения отобранных советов по путешествиям на Занзибаре, "
 "раннего доступа к предложениям и сезонных акций."
 
+#: .\templates\core\home.html:678 .\templates\core\home.html:679
 msgid "Enter your email address"
 msgstr "Введите адрес электронной почты"
 
-msgid "Subscribe"
-msgstr "Подписаться"
-
+#: .\templates\core\home.html:688
 msgid "No spam, ever. Unsubscribe anytime."
 msgstr "Никакого спама. Отписаться можно в любое время."
 
+#: .\templates\core\home.html:699
+msgid "Close"
+msgstr "Закрыть"
+
+#: .\templates\gallery\gallery.html:4
 msgid "Gallery — Jadevine Travel & Tours"
 msgstr "Галерея — Jadevine Travel & Tours"
 
+#: .\templates\gallery\gallery.html:5
 msgid ""
 "Explore our photo and video gallery of Tanzania safaris, Zanzibar beaches, "
 "hotels, wildlife, and cultural experiences."
@@ -2653,26 +4100,37 @@ msgstr ""
 "Исследуйте нашу фото- и видеогалерею сафари в Танзании, пляжей Занзибара, "
 "отелей, дикой природы и культурных впечатлений."
 
+#: .\templates\gallery\gallery.html:30
 msgid ""
 "Safari landscapes, pristine beaches, vibrant culture — captured for you."
 msgstr ""
 "Пейзажи сафари, нетронутые пляжи, яркая культура — запечатлённые для вас."
 
+#: .\templates\gallery\gallery.html:38
 msgid "Photos"
 msgstr "Фото"
 
+#: .\templates\gallery\gallery.html:44
 msgid "Videos"
 msgstr "Видео"
 
+#: .\templates\gallery\gallery.html:51
 msgid "Categories"
 msgstr "Категории"
 
+#: .\templates\gallery\gallery.html:129
+msgid "Play video"
+msgstr "Воспроизвести видео"
+
+#: .\templates\gallery\gallery.html:157
 msgid "Gallery Coming Soon"
 msgstr "Галерея скоро"
 
+#: .\templates\gallery\gallery.html:160
 msgid "No items in this category yet."
 msgstr "В этой категории пока нет элементов."
 
+#: .\templates\gallery\gallery.html:162
 msgid ""
 "Our team is curating stunning photos and videos from across Tanzania and "
 "Zanzibar. Check back soon."
@@ -2680,15 +4138,19 @@ msgstr ""
 "Наша команда подбирает потрясающие фото и видео со всей Танзании и "
 "Занзибара. Загляните позже."
 
+#: .\templates\gallery\gallery.html:167
 msgid "View All"
 msgstr "Смотреть все"
 
+#: .\templates\gallery\gallery.html:185
 msgid "Ready to Experience"
 msgstr "Готовы пережить"
 
+#: .\templates\gallery\gallery.html:185
 msgid "Tanzania?"
 msgstr "Танзанию?"
 
+#: .\templates\gallery\gallery.html:188
 msgid ""
 "These are more than photographs — they are invitations. Let us plan your "
 "journey."
@@ -2696,36 +4158,58 @@ msgstr ""
 "Это больше, чем фотографии — это приглашения. Позвольте нам спланировать "
 "ваше путешествие."
 
+#: .\templates\gallery\gallery.html:192
 msgid "Explore Packages"
 msgstr "Смотреть пакеты"
 
+#: .\templates\gallery\gallery.html:207
 msgid "Jadevine Gallery"
 msgstr "Галерея Jadevine"
 
-msgid "Book %(name)s in %(location)s with Jadevine Travel & Tours."
-msgstr "Забронируйте %(name)s в %(location)s с Jadevine Travel & Tours."
+#: .\templates\hotels\hotel_detail.html:78
+#: .\templates\hotels\hotel_list.html:129
+msgid "star rating"
+msgstr "звёзд"
 
+#: .\templates\hotels\hotel_detail.html:130
 msgid "About This Hotel"
 msgstr "Об этом отеле"
 
+#: .\templates\hotels\hotel_detail.html:138
 msgid "Choose Your <em>Room</em>"
 msgstr "Выберите свой <em>номер</em>"
 
-msgid "Max %(max)s guests"
-msgstr "Макс. %(max)s гостей"
+#: .\templates\hotels\hotel_detail.html:155
+#, python-format
+msgid "Max %(max)s guests per room"
+msgstr "Макс. %(max)s гостей на номер"
 
+#: .\templates\hotels\hotel_detail.html:173
 msgid "Pay Now only"
 msgstr "Только немедленная оплата"
 
-msgid "/ night"
-msgstr "/ ночь"
+#: .\templates\hotels\hotel_detail.html:178
+msgid "Pets welcome"
+msgstr "Питомцы приветствуются"
 
+#: .\templates\hotels\hotel_detail.html:193
+#: .\templates\hotels\hotel_detail.html:255
+msgid "/ room / night"
+msgstr "/ номер / ночь"
+
+#: .\templates\hotels\hotel_detail.html:197
 msgid "Selected"
 msgstr "Выбрано"
 
+#: .\templates\hotels\hotel_detail.html:237
+msgid "Map showing hotel location"
+msgstr "Карта расположения отеля"
+
+#: .\templates\hotels\hotel_detail.html:416
 msgid "Dietary requirements, room preferences, late arrival..."
 msgstr "Диетические требования, предпочтения по номеру, позднее прибытие..."
 
+#: .\templates\hotels\hotel_detail.html:437
 msgid ""
 "This room type is non-refundable. Once booked, no refund will be issued "
 "regardless of cancellation date."
@@ -2733,18 +4217,72 @@ msgstr ""
 "Этот тип номера невозвратный. После бронирования возврат не производится "
 "независимо от даты отмены."
 
+#: .\templates\hotels\hotel_detail.html:445
 msgid "This room requires Pay Now — Pay on Arrival is not available."
-msgstr "Для этого номера требуется немедленная оплата — оплата при заезде недоступна."
+msgstr ""
+"Для этого номера требуется немедленная оплата — оплата при заезде недоступна."
 
+#: .\templates\hotels\hotel_detail.html:463
 msgid "No rooms currently available. Contact us for availability."
-msgstr "В настоящее время нет доступных номеров. Свяжитесь с нами для уточнения."
+msgstr ""
+"В настоящее время нет доступных номеров. Свяжитесь с нами для уточнения."
 
-msgid "This room requires Pay Now — Pay on Arrival not available."
-msgstr "Для этого номера требуется немедленная оплата — оплата при заезде недоступна."
+#: .\templates\hotels\hotel_detail.html:504
+#, python-brace-format
+msgid "Max {max} guests per room"
+msgstr "Макс. {max} гостей на номер"
 
-msgid "Free cancellation applies — cancel 14+ days before for a full refund."
-msgstr "Бесплатная отмена — отмените за 14+ дней для полного возврата средств."
+#: .\templates\hotels\hotel_detail.html:505
+msgid "Maximum capacity reached for selected rooms"
+msgstr "Достигнута максимальная вместимость для выбранных номеров"
 
+#: .\templates\hotels\hotel_detail.html:506
+msgid "Pets are not allowed in this room type."
+msgstr "В этом типе номера питомцы не допускаются."
+
+#: .\templates\hotels\hotel_detail.html:507
+msgid "Please select a check-in date"
+msgstr "Пожалуйста, выберите дату заезда"
+
+#: .\templates\hotels\hotel_detail.html:508
+msgid "Please select a check-out date"
+msgstr "Пожалуйста, выберите дату выезда"
+
+#: .\templates\hotels\hotel_detail.html:509
+msgid "Please select a room type"
+msgstr "Пожалуйста, выберите тип номера"
+
+#: .\templates\hotels\hotel_detail.html:510
+msgid "night"
+msgstr "ночь"
+
+#: .\templates\hotels\hotel_detail.html:511
+msgid "nights"
+msgstr "ночей"
+
+#: .\templates\hotels\hotel_detail.html:512
+msgid "room"
+msgstr "номер"
+
+#: .\templates\hotels\hotel_detail.html:513
+msgid "rooms"
+msgstr "номеров"
+
+#: .\templates\hotels\hotel_detail.html:514
+#, python-brace-format
+msgid ""
+"Max {max} adults/children per room × {rooms} {roomWord} = {total} total. "
+"Infants & pets excluded."
+msgstr "Макс. {max} взрослых/детей на номер × {rooms} {roomWord} = {total} всего. Младенцы и питомцы не учитываются."
+
+#: .\templates\hotels\hotel_detail.html:515
+#, python-brace-format
+msgid ""
+"Max {max} adults/children for {rooms} room(s). Infants and pets are not "
+"counted."
+msgstr "Макс. {max} взрослых/детей на {rooms} номер(ов). Младенцы и питомцы не учитываются."
+
+#: .\templates\hotels\hotel_list.html:5
 msgid ""
 "Book hotels in Zanzibar and Dar es Salaam with Jadevine Travel & Tours. "
 "Handpicked accommodation for every budget."
@@ -2752,156 +4290,217 @@ msgstr ""
 "Бронируйте отели на Занзибаре и в Дар-эс-Саламе с Jadevine Travel & Tours. "
 "Отобранное жильё для любого бюджета."
 
+#: .\templates\hotels\hotel_list.html:19
 msgid "Accommodation"
 msgstr "Размещение"
 
+#: .\templates\hotels\hotel_list.html:20
 msgid "Hotels in <em>Zanzibar</em> & Dar es Salaam"
 msgstr "Отели на <em>Занзибаре</em> и в Дар-эс-Саламе"
 
+#: .\templates\hotels\hotel_list.html:24
 msgid ""
 "Handpicked hotels and guesthouses — from beachfront luxury to Stone Town "
 "boutique stays."
 msgstr ""
-"Отобранные отели и гостевые дома — от роскошных пляжных курортов до бутик-отелей "
-"Стоун-Тауна."
+"Отобранные отели и гостевые дома — от роскошных пляжных курортов до бутик-"
+"отелей Стоун-Тауна."
 
+#: .\templates\hotels\hotel_list.html:43 .\templates\hotels\hotel_list.html:44
+msgid "Search hotels by name..."
+msgstr "Поиск отелей по названию..."
+
+#: .\templates\hotels\hotel_list.html:64
 msgid "Any Rating"
 msgstr "Любая звёздность"
 
+#: .\templates\hotels\hotel_list.html:73
 msgid "Max Price / Night"
 msgstr "Макс. цена / ночь"
 
+#: .\templates\hotels\hotel_list.html:106
 msgid "hotels found"
 msgstr "отелей найдено"
 
+#: .\templates\hotels\hotel_list.html:111
 msgid "Finding hotels..."
 msgstr "Поиск отелей..."
 
+#: .\templates\hotels\hotel_list.html:115
 msgid "No hotels found"
 msgstr "Отели не найдены"
 
+#: .\templates\hotels\hotel_list.html:130
 msgid "View Hotel"
 msgstr "Смотреть отель"
 
+#: .\templates\hotels\hotel_list.html:131
 msgid "Failed to load hotels. Please try again."
 msgstr "Не удалось загрузить отели. Пожалуйста, попробуйте снова."
 
+#: .\templates\hotels\hotel_list.html:134
 msgid "per night"
 msgstr "за ночь"
 
-msgid "Breadcrumb"
-msgstr "Навигационная цепочка"
-
+#: .\templates\tours\tour_detail.html:86 .\templates\tours\tour_list.html:122
 msgid "day"
 msgstr "день"
 
+#: .\templates\tours\tour_detail.html:90
+#, python-format
 msgid "Max %(max)s people"
 msgstr "Макс. %(max)s человек"
 
+#: .\templates\tours\tour_detail.html:101
 msgid "per person"
 msgstr "на человека"
 
+#: .\templates\tours\tour_detail.html:145
 msgid "About This Tour"
 msgstr "Об этом туре"
 
+#: .\templates\tours\tour_detail.html:151
 msgid "Tour Highlights"
 msgstr "Особенности тура"
 
+#: .\templates\tours\tour_detail.html:162
 msgid "Day-by-Day Itinerary"
 msgstr "Маршрут по дням"
 
+#: .\templates\tours\tour_detail.html:174
 msgid "Day"
 msgstr "День"
 
+#: .\templates\tours\tour_detail.html:193
 msgid "What's Included"
 msgstr "Что включено"
 
+#: .\templates\tours\tour_detail.html:198
 msgid "Included"
 msgstr "Включено"
 
+#: .\templates\tours\tour_detail.html:208
 msgid "Not Included"
 msgstr "Не включено"
 
+#: .\templates\tours\tour_detail.html:221
 msgid "What to Bring"
 msgstr "Что взять с собой"
 
+#: .\templates\tours\tour_detail.html:243
 msgid " total"
 msgstr " итого"
 
+#: .\templates\tours\tour_detail.html:262
 msgid "Select a date"
 msgstr "Выберите дату"
 
-msgid "Decrease"
-msgstr "Уменьшить"
+#: .\templates\tours\tour_detail.html:272
+#, python-format
+msgid "Max %(max)s billable participants (adults + children)"
+msgstr "Макс. %(max)s оплачиваемых участников (взрослые + дети)"
 
-msgid "Increase"
-msgstr "Увеличить"
+#: .\templates\tours\tour_detail.html:308
+msgid "Under 2 — free"
+msgstr "До 2 лет — бесплатно"
 
-msgid "Maximum %(max)s participants"
-msgstr "Максимум %(max)s участников"
-
+#: .\templates\tours\tour_detail.html:345
+#: .\templates\tours\tour_detail.html:439
 msgid "person"
 msgstr "человек"
 
+#: .\templates\tours\tour_detail.html:362
 msgid "Dietary requirements, accessibility needs, anniversary celebration..."
-msgstr "Диетические требования, потребности в доступности, празднование юбилея..."
+msgstr ""
+"Диетические требования, потребности в доступности, празднование юбилея..."
 
+#: .\templates\tours\tour_detail.html:368
 msgid "We will confirm your preferred date within 24–48 hours of booking."
 msgstr "Мы подтвердим выбранную дату в течение 24–48 часов после бронирования."
 
+#: .\templates\tours\tour_detail.html:377
 msgid ""
 "This tour package is non-refundable. Once booked, no refund will be issued "
 "regardless of cancellation date."
 msgstr ""
-"Этот туристический пакет невозвратный. После бронирования возврат не производится "
-"независимо от даты отмены."
+"Этот туристический пакет невозвратный. После бронирования возврат не "
+"производится независимо от даты отмены."
 
+#: .\templates\tours\tour_detail.html:386
 msgid "This tour requires Pay Now — Pay on Arrival is not available."
-msgstr "Для этого тура требуется немедленная оплата — оплата при заезде недоступна."
+msgstr ""
+"Для этого тура требуется немедленная оплата — оплата при заезде недоступна."
 
+#: .\templates\tours\tour_detail.html:401
 msgid "Book This Tour"
 msgstr "Забронировать этот тур"
 
+#: .\templates\tours\tour_detail.html:440 .\templates\tours\tour_list.html:123
 msgid "people"
 msgstr "человек"
 
+#: .\templates\tours\tour_detail.html:441
+#, python-brace-format
+msgid "Maximum {max} participants reached."
+msgstr "Достигнут максимум — {max} участников."
+
+#: .\templates\tours\tour_detail.html:442
+msgid "Please select a preferred start date."
+msgstr "Пожалуйста, выберите предпочтительную дату начала."
+
+#: .\templates\tours\tour_list.html:4
 msgid "Safari & Tour Packages in Zanzibar & Tanzania"
 msgstr "Пакеты сафари и туров на Занзибаре и в Танзании"
 
+#: .\templates\tours\tour_list.html:5
 msgid ""
 "Explore Serengeti safaris, Zanzibar beach tours, Ngorongoro crater trips, "
 "spice tours and more. Book directly with Jadevine Travel & Tours."
 msgstr ""
 "Исследуйте сафари в Серенгети, пляжные туры на Занзибаре, поездки к кратеру "
-"Нгоронгоро, туры по пряностям и многое другое. Бронируйте напрямую с Jadevine Travel & Tours."
+"Нгоронгоро, туры по пряностям и многое другое. Бронируйте напрямую с "
+"Jadevine Travel & Tours."
 
+#: .\templates\tours\tour_list.html:19
 msgid "Explore Tanzania"
 msgstr "Исследуйте Танзанию"
 
+#: .\templates\tours\tour_list.html:20
 msgid "Safaris & Tour Packages"
 msgstr "Пакеты сафари и туров"
 
+#: .\templates\tours\tour_list.html:24
 msgid ""
 "Hand-crafted experiences from the Serengeti to Zanzibar's shores. Every "
 "journey is personal."
 msgstr ""
-"Индивидуально созданные впечатления от Серенгети до берегов Занзибара. Каждое "
-"путешествие — личное."
+"Индивидуально созданные впечатления от Серенгети до берегов Занзибара. "
+"Каждое путешествие — личное."
 
+#: .\templates\tours\tour_list.html:43 .\templates\tours\tour_list.html:44
+msgid "Search tours by name..."
+msgstr "Поиск туров по названию..."
+
+#: .\templates\tours\tour_list.html:61
 msgid "Combined"
 msgstr "Комбинированный"
 
+#: .\templates\tours\tour_list.html:75
 msgid "Max Price / Person"
 msgstr "Макс. цена / человек"
 
+#: .\templates\tours\tour_list.html:96
 msgid "packages found"
 msgstr "пакетов найдено"
 
+#: .\templates\tours\tour_list.html:101
 msgid "No tours found"
 msgstr "Туры не найдены"
 
+#: .\templates\tours\tour_list.html:116
 msgid "Failed to load tours. Please try again."
 msgstr "Не удалось загрузить туры. Пожалуйста, попробуйте снова."
 
+#: .\templates\tours\tour_list.html:118
 msgid "/ person"
 msgstr "/ человек"

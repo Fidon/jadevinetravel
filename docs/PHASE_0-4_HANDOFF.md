@@ -669,7 +669,7 @@ Gmail strips these. Use `<table>` for all multi-column layouts, amount rows, and
 - Inline CSS only — no `<link>` tags
 - Plain text body always included
 - Mobile responsive via `@media (max-width: 620px)`
-- Footer: `Jadevine Travel & Tours | Zanzibar, Tanzania | info@jadevinetours.com | +255 713 529 019`
+- Footer: `Jadevine Travel & Tours | Zanzibar, Tanzania | info@jadevinetravel.com | +255 713 529 019`
 
 ## PDF BOOKING CONFIRMATION (BookingPDFView)
 **Header:** Single flat `Table` with 2 rows × 2 columns. No nested tables — ReportLab clips nested content.

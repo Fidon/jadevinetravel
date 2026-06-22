@@ -70,9 +70,9 @@ def _email_wrap(title, body_html, recipient_email=''):
       <p style="font-size:12px;color:#9e8e7e;margin:0;line-height:1.8;">
         <strong>Jadevine Travel &amp; Tours</strong><br>
         Stone Town, Zanzibar, Tanzania<br>
-        <a href="mailto:info@jadevinetours.com"
+        <a href="mailto:info@jadevinetravel.com"
            style="color:#c89666;text-decoration:none;">
-          info@jadevinetours.com
+          info@jadevinetravel.com
         </a>
       </p>
       {note}

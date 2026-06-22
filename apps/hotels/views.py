@@ -2,12 +2,17 @@ import json
 from django.views.generic import DetailView
 from django.views import View
 from django.http import JsonResponse
+from django.urls import reverse
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Avg, Count
+
 from .models import Hotel, HotelRoomType
 from apps.reviews.models import Review
 from apps.core.models import SavedFavourite
-from django.db.models import Avg, Count
+from apps.core.seo import absolute_url, clean_text, jsonld_safe, breadcrumb_schema
 
 
 def public_hotels_qs():
@@ -114,7 +119,7 @@ class HotelListView(View):
                 'discount_percent': best_discount,
                 'avg_rating': avg_rating,
                 'review_count': review_count,
-                'url': request.build_absolute_uri(f"/hotels/{hotel.slug}/"),
+                'url': request.build_absolute_uri(reverse('hotels:detail', kwargs={'slug': hotel.slug})),
                 'is_saved': hotel.id in saved_ids,
                 'item_type': 'hotel',
             })
@@ -183,5 +188,69 @@ class HotelDetailView(DetailView):
             ).exists()
         )
         context['favourite_toggle_url'] = '/favourites/toggle/'
+
+        # ----------------------------------------------------------------
+        # SEO: per-listing meta (drives <title>/description/OG/Twitter via
+        # base.html) + Hotel & BreadcrumbList JSON-LD.
+        # ----------------------------------------------------------------
+        canonical = absolute_url(self.request.path)
+        photos = list(context['photos'])
+        cover = hotel.cover_photo
+        image_urls = [absolute_url(p.image.url) for p in photos if p.image]
+        if cover and cover.image:
+            primary_image = absolute_url(cover.image.url)
+        elif image_urls:
+            primary_image = image_urls[0]
+        else:
+            primary_image = absolute_url(static('images/logo.png'))
+
+        location_label = str(hotel.get_location_display())
+
+        hotel_schema = {
+            "@type": "Hotel",
+            "@id": canonical + "#hotel",
+            "name": hotel.name,
+            "url": canonical,
+            "description": clean_text(hotel.get_description(lang), 300),
+            "image": image_urls or [primary_image],
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": hotel.address,
+                "addressLocality": location_label,
+                "addressCountry": "TZ",
+            },
+            "starRating": {"@type": "Rating", "ratingValue": hotel.stars},
+            "priceRange": f"From {hotel.price_per_night} USD",
+        }
+        if hotel.latitude is not None and hotel.longitude is not None:
+            hotel_schema["geo"] = {
+                "@type": "GeoCoordinates",
+                "latitude": float(hotel.latitude),
+                "longitude": float(hotel.longitude),
+            }
+        if context['review_count']:
+            hotel_schema["aggregateRating"] = {
+                "@type": "AggregateRating",
+                "ratingValue": context['avg_rating'],
+                "reviewCount": context['review_count'],
+            }
+
+        breadcrumbs = breadcrumb_schema([
+            (gettext("Home"), absolute_url(reverse('core:home'))),
+            (gettext("Hotels"), absolute_url(reverse('hotels:list'))),
+            (hotel.name, canonical),
+        ])
+
+        context['seo_title'] = f"{hotel.name}, {location_label} | Jadevine Travel & Tours"
+        context['seo_description'] = clean_text(hotel.get_description(lang), 155) or (
+            gettext("Book %(name)s in %(location)s with Jadevine Travel & Tours.")
+            % {"name": hotel.name, "location": location_label}
+        )
+        context['seo_image'] = primary_image
+        context['seo_type'] = 'product'
+        context['structured_data'] = jsonld_safe({
+            "@context": "https://schema.org",
+            "@graph": [hotel_schema, breadcrumbs],
+        })
 
         return context

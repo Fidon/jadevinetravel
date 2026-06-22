@@ -7,6 +7,17 @@
   const Count = $("#results-count");
   const S = window.JD_STRINGS || {};
 
+  // Escape any server/user-supplied value before injecting into HTML.
+  function escHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   function showSkeletons(n) {
     Grid.empty();
     for (let i = 0; i < n; i++) {
@@ -28,21 +39,24 @@
     let html = "";
     if (offersDriver) {
       html += `<span class="car-mode-badge driver">
-                 <i class="bi bi-person-fill"></i> ${S.withDriver || "With Driver"}
+                 <i class="bi bi-person-fill" aria-hidden="true"></i> ${S.withDriver || "With Driver"}
                </span>`;
     }
     if (offersSelfDrive) {
       html += `<span class="car-mode-badge self-drive">
-                 <i class="bi bi-key-fill"></i> ${S.selfDrive || "Self Drive"}
+                 <i class="bi bi-key-fill" aria-hidden="true"></i> ${S.selfDrive || "Self Drive"}
                </span>`;
     }
     return html;
   }
 
   function renderCard(c) {
+    const name = escHtml(c.name);
+    const url = escHtml(c.url);
+
     const imgHtml = c.cover_photo
-      ? `<img src="${c.cover_photo}" alt="${c.name}" class="car-card-img" loading="lazy">`
-      : `<div class="car-card-img-placeholder"><i class="bi bi-car-front-fill"></i></div>`;
+      ? `<img src="${escHtml(c.cover_photo)}" alt="${name}" class="car-card-img" loading="lazy">`
+      : `<div class="car-card-img-placeholder"><i class="bi bi-car-front-fill" aria-hidden="true"></i></div>`;
 
     // top-right
     const discountBadge = c.has_discount
@@ -50,7 +64,7 @@
       : "";
 
     // top-left — frosted white pill (car-card-type-badge-img in CSS)
-    const typeBadge = `<span class="car-card-type-badge-img">${c.vehicle_type}</span>`;
+    const typeBadge = `<span class="car-card-type-badge-img">${escHtml(c.vehicle_type)}</span>`;
 
     // bottom-right — heart button (positioned via .car-card .jd-fav-btn override in main.css)
     const favBtn =
@@ -59,7 +73,7 @@
         : "";
 
     const ratingBadge = c.avg_rating
-      ? `<span class="jd-rating-badge"><i class="bi bi-star-fill"></i> ${c.avg_rating}<span class="jd-rating-count">(${c.review_count})</span></span>`
+      ? `<span class="jd-rating-badge"><i class="bi bi-star-fill" aria-hidden="true"></i> ${c.avg_rating}<span class="jd-rating-count">(${c.review_count})</span></span>`
       : "";
 
     const priceHtml = c.has_discount
@@ -71,29 +85,29 @@
       <div class="col-lg-4 col-md-6 jd-reveal">
         <div class="car-card">
           <div class="car-card-img-wrap" style="position:relative;">
-            <a href="${c.url}" style="display:block;height:100%;">${imgHtml}</a>
+            <a href="${url}" style="display:block;height:100%;">${imgHtml}</a>
             ${typeBadge}
             ${discountBadge}
             ${favBtn}
           </div>
           <div class="car-card-body">
             <div class="d-flex align-items-center justify-content-between mb-1">
-              <h3 class="car-card-name mb-0">${c.name}</h3>
+              <h3 class="car-card-name mb-0">${name}</h3>
               ${ratingBadge}
             </div>
             <div class="car-card-specs">
-              <span class="car-spec-pill"><i class="bi bi-people-fill"></i> ${c.capacity} ${S.capacity || "passengers"}</span>
-              <span class="car-spec-pill"><i class="bi bi-gear-fill"></i> ${c.transmission}</span>
-              <span class="car-spec-pill"><i class="bi bi-droplet-fill"></i> ${c.fuel_type}</span>
+              <span class="car-spec-pill"><i class="bi bi-people-fill" aria-hidden="true"></i> ${c.capacity} ${S.capacity || "passengers"}</span>
+              <span class="car-spec-pill"><i class="bi bi-gear-fill" aria-hidden="true"></i> ${escHtml(c.transmission)}</span>
+              <span class="car-spec-pill"><i class="bi bi-droplet-fill" aria-hidden="true"></i> ${escHtml(c.fuel_type)}</span>
             </div>
             <div class="car-card-modes">${renderModes(c.offers_self_drive, c.offers_driver)}</div>
-            <p class="car-card-desc">${c.description || ""}</p>
+            <p class="car-card-desc">${escHtml(c.description) || ""}</p>
             <div class="car-card-footer">
               <div>
                 ${priceHtml}
                 <div class="car-card-price-label">${S.perDay || "/ day"}</div>
               </div>
-              <a href="${c.url}" class="btn-accent-jd" style="padding:10px 22px;font-size:0.7rem;">
+              <a href="${url}" class="btn-accent-jd" style="padding:10px 22px;font-size:0.7rem;">
                 ${S.viewCar || "View & Book"}
               </a>
             </div>

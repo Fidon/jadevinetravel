@@ -6,8 +6,10 @@
 
   // ── Inquiry type tab switching ────────────────────────────────────────
   $(document).on("click", ".contact-inquiry-tab", function () {
-    $(".contact-inquiry-tab").removeClass("active");
-    $(this).addClass("active");
+    $(".contact-inquiry-tab")
+      .removeClass("active")
+      .attr("aria-pressed", "false");
+    $(this).addClass("active").attr("aria-pressed", "true");
     $("#inquiryTypeInput").val($(this).data("value"));
   });
 
@@ -19,14 +21,18 @@
 
   // ── Inline field validation helpers ──────────────────────────────────
   function showError(fieldId, errorId, msg) {
-    $("#" + fieldId).addClass("is-invalid");
+    $("#" + fieldId)
+      .addClass("is-invalid")
+      .attr("aria-invalid", "true");
     $("#" + errorId)
       .text(msg)
       .addClass("visible");
   }
 
   function clearError(fieldId, errorId) {
-    $("#" + fieldId).removeClass("is-invalid");
+    $("#" + fieldId)
+      .removeClass("is-invalid")
+      .attr("aria-invalid", "false");
     $("#" + errorId)
       .text("")
       .removeClass("visible");
@@ -160,8 +166,12 @@
     $("#contactForm").trigger("reset");
     $("#contactCharCount").text("0 " + (S.characters || "characters"));
     // Reset inquiry tab to general
-    $(".contact-inquiry-tab").removeClass("active");
-    $('.contact-inquiry-tab[data-value="general"]').addClass("active");
+    $(".contact-inquiry-tab")
+      .removeClass("active")
+      .attr("aria-pressed", "false");
+    $('.contact-inquiry-tab[data-value="general"]')
+      .addClass("active")
+      .attr("aria-pressed", "true");
     $("#inquiryTypeInput").val("general");
     clearAllErrors();
     $("#contactForm").fadeIn(300);

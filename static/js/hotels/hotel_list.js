@@ -8,6 +8,17 @@
   const Count = $("#results-count");
   const S = window.JD_STRINGS || {};
 
+  // Escape any server/user-supplied value before injecting into HTML.
+  function escHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   function showSkeletons(n) {
     Grid.empty();
     for (let i = 0; i < n; i++) {
@@ -29,15 +40,18 @@
   function renderStars(count) {
     let html = "";
     for (let i = 1; i <= 5; i++) {
-      html += `<i class="bi bi-star${i <= count ? "-fill" : ""}"></i>`;
+      html += `<i class="bi bi-star${i <= count ? "-fill" : ""}" aria-hidden="true"></i>`;
     }
     return html;
   }
 
   function renderCard(h) {
+    const name = escHtml(h.name);
+    const url = escHtml(h.url);
+
     const imgHtml = h.cover_photo
-      ? `<img src="${h.cover_photo}" alt="${h.name}" class="hotel-card-img" loading="lazy">`
-      : `<div class="hotel-card-img-placeholder"><i class="bi bi-building"></i></div>`;
+      ? `<img src="${escHtml(h.cover_photo)}" alt="${name}" class="hotel-card-img" loading="lazy">`
+      : `<div class="hotel-card-img-placeholder"><i class="bi bi-building" aria-hidden="true"></i></div>`;
 
     const discountBadge = h.has_discount
       ? `<span class="jd-discount-badge position-absolute" style="top:14px;right:14px;">
@@ -53,11 +67,14 @@
 
     const ratingBadge = h.avg_rating
       ? `<span class="jd-rating-badge">
-           <i class="bi bi-star-fill"></i>
+           <i class="bi bi-star-fill" aria-hidden="true"></i>
            ${h.avg_rating}
            <span class="jd-rating-count">(${h.review_count})</span>
          </span>`
       : "";
+
+    // Accessible name for the icon-only star rating.
+    const starsAria = `${h.stars} ${S.starRating || "star rating"}`;
 
     const priceHtml = h.has_discount
       ? `<span class="jd-price-original">$${parseFloat(h.price_per_night).toLocaleString()}</span>
@@ -68,24 +85,24 @@
       <div class="col-lg-4 col-md-6 jd-reveal">
         <div class="hotel-card">
           <div class="hotel-card-img-wrap" style="position:relative;">
-            <a href="${h.url}">${imgHtml}</a>
-            <span class="hotel-card-location-badge">${h.location}</span>
+            <a href="${url}">${imgHtml}</a>
+            <span class="hotel-card-location-badge">${escHtml(h.location)}</span>
             ${discountBadge}
             ${favBtn}
           </div>
           <div class="hotel-card-body">
             <div class="d-flex align-items-center justify-content-between mb-1">
-              <div class="hotel-card-stars">${renderStars(h.stars)}</div>
+              <div class="hotel-card-stars" role="img" aria-label="${starsAria}">${renderStars(h.stars)}</div>
               ${ratingBadge}
             </div>
-            <h3 class="hotel-card-name">${h.name}</h3>
-            <p class="hotel-card-desc">${h.description || ""}</p>
+            <h3 class="hotel-card-name">${name}</h3>
+            <p class="hotel-card-desc">${escHtml(h.description) || ""}</p>
             <div class="hotel-card-footer">
               <div class="hotel-card-price">
                 ${priceHtml}
                 <span class="hotel-card-price-label">${S.perNight || "per night"}</span>
               </div>
-              <a href="${h.url}" class="btn-accent-jd" style="padding:10px 22px;font-size:0.7rem;">
+              <a href="${url}" class="btn-accent-jd" style="padding:10px 22px;font-size:0.7rem;">
                 ${S.viewHotel || "View Hotel"}
               </a>
             </div>

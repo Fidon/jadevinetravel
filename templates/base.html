@@ -1,16 +1,71 @@
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_CODE == 'ar' %}dir="rtl"{% endif %}>
-<html lang="{{ LANGUAGE_CODE }}" class="jd-loading"{% if LANGUAGE_CODE == 'ar' %} dir="rtl"{% endif %}>
+<html lang="{{ LANGUAGE_CODE }}" class="jd-loading">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#1a4d2e" />
 
-  <title>{% block title %}{% trans "Jadevine Travel & Tours — Zanzibar, Tanzania" %}{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}{% trans "Discover Zanzibar and Tanzania with Jadevine Travel & Tours. Hotels, safaris, car rentals and more." %}{% endblock %}" />
+  {% comment %} ============================================================
+     TITLE & DESCRIPTION
+     Single source of truth: view-supplied `seo_title` / `seo_description`,
+     with strong site-wide defaults. A child template may still override the
+     `title` / `meta_description` blocks (static pages do); detail views set the
+     context vars so <title>, <meta description>, OG and Twitter stay identical.
+     Defaults are assigned via {% trans … as … %} (you cannot call _() inside a
+     filter argument in a Django template).
+     ============================================================ {% endcomment %}
+  {% trans "Jadevine Travel & Tours — Hotels, Safaris & Car Rentals in Zanzibar, Tanzania" as default_seo_title %}
+  {% trans "Book hotels, safaris, tours and car rentals across Zanzibar and Tanzania with Jadevine Travel & Tours. Trusted local partners, secure payment, instant confirmation." as default_seo_desc %}
+  {% trans "Jadevine Travel & Tours — Zanzibar, Tanzania" as default_share_title %}
+  {% trans "Book hotels, safaris, tours and car rentals across Zanzibar and Tanzania with Jadevine Travel & Tours." as default_og_desc %}
+  {% trans "Book hotels, safaris, tours and car rentals across Zanzibar and Tanzania." as default_tw_desc %}
+  <title>{% block title %}{{ seo_title|default:default_seo_title }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ seo_description|default:default_seo_desc }}{% endblock %}" />
 
-  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+  {% comment %} ============================================================
+     CANONICAL & HREFLANG  (built from settings.SITE_URL, never the request host)
+     ============================================================ {% endcomment %}
+  <link rel="canonical" href="{{ SEO.canonical_url }}" />
+  {% for alt in SEO.hreflang_alternates %}<link rel="alternate" hreflang="{{ alt.lang }}" href="{{ alt.url }}" />
+  {% endfor %}{% if SEO.hreflang_x_default %}<link rel="alternate" hreflang="x-default" href="{{ SEO.hreflang_x_default }}" />{% endif %}
+
+  {% comment %} ============================================================
+     ROBOTS  (noindex,follow on private paths + any filtered/query-string page)
+     ============================================================ {% endcomment %}
+  {% if not SEO.robots_index %}<meta name="robots" content="noindex,follow" />{% endif %}
+
+  {% comment %} ============================================================
+     GOOGLE SEARCH CONSOLE verification (rendered only when token provisioned)
+     ============================================================ {% endcomment %}
+  {% if GSC_VERIFICATION %}<meta name="google-site-verification" content="{{ GSC_VERIFICATION }}" />{% endif %}
+
+  {% comment %} ============================================================
+     OPEN GRAPH
+     ============================================================ {% endcomment %}
+  <meta property="og:site_name" content="Jadevine Travel &amp; Tours" />
+  <meta property="og:type" content="{{ seo_type|default:'website' }}" />
+  <meta property="og:title" content="{% block og_title %}{{ seo_title|default:default_share_title }}{% endblock %}" />
+  <meta property="og:description" content="{% block og_description %}{{ seo_description|default:default_og_desc }}{% endblock %}" />
+  <meta property="og:url" content="{{ SEO.canonical_url }}" />
+  <meta property="og:image" content="{% block og_image %}{% if seo_image %}{{ seo_image }}{% else %}{{ SEO.site_url }}{% static 'images/logo.png' %}{% endif %}{% endblock %}" />
+  <meta property="og:locale" content="{{ SEO.og_locale }}" />
+  {% for alt in SEO.hreflang_alternates %}{% if alt.lang != LANGUAGE_CODE %}<meta property="og:locale:alternate" content="{{ alt.og_locale }}" />
+  {% endif %}{% endfor %}
+
+  {% comment %} ============================================================
+     TWITTER / X CARD
+     ============================================================ {% endcomment %}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ seo_title|default:default_share_title }}" />
+  <meta name="twitter:description" content="{{ seo_description|default:default_tw_desc }}" />
+  <meta name="twitter:image" content="{% if seo_image %}{{ seo_image }}{% else %}{{ SEO.site_url }}{% static 'images/logo.png' %}{% endif %}" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32x32.png' %}" />
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16x16.png' %}" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/apple-touch-icon.png' %}" />
+  <link rel="manifest" href="{% static 'favicons/site.webmanifest' %}" />
+  <link rel="shortcut icon" href="{% static 'favicons/favicon.ico' %}" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,6 +88,70 @@
   </noscript>
 
   {% block extra_css %}{% endblock %}
+
+  {% comment %} ============================================================
+     GOOGLE ANALYTICS 4  (rendered only when a Measurement ID is configured;
+     leave GA4_MEASUREMENT_ID empty in dev to avoid polluting analytics)
+     ============================================================ {% endcomment %}
+  {% if GA4_MEASUREMENT_ID %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ GA4_MEASUREMENT_ID }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ GA4_MEASUREMENT_ID }}');
+  </script>
+  {% endif %}
+
+  {% comment %} ============================================================
+     STRUCTURED DATA — site-wide Organization + WebSite.
+     Per-page schema (Hotel / Product / BreadcrumbList) is injected by
+     detail views via the `structured_data` block below.
+     ============================================================ {% endcomment %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "@id": "{{ SEO.site_url }}/#organization",
+    "name": "Jadevine Travel & Tours",
+    "url": "{{ SEO.site_url }}/",
+    "logo": "{{ SEO.site_url }}{% static 'images/logo.png' %}",
+    "image": "{{ SEO.site_url }}{% static 'images/logo.png' %}",
+    "description": "Hotels, safaris, tours and car rentals across Zanzibar and Tanzania.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Welezo Street, Amani",
+      "addressLocality": "Stone Town",
+      "addressRegion": "Zanzibar Urban/West",
+      "postalCode": "11000",
+      "addressCountry": "TZ"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -6.1631323,
+      "longitude": 39.2273077
+    },
+    "areaServed": ["Zanzibar", "Tanzania"],
+    "telephone": "+255683956372",
+    "sameAs": [
+      "https://www.instagram.com/jadevine_travel",
+      "https://www.facebook.com/jadevinetravel/",
+      "https://www.tripadvisor.com/Attraction_Review-g488129-d19961135-Reviews-Jadevine_Travel_Tours-Stone_Town_Zanzibar_City_Zanzibar_Island_Zanzibar_Archipel.html"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "{{ SEO.site_url }}/#website",
+    "url": "{{ SEO.site_url }}/",
+    "name": "Jadevine Travel & Tours",
+    "inLanguage": "{{ LANGUAGE_CODE|default:'en' }}",
+    "publisher": { "@id": "{{ SEO.site_url }}/#organization" }
+  }
+  </script>
+  {% block structured_data %}{% endblock %}
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
@@ -91,7 +210,7 @@
           {% endif %}
         </div>
 
-        <button class="jd-hamburger d-lg-none" aria-label="Toggle menu">
+        <button class="jd-hamburger d-lg-none" aria-label="{% trans 'Toggle menu' %}">
           <span></span><span></span><span></span>
         </button>
 
@@ -164,10 +283,10 @@
             {% trans "Your trusted partner for unforgettable travel experiences across Zanzibar and Tanzania." %}
           </p>
           <div class="jd-footer-social">
-            <a href="#" class="jd-footer-social-link" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="jd-footer-social-link" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="jd-footer-social-link" aria-label="TripAdvisor"><i class="bi bi-star-fill"></i></a>
-            <a href="#" class="jd-footer-social-link" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            <a target="_blank" href="https://www.instagram.com/jadevine_travel" class="jd-footer-social-link" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a target="_blank" href="https://www.facebook.com/jadevinetravel/" class="jd-footer-social-link" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a target="_blank" href="https://www.tripadvisor.com/Attraction_Review-g488129-d19961135-Reviews-Jadevine_Travel_Tours-Stone_Town_Zanzibar_City_Zanzibar_Island_Zanzibar_Archipel.html" class="jd-footer-social-link" aria-label="TripAdvisor"><i class="bi bi-star-fill"></i></a>
+            <a target="_blank" href="https://wa.me/255683956372" class="jd-footer-social-link" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
           </div>
         </div>
 
@@ -199,11 +318,11 @@
           </div>
           <div class="jd-footer-contact-item">
             <i class="bi bi-whatsapp"></i>
-            <a href="https://wa.me/255000000000" class="jd-footer-link">+255 000 000 000</a>
+            <a target="_blank" href="https://wa.me/255683956372" class="jd-footer-link">+255 683 956 372</a>
           </div>
           <div class="jd-footer-contact-item">
             <i class="bi bi-envelope-fill"></i>
-            <a href="mailto:info@jadevinetours.com" class="jd-footer-link">info@jadevinetours.com</a>
+            <a href="mailto:info@jadevinetravel.com" class="jd-footer-link">info@jadevinetravel.com</a>
           </div>
         </div>
 
@@ -266,7 +385,7 @@
      class="jd-whatsapp-btn"
      target="_blank"
      rel="noopener noreferrer"
-     aria-label="Chat on WhatsApp">
+     aria-label="{% trans 'Chat on WhatsApp' %}">
     <i class="bi bi-whatsapp"></i>
     <span class="whatsapp-tooltip">{% trans "Chat with us" %}</span>
   </a>

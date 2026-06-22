@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /portal/
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /book/
+Disallow: /reviews/
+Disallow: /favourites/
+Disallow: /i18n/
+
+Sitemap: {{ SEO.site_url }}/sitemap.xml

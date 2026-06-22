@@ -41,6 +41,7 @@
                id="search-input"
                class="jd-input listing-search-input"
                placeholder="{% trans 'Search hotels by name...' %}"
+               aria-label="{% trans 'Search hotels by name...' %}"
                autocomplete="off">
         <button type="button" class="listing-search-clear" id="btn-search-clear" style="display:none;" aria-label="{% trans 'Clear search' %}">
           <i class="bi bi-x-lg"></i>
@@ -50,7 +51,7 @@
 
     <div class="hotel-filters-inner mt-3">
       <div class="filter-group">
-        <label class="jd-label">{% trans "Destination" %}</label>
+        <label class="jd-label" for="filter-location">{% trans "Destination" %}</label>
         <select class="jd-input" id="filter-location">
           <option value="">{% trans "All Destinations" %}</option>
           <option value="zanzibar">{% trans "Zanzibar" %}</option>
@@ -58,7 +59,7 @@
         </select>
       </div>
       <div class="filter-group">
-        <label class="jd-label">{% trans "Star Rating" %}</label>
+        <label class="jd-label" for="filter-stars">{% trans "Star Rating" %}</label>
         <select class="jd-input" id="filter-stars">
           <option value="">{% trans "Any Rating" %}</option>
           <option value="5">★★★★★</option>
@@ -69,7 +70,7 @@
         </select>
       </div>
       <div class="filter-group">
-        <label class="jd-label">{% trans "Max Price / Night" %}</label>
+        <label class="jd-label" for="filter-max-price">{% trans "Max Price / Night" %}</label>
         <select class="jd-input" id="filter-max-price">
           <option value="">{% trans "Any Price" %}</option>
           <option value="50">{% trans "Up to $50" %}</option>
@@ -80,7 +81,7 @@
         </select>
       </div>
       <div class="filter-group">
-        <label class="jd-label">{% trans "Guests" %}</label>
+        <label class="jd-label" for="filter-guests">{% trans "Guests" %}</label>
         <select class="jd-input" id="filter-guests">
           <option value="">{% trans "Any" %}</option>
           <option value="1">1</option>
@@ -115,6 +116,7 @@
       <p>{% trans "Try adjusting your filters or search term." %}</p>
       <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
     </div>
+    <h2 class="visually-hidden">{% trans "Search results" %}</h2>
     <div class="row g-4" id="hotels-grid"></div>
   </div>
 </section>
@@ -124,6 +126,7 @@
 {% block extra_js %}
 <script>
   window.JD_STRINGS = window.JD_STRINGS || {};
+  window.JD_STRINGS.starRating            = "{% trans 'star rating' %}";
   window.JD_STRINGS.viewHotel             = "{% trans 'View Hotel' %}";
   window.JD_STRINGS.hotelsNotFound        = "{% trans 'Failed to load hotels. Please try again.' %}";
   window.JD_STRINGS.off                   = "{% trans 'off' %}";

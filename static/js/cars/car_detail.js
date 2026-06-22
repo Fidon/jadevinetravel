@@ -61,12 +61,10 @@
     // Same-day = 1 billable day (transfer use case)
     const days = rawDays === 0 ? 1 : rawDays;
     const total = (PRICE_PER_DAY * days).toFixed(2);
+    const unit =
+      days === 1 ? S.dayTransfer || "day (transfer)" : S.days || "days";
     $("#breakdown-rate-label").text(
-      "$" +
-        PRICE_PER_DAY.toFixed(2) +
-        " × " +
-        days +
-        (days === 1 ? " day (transfer)" : " days"),
+      "$" + PRICE_PER_DAY.toFixed(2) + " × " + days + " " + unit,
     );
     $("#breakdown-rate-amount").text("$" + total);
     $("#breakdown-total").text(
@@ -184,22 +182,28 @@
     var valid = true;
 
     if (!$("#id_pickup_location").val()) {
-      JD.toast("Please select a pickup location", "error");
+      JD.toast(
+        S.selectPickupLocation || "Please select a pickup location",
+        "error",
+      );
       valid = false;
     }
     if (!pickupDate) {
-      JD.toast("Please select a pickup date", "error");
+      JD.toast(S.selectPickupDate || "Please select a pickup date", "error");
       valid = false;
     }
     if (!returnDate) {
-      JD.toast("Please select a return date", "error");
+      JD.toast(S.selectReturnDate || "Please select a return date", "error");
       valid = false;
     }
     if (
       $('input[name="rental_mode"]:checked').val() === "self_drive" &&
       !$("#id_driver_licence_number").val().trim()
     ) {
-      JD.toast("Licence number is required for self-drive", "error");
+      JD.toast(
+        S.licenceRequired || "Licence number is required for self-drive",
+        "error",
+      );
       valid = false;
     }
     if (getTotalPassengers() > CAR_CAPACITY) {

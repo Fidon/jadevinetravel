@@ -41,6 +41,7 @@
                id="search-input"
                class="jd-input listing-search-input"
                placeholder="{% trans 'Search vehicles by name...' %}"
+               aria-label="{% trans 'Search vehicles by name...' %}"
                autocomplete="off">
         <button type="button" class="listing-search-clear" id="btn-search-clear" style="display:none;" aria-label="{% trans 'Clear search' %}">
           <i class="bi bi-x-lg"></i>
@@ -50,7 +51,7 @@
 
     <div class="car-filters-inner mt-3">
       <div class="filter-group">
-        <label class="jd-label">{% trans "Vehicle Type" %}</label>
+        <label class="jd-label" for="filter-vehicle-type">{% trans "Vehicle Type" %}</label>
         <select class="jd-input" id="filter-vehicle-type">
           <option value="">{% trans "All Types" %}</option>
           <option value="sedan">{% trans "Sedan" %}</option>
@@ -61,7 +62,7 @@
         </select>
       </div>
       <div class="filter-group">
-        <label class="jd-label">{% trans "Rental Mode" %}</label>
+        <label class="jd-label" for="filter-rental-mode">{% trans "Rental Mode" %}</label>
         <select class="jd-input" id="filter-rental-mode">
           <option value="">{% trans "Any Mode" %}</option>
           <option value="with_driver">{% trans "With Driver" %}</option>
@@ -69,7 +70,7 @@
         </select>
       </div>
       <div class="filter-group">
-        <label class="jd-label">{% trans "Max Price / Day" %}</label>
+        <label class="jd-label" for="filter-max-price">{% trans "Max Price / Day" %}</label>
         <select class="jd-input" id="filter-max-price">
           <option value="">{% trans "Any Price" %}</option>
           <option value="50">{% trans "Up to $50" %}</option>
@@ -99,6 +100,7 @@
       <p>{% trans "Try adjusting your filters or search term." %}</p>
       <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
     </div>
+    <h2 class="visually-hidden">{% trans "Search results" %}</h2>
     <div class="row g-4" id="cars-grid"></div>
   </div>
 </section>

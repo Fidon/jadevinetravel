@@ -2,9 +2,13 @@ import json
 from django.views import View
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
+from django.urls import reverse
+from django.templatetags.static import static
+from django.utils.translation import gettext
 
 from .models import TourPackage
 from apps.core.models import SavedFavourite
+from apps.core.seo import absolute_url, clean_text, jsonld_safe, breadcrumb_schema
 
 
 class TourListView(View):
@@ -84,7 +88,7 @@ class TourListView(View):
             'is_refundable': tour.is_refundable,
             'avg_rating': avg_rating,
             'review_count': review_count,
-            'url': f'/tours/{tour.slug}/',
+            'url': reverse('tours:detail', kwargs={'slug': tour.slug}),
             'is_saved': tour.id in (saved_ids or set()),
             'item_type': 'tour',
         }
@@ -128,10 +132,61 @@ class TourDetailView(View):
             ).exists()
         )
 
+        tour_name = tour.get_name(lang)
+        tour_description = tour.get_description(lang)
+
+        # ----------------------------------------------------------------
+        # SEO: per-listing meta + Product/Offer & BreadcrumbList JSON-LD.
+        # ----------------------------------------------------------------
+        canonical = absolute_url(request.path)
+        gallery_urls = [absolute_url(p.image.url) for p in photos if p.image]
+        if tour.cover_image:
+            primary_image = absolute_url(tour.cover_image.url)
+        elif gallery_urls:
+            primary_image = gallery_urls[0]
+        else:
+            primary_image = absolute_url(static('images/logo.png'))
+        schema_images = [primary_image] + [u for u in gallery_urls if u != primary_image]
+
+        tour_schema = {
+            "@type": "Product",
+            "@id": canonical + "#product",
+            "name": tour_name,
+            "url": canonical,
+            "description": clean_text(tour_description, 300),
+            "image": schema_images,
+            "category": str(tour.get_tour_type_display()),
+            "brand": {"@type": "Brand", "name": "Jadevine Travel & Tours"},
+            "offers": {
+                "@type": "Offer",
+                "price": f"{display_price:.2f}",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "url": canonical,
+            },
+        }
+        if review_count:
+            tour_schema["aggregateRating"] = {
+                "@type": "AggregateRating",
+                "ratingValue": avg_rating,
+                "reviewCount": review_count,
+            }
+
+        breadcrumbs = breadcrumb_schema([
+            (gettext("Home"), absolute_url(reverse('core:home'))),
+            (gettext("Safaris & Tours"), absolute_url(reverse('tours:list'))),
+            (tour_name, canonical),
+        ])
+
+        structured_data = jsonld_safe({
+            "@context": "https://schema.org",
+            "@graph": [tour_schema, breadcrumbs],
+        })
+
         return render(request, self.template_name, {
             'tour': tour,
-            'tour_name': tour.get_name(lang),
-            'tour_description': tour.get_description(lang),
+            'tour_name': tour_name,
+            'tour_description': tour_description,
             'highlights': highlights,
             'inclusions': inclusions,
             'exclusions': exclusions,
@@ -151,4 +206,13 @@ class TourDetailView(View):
             'review_count': review_count,
             'is_saved': is_saved,
             'favourite_toggle_url': '/favourites/toggle/',
+            # SEO
+            'seo_title': f"{tour_name} — {gettext('Safari & Tour Package')} | Jadevine Travel & Tours",
+            'seo_description': clean_text(tour_description, 155) or (
+                gettext("Book the %(name)s package with Jadevine Travel & Tours.")
+                % {"name": tour_name}
+            ),
+            'seo_image': primary_image,
+            'seo_type': 'product',
+            'structured_data': structured_data,
         })

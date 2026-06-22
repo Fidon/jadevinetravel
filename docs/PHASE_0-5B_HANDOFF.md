@@ -1268,7 +1268,7 @@ Admin emails always go to: `settings.ADMIN\_NOTIFICATION\_EMAIL`
 
 \- Green header `#1a4d2e`, gold accent `#c89666`
 
-\- Footer: `Jadevine Travel \& Tours | Zanzibar, Tanzania | info@jadevinetours.com`
+\- Footer: `Jadevine Travel \& Tours | Zanzibar, Tanzania | info@jadevinetravel.com`
 
 
 

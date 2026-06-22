@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}{{ tour_name }} — {% trans "Safaris & Tours" %} — Jadevine Travel & Tours{% endblock %}
-{% block meta_description %}{{ tour_description|truncatechars:160 }}{% endblock %}
+{% block structured_data %}{% if structured_data %}<script type="application/ld+json">{{ structured_data }}</script>{% endif %}{% endblock %}
 {% block navbar_class %}navbar-scrolled{% endblock %}
 
 {% block extra_css %}
@@ -133,8 +132,9 @@
                   data-item-type="tour"
                   data-item-id="{{ tour.id }}"
                   data-saved="{{ is_saved|yesno:'true,false' }}"
-                  data-toggle-url="{{ favourite_toggle_url }}">
-            <i class="bi {% if is_saved %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                  data-toggle-url="{{ favourite_toggle_url }}"
+                  aria-pressed="{{ is_saved|yesno:'true,false' }}">
+            <i class="bi {% if is_saved %}bi-heart-fill{% else %}bi-heart{% endif %}" aria-hidden="true"></i>
             <span class="jd-fav-label">
               {% if is_saved %}{% trans "Saved" %}{% else %}{% trans "Save" %}{% endif %}
             </span>
@@ -278,12 +278,12 @@
                       <span class="guest-type-title">{% trans "Adults" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-adults-minus"><i class="bi bi-dash"></i></button>
-                      <input type="number" name="num_adults" id="id_num_adults"
+                      <button type="button" class="guest-counter-btn" id="btn-adults-minus" aria-label="{% trans 'Decrease' %}"><i class="bi bi-dash" aria-hidden="true"></i></button>
+                      <input type="number" name="num_adults" id="id_num_adults" aria-label="{% trans 'Adults' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_adults|default:'1' }}"
                              min="1" max="{{ tour.group_size_max }}" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-adults-plus"><i class="bi bi-plus"></i></button>
+                      <button type="button" class="guest-counter-btn" id="btn-adults-plus" aria-label="{% trans 'Increase' %}"><i class="bi bi-plus" aria-hidden="true"></i></button>
                     </div>
                   </div>
 
@@ -293,12 +293,12 @@
                       <span class="guest-type-sub">{% trans "Ages 2–12" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-children-minus"><i class="bi bi-dash"></i></button>
-                      <input type="number" name="num_children" id="id_num_children"
+                      <button type="button" class="guest-counter-btn" id="btn-children-minus" aria-label="{% trans 'Decrease' %}"><i class="bi bi-dash" aria-hidden="true"></i></button>
+                      <input type="number" name="num_children" id="id_num_children" aria-label="{% trans 'Children' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_children|default:'0' }}"
                              min="0" max="{{ tour.group_size_max }}" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-children-plus"><i class="bi bi-plus"></i></button>
+                      <button type="button" class="guest-counter-btn" id="btn-children-plus" aria-label="{% trans 'Increase' %}"><i class="bi bi-plus" aria-hidden="true"></i></button>
                     </div>
                   </div>
 
@@ -308,12 +308,12 @@
                       <span class="guest-type-sub">{% trans "Under 2 — free" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-infants-minus"><i class="bi bi-dash"></i></button>
-                      <input type="number" name="num_infants" id="id_num_infants"
+                      <button type="button" class="guest-counter-btn" id="btn-infants-minus" aria-label="{% trans 'Decrease' %}"><i class="bi bi-dash" aria-hidden="true"></i></button>
+                      <input type="number" name="num_infants" id="id_num_infants" aria-label="{% trans 'Infants' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_infants|default:'0' }}"
                              min="0" max="10" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-infants-plus"><i class="bi bi-plus"></i></button>
+                      <button type="button" class="guest-counter-btn" id="btn-infants-plus" aria-label="{% trans 'Increase' %}"><i class="bi bi-plus" aria-hidden="true"></i></button>
                     </div>
                   </div>
 
@@ -324,12 +324,12 @@
                       <span class="guest-type-sub">{% trans "Dogs, cats" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-pets-minus"><i class="bi bi-dash"></i></button>
-                      <input type="number" name="num_pets" id="id_num_pets"
+                      <button type="button" class="guest-counter-btn" id="btn-pets-minus" aria-label="{% trans 'Decrease' %}"><i class="bi bi-dash" aria-hidden="true"></i></button>
+                      <input type="number" name="num_pets" id="id_num_pets" aria-label="{% trans 'Pets' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_pets|default:'0' }}"
                              min="0" max="5" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-pets-plus"><i class="bi bi-plus"></i></button>
+                      <button type="button" class="guest-counter-btn" id="btn-pets-plus" aria-label="{% trans 'Increase' %}"><i class="bi bi-plus" aria-hidden="true"></i></button>
                     </div>
                   </div>
                   {% else %}
@@ -439,6 +439,7 @@
   window.JD_STRINGS.person  = "{% trans 'person' %}";
   window.JD_STRINGS.people  = "{% trans 'people' %}";
   window.JD_STRINGS.maxParticipants = "{% trans 'Maximum {max} participants reached.' %}";
+  window.JD_STRINGS.selectPreferredDate = "{% trans 'Please select a preferred start date.' %}";
   window.JD_STRINGS.saveToFavourites     = "{% trans 'Save' %}";
   window.JD_STRINGS.savedToFavourites    = "{% trans 'Saved' %}";
   window.JD_STRINGS.addedToFavourites    = "{% trans 'Added to favourites' %}";

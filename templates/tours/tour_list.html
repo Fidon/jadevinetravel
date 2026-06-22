@@ -41,6 +41,7 @@
                id="search-input"
                class="jd-input listing-search-input"
                placeholder="{% trans 'Search tours by name...' %}"
+               aria-label="{% trans 'Search tours by name...' %}"
                autocomplete="off">
         <button type="button" class="listing-search-clear" id="btn-search-clear" style="display:none;" aria-label="{% trans 'Clear search' %}">
           <i class="bi bi-x-lg"></i>
@@ -50,7 +51,7 @@
 
     <div class="tour-filters-inner mt-3">
       <div class="filter-group">
-        <label class="jd-label">{% trans "Tour Type" %}</label>
+        <label class="jd-label" for="filter-tour-type">{% trans "Tour Type" %}</label>
         <select class="jd-input" id="filter-tour-type">
           <option value="">{% trans "All Types" %}</option>
           <option value="safari">{% trans "Safari" %}</option>
@@ -61,7 +62,7 @@
         </select>
       </div>
       <div class="filter-group">
-        <label class="jd-label">{% trans "Max Duration" %}</label>
+        <label class="jd-label" for="filter-max-duration">{% trans "Max Duration" %}</label>
         <select class="jd-input" id="filter-max-duration">
           <option value="">{% trans "Any Duration" %}</option>
           <option value="1">{% trans "1 Day" %}</option>
@@ -71,7 +72,7 @@
         </select>
       </div>
       <div class="filter-group">
-        <label class="jd-label">{% trans "Max Price / Person" %}</label>
+        <label class="jd-label" for="filter-max-price">{% trans "Max Price / Person" %}</label>
         <select class="jd-input" id="filter-max-price">
           <option value="">{% trans "Any Price" %}</option>
           <option value="100">{% trans "Under $100" %}</option>
@@ -101,6 +102,7 @@
       <p>{% trans "Try adjusting your filters or search term." %}</p>
       <button class="btn-outline-jd mt-2" id="btn-empty-clear">{% trans "Clear Filters" %}</button>
     </div>
+    <h2 class="visually-hidden">{% trans "Search results" %}</h2>
     <div class="row g-4" id="tours-grid"></div>
   </div>
 </section>

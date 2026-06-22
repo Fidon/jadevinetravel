@@ -1,31 +1,3 @@
-/**
- * favourites.js
- * Shared favourite toggle logic.
- * Exposes window.JD_FAV.init() and window.JD_FAV.toggle().
- *
- * List pages:   call JD_FAV.initCard(el) after inserting each card into DOM.
- * Detail pages: call JD_FAV.initDetail() on DOMContentLoaded.
- *
- * Expected button markup (list card):
- *   <button class="jd-fav-btn"
- *           data-item-type="hotel|tour|car"
- *           data-item-id="<int>"
- *           data-saved="true|false"
- *           aria-label="Save to favourites">
- *     <i class="bi bi-heart[-fill]"></i>
- *   </button>
- *
- * Expected button markup (detail page):
- *   <button class="jd-fav-btn jd-fav-btn--detail"
- *           data-item-type="hotel|tour|car"
- *           data-item-id="<int>"
- *           data-saved="true|false"
- *           data-toggle-url="/favourites/toggle/"
- *           aria-label="Save to favourites">
- *     <i class="bi bi-heart[-fill]"></i>
- *     <span class="jd-fav-label"></span>
- *   </button>
- */
 (function ($) {
   "use strict";
 
@@ -56,12 +28,15 @@
       ' data-saved="' +
       (isSaved ? "true" : "false") +
       '"' +
+      ' aria-pressed="' +
+      (isSaved ? "true" : "false") +
+      '"' +
       ' aria-label="' +
       (S.saveToFavourites || "Save to favourites") +
       '">' +
       '<i class="bi ' +
       icon +
-      '"></i>' +
+      '" aria-hidden="true"></i>' +
       "</button>"
     );
   }
@@ -92,12 +67,15 @@
       ' data-toggle-url="' +
       (toggleUrl || TOGGLE_URL) +
       '"' +
+      ' aria-pressed="' +
+      (isSaved ? "true" : "false") +
+      '"' +
       ' aria-label="' +
-      label +
+      (S.saveToFavourites || "Save to favourites") +
       '">' +
       '<i class="bi ' +
       icon +
-      '"></i>' +
+      '" aria-hidden="true"></i>' +
       '<span class="jd-fav-label">' +
       label +
       "</span>" +
@@ -109,6 +87,8 @@
   function applyState($btn, saved) {
     $btn.data("saved", saved ? "true" : "false");
     $btn.attr("data-saved", saved ? "true" : "false");
+    // Keep the accessible toggle state in sync with the visual state.
+    $btn.attr("aria-pressed", saved ? "true" : "false");
 
     var $icon = $btn.find("i");
     $icon.removeClass("bi-heart bi-heart-fill");

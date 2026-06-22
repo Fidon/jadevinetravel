@@ -699,7 +699,7 @@ class BookingPDFView(LoginRequiredMixin, View):
         ))
         story.append(Paragraph(
             'Jadevine Travel & Tours  |  Zanzibar, Tanzania  |  '
-            'info@jadevinetours.com  |  +255 713 529 019',
+            'info@jadevinetravel.com  |  +255 713 529 019',
             footer_style,
         ))
         story.append(Paragraph(

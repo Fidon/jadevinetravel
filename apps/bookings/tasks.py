@@ -157,7 +157,7 @@ def send_poa_booking_confirmation_customer(booking_id):
         f'Please bring the full amount of {booking.currency} {booking.total_price} '
         f'when you arrive in Tanzania.\n\n'
         f'Thank you for choosing Jadevine Travel & Tours.\n'
-        f'For questions, WhatsApp us or email info@jadevinetours.com\n\n'
+        f'For questions, WhatsApp us or email info@jadevinetravel.com\n\n'
         f'Jadevine Travel & Tours\nZanzibar, Tanzania'
     )
 
@@ -256,7 +256,7 @@ def send_poa_booking_confirmation_customer(booking_id):
       <p class="contact-text">
         Questions about your booking?<br>
         <a href="https://wa.me/255683956372">WhatsApp us</a> anytime or email
-        <a href="mailto:info@jadevinetours.com">info@jadevinetours.com</a>
+        <a href="mailto:info@jadevinetravel.com">info@jadevinetravel.com</a>
       </p>
 
     </div>
@@ -265,7 +265,7 @@ def send_poa_booking_confirmation_customer(booking_id):
       <p>
         <strong>Jadevine Travel & Tours</strong><br>
         Stone Town, Zanzibar, Tanzania<br>
-        <a href="mailto:info@jadevinetours.com">info@jadevinetours.com</a>
+        <a href="mailto:info@jadevinetravel.com">info@jadevinetravel.com</a>
       </p>
       <p style="margin-top:12px;">
         This confirmation was sent to {user.email}.<br>
@@ -571,7 +571,7 @@ def send_paynow_booking_confirmation_customer(booking_id):
         f'Total Paid: {booking.currency} {booking.total_price}\n'
         f'Payment Method: Online (PesaPal)\n\n'
         f'Thank you for choosing Jadevine Travel & Tours.\n'
-        f'For questions, WhatsApp us or email info@jadevinetours.com\n\n'
+        f'For questions, WhatsApp us or email info@jadevinetravel.com\n\n'
         f'Jadevine Travel & Tours\nZanzibar, Tanzania'
     )
 
@@ -662,14 +662,14 @@ def send_paynow_booking_confirmation_customer(booking_id):
       <p class="contact-text">
         Questions about your booking?<br>
         <a href="https://wa.me/255683956372">WhatsApp us</a> anytime or email
-        <a href="mailto:info@jadevinetours.com">info@jadevinetours.com</a>
+        <a href="mailto:info@jadevinetravel.com">info@jadevinetravel.com</a>
       </p>
     </div>
     <div class="email-footer">
       <p>
         <strong>Jadevine Travel & Tours</strong><br>
         Stone Town, Zanzibar, Tanzania<br>
-        <a href="mailto:info@jadevinetours.com">info@jadevinetours.com</a>
+        <a href="mailto:info@jadevinetravel.com">info@jadevinetravel.com</a>
       </p>
       <p style="margin-top:12px;">
         This confirmation was sent to {user.email}.<br>

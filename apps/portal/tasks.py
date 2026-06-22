@@ -105,8 +105,8 @@ def _email_footer(recipient_email=''):
       <p style="font-size:12px;color:#9e8e7e;margin:0;line-height:1.8;">
         <strong>Jadevine Travel &amp; Tours</strong><br>
         Stone Town, Zanzibar, Tanzania<br>
-        <a href="mailto:info@jadevinetours.com"
-           style="color:#c89666;text-decoration:none;">info@jadevinetours.com</a>
+        <a href="mailto:info@jadevinetravel.com"
+           style="color:#c89666;text-decoration:none;">info@jadevinetravel.com</a>
       </p>
       {note}
     </td>
@@ -412,7 +412,7 @@ def send_miniadmin_welcome_email(user_id):
         f'page and use "Forgot password?" to get a new link.\n\n'
         f'Once logged in you can create and manage your hotel or car rental listings. '
         f'All listings require approval from the Jadevine team before going live.\n\n'
-        f'Questions? Contact the Jadevine team at info@jadevinetours.com\n\n'
+        f'Questions? Contact the Jadevine team at info@jadevinetravel.com\n\n'
         f'Jadevine Travel & Tours\nZanzibar, Tanzania'
     )
 
@@ -480,8 +480,8 @@ def send_miniadmin_welcome_email(user_id):
         <hr style="border:none;border-top:1px solid #e0d5c8;margin:28px 0;">
         <p style="font-size:13px;color:#9e8e7e;text-align:center;line-height:1.7;">
           Questions? Email us at
-          <a href="mailto:info@jadevinetours.com"
-             style="color:#c89666;text-decoration:none;">info@jadevinetours.com</a>
+          <a href="mailto:info@jadevinetravel.com"
+             style="color:#c89666;text-decoration:none;">info@jadevinetravel.com</a>
         </p>
         """
         + _email_footer(recipient)
@@ -518,7 +518,7 @@ def send_contact_reply_email(message_id, reply_text):
         f'Your original message:\n'
         f'Subject: {msg.subject}\n'
         f'{msg.message}\n\n'
-        f'Jadevine Travel & Tours\nZanzibar, Tanzania\ninfo@jadevinetours.com'
+        f'Jadevine Travel & Tours\nZanzibar, Tanzania\ninfo@jadevinetravel.com'
     )
 
     quoted_original = (
@@ -600,7 +600,7 @@ def send_listing_edited_by_admin_email(listing_type, listing_id, edited_by_id):
         f'Your listing remains live. You can review the changes in the portal:\n'
         f'{portal_url}\n\n'
         f'If you have questions about the changes made, please contact the '
-        f'Jadevine team at info@jadevinetours.com.\n\n'
+        f'Jadevine team at info@jadevinetravel.com.\n\n'
         f'Jadevine Travel & Tours\nZanzibar, Tanzania'
     )
 
@@ -637,8 +637,8 @@ def send_listing_edited_by_admin_email(listing_type, listing_id, edited_by_id):
           Your listing is still live and accepting bookings. Log in to the portal
           to review any changes. If anything looks incorrect, contact the Jadevine
           team at
-          <a href="mailto:info@jadevinetours.com"
-             style="color:#2471a3;">info@jadevinetours.com</a>.
+          <a href="mailto:info@jadevinetravel.com"
+             style="color:#2471a3;">info@jadevinetravel.com</a>.
         </div>
 
         {_portal_button(portal_url, 'Review My Listing →')}

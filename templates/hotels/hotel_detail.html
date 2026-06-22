@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}{{ hotel.name }} — Jadevine Travel & Tours{% endblock %}
-{% block meta_description %}{% blocktrans with name=hotel.name location=hotel.get_location_display %}Book {{ name }} in {{ location }} with Jadevine Travel & Tours.{% endblocktrans %}{% endblock %}
+{% block structured_data %}{% if structured_data %}<script type="application/ld+json">{{ structured_data }}</script>{% endif %}{% endblock %}
 {% block navbar_class %}navbar-scrolled{% endblock %}
 
 {% block extra_css %}
@@ -14,7 +13,7 @@
 <!-- Breadcrumb -->
 <div class="hotel-breadcrumb jd-load-reveal" data-delay="1">
   <div class="container">
-    <nav aria-label="breadcrumb">
+    <nav aria-label="{% trans 'Breadcrumb' %}">
       <ol class="breadcrumb-list">
         <li><a href="{% url 'core:home' %}">{% trans "Home" %}</a></li>
         <li><i class="bi bi-chevron-right"></i></li>
@@ -76,10 +75,10 @@
         <div class="hotel-detail-header">
           <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
             <div>
-              <div class="jd-stars mb-2">
+              <div class="jd-stars mb-2" role="img" aria-label="{{ hotel.stars }} {% trans 'star rating' %}">
                 {% for i in "12345" %}
-                  {% if forloop.counter <= hotel.stars %}<i class="bi bi-star-fill"></i>
-                  {% else %}<i class="bi bi-star"></i>{% endif %}
+                  {% if forloop.counter <= hotel.stars %}<i class="bi bi-star-fill" aria-hidden="true"></i>
+                  {% else %}<i class="bi bi-star" aria-hidden="true"></i>{% endif %}
                 {% endfor %}
               </div>
               <h1 class="hotel-detail-name">{{ hotel.name }}</h1>
@@ -90,7 +89,7 @@
             </div>
             {% if hotel.tripadvisor_url %}
             <a href="{{ hotel.tripadvisor_url }}" target="_blank" rel="noopener" class="tripadvisor-badge">
-              <i class="bi bi-star-fill"></i> TripAdvisor
+              <i class="bi bi-star-fill" aria-hidden="true"></i> TripAdvisor
             </a>
             {% endif %}
           </div>
@@ -98,7 +97,7 @@
           {% if avg_rating %}
           <div class="mt-3">
             <span class="jd-rating-badge" style="font-size:var(--text-sm);padding:6px 14px;">
-              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill" aria-hidden="true"></i>
               {{ avg_rating }} / 10
               <span class="jd-rating-count">({{ review_count }} {% trans "reviews" %})</span>
             </span>
@@ -116,8 +115,9 @@
                   data-item-type="hotel"
                   data-item-id="{{ hotel.id }}"
                   data-saved="{{ is_saved|yesno:'true,false' }}"
-                  data-toggle-url="{{ favourite_toggle_url }}">
-            <i class="bi {% if is_saved %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                  data-toggle-url="{{ favourite_toggle_url }}"
+                  aria-pressed="{{ is_saved|yesno:'true,false' }}">
+            <i class="bi {% if is_saved %}bi-heart-fill{% else %}bi-heart{% endif %}" aria-hidden="true"></i>
             <span class="jd-fav-label">
               {% if is_saved %}{% trans "Saved" %}{% else %}{% trans "Save" %}{% endif %}
             </span>
@@ -135,7 +135,7 @@
         {% if room_types %}
         <div class="hotel-room-types mt-5 jd-reveal">
           <span class="eyebrow">{% trans "Room Types" %}</span>
-          <h2 class="section-heading" style="font-size:1.8rem;">{% trans "Choose Your <em>Room</em>" %}</h2>
+          <h2 class="section-heading" style="font-size:1.8rem;">{% blocktrans %}Choose Your <em>Room</em>{% endblocktrans %}</h2>
           <div class="room-types-list mt-4" id="room-types-list">
             {% for rt in room_types %}
             <div class="room-type-card {% if forloop.first %}selected{% endif %}"
@@ -234,7 +234,7 @@
             <iframe
               src="https://maps.google.com/maps?q={{ hotel.latitude }},{{ hotel.longitude }}&z=15&output=embed"
               width="100%" height="300" style="border:0;border-radius:var(--radius-lg);"
-              allowfullscreen="" loading="lazy"></iframe>
+              title="{% trans 'Map showing hotel location' %}" allowfullscreen="" loading="lazy"></iframe>
           </div>
         </div>
         {% endif %}
@@ -254,10 +254,10 @@
               </span>
               <span class="booking-price-per">{% trans "/ room / night" %}</span>
             </div>
-            <div class="jd-stars">
+            <div class="jd-stars" aria-hidden="true">
               {% for i in "12345" %}
-                {% if forloop.counter <= hotel.stars %}<i class="bi bi-star-fill"></i>
-                {% else %}<i class="bi bi-star"></i>{% endif %}
+                {% if forloop.counter <= hotel.stars %}<i class="bi bi-star-fill" aria-hidden="true"></i>
+                {% else %}<i class="bi bi-star" aria-hidden="true"></i>{% endif %}
               {% endfor %}
             </div>
           </div>
@@ -304,15 +304,15 @@
               <div class="jd-form-group mt-3">
                 <label class="jd-label">{% trans "Rooms" %}</label>
                 <div class="guest-counter">
-                  <button type="button" class="guest-counter-btn" id="btn-rooms-minus">
-                    <i class="bi bi-dash"></i>
+                  <button type="button" class="guest-counter-btn" id="btn-rooms-minus" aria-label="{% trans 'Decrease' %}">
+                    <i class="bi bi-dash" aria-hidden="true"></i>
                   </button>
-                  <input type="number" name="num_rooms" id="id_num_rooms"
+                  <input type="number" name="num_rooms" id="id_num_rooms" aria-label="{% trans 'Rooms' %}"
                          class="jd-input guest-counter-input"
                          value="{{ booking_prefill.num_rooms|default:'1' }}"
                          min="1" max="10" readonly>
-                  <button type="button" class="guest-counter-btn" id="btn-rooms-plus">
-                    <i class="bi bi-plus"></i>
+                  <button type="button" class="guest-counter-btn" id="btn-rooms-plus" aria-label="{% trans 'Increase' %}">
+                    <i class="bi bi-plus" aria-hidden="true"></i>
                   </button>
                 </div>
               </div>
@@ -328,15 +328,15 @@
                       <span class="guest-type-title">{% trans "Adults" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-adults-minus">
-                        <i class="bi bi-dash"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-adults-minus" aria-label="{% trans 'Decrease' %}">
+                        <i class="bi bi-dash" aria-hidden="true"></i>
                       </button>
-                      <input type="number" name="num_adults" id="id_num_adults"
+                      <input type="number" name="num_adults" id="id_num_adults" aria-label="{% trans 'Adults' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_adults|default:'1' }}"
                              min="1" max="40" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-adults-plus">
-                        <i class="bi bi-plus"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-adults-plus" aria-label="{% trans 'Increase' %}">
+                        <i class="bi bi-plus" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -348,15 +348,15 @@
                       <span class="guest-type-sub">{% trans "Ages 2–12" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-children-minus">
-                        <i class="bi bi-dash"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-children-minus" aria-label="{% trans 'Decrease' %}">
+                        <i class="bi bi-dash" aria-hidden="true"></i>
                       </button>
-                      <input type="number" name="num_children" id="id_num_children"
+                      <input type="number" name="num_children" id="id_num_children" aria-label="{% trans 'Children' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_children|default:'0' }}"
                              min="0" max="20" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-children-plus">
-                        <i class="bi bi-plus"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-children-plus" aria-label="{% trans 'Increase' %}">
+                        <i class="bi bi-plus" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -368,15 +368,15 @@
                       <span class="guest-type-sub">{% trans "Under 2" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-infants-minus">
-                        <i class="bi bi-dash"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-infants-minus" aria-label="{% trans 'Decrease' %}">
+                        <i class="bi bi-dash" aria-hidden="true"></i>
                       </button>
-                      <input type="number" name="num_infants" id="id_num_infants"
+                      <input type="number" name="num_infants" id="id_num_infants" aria-label="{% trans 'Infants' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_infants|default:'0' }}"
                              min="0" max="10" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-infants-plus">
-                        <i class="bi bi-plus"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-infants-plus" aria-label="{% trans 'Increase' %}">
+                        <i class="bi bi-plus" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -388,15 +388,15 @@
                       <span class="guest-type-sub">{% trans "Dogs, cats" %}</span>
                     </div>
                     <div class="guest-counter guest-counter-sm">
-                      <button type="button" class="guest-counter-btn" id="btn-pets-minus">
-                        <i class="bi bi-dash"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-pets-minus" aria-label="{% trans 'Decrease' %}">
+                        <i class="bi bi-dash" aria-hidden="true"></i>
                       </button>
-                      <input type="number" name="num_pets" id="id_num_pets"
+                      <input type="number" name="num_pets" id="id_num_pets" aria-label="{% trans 'Pets' %}"
                              class="jd-input guest-counter-input"
                              value="{{ booking_prefill.num_pets|default:'0' }}"
                              min="0" max="5" readonly>
-                      <button type="button" class="guest-counter-btn" id="btn-pets-plus">
-                        <i class="bi bi-plus"></i>
+                      <button type="button" class="guest-counter-btn" id="btn-pets-plus" aria-label="{% trans 'Increase' %}">
+                        <i class="bi bi-plus" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -504,6 +504,15 @@
   window.JD_STRINGS.maxGuestsPerRoom = "{% trans 'Max {max} guests per room' %}";
   window.JD_STRINGS.maxCapacityReached = "{% trans 'Maximum capacity reached for selected rooms' %}";
   window.JD_STRINGS.petsNotAllowed = "{% trans 'Pets are not allowed in this room type.' %}";
+  window.JD_STRINGS.selectCheckIn  = "{% trans 'Please select a check-in date' %}";
+  window.JD_STRINGS.selectCheckOut = "{% trans 'Please select a check-out date' %}";
+  window.JD_STRINGS.selectRoomType = "{% trans 'Please select a room type' %}";
+  window.JD_STRINGS.night  = "{% trans 'night' %}";
+  window.JD_STRINGS.nights = "{% trans 'nights' %}";
+  window.JD_STRINGS.room   = "{% trans 'room' %}";
+  window.JD_STRINGS.rooms  = "{% trans 'rooms' %}";
+  window.JD_STRINGS.guestMaxNote   = "{% trans 'Max {max} adults/children per room × {rooms} {roomWord} = {total} total. Infants & pets excluded.' %}";
+  window.JD_STRINGS.occupancyError = "{% trans 'Max {max} adults/children for {rooms} room(s). Infants and pets are not counted.' %}";
 </script>
 <script src="{% static 'js/hotels/hotel_detail.js' %}"></script>
 {% endblock %}

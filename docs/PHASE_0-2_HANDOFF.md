@@ -19,7 +19,7 @@ Active settings: `config.settings.development`
 Set in `.env`:
 DJANGO_SETTINGS_MODULE=config.settings.development
 SECRET_KEY=your-secret-key-here
-DEFAULT_FROM_EMAIL=noreply@jadevinetours.com
+DEFAULT_FROM_EMAIL=noreply@jadevinetravel.com
 
 Settings split:
 - `config/settings/base.py` — shared

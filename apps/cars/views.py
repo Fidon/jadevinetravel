@@ -2,12 +2,17 @@ import json
 from django.views.generic import DetailView
 from django.views import View
 from django.http import JsonResponse
+from django.urls import reverse
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Avg, Count
+
 from .models import CarRental
 from apps.reviews.models import Review
 from apps.core.models import SavedFavourite
-from django.db.models import Avg, Count
+from apps.core.seo import absolute_url, clean_text, jsonld_safe, breadcrumb_schema
 
 
 def public_cars_qs():
@@ -99,7 +104,7 @@ class CarListView(View):
                 'cover_photo': cover.image.url if cover else None,
                 'avg_rating': avg_rating,
                 'review_count': review_count,
-                'url': request.build_absolute_uri(f"/cars/{car.slug}/"),
+                'url': request.build_absolute_uri(reverse('cars:detail', kwargs={'slug': car.slug})),
                 'is_saved': car.id in saved_ids,
                 'item_type': 'car',
             })
@@ -153,5 +158,65 @@ class CarDetailView(DetailView):
             ).exists()
         )
         context['favourite_toggle_url'] = '/favourites/toggle/'
+
+        # ----------------------------------------------------------------
+        # SEO: per-listing meta + Product/Offer & BreadcrumbList JSON-LD.
+        # Product + Offer is what makes price (and star rating, when reviews
+        # exist) eligible to show in the Google result snippet.
+        # ----------------------------------------------------------------
+        canonical = absolute_url(self.request.path)
+        photos = list(context['photos'])
+        cover = car.cover_photo
+        image_urls = [absolute_url(p.image.url) for p in photos if p.image]
+        if cover and cover.image:
+            primary_image = absolute_url(cover.image.url)
+        elif image_urls:
+            primary_image = image_urls[0]
+        else:
+            primary_image = absolute_url(static('images/logo.png'))
+
+        display_price = car.get_display_price()  # Decimal (discounted if active, else base)
+
+        car_schema = {
+            "@type": "Product",
+            "@id": canonical + "#product",
+            "name": car.name,
+            "url": canonical,
+            "description": clean_text(car.get_description(lang), 300),
+            "image": image_urls or [primary_image],
+            "category": str(car.get_vehicle_type_display()),
+            "brand": {"@type": "Brand", "name": "Jadevine Travel & Tours"},
+            "offers": {
+                "@type": "Offer",
+                "price": f"{display_price:.2f}",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "url": canonical,
+            },
+        }
+        if context['review_count']:
+            car_schema["aggregateRating"] = {
+                "@type": "AggregateRating",
+                "ratingValue": context['avg_rating'],
+                "reviewCount": context['review_count'],
+            }
+
+        breadcrumbs = breadcrumb_schema([
+            (gettext("Home"), absolute_url(reverse('core:home'))),
+            (gettext("Car Rentals"), absolute_url(reverse('cars:list'))),
+            (car.name, canonical),
+        ])
+
+        context['seo_title'] = f"{car.name} | {gettext('Car Rental')} — Jadevine Travel & Tours"
+        context['seo_description'] = clean_text(car.get_description(lang), 155) or (
+            gettext("Rent a %(name)s in Zanzibar or Tanzania with Jadevine Travel & Tours.")
+            % {"name": car.name}
+        )
+        context['seo_image'] = primary_image
+        context['seo_type'] = 'product'
+        context['structured_data'] = jsonld_safe({
+            "@context": "https://schema.org",
+            "@graph": [car_schema, breadcrumbs],
+        })
 
         return context
